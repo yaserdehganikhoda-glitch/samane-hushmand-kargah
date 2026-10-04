@@ -169,10 +169,6 @@
             #recordsTableWrap.hc-total .c-total, #recordsTableWrap.hc-due .c-due, #recordsTableWrap.hc-end .c-end, #recordsTableWrap.hc-next .c-next,
             #recordsTableWrap.hc-status .c-status, #recordsTableWrap.hc-date .c-date { display: none !important; }
         }
-        @media screen {
-            #recordsTableWrap.hf-color .c-color, #recordsTableWrap.hf-daily .c-daily { display: none !important; }
-        }
-        #recordsTableWrap.hf-color .c-color, #recordsTableWrap.hf-daily .c-daily { display: none !important; }
         #recColsPop { position: fixed; z-index: 90; width: 230px; max-width: calc(100vw - 16px); padding: 10px 12px; border-radius: 14px; background: #fff; border: 1px solid rgb(203 213 225); box-shadow: 0 18px 40px -12px rgba(15,23,42,.45); }
         .dark #recColsPop { background: rgb(15 23 42); border-color: rgb(71 85 105); }
         #recColsPop .rc-pop-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 12px; font-weight: 800; color: rgb(51 65 85); } .dark #recColsPop .rc-pop-head { color: rgb(226 232 240); }
@@ -315,43 +311,6 @@
         #recordsTableCard[data-view="table"] .overflow-x-auto { display: block !important; }
         #recordsTableCard[data-view="card"] #recordsCardView { display: block !important; }
         body[data-grouped="1"] #recordsTableWrap, body[data-grouped="1"] #recordsCardView { display: none !important; }
-        /* ===== اندازه‌ی فونت و فاصله‌های لیست کارکردها =====
-           فاصله‌ها با واحد em نوشته شده‌اند، پس همیشه متناسب با فونت جدول/کارت تغییر می‌کنند.
-           برای بزرگ‌تر یا کوچک‌تر کردن کل لیست فقط مقدار --rt (ضریب مقیاس) را عوض کنید.
-           ضریب مقیاس با گزینه‌ی «اندازه‌ی فونت» در تنظیمات هم هماهنگ است. */
-        @media screen {
-            body { --rt: 1; }
-            body.font-small-size { --rt: .92; }
-            body.font-large-size { --rt: 1.1; }
-            body.font-xlarge-size { --rt: 1.22; }
-            /* نمای جدولی */
-            #recordsTableCard #recordsTableWrap table { font-size: calc(12px * var(--rt)); line-height: 1.5; }
-            #recordsTableCard #recordsTableWrap thead th { font-size: .92em; font-weight: 700; line-height: 1.4; padding: .6em .85em; }
-            #recordsTableCard #recordsTableBody td { padding: .5em .85em; line-height: 1.5; }
-            #recordsTableCard #recordsTableBody td.c-status { padding-top: .35em; padding-bottom: .35em; }
-            #recordsTableCard #recordsTableBody td .text-xs { font-size: .92em; }
-            #recordsTableCard #recordsTableBody td .text-xs.px-2\.5 { padding: .15em .65em; }
-            #recordsTableCard #recordsTableBody td .text-\[11px\] { font-size: .9em; }
-            #recordsTableCard #recordsTableBody td.c-photo > * { width: 2.6em; height: 2.6em; border-radius: .6em; }
-            #recordsTableCard #recordsTableBody td:last-child button[data-action] { width: 2.3em; height: 2.3em; font-size: 1em; }
-            /* نمای کارتی (موبایل) */
-            #recordsCardView .rc-card { padding: .8rem .9rem; font-size: calc(12px * var(--rt)); }
-            #recordsCardView .rc-card .text-sm { font-size: calc(13px * var(--rt)); line-height: 1.45; }
-            #recordsCardView .rc-card .text-xs { font-size: calc(11.5px * var(--rt)); }
-            #recordsCardView .rc-card .text-\[11px\] { font-size: calc(10.5px * var(--rt)); }
-            #recordsCardView .rc-card .mt-3 { margin-top: .55rem; }
-            #recordsCardView .rc-card .mt-2 { margin-top: .4rem; }
-            #recordsCardView .rc-card .mt-1 { margin-top: .2rem; }
-            #recordsCardView .rc-card .pt-3 { padding-top: .55rem; }
-            #recordsCardView .rc-card .pt-2 { padding-top: .4rem; }
-            #recordsCardView .rc-card .gap-y-1\.5 { row-gap: .3rem; }
-            #recordsCardView .rc-card .w-12.h-12 { width: 2.7rem; height: 2.7rem; }
-            #recordsCardView .rc-card button[data-action="edit"], #recordsCardView .rc-card button[data-action="delete"] { width: 1.9rem; height: 1.9rem; font-size: calc(12px * var(--rt)); }
-            #recordsCardView .rc-card .py-1.rounded-full { padding-top: .15rem; padding-bottom: .15rem; }
-            /* جدول‌های گروه‌بندی‌شده‌ی پرسنل (حالت کارفرما) */
-            #mgrWorkerLists table { font-size: calc(11.5px * var(--rt)); }
-            #mgrWorkerLists th, #mgrWorkerLists td { padding: .5em .75em; }
-        }
         @media print {
             body[data-grouped="1"] #recordsTableWrap { display: block !important; max-height: none !important; overflow: visible !important; }
             #mgrWorkerLists, #mgrMainStats, #mgrFilterBar, #mgrListSummary { display: none !important; }
@@ -427,38 +386,13 @@
             -webkit-backdrop-filter: blur(16px) saturate(170%);
         }
         .dark #bottomNavBar { background-color: rgba(2,6,23,0.82) !important; }
-        /* نوار تب پایین: هر تب یک صفحه؛ دکمه‌ی «ثبت» در وسط، بزرگ‌تر و برجسته */
-        #bottomNavBar { border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px -10px rgba(15,23,42,.22); }
-        .dark #bottomNavBar { box-shadow: 0 -8px 28px -10px rgba(0,0,0,.6); }
-        #bottomNavBar .bottom-nav-item { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 3px 0 1px; background: none; border: 0; color: #64748b; font-size: 11px; font-weight: 500; transition: color .2s; -webkit-tap-highlight-color: transparent; }
+        /* نوار تب پایین (مثل پروژه‌ی کافه‌رستوران): هر تب یک صفحه */
+        #bottomNavBar .bottom-nav-item { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; background: none; border: 0; color: #64748b; font-size: 11px; font-weight: 500; transition: color .15s; }
         .dark #bottomNavBar .bottom-nav-item { color: #94a3b8; }
-        #bottomNavBar .nav-ico { display: flex; align-items: center; justify-content: center; width: 46px; height: 28px; border-radius: 14px; transition: background-color .25s, transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .25s; }
-        #bottomNavBar .bottom-nav-item i { font-size: 17px; transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
-        #bottomNavBar .bottom-nav-item:active .nav-ico { transform: scale(.86); }
+        #bottomNavBar .bottom-nav-item i { font-size: 17px; }
         #bottomNavBar .bottom-nav-item.nav-on { color: #4f46e5; font-weight: 700; }
-        .dark #bottomNavBar .bottom-nav-item.nav-on { color: #a5b4fc; }
-        #bottomNavBar .bottom-nav-item.nav-on .nav-ico { background: linear-gradient(135deg, rgba(99,102,241,.18), rgba(139,92,246,.18)); box-shadow: 0 2px 10px -2px rgba(79,70,229,.35); transform: translateY(-2px); }
-        .dark #bottomNavBar .bottom-nav-item.nav-on .nav-ico { background: linear-gradient(135deg, rgba(129,140,248,.26), rgba(167,139,250,.22)); }
-        #bottomNavBar .bottom-nav-item.nav-on i { transform: scale(1.14); }
-        /* دکمه‌ی وسطیِ «ثبت» */
-        #bottomNavBar .bottom-nav-item[data-nav="add"] { flex: 1.25; margin-top: -24px; color: #4f46e5; font-weight: 700; font-size: 12px; }
-        .dark #bottomNavBar .bottom-nav-item[data-nav="add"] { color: #a5b4fc; }
-        #bottomNavBar .bottom-nav-item[data-nav="add"] .nav-ico { width: 60px; height: 60px; border-radius: 50%; color: #fff; background: linear-gradient(135deg, #6366f1, #4f46e5 55%, #7c3aed); box-shadow: 0 10px 22px -6px rgba(79,70,229,.6), 0 0 0 5px rgba(255,255,255,.92); transform: none; }
-        .dark #bottomNavBar .bottom-nav-item[data-nav="add"] .nav-ico { box-shadow: 0 10px 22px -6px rgba(99,102,241,.55), 0 0 0 5px rgba(2,6,23,.92); }
-        #bottomNavBar .bottom-nav-item[data-nav="add"] i { font-size: 26px; }
-        #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on .nav-ico { background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 12px 26px -6px rgba(124,58,237,.7), 0 0 0 5px rgba(255,255,255,.92); transform: translateY(-2px) scale(1.06); }
-        .dark #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on .nav-ico { box-shadow: 0 12px 26px -6px rgba(139,92,246,.65), 0 0 0 5px rgba(2,6,23,.92); }
-        #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on i { transform: rotate(90deg) scale(1.05); }
-        body:not([data-mode="employer"]) #bottomNavBar [data-mgr-only] { display: none !important; }
-        body[data-mode="employer"] #bottomNavBar .bottom-nav-item { font-size: 9.5px; white-space: nowrap; min-width: 0; }
-        body[data-mode="employer"] #bottomNavBar .bottom-nav-item:not([data-nav="add"]) .nav-ico { width: 34px; }
-        body[data-mode="employer"] #bottomNavBar .bottom-nav-item:not([data-nav="add"]) i { font-size: 15px; }
-        @media (prefers-reduced-motion: reduce) { #bottomNavBar *, #bottomNavBar { transition: none !important; } }
-        /* دکمه‌ی پنل کارفرما در تب خانه */
-        #homeMgrBtn { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-bottom: 12px; padding: 12px 16px; border: 0; border-radius: 16px; color: #fff; font-size: 14px; font-weight: 700; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 8px 20px -8px rgba(79,70,229,.6); transition: transform .15s, box-shadow .2s; }
-        #homeMgrBtn:active { transform: scale(.98); }
-        #homeMgrBtn.hidden { display: none; }
-        body:not([data-apptab="home"]) #homeMgrBtn { display: none !important; }
+        .dark #bottomNavBar .bottom-nav-item.nav-on { color: #818cf8; }
+        #bottomNavBar .bottom-nav-item.nav-on::after { content: ''; position: absolute; top: -7px; left: 28%; right: 28%; height: 3px; border-radius: 0 0 3px 3px; background: currentColor; }
         .box-off { display: none !important; }
         @media screen {
             body[data-apptab="home"] :is(#mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
@@ -473,7 +407,7 @@
             body[data-apptab="notes"] :is(#kpiCardWrap, #activeProgressCard, #mainTabBar, #recordFormCard) { display: none !important; }
             body[data-apptab="list"] :is(#kpiCardWrap, #activeProgressCard, #mainTabBar) { display: none !important; }
             body[data-apptab="progress"] :is(#kpiCardWrap, #mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
-            body:is([data-apptab="mgr"], [data-apptab="att"], [data-apptab="fin"]) :is(#kpiCardWrap, #activeProgressCard, #mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
+            body[data-apptab="mgr"] :is(#kpiCardWrap, #activeProgressCard, #mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
         }
 
         /* مدال‌ها: سایه‌ی عمیق‌تر و حرفه‌ای‌تر به‌جای shadow-2xl خام */
@@ -923,52 +857,6 @@
     <!-- Tailwind CSS: فایل نهایی و کم‌حجم که با Tailwind CLI ساخته می‌شود (npm run build:css).
          عمداً بعد از استایل‌های بالا آمده تا ترتیب اولویت همان رفتار قبلی را داشته باشد. -->
     <link rel="stylesheet" href="style.css">
-
-    <style id="kfPatchStyle">
-        /* دکمه‌ی ثبت یادآوری زیر کادر «تکرار» */
-        .kf-note-savegroup { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .kf-note-savegroup.kf-col { flex-direction: column; align-items: stretch; margin-top: 8px; gap: 6px; }
-        .kf-note-savegroup.kf-col > button { width: 100%; justify-content: center; }
-        .kf-note-repeat { width: 8rem; flex-shrink: 0; }
-        .kf-note-aux { margin-top: 1.85rem; }
-        /* ردیف تاریخ و زمان پایان در ویجت پرسنل: تمام‌عرض و بدون برش */
-        .mgr-kv.kf-kv-wide { grid-column: 1 / -1; }
-        .mgr-kv.kf-kv-wide > b { overflow: visible; text-overflow: clip; white-space: normal; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
-        /* دکمه‌ی اضافه‌کاری در حضور و غیاب */
-        .kf-ot-btn { border-color: #a5b4fc; color: #4f46e5; }
-        .dark .kf-ot-btn { border-color: #4338ca; color: #a5b4fc; }
-        .kf-ot-btn.on { background: #4f46e5; border-color: #4f46e5; color: #fff; font-weight: 700; }
-        .kf-ot-txt { color: #4f46e5; } .dark .kf-ot-txt { color: #a5b4fc; }
-        /* لیست حقوق و مالی زیر لیست کارکردها */
-        .kf-pay-btn { color: #047857; } .dark .kf-pay-btn { color: #6ee7b7; }
-        .kf-pay-btn.on { background: #d1fae5 !important; } .dark .kf-pay-btn.on { background: rgba(6, 78, 59, .45) !important; }
-        .kf-pay-wrap { overflow-x: auto; border-radius: 12px; }
-        .kf-pay { width: 100%; border-collapse: collapse; font-size: 11px; text-align: center; }
-        .kf-pay th, .kf-pay td { padding: 6px 6px; border: 1px solid #cbd5e1; white-space: nowrap; }
-        .dark .kf-pay th, .dark .kf-pay td { border-color: #475569; }
-        .kf-pay thead th { background: #f1f5f9; color: #334155; font-weight: 700; }
-        .dark .kf-pay thead th { background: #1e293b; color: #e2e8f0; }
-        .kf-pay tbody td, .kf-pay tfoot td { background: #fff; color: #1e293b; }
-        .dark .kf-pay tbody td, .dark .kf-pay tfoot td { background: #0f172a; color: #e2e8f0; }
-        .kf-pay tfoot td { background: #f8fafc; font-weight: 700; } .dark .kf-pay tfoot td { background: #1e293b; }
-        .kf-pay th:first-child, .kf-pay td:first-child { position: sticky; right: 0; text-align: right; z-index: 1; }
-        .kf-pay .kf-sub { display: block; font-size: 9.5px; color: #64748b; font-weight: 400; }
-        .kf-pay .kf-pos { color: #047857; } .kf-pay .kf-neg { color: #be123c; } .kf-pay .kf-amb { color: #b45309; } .kf-pay .kf-ind { color: #4f46e5; } .kf-pay .kf-mut { color: #94a3b8; }
-        .dark .kf-pay .kf-pos { color: #34d399; } .dark .kf-pay .kf-neg { color: #fb7185; } .dark .kf-pay .kf-amb { color: #fbbf24; } .dark .kf-pay .kf-ind { color: #a5b4fc; }
-        .kf-pay-head { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
-        .kf-pay-note { font-size: 10px; color: #94a3b8; margin-top: 4px; }
-        .kf-rate-box { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: #64748b; }
-        @media print {
-            #recordsPayrollPrint { margin-top: 14px; padding: 0 8px; color: #0f172a; }
-            #recordsPayrollPrint .kf-pay { font-size: 9px; }
-            #recordsPayrollPrint .kf-pay th, #recordsPayrollPrint .kf-pay td { padding: 4px 3px; border-color: #94a3b8; background: #fff !important; color: #0f172a !important; }
-            #recordsPayrollPrint .kf-pay thead th { background: #e2e8f0 !important; }
-            #recordsPayrollPrint .kf-pay th:first-child, #recordsPayrollPrint .kf-pay td:first-child { position: static; white-space: normal; }
-            #recordsPayrollPrint .kf-pay-wrap { overflow: visible; }
-            #recordsPayrollPrint { page-break-inside: auto; }
-            #recordsPayrollPrint tr { page-break-inside: avoid; }
-        }
-    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen pb-28 font-normal-size" id="appBody">
 
@@ -1026,13 +914,12 @@
     <!-- نوار ناوبری پایین صفحه: نسخه‌ی شیشه‌ای شناور -->
     <div id="bottomNavBar" class="no-print fixed bottom-0 inset-x-0 z-30 border-t border-slate-200/70 dark:border-slate-700/60">
         <div class="max-w-5xl mx-auto px-2 flex items-stretch justify-around pt-1.5" role="tablist" aria-label="تب‌های اصلی" style="padding-bottom: calc(0.4rem + env(safe-area-inset-bottom));">
-            <button type="button" role="tab" data-nav="home" onclick="setAppTab('home')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-house"></i></span><span>خانه</span></button>
-            <button type="button" role="tab" data-nav="list" onclick="setAppTab('list')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-table-list"></i></span><span>رکوردها</span></button>
-            <button type="button" role="tab" data-nav="att" data-mgr-only="1" onclick="setAppTab('att')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-calendar-check"></i></span><span>حضور و غیاب</span></button>
-            <button type="button" role="tab" data-nav="add" onclick="setAppTab('add')" class="bottom-nav-item" aria-label="ثبت کارکرد جدید"><span class="nav-ico"><i class="fa-solid fa-plus"></i></span><span>ثبت</span></button>
-            <button type="button" role="tab" data-nav="fin" data-mgr-only="1" onclick="setAppTab('fin')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-coins"></i></span><span>حقوق و مالی</span></button>
-            <button type="button" role="tab" data-nav="notes" onclick="setAppTab('notes')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-note-sticky"></i></span><span>یادداشت‌ها</span></button>
-            <button type="button" role="tab" data-nav="progress" onclick="setAppTab('progress')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-stopwatch"></i></span><span>پیشرفت کار</span></button>
+            <button type="button" role="tab" data-nav="home" onclick="setAppTab('home')" class="bottom-nav-item"><i class="fa-solid fa-house"></i><span>خانه</span></button>
+            <button type="button" role="tab" data-nav="add" onclick="setAppTab('add')" class="bottom-nav-item"><i class="fa-solid fa-circle-plus"></i><span>ثبت</span></button>
+            <button type="button" role="tab" data-nav="list" onclick="setAppTab('list')" class="bottom-nav-item"><i class="fa-solid fa-table-list"></i><span>رکوردها</span></button>
+            <button type="button" role="tab" data-nav="notes" onclick="setAppTab('notes')" class="bottom-nav-item"><i class="fa-solid fa-note-sticky"></i><span>یادداشت‌ها</span></button>
+            <button type="button" role="tab" data-nav="progress" onclick="setAppTab('progress')" class="bottom-nav-item"><i class="fa-solid fa-stopwatch"></i><span>پیشرفت کار</span></button>
+            <button type="button" role="tab" data-nav="mgr" id="navMgrBtn" onclick="setAppTab('mgr')" class="bottom-nav-item" style="display:none"><i class="fa-solid fa-user-tie"></i><span>کارفرما</span></button>
         </div>
     </div>
 
@@ -1333,8 +1220,6 @@
         </div>
         </header>
 
-        <button type="button" id="homeMgrBtn" class="hidden no-print" onclick="setAppTab('mgr')"><span class="flex items-center gap-2.5"><i class="fa-solid fa-user-tie"></i> پنل کارفرما</span><i class="fa-solid fa-chevron-left text-xs opacity-80"></i></button>
-
         <!-- کادر نمایش لاگ‌ها -->
         <div id="logDropdownPanel" class="hidden bg-slate-900 text-slate-200 rounded-2xl p-4 mb-6 shadow-xl text-xs font-mono transition-all duration-300 border border-slate-800">
             <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-800">
@@ -1501,8 +1386,6 @@
                     </div>
                 </div>
 
-                <div id="customFormFields" style="display:none" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4"></div>
-
                 <div id="workerFieldWrap" class="hidden">
                     <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1.5" for="recordWorker"><i class="fa-solid fa-user-gear text-indigo-500 ml-1"></i>پرسنل مسئول (ارجاع کار)</label>
                     <select id="recordWorker" class="w-full p-3 border border-slate-400 dark:border-slate-500 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 transition-all"></select>
@@ -1642,7 +1525,9 @@
                 </h2>
                 <div class="flex items-center gap-3">
                     <span class="text-xs text-slate-400 hidden sm:inline">یادداشت برای تاریخ انتخابی</span>
-                    
+                    <button type="button" onclick="toggleDailyNotesSection()" class="text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 p-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors" title="بستن یادداشت‌ها">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
                 </div>
             </div>
 
@@ -1659,51 +1544,15 @@
                     </div>
                     <div class="w-28 shrink-0">
                         <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">نوع یادداشت</label>
-                        <select id="noteTypeInput" onchange="onNoteTypeChange()" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
+                        <select id="noteTypeInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
                             <option value="normal">عادی</option>
                             <option value="reminder">یادآوری</option>
                             <option value="holiday">تعطیلی</option>
                         </select>
                     </div>
-                    <div id="noteSaveSlotMain" style="display:contents">
-                        <div id="noteSaveGroup" class="kf-note-savegroup">
-                            <button type="button" id="noteSaveBtn" onclick="saveDailyNote()" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2.5 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap">
-                                <i id="noteSaveIcon" class="fa-solid fa-plus"></i> <span id="noteSaveLabel">ثبت یادداشت</span>
-                            </button>
-                            <button type="button" id="noteCancelEditBtn" onclick="cancelNoteEdit()" class="hidden bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3.5 py-2.5 rounded-xl font-medium text-xs whitespace-nowrap">انصراف</button>
-                        </div>
-                    </div>
-                </div>
-                <div id="noteReminderOpts" class="hidden">
-                    <div class="flex items-start gap-3 flex-wrap">
-                        <div class="w-28 shrink-0">
-                            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">ساعت یادآوری</label>
-                            <input type="time" id="noteTimeInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
-                        </div>
-                        <div class="w-36 shrink-0">
-                            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">زمان هشدار</label>
-                            <select id="noteLeadInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
-                                <option value="0">همان لحظه</option>
-                                <option value="5">۵ دقیقه قبل</option>
-                                <option value="10">۱۰ دقیقه قبل</option>
-                                <option value="30">۳۰ دقیقه قبل</option>
-                                <option value="60">۱ ساعت قبل</option>
-                                <option value="1440">۱ روز قبل</option>
-                            </select>
-                        </div>
-                        <div class="kf-note-repeat">
-                            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">تکرار</label>
-                            <select id="noteRepeatInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
-                                <option value="none">بدون تکرار</option>
-                                <option value="daily">هر روز</option>
-                                <option value="weekly">هر هفته</option>
-                                <option value="monthly">هر ماه</option>
-                            </select>
-                            <div id="noteSaveSlotRem"></div>
-                        </div>
-                        <label class="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 kf-note-aux cursor-pointer"><input type="checkbox" id="noteSoundInput" checked class="accent-amber-500"> هشدار صوتی</label>
-                        <button type="button" onclick="testNoteSound()" class="kf-note-aux text-xs text-amber-600 dark:text-amber-400 hover:underline"><i class="fa-solid fa-volume-high"></i> تست صدا</button>
-                    </div>
+                    <button type="button" onclick="saveDailyNote()" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2.5 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap">
+                        <i class="fa-solid fa-plus"></i> ثبت یادداشت
+                    </button>
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">متن یادداشت / نکته</label>
@@ -1713,10 +1562,7 @@
                 <!-- لیست یادداشت‌های ثبت شده در ماه جاری -->
                 <div class="mt-4 pt-3 border-t border-slate-300 dark:border-slate-600">
                     <h3 class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">یادداشت‌های ثبت‌شده این دوره:</h3>
-                    <div class="flex gap-2 mb-2">
-                        <input type="search" id="noteSearchInput" style="width:13rem;max-width:100%;flex:0 1 auto" oninput="noteSearchQ=this.value;renderDailyNotes()" placeholder="جستجو در یادداشت‌ها..." class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all flex-1 min-w-0">
-                    </div>
-                    <div id="notesContainer" class="space-y-2 overflow-y-auto" style="max-height:11rem">
+                    <div id="notesContainer" class="space-y-2 max-h-40 overflow-y-auto">
                     </div>
                 </div>
             </div>
@@ -1843,9 +1689,6 @@
                 <button type="button" onclick="toggleDuplicateCodesVisibility()" id="duplicateCodesToggleBtn" class="tactile-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 field-box-bg text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-colors border border-slate-400 dark:border-slate-500">
                     <i class="fa-solid fa-copy"></i> <span>کدهای تکراری</span>
                 </button>
-                <button type="button" onclick="toggleRecordsPayroll()" id="payrollToggleBtn" class="hidden tactile-btn kf-pay-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 field-box-bg transition-colors border border-slate-400 dark:border-slate-500">
-                    <i class="fa-solid fa-sack-dollar"></i> <span>حقوق و مالی پرسنل</span>
-                </button>
             </div>
 
             <div id="delaySummaryBody" class="hidden no-print p-4 border-t border-slate-300 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-900/50">
@@ -1857,12 +1700,6 @@
                     <p id="workdayBasisNote" class="text-[10px] text-slate-400 dark:text-slate-500 mt-1">بر مبنای ۸ ساعت و ۱۵ دقیقه کاری در هر روز</p>
                 </div>
             </div>
-
-            <div id="recordsPayrollBody" class="hidden no-print p-4 border-t border-slate-300 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-900/50">
-                <div id="recordsPayrollInner"></div>
-            </div>
-
-            <div id="recordsPayrollPrint" class="print-only"></div>
 
             <div id="duplicateCodesBody" class="hidden no-print p-4 border-t border-slate-300 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-900/50">
                 <div class="bg-white dark:bg-slate-800 field-box-bg rounded-xl p-4 border border-slate-300 dark:border-slate-600">
@@ -2273,14 +2110,6 @@
                     <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">هر فیلد را که خالی بگذارید، نام پیش‌فرض نمایش داده می‌شود. واحد پول به‌طور خودکار کنار «قیمت واحد» می‌آید.</p>
                     <div id="formLabelsFields" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
                     <button type="button" onclick="resetFormLabelsFields()" class="text-xs text-slate-500 dark:text-slate-400 underline hover:text-purple-600">پاک کردن همه‌ی نام‌های سفارشی</button>
-                    <div class="pt-3 border-t border-slate-300 dark:border-slate-600 space-y-2">
-                        <div class="flex items-center justify-between gap-2">
-                            <span class="text-xs font-bold text-slate-700 dark:text-slate-200"><i class="fa-solid fa-square-plus ml-1 text-purple-600"></i> فیلدهای اضافه (در فرم و لیست کارکردها)</span>
-                            <button type="button" onclick="cfEditorAdd()" class="tactile-btn px-3 py-1.5 rounded-xl border border-purple-500 text-purple-700 dark:text-purple-300 text-xs"><i class="fa-solid fa-plus ml-1"></i> افزودن فیلد</button>
-                        </div>
-                        <div id="customFieldsEditor" class="space-y-2"></div>
-                        <p class="text-[10px] text-slate-400">با «ذخیره» در پایین تنظیمات اعمال می‌شود. حذف فیلد، مقادیر ثبت‌شده‌ی آن را هم از رکوردها پاک می‌کند.</p>
-                    </div>
                     </div>
                 </div>
                 <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3 border border-slate-300 dark:border-slate-600 flex items-center justify-between">
@@ -3754,7 +3583,6 @@
                 monthKey, monthName, year,
                 streakCounted: !!r.streakCounted,
                 workerId: optStr(r.workerId, 40), workerName: str(r.workerName, 100),
-                custom: (() => { const c = (r.custom && typeof r.custom === 'object' && !Array.isArray(r.custom)) ? r.custom : null; if (!c) return null; const o = {}; let n = 0; Object.keys(c).forEach(k => { if (n < 24 && /^cf[a-z0-9]{3,24}$/.test(k) && c[k] !== null && c[k] !== undefined && String(c[k]).trim() !== '') { o[k] = String(c[k]).slice(0, 200); n++; } }); return n ? o : null; })(),
                 // رکوردهای قدیمی updatedAt نداشتند؛ id (زمان ساخت) جایگزین منطقی آن است
                 updatedAt: (Number.isFinite(upd) && upd > 0) ? upd : id
             };
@@ -3771,14 +3599,6 @@
                 text: String(n.text == null ? '' : n.text).slice(0, 5000),
                 type: NOTE_TYPES.includes(n.type) ? n.type : 'normal',
                 hidden: !!n.hidden,
-                time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(n.time || '')) ? String(n.time) : '',
-                lead: (Number.isFinite(Number(n.lead)) && Number(n.lead) >= 0 && Number(n.lead) <= 10080) ? Math.round(Number(n.lead)) : 0,
-                sound: n.sound !== false,
-                done: !!n.done,
-                repeat: ['daily', 'weekly', 'monthly'].includes(n.repeat) ? n.repeat : 'none',
-                ref: String(n.ref == null ? '' : n.ref).slice(0, 40),
-                fired: (Number.isFinite(Number(n.fired)) && Number(n.fired) > 0) ? Number(n.fired) : 0,
-                snoozeUntil: (Number.isFinite(Number(n.snoozeUntil)) && Number(n.snoozeUntil) > 0) ? Number(n.snoozeUntil) : 0,
                 updatedAt: (Number.isFinite(upd) && upd > 0) ? upd : id
             };
         }
@@ -3858,12 +3678,6 @@
             const srcOptional = (s.optionalFields && typeof s.optionalFields === 'object' && !Array.isArray(s.optionalFields)) ? s.optionalFields : {};
             s.optionalFields = {};
             FIELD_REQUIRED_KEYS.forEach(k => { if (srcOptional[k]) s.optionalFields[k] = true; });
-            const srcHidden = (s.hiddenFields && typeof s.hiddenFields === 'object' && !Array.isArray(s.hiddenFields)) ? s.hiddenFields : {};
-            s.hiddenFields = {};
-            HIDEABLE_FIELDS.forEach(k => { if (srcHidden[k]) s.hiddenFields[k] = true; });
-            { const seenCf = new Set(); s.customFields = (Array.isArray(s.customFields) ? s.customFields : [])
-                .filter(f => f && typeof f === 'object' && /^cf[a-z0-9]{3,24}$/.test(String(f.id)) && !seenCf.has(String(f.id)) && seenCf.add(String(f.id)))
-                .slice(0, CF_MAX).map(f => ({ id: String(f.id), label: String(f.label == null ? '' : f.label).trim().slice(0, 40) || 'فیلد', type: f.type === 'number' ? 'number' : 'text' })); }
             s.businessType = (typeof BUSINESS_PRESETS !== 'undefined' && BUSINESS_PRESETS[s.businessType]) ? s.businessType : 'general';
             s.bestStreak = Math.max(0, Number(s.bestStreak) || 0);
             const m = (s.manager && typeof s.manager === 'object' && !Array.isArray(s.manager)) ? s.manager : {};
@@ -3898,27 +3712,13 @@
                     });
                     return out;
                 })(),
-                otMin: (() => {
-                    const a = (m.otMin && typeof m.otMin === 'object' && !Array.isArray(m.otMin)) ? m.otMin : {}, out = {};
-                    Object.keys(a).slice(0, 4000).forEach(d => {
-                        const k = dk(d), day = a[d];
-                        if (!k || k !== d || !day || typeof day !== 'object') return;
-                        const o = {};
-                        Object.keys(day).slice(0, 600).forEach(w => { const id = I(w), n = Math.floor(Number(day[w])); if (id && Number.isFinite(n) && n > 0 && n <= 1440) o[id] = n; });
-                        if (Object.keys(o).length) out[k] = o;
-                    });
-                    return out;
-                })(),
                 finance: (() => {
                     const f = (m.finance && typeof m.finance === 'object' && !Array.isArray(m.finance)) ? m.finance : {};
                     const days = {};
                     if (f.days && typeof f.days === 'object' && !Array.isArray(f.days)) Object.keys(f.days).slice(0, 5000).forEach(k => { const n = Math.floor(Number(f.days[k])); if (/^[\w-]{1,40}\|\d{4}-\d{1,2}$/.test(k) && Number.isFinite(n) && n >= 0 && n <= 31) days[k] = n; });
-                    const rates = {};
-                    if (f.rates && typeof f.rates === 'object' && !Array.isArray(f.rates)) Object.keys(f.rates).slice(0, 600).forEach(k => { const id = I(k), r = f.rates[k]; if (id && r && typeof r === 'object') { const ot = N(r.ot), lv = N(r.lv); if (ot || lv) rates[id] = { ot, lv }; } });
-                    const dfo = (f.def && typeof f.def === 'object' && !Array.isArray(f.def)) ? f.def : {};
                     return {
                         txns: A(f.txns).map(t => t && { id: I(t.id) || mgrId('f'), workerId: I(t.workerId), type: ['advance', 'bonus', 'deduction', 'payment'].includes(t.type) ? t.type : '', amount: N(t.amount), date: dk(t.date), monthKey: /^\d{4}-\d{1,2}$/.test(String(t.monthKey)) ? String(t.monthKey) : '', note: T(t.note, 200) }).filter(t => t && t.type && t.amount > 0 && t.workerId && t.monthKey).slice(0, 20000),
-                        days, rates, def: { ot: N(dfo.ot), lv: N(dfo.lv) }
+                        days
                     };
                 })(),
                 schema: 3
@@ -4529,6 +4329,11 @@
             const staleLinksCount = allRecords.filter(r => r.nextCodeStartDate && !allRecords.some(o => o.id !== r.id && recOwnerKey(o) === recOwnerKey(r) && sameDT(o.date, o.time, r.nextCodeStartDate, r.nextCodeStartTime))).length;
             if (staleLinksCount) issues.push({ key: 'stale_links', severity: 'warn', text: `${formatNumber(staleLinksCount)} رکورد با اشاره‌گر «شروع کد بعد» نامعتبر/قدیمی.`, fixable: true });
 
+            const noteDateCounts = new Map();
+            dailyNotes.forEach(n => noteDateCounts.set(n.date, (noteDateCounts.get(n.date) || 0) + 1));
+            const dupNoteCount = [...noteDateCounts.values()].filter(c => c > 1).length;
+            if (dupNoteCount) issues.push({ key: 'dup_notes', severity: 'warn', text: `${formatNumber(dupNoteCount)} تاریخ دارای بیش از یک یادداشت.`, fixable: true });
+
             const missingPhotoCount = allRecords.filter(r => r.hasPhoto && !r.photo).length;
             if (missingPhotoCount) issues.push({ key: 'missing_photo', severity: 'info', text: `${formatNumber(missingPhotoCount)} رکورد به عکسی اشاره می‌کند که پیدا نشد.`, fixable: true });
 
@@ -4565,6 +4370,27 @@
                         fixedCount++;
                     }
                 });
+            } else if (key === 'dup_notes') {
+                // متن یادداشت‌های هم‌تاریخ ادغام می‌شود (نه حذف)؛ نسخه‌های ادغام‌شده هم به سطل بازیافت می‌روند
+                const groups = new Map();
+                dailyNotes.forEach(n => { if (!groups.has(n.date)) groups.set(n.date, []); groups.get(n.date).push(n); });
+                const prio = { holiday: 3, reminder: 2, normal: 1 };
+                const kept = [];
+                groups.forEach(list => {
+                    if (list.length === 1) { kept.push(list[0]); return; }
+                    list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+                    const primary = list[0];
+                    const texts = [];
+                    list.forEach(n => { const t = (n.text || '').trim(); if (t && !texts.includes(t)) texts.push(t); });
+                    const merged = texts.join('\n———\n');
+                    if (merged.length > 5000) { list.forEach(n => kept.push(n)); return; } // سقف طول یادداشت؛ دست نمی‌زنیم
+                    primary.text = merged;
+                    primary.type = list.reduce((best, n) => ((prio[n.type] || 0) > (prio[best] || 0) ? n.type : best), primary.type);
+                    primary.updatedAt = Date.now();
+                    list.slice(1).forEach(n => { addTombstone('notes', n.id); moveToTrash(TRASH_NOTES_STORE, n); fixedCount++; });
+                    kept.push(primary);
+                });
+                dailyNotes = kept;
             } else if (key === 'missing_photo') {
                 allRecords.forEach(r => {
                     if (r.hasPhoto && !r.photo) { r.hasPhoto = false; r.updatedAt = Date.now(); fixedCount++; }
@@ -4630,9 +4456,6 @@
                 case 'photo': viewRecordPhoto(id); break;
                 case 'toggle-note': toggleNoteVisibility(id); break;
                 case 'delete-note': deleteDailyNote(id); break;
-                case 'done-note': toggleNoteDone(id); break;
-                case 'edit-note': editDailyNote(id); break;
-                case 'deadline-reminder': createDeadlineReminder(id); break;
                 case 'finish-active': finishRecordNow(id); break;
                 case 'unfinish': unfinishRecord(id); break;
                 case 'worker-info': showWorkerInfoPop(id, el); break;
@@ -4694,14 +4517,6 @@
                 if (cb) cb.checked = !(p.optional && p.optional[k]);
             });
         }
-        const HIDEABLE_FIELDS = ['itemColor', 'dailyStat'];
-        const CF_MAX = 12;
-        function cfList() { const a = (typeof appSettings !== 'undefined' && appSettings) ? appSettings.customFields : null; return Array.isArray(a) ? a : []; }
-        function isFieldHidden(k) { return !!(typeof appSettings !== 'undefined' && appSettings && appSettings.hiddenFields && appSettings.hiddenFields[k]); }
-        function cfVal(r, id) { const v = r && r.custom && r.custom[id]; return (v === undefined || v === null) ? '' : String(v); }
-        function cfDisplay(f, v) { if (v === '') return '-'; if (f.type === 'number') { const n = Number(v); return Number.isFinite(n) ? formatNumber(n) : escapeHTML(v); } return escapeHTML(v); }
-        function cfCells(r) { return cfList().map(f => `<td class="c-cf_${f.id} p-2.5 whitespace-nowrap text-slate-500 dark:text-slate-400">${cfDisplay(f, cfVal(r, f.id))}</td>`).join(''); }
-        function cfCards(r) { return cfList().map(f => `<div>${escapeHTML(f.label)}: <span class="text-slate-700 dark:text-slate-200">${cfDisplay(f, cfVal(r, f.id))}</span></div>`).join(''); }
         const FIELD_REQUIRED_KEYS = ['itemCode', 'itemTitle', 'itemColor', 'receivedQuantity', 'unitPrice', 'itemStatus', 'recordDate', 'recordTime'];
         const BREAK_META = [['breakfast', 'صبحانه'], ['tea1', 'چای اول'], ['lunch', 'ناهار'], ['tea2', 'چای دوم']];
         const BREAK_KEYS = BREAK_META.map(x => x[0]);
@@ -4714,7 +4529,7 @@
             }
         };
         const DEFAULT_APP_SETTINGS = {
-            workdayMinutes: 495, shiftStart: '08:00', shiftEnd: '18:00', shiftBreaks: null, formLabels: {}, optionalFields: { itemColor: true }, businessType: 'general', customFields: [], hiddenFields: {},
+            workdayMinutes: 495, shiftStart: '08:00', shiftEnd: '18:00', shiftBreaks: null, formLabels: {}, optionalFields: { itemColor: true }, businessType: 'general',
             schemaVersion: 1,
             shopName: 'سامانه‌ی کارگاه هوشمند',
             currency: 'تومان',
@@ -4830,7 +4645,7 @@
         function mgrMergeLocalInto(theirs, ours) {
             if (!ours) return theirs;
             const out = theirs;
-            ['attendance', 'attMin', 'otMin'].forEach(k => {
+            ['attendance', 'attMin'].forEach(k => {
                 const o = (ours[k] && typeof ours[k] === 'object') ? ours[k] : {};
                 out[k] = out[k] || {};
                 Object.keys(o).forEach(d => { out[k][d] = { ...(out[k][d] || {}), ...o[d] }; });
@@ -4840,8 +4655,6 @@
                 const ids = new Set((out.finance.txns || []).map(t => t.id));
                 (ours.finance.txns || []).forEach(t => { if (!ids.has(t.id)) out.finance.txns.push(t); });
                 out.finance.days = { ...(out.finance.days || {}), ...(ours.finance.days || {}) };
-                out.finance.rates = { ...(out.finance.rates || {}), ...(ours.finance.rates || {}) };
-                out.finance.def = { ...(out.finance.def || {}), ...(ours.finance.def || {}) };
             }
             return out;
         }
@@ -6653,15 +6466,14 @@
         // ===== تب‌بندی اصلی (مثل کافه‌رستوران): خانه | ثبت | رکوردها | یادداشت‌ها =====
         let appTab = 'home';
         function setAppTab(tab, opts) {
-            if (['home', 'add', 'list', 'notes', 'progress', 'mgr', 'att', 'fin'].indexOf(tab) < 0) tab = 'home';
-            if ((tab === 'mgr' || tab === 'att' || tab === 'fin') && !mgrOn()) tab = 'home';
-            if (tab === 'att') mgrTab = 'attendance'; else if (tab === 'fin') mgrTab = 'finance'; else if (tab === 'mgr' && (mgrTab === 'attendance' || mgrTab === 'finance')) mgrTab = 'workers';
+            if (['home', 'add', 'list', 'notes', 'progress', 'mgr'].indexOf(tab) < 0) tab = 'home';
+            if (tab === 'mgr' && !mgrOn()) tab = 'home';
             if (tab !== 'progress' && typeof mgrPageW !== 'undefined' && mgrPageW) { try { mgrCloseWorkerPage(); } catch (e) { /* بی‌اهمیت */ } }
             appTab = tab;
             document.body.dataset.apptab = tab;
             _switchMainPanel(tab === 'list' ? 'list' : 'entry');
             const mgrPage = document.getElementById('managerModal');
-            if (mgrPage) { const isM = tab === 'mgr' || tab === 'att' || tab === 'fin'; mgrPage.classList.toggle('hidden', !isM); if (isM) { try { mgrRender(); } catch (e) { /* بی‌اهمیت */ } } }
+            if (mgrPage) { mgrPage.classList.toggle('hidden', tab !== 'mgr'); if (tab === 'mgr') { try { mgrRender(); } catch (e) { /* بی‌اهمیت */ } } }
             if (!(opts && opts.noScroll)) window.scrollTo({ top: 0, behavior: 'smooth' });
             if (tab === 'notes') {
                 const sec = document.getElementById('dailyNotesSection');
@@ -6673,7 +6485,7 @@
             updateTabHeaderBar(tab);
         }
         function updateTabHeaderBar(tab) {
-            const TAB_HEADERS = { add: ['fa-circle-plus', 'ثبت کارکرد جدید', 'ثبت سریع رکورد کار'], list: ['fa-table', 'لیست کارکردها', 'مشاهده، جستجو و ویرایش رکوردها'], notes: ['fa-note-sticky', 'یادداشت‌ها', 'یادداشت‌های روزانه'], progress: ['fa-stopwatch', 'پیشرفت کار', 'وضعیت زنده‌ی کار جاری'], att: ['fa-calendar-check', 'حضور و غیاب', 'ثبت و مدیریت حضور و غیاب پرسنل'], fin: ['fa-coins', 'حقوق و مالی', 'ثبت و مدیریت تراکنش‌های مالی پرسنل'], mgr: ['fa-user-tie', 'پنل کارفرما', 'مدیریت پرسنل و بخش‌ها'] };
+            const TAB_HEADERS = { add: ['fa-circle-plus', 'ثبت کارکرد جدید', 'ثبت سریع رکورد کار'], list: ['fa-table', 'لیست کارکردها', 'مشاهده، جستجو و ویرایش رکوردها'], notes: ['fa-note-sticky', 'یادداشت‌ها', 'یادداشت‌های روزانه'], progress: ['fa-stopwatch', 'پیشرفت کار', 'وضعیت زنده‌ی کار جاری'], mgr: ['fa-user-tie', 'پنل کارفرما', 'مدیریت پرسنل و بخش‌ها'] };
             const bar = document.getElementById('brandTabTitle'); if (!bar) return;
             const c = TAB_HEADERS[tab];
             bar.classList.toggle('hidden', !c);
@@ -6689,9 +6501,9 @@
         }
         function syncMgrTab() {
             const on = (typeof mgrOn === 'function') && mgrOn();
-            const b = document.getElementById('homeMgrBtn');
-            if (b) b.classList.toggle('hidden', !on);
-            if (!on && ['mgr', 'att', 'fin'].indexOf(appTab) >= 0) setAppTab('home', { noScroll: true });
+            const b = document.getElementById('navMgrBtn');
+            if (b) b.style.display = on ? '' : 'none';
+            if (!on && appTab === 'mgr') setAppTab('home', { noScroll: true });
         }
         function syncProgressEmpty() {
             syncMgrTab();
@@ -6832,7 +6644,6 @@
             document.getElementById('printRecordsSubtitle').innerText =
                 `${ownerLine ? ownerLine + '  |  ' : ''}دوره: ${periodLabel}  |  تعداد رکورد: ${formatNumber(records.length)}  |  مجموع مبلغ: ${formatNumber(totalAmountSum)} ${currency}${unknownPriceCount > 0 ? '  |  ' + formatNumber(unknownPriceCount) + ' رکورد با قیمت نامعلوم' : ''}  |  تاریخ چاپ: ${formatDateDigits(currentJalali.fullDateStr)}`;
 
-            try { renderRecordsPayrollPrint(); } catch (e) { /* بی‌اهمیت */ }
             printWithLightTheme();
         }
 
@@ -6955,12 +6766,11 @@
 
         /* ==================== انتخاب فیلدهای نمایشی جدول لیست کارکردها ==================== */
         const REC_COLS = [['photo', 'عکس'], ['code', 'کد'], ['title', 'عنوان کار'], ['color', 'رنگ / مشخصات'], ['worker', 'پرسنل و بخش'], ['qty', 'تعداد دریافتی'], ['daily', 'آمار روزانه'], ['unit', 'قیمت واحد'], ['total', 'مبلغ کل'], ['due', 'مدت زمان تحویل'], ['end', 'تاریخ و زمان پایان'], ['next', 'شروع کد بعد'], ['status', 'وضعیت'], ['date', 'تاریخ و ساعت']];
-        function recAllCols() { return REC_COLS.concat(cfList().map(f => ['cf_' + f.id, escapeHTML(f.label)])); }
         let recColsHidden = [];
         try { const v = JSON.parse(localStorage.getItem('rec_cols_hidden') || '[]'); if (Array.isArray(v)) recColsHidden = v.map(String); } catch (e) { recColsHidden = []; }
         function applyRecColsUI() {
             const w = document.getElementById('recordsTableWrap'); if (!w) return;
-            recAllCols().forEach(c => w.classList.toggle('hc-' + c[0], recColsHidden.indexOf(c[0]) >= 0));
+            REC_COLS.forEach(c => w.classList.toggle('hc-' + c[0], recColsHidden.indexOf(c[0]) >= 0));
             const b = document.getElementById('recColsBtn'); if (b) { b.classList.toggle('ring-2', recColsHidden.length > 0); b.classList.toggle('ring-indigo-300', recColsHidden.length > 0); }
         }
         function recColsSave() { try { localStorage.setItem('rec_cols_hidden', JSON.stringify(recColsHidden)); } catch (e) { /* بی‌اهمیت */ } }
@@ -6972,7 +6782,7 @@
             const emp = (typeof mgrOn === 'function') && mgrOn();
             const el = document.createElement('div'); el.id = 'recColsPop'; el.className = 'no-print'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'فیلدهای نمایشی');
             el.innerHTML = `<div class="rc-pop-head"><span><i class="fa-solid fa-table-columns ml-1"></i>فیلدهای نمایشی</span><button type="button" class="rc-pop-reset" onclick="recColsReset()">همه</button></div>`
-                + recAllCols().filter(c => emp || c[0] !== 'worker').map(c => `<label><input type="checkbox" ${recColsHidden.indexOf(c[0]) < 0 ? 'checked' : ''} onchange="recColsSet('${c[0]}',this.checked)">${c[1]}</label>`).join('')
+                + REC_COLS.filter(c => emp || c[0] !== 'worker').map(c => `<label><input type="checkbox" ${recColsHidden.indexOf(c[0]) < 0 ? 'checked' : ''} onchange="recColsSet('${c[0]}',this.checked)">${c[1]}</label>`).join('')
                 + `<p style="margin-top:6px;font-size:10px;line-height:1.7;color:#64748b">چاپ همیشه همه‌ی ستون‌ها را دارد.</p>`;
             document.body.appendChild(el);
             const r = btn.getBoundingClientRect(), pw = el.offsetWidth, ph = el.offsetHeight;
@@ -7104,7 +6914,7 @@
             });
         }
         function isFieldOptional(key) {
-            return isFieldHidden(key) || !!((appSettings.optionalFields || {})[key]);
+            return !!((appSettings.optionalFields || {})[key]);
         }
         function applyRequiredFieldsToUI() {
             FIELD_REQUIRED_KEYS.forEach(k => {
@@ -7158,12 +6968,10 @@
             document.getElementById('formLabelsFields').innerHTML = Object.keys(FORM_LABEL_DEFAULTS).map(k => {
                 const canToggle = FIELD_REQUIRED_KEYS.includes(k);
                 const checkedAttr = isFieldOptional(k) ? '' : 'checked';
-                const hid = isFieldHidden(k);
-                const hideBtn = HIDEABLE_FIELDS.includes(k) ? `<button type="button" id="settingHideBtn_${k}" onclick="toggleHideField('${k}')" class="text-[10px] shrink-0 ${hid ? 'text-emerald-600' : 'text-rose-500'}">${hid ? '<i class="fa-solid fa-rotate-left"></i> بازگردانی' : '<i class="fa-solid fa-trash"></i> حذف فیلد'}</button>` : '';
                 return `
-                <div id="settingFieldWrap_${k}" data-hidden="${hid ? 1 : 0}" class="${hid ? 'opacity-50' : ''}">
+                <div>
                     <div class="flex items-center justify-between mb-1 gap-2">
-                        <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400">${escapeHTML(FORM_LABEL_DEFAULTS[k])}</label>${hideBtn}
+                        <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400">${escapeHTML(FORM_LABEL_DEFAULTS[k])}</label>
                         ${canToggle ? `<label class="flex items-center gap-1 text-[10px] text-slate-400 dark:text-slate-500 cursor-pointer select-none shrink-0">
                             <input type="checkbox" id="settingRequired_${k}" ${checkedAttr} class="w-3.5 h-3.5 rounded accent-purple-600">
                             اجباری
@@ -7172,68 +6980,8 @@
                     <input type="text" id="settingLabel_${k}" maxlength="60" value="${escapeHTML(labels[k] || '')}" placeholder="${escapeHTML(FORM_LABEL_DEFAULTS[k])}" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all">
                 </div>`;
             }).join('');
-            cfDraft = cfList().map(f => ({ ...f })); cfEditorRender();
             updateShiftPreview();
             populateBusinessTypeSelect();
-        }
-
-        /* ---- افزودن / حذف فیلدهای فرم «ثبت کارکرد» (بازتاب مستقیم در لیست کارکردها) ---- */
-        let cfDraft = [];
-        function toggleHideField(k) {
-            const w = document.getElementById('settingFieldWrap_' + k), b = document.getElementById('settingHideBtn_' + k); if (!w || !b) return;
-            const hid = w.dataset.hidden !== '1'; w.dataset.hidden = hid ? '1' : '0'; w.classList.toggle('opacity-50', hid);
-            b.className = 'text-[10px] shrink-0 ' + (hid ? 'text-emerald-600' : 'text-rose-500');
-            b.innerHTML = hid ? '<i class="fa-solid fa-rotate-left"></i> بازگردانی' : '<i class="fa-solid fa-trash"></i> حذف فیلد';
-        }
-        function cfEditorRender() {
-            const box = document.getElementById('customFieldsEditor'); if (!box) return;
-            const cls = 'p-2 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 outline-none focus:border-purple-500';
-            box.innerHTML = cfDraft.map((f, i) => `<div class="flex items-center gap-2"><input type="text" maxlength="40" value="${escapeHTML(f.label)}" placeholder="نام فیلد (مثلاً شماره سفارش)" oninput="cfDraftSet(${i},'label',this.value)" class="flex-1 min-w-0 ${cls}"><select onchange="cfDraftSet(${i},'type',this.value)" class="${cls}"><option value="text" ${f.type !== 'number' ? 'selected' : ''}>متن</option><option value="number" ${f.type === 'number' ? 'selected' : ''}>عدد</option></select><button type="button" onclick="cfEditorDel(${i})" title="حذف فیلد" aria-label="حذف فیلد" class="w-8 h-8 shrink-0 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></div>`).join('')
-                || '<p class="text-[11px] text-slate-400 text-center py-2">فیلد اضافه‌ای تعریف نشده است.</p>';
-        }
-        function cfDraftSet(i, k, v) { if (cfDraft[i]) cfDraft[i][k] = v; }
-        function cfEditorAdd() {
-            if (cfDraft.length >= CF_MAX) { showFeedbackBanner(`حداکثر ${formatNumber(CF_MAX)} فیلد اضافه می‌توانید تعریف کنید.`, 'warn'); return; }
-            cfDraft.push({ id: 'cf' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5), label: '', type: 'text' });
-            cfEditorRender();
-            const box = document.getElementById('customFieldsEditor'), inp = box && box.querySelector('div:last-child input'); if (inp) inp.focus();
-        }
-        function cfEditorDel(i) { cfDraft.splice(i, 1); cfEditorRender(); }
-        function cfReadEditor() { return cfDraft.map(f => ({ id: f.id, label: String(f.label || '').trim().slice(0, 40), type: f.type === 'number' ? 'number' : 'text' })).filter(f => f.label); }
-
-        let _cfSig = '';
-        function renderCustomFormFields() {
-            const box = document.getElementById('customFormFields'); if (!box) return;
-            const list = cfList(), sig = JSON.stringify(list);
-            if (sig === _cfSig) return; _cfSig = sig;
-            const keep = {}; list.forEach(f => { const el = document.getElementById('cf_' + f.id); if (el) keep[f.id] = el.value; });
-            const cls = 'w-full p-3 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all';
-            box.style.display = list.length ? '' : 'none';
-            box.innerHTML = list.map(f => `<div><label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1.5">${escapeHTML(f.label)}</label><input type="text" id="cf_${f.id}" ${f.type === 'number' ? 'inputmode="numeric" data-thousands="1" maxlength="15"' : 'maxlength="100"'} value="${escapeHTML(keep[f.id] || '')}" class="${cls}"></div>`).join('');
-        }
-        function cfCollectForm() {
-            const o = {};
-            cfList().forEach(f => { const el = document.getElementById('cf_' + f.id); if (!el) return; const raw = el.value.trim(); if (!raw) return; o[f.id] = f.type === 'number' ? String(parsePersianInt(raw)) : raw.slice(0, 100); });
-            return Object.keys(o).length ? o : null;
-        }
-        function cfFillForm(r) {
-            cfList().forEach(f => { const el = document.getElementById('cf_' + f.id); if (!el) return; const v = cfVal(r, f.id); el.value = (f.type === 'number' && v !== '' && Number.isFinite(Number(v))) ? formatNumber(Number(v)) : v; });
-        }
-        function cfSyncTableColumns() {
-            const tr = document.querySelector('#recordsTableWrap thead tr'); if (!tr) return;
-            tr.querySelectorAll('th.cf-th').forEach(t => t.remove());
-            const anchor = tr.querySelector('th.c-next');
-            cfList().forEach(f => { const th = document.createElement('th'); th.className = `cf-th c-cf_${f.id} sticky top-0 z-10 p-2.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 shadow-sm`; th.textContent = f.label; tr.insertBefore(th, anchor); });
-            let st = document.getElementById('cfDynStyle'); if (!st) { st = document.createElement('style'); st.id = 'cfDynStyle'; document.head.appendChild(st); }
-            st.textContent = '@media screen {\n' + cfList().map(f => `#recordsTableWrap.hc-cf_${f.id} .c-cf_${f.id} { display: none !important; }`).join('\n') + '\n}';
-        }
-        function applyHiddenFieldsUI() {
-            HIDEABLE_FIELDS.forEach(k => { const el = document.getElementById(k), w = el && el.parentElement; if (w) w.classList.toggle('hidden', isFieldHidden(k)); });
-            const tw = document.getElementById('recordsTableWrap');
-            if (tw) { tw.classList.toggle('hf-color', isFieldHidden('itemColor')); tw.classList.toggle('hf-daily', isFieldHidden('dailyStat')); }
-        }
-        function applyCustomFieldsUI() {
-            try { applyHiddenFieldsUI(); renderCustomFormFields(); cfSyncTableColumns(); applyRecColsUI(); } catch (e) { console.warn('فیلدهای سفارشی:', e); }
         }
 
         function loadWorkSettingsIntoForm() {
@@ -7304,9 +7052,7 @@
             });
             const btEl = document.getElementById('settingBusinessType');
             const businessType = (btEl && BUSINESS_PRESETS[btEl.value]) ? btEl.value : 'general';
-            const hiddenFields = {};
-            HIDEABLE_FIELDS.forEach(k => { const w = document.getElementById('settingFieldWrap_' + k); if (w && w.dataset.hidden === '1') hiddenFields[k] = true; });
-            return { data: { workdayMinutes, shiftStart: v.start, shiftEnd: v.end, shiftBreaks: breaks, formLabels: labels, optionalFields, businessType, hiddenFields, customFields: cfReadEditor() } };
+            return { data: { workdayMinutes, shiftStart: v.start, shiftEnd: v.end, shiftBreaks: breaks, formLabels: labels, optionalFields, businessType } };
         }
         /* ============ پایان نام فیلدها و ساعات کاری ============ */
 
@@ -7522,9 +7268,6 @@
             appSettings.motivationBgColor = motivationBgColorVal;
             appSettings.motivationTextColor = motivationTextColorVal;
             Object.assign(appSettings, workRes.data);
-            { const keepCf = new Set(cfList().map(f => f.id)); let chCf = false;
-              allRecords.forEach(r => { if (r.custom) { Object.keys(r.custom).forEach(k => { if (!keepCf.has(k)) { delete r.custom[k]; chCf = true; } }); if (!Object.keys(r.custom).length) r.custom = null; if (chCf) r.updatedAt = Date.now(); } });
-              if (chCf) saveRecords(); }
             applyShiftSettings();
 
             appSettings.updatedAt = new Date().toISOString();
@@ -7566,81 +7309,6 @@
             body.classList.toggle('hidden', !isOpen);
             if (btn) { btn.classList.toggle('bg-amber-100', isOpen); btn.classList.toggle('dark:bg-amber-950/40', isOpen); }
         }
-
-
-        /* ==================== لیست حقوق و مالی پرسنل (زیر لیست کارکردها؛ با چاپ لیست کارکردها هم چاپ می‌شود) ==================== */
-        function mgrPayrollHTML() {
-            const M = mgr(), F = mgrFin(), mk = selectedMonthFilter, cur = escapeHTML(appSettings.currency || 'تومان'), f = formatNumber;
-            const piece = mgrPieceTotals(mk);
-            mgrPieceCache = { mk, map: piece };
-            let rows;
-            try {
-                const ws = M.workers.filter(w => w.active || F.txns.some(x => x.workerId === w.id && x.monthKey === mk) || (piece.get(w.id) || 0) > 0);
-                rows = ws.map(w => ({ w, c: mgrFinCalc(w, mk), at: mgrAttCount(w.id, mk) }));
-            } finally { mgrPieceCache = null; }
-            if (!rows.length) return '';
-            const T = { earn: 0, ot: 0, bonus: 0, leave: 0, absent: 0, ded: 0, adv: 0, net: 0, pay: 0, remain: 0 };
-            const money = (n, cls) => `<td class="${n ? (cls || '') : 'kf-mut'}">${n ? f(n) : '—'}</td>`;
-            const body = rows.map(({ w, c, at }) => {
-                T.earn += c.earn; T.ot += c.otPay; T.bonus += c.bonus; T.leave += c.leaveDeduct; T.absent += c.absentDeduct; T.ded += c.deduction; T.adv += c.advance; T.net += c.net; T.pay += c.payment; T.remain += c.remain;
-                const sc = mgrSection(w.sectionId);
-                const wage = (mgrWageLabel(w.wageType) || 'کارمزدی') + (w.wageType && w.wageType !== 'piece' && w.rate ? ' • ' + f(w.rate) : '');
-                const attTxt = [at.p ? 'حاضر ' + f(at.p) : '', at.t ? 'تاخیر ' + f(at.t) : '', at.l ? 'مرخصی ' + f(at.l) : '', at.a ? 'غیبت ' + f(at.a) : ''].filter(Boolean).join(' • ') || '—';
-                const remCls = c.remain > 0 ? 'kf-pos' : c.remain < 0 ? 'kf-neg' : 'kf-mut';
-                return `<tr><td><b>${escapeHTML(w.name)}</b><span class="kf-sub">${[sc ? escapeHTML(sc.name) : '', wage].filter(Boolean).join(' • ')}</span></td>`
-                    + `<td>${attTxt}${w.wageType === 'daily' && c.days ? `<span class="kf-sub">${f(c.days)} روز کارکرد</span>` : ''}</td>`
-                    + money(c.earn)
-                    + `<td class="${c.otPay ? 'kf-ind' : 'kf-mut'}">${c.otPay ? f(c.otPay) : '—'}${c.otMin ? `<span class="kf-sub">${formatMinutesDuration(c.otMin)}</span>` : ''}</td>`
-                    + money(c.bonus, 'kf-pos')
-                    + `<td class="${c.leaveDeduct ? 'kf-amb' : 'kf-mut'}">${c.leaveDeduct ? f(c.leaveDeduct) : '—'}${c.leaveMin ? `<span class="kf-sub">${formatMinutesDuration(c.leaveMin)}</span>` : ''}</td>`
-                    + money(c.absentDeduct, 'kf-amb') + money(c.deduction, 'kf-amb') + money(c.advance, 'kf-neg')
-                    + `<td><b>${f(c.net)}</b></td>` + money(c.payment)
-                    + `<td class="${remCls}"><b>${c.remain < 0 ? '−' : ''}${f(Math.abs(c.remain))}</b></td><td class="no-print" style="white-space:nowrap"><button type="button" onclick="mgrPayEdit('${escapeHTML(w.id)}')" title="ویرایش" class="w-8 h-8 rounded-full text-amber-600"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" onclick="mgrPayDel('${escapeHTML(w.id)}')" title="حذف" class="w-8 h-8 rounded-full text-rose-500"><i class="fa-solid fa-trash text-xs"></i></button></td></tr>`;
-            }).join('');
-            const tot = `<tr><td>جمع کل</td><td>—</td><td>${f(T.earn)}</td><td>${f(T.ot)}</td><td>${f(T.bonus)}</td><td>${f(T.leave)}</td><td>${f(T.absent)}</td><td>${f(T.ded)}</td><td>${f(T.adv)}</td><td>${f(T.net)}</td><td>${f(T.pay)}</td><td>${T.remain < 0 ? '−' : ''}${f(Math.abs(T.remain))}</td><td class="no-print"></td></tr>`;
-            const head = ['پرسنل', 'حضور و غیاب', 'حقوق / کارکرد', 'اضافه‌کاری', 'پاداش', 'کسر مرخصی', 'کسر غیبت', 'کسری / جریمه', 'مساعده', 'خالص', 'پرداخت‌شده', 'مانده'].map(t => `<th>${t}</th>`).join('') + '<th class="no-print">عملیات</th>';
-            const noRate = rows.some(({ c }) => (c.otMin && !c.otRate) || (c.leaveMin && !c.leaveRate));
-            return `<div class="kf-pay-head"><i class="fa-solid fa-sack-dollar ml-1"></i> لیست حقوق و مالی پرسنل — ${mgrMonthLabel()} <span style="font-weight:400;font-size:10px">(مبالغ به ${cur})</span></div>`
-                + `<div class="kf-pay-wrap"><table class="kf-pay"><thead><tr>${head}</tr></thead><tbody>${body}</tbody><tfoot>${tot}</tfoot></table></div>`
-                + `<p class="kf-pay-note">محاسبه بر اساس حضور و غیاب، مرخصی و اضافه‌کاری ثبت‌شده در پنل کارفرما، به‌همراه پاداش، کسری، مساعده و پرداخت‌ها.${noRate ? ' برای بعضی پرسنل اضافه‌کاری یا مرخصی ساعتی ثبت شده ولی مبلغ هر ساعت آن در بخش مالی تعیین نشده است.' : ''}</p>`;
-        }
-        function mgrPayEdit(id) { setAppTab('fin'); setTimeout(() => { const s = document.getElementById('mgrFWorker'); if (s) s.value = id; }, 60); }
-        function mgrPayDel(id) {
-            const w = mgrWorker(id); if (!w) return;
-            showCustomConfirm(`همه‌ی تراکنش‌های مالی «${w.name}» در ${mgrMonthLabel()} (پاداش، کسری، مساعده، پرداخت) حذف شود؟`, ok => {
-                if (!ok) return;
-                const F = mgrFin(), mk = selectedMonthFilter; F.txns = F.txns.filter(x => !(x.workerId === id && x.monthKey === mk));
-                mgrSaveReport('حذف شد.'); mgrRender();
-            });
-        }
-        function mgrPayrollAvailable() {
-            try { return (typeof mgrOn === 'function') && mgrOn() && !!(mgr() && mgr().workers && mgr().workers.length); } catch (e) { return false; }
-        }
-        function renderRecordsPayroll() {
-            const body = document.getElementById('recordsPayrollBody'), inner = document.getElementById('recordsPayrollInner'), btn = document.getElementById('payrollToggleBtn');
-            if (!body || !inner || !btn) return;
-            if (!mgrPayrollAvailable()) { btn.classList.add('hidden'); body.classList.add('hidden'); inner.innerHTML = ''; const pr = document.getElementById('recordsPayrollPrint'); if (pr) pr.innerHTML = ''; return; }
-            btn.classList.remove('hidden');
-            let open = false; try { open = localStorage.getItem('kf_payroll_open') === '1'; } catch (e) { /* بی‌اهمیت */ }
-            body.classList.toggle('hidden', !open); btn.classList.toggle('on', open);
-            if (open) inner.innerHTML = mgrPayrollHTML() || '<p class="text-xs text-slate-400 text-center py-2">برای این دوره پرسنلی برای نمایش وجود ندارد.</p>';
-        }
-        function renderRecordsPayrollPrint() {
-            const pr = document.getElementById('recordsPayrollPrint');
-            if (!pr) return;
-            pr.innerHTML = mgrPayrollAvailable() ? mgrPayrollHTML() : '';
-        }
-        function toggleRecordsPayroll() {
-            const body = document.getElementById('recordsPayrollBody'), btn = document.getElementById('payrollToggleBtn');
-            if (!body) return;
-            const open = body.classList.contains('hidden');
-            try { localStorage.setItem('kf_payroll_open', open ? '1' : '0'); } catch (e) { /* بی‌اهمیت */ }
-            renderRecordsPayroll();
-            if (btn) btn.classList.toggle('on', open);
-            if (open) body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        window.addEventListener('beforeprint', () => { try { renderRecordsPayrollPrint(); } catch (e) { /* بی‌اهمیت */ } });
-        /* ==================== پایان لیست حقوق و مالی پرسنل ==================== */
 
         // نمایش/پنهان‌سازی «کدهای تکراری» با دکمه‌ی زیر لیست کارکردها
         function toggleDuplicateCodesVisibility() {
@@ -7696,7 +7364,6 @@
             document.getElementById('unitPriceLabel').innerText = `${getFormLabel('unitPrice')} (${currency})`;
             applyFormLabels();
             applyRequiredFieldsToUI();
-            applyCustomFieldsUI();
             const basisNote = document.getElementById('workdayBasisNote');
             if (basisNote) basisNote.innerText = `بر مبنای ${formatMinutesDuration(SHIFT_MINUTES)} کاری در هر روز`;
             document.getElementById('thUnitPrice').innerText = getFormLabel('unitPrice');
@@ -8144,13 +7811,13 @@
                 return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
             };
             const withW = mgrOn();
-            const headers = ['تاریخ', 'ساعت', ...(withW ? ['پرسنل'] : []), 'کد کالا', 'عنوان', 'رنگ/مشخصات', 'تعداد', 'قیمت واحد', 'قیمت کل', 'وضعیت', 'مدت زمان', ...(withW ? ['بخش'] : []), ...cfList().map(f => f.label)];
+            const headers = ['تاریخ', 'ساعت', ...(withW ? ['پرسنل'] : []), 'کد کالا', 'عنوان', 'رنگ/مشخصات', 'تعداد', 'قیمت واحد', 'قیمت کل', 'وضعیت', 'مدت زمان', ...(withW ? ['بخش'] : [])];
             const lines = [headers.map(csvCell).join(',')];
             records.forEach(r => {
                 lines.push([
                     r.date, r.time, ...(withW ? [mgrRecWorker(r)] : []), r.itemCode, r.itemTitle, r.itemColor,
                     r.quantity, (r.unitPrice === null ? '' : r.unitPrice), (r.totalPrice === null ? '' : r.totalPrice),
-                    getDisplayStatus(r), r.durationTime, ...(withW ? [mgrRecSection(r)] : []), ...cfList().map(f => cfVal(r, f.id))
+                    getDisplayStatus(r), r.durationTime, ...(withW ? [mgrRecSection(r)] : [])
                 ].map(csvCell).join(','));
             });
             // BOM ابتدای فایل برای نمایش صحیح حروف فارسی در اکسل ویندوز ضروری است
@@ -8821,7 +8488,7 @@
                         status: status, date: date, time: time, durationTime: durationTime,
                         dailyStat: dailyStat, receivedQuantity: receivedQuantity, endDateTime: endDateTime,
                         workDuration: workDuration,
-                        photo: currentPhotoData, hasPhoto: !!currentPhotoData, custom: cfCollectForm(), ...(workerFields || {}),
+                        photo: currentPhotoData, hasPhoto: !!currentPhotoData, ...(workerFields || {}),
                         monthKey: dateInfo.monthKey, monthName: dateInfo.monthName, year: dateInfo.year,
                         updatedAt: Date.now()
                     };
@@ -8869,7 +8536,7 @@
                     status: status, date: date, time: time, durationTime: durationTime,
                     dailyStat: dailyStat, receivedQuantity: receivedQuantity, endDateTime: endDateTime,
                     workDuration: workDuration,
-                    photo: currentPhotoData, hasPhoto: !!currentPhotoData, custom: cfCollectForm(), ...(workerFields || {}),
+                    photo: currentPhotoData, hasPhoto: !!currentPhotoData, ...(workerFields || {}),
                     monthKey: dateInfo.monthKey, monthName: dateInfo.monthName, year: dateInfo.year
                 };
                 // پیش از افزودن رکورد جدید، اگر رکورد قبلی (از نظر زمانی) هنوز «تاریخ/ساعت شروع کد بعد»
@@ -8900,7 +8567,6 @@
             document.getElementById('itemCode').value = record.itemCode || '';
             document.getElementById('itemTitle').value = record.itemTitle || '';
             document.getElementById('itemColor').value = record.itemColor || '';
-            cfFillForm(record);
             mgrSetFormWorker(record);
             document.getElementById('priceUnknownCheckbox').checked = (record.unitPrice === null || record.unitPrice === undefined);
             document.getElementById('unitPrice').value = (record.unitPrice === null || record.unitPrice === undefined) ? '' : record.unitPrice;
@@ -9166,109 +8832,31 @@
             localStorage.setItem('sewing_kpi_price_collapsed', collapsed ? '1' : '0');
         }
 
-        let editingNoteId = null, noteSearchQ = '', noteFilter = 'all';
-
-        function onNoteTypeChange() {
-            const box = document.getElementById('noteReminderOpts');
-            const isRem = document.getElementById('noteTypeInput').value === 'reminder';
-            if (box) box.classList.toggle('hidden', !isRem);
-            // در حالت «یادآوری»، دکمه‌ی ثبت زیر کادر «تکرار» قرار می‌گیرد؛ در بقیه‌ی حالت‌ها کنار نوع یادداشت
-            const g = document.getElementById('noteSaveGroup'), main = document.getElementById('noteSaveSlotMain'), rem = document.getElementById('noteSaveSlotRem');
-            if (g && main && rem) {
-                const target = isRem ? rem : main;
-                if (g.parentElement !== target) target.appendChild(g);
-                g.classList.toggle('kf-col', isRem);
-            }
-        }
-
-        function resetNoteForm() {
-            editingNoteId = null;
-            document.getElementById('noteTextInput').value = '';
-            document.getElementById('noteTimeInput').value = '';
-            document.getElementById('noteTypeInput').value = 'normal';
-            document.getElementById('noteLeadInput').value = '0';
-            document.getElementById('noteRepeatInput').value = 'none';
-            document.getElementById('noteSoundInput').checked = true;
-            document.getElementById('noteSaveLabel').textContent = 'ثبت یادداشت';
-            document.getElementById('noteSaveIcon').className = 'fa-solid fa-plus';
-            document.getElementById('noteCancelEditBtn').classList.add('hidden');
-            onNoteTypeChange();
-        }
-        function cancelNoteEdit() { resetNoteForm(); }
-
-        function editDailyNote(id) {
-            const n = dailyNotes.find(x => x.id === id);
-            if (!n) return;
-            editingNoteId = id;
-            document.getElementById('noteDateInput').value = n.date;
-            document.getElementById('noteTypeInput').value = n.type;
-            document.getElementById('noteTextInput').value = n.text;
-            document.getElementById('noteTimeInput').value = n.time || '';
-            document.getElementById('noteLeadInput').value = String(n.lead || 0);
-            document.getElementById('noteRepeatInput').value = n.repeat || 'none';
-            document.getElementById('noteSoundInput').checked = n.sound !== false;
-            document.getElementById('noteSaveLabel').textContent = 'ذخیره‌ی ویرایش';
-            document.getElementById('noteSaveIcon').className = 'fa-solid fa-check';
-            document.getElementById('noteCancelEditBtn').classList.remove('hidden');
-            onNoteTypeChange();
-            const ta = document.getElementById('noteTextInput');
-            ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            ta.focus();
-        }
-
         function saveDailyNote() {
             const dateInput = document.getElementById('noteDateInput').value.trim();
             const textInput = document.getElementById('noteTextInput').value.trim();
             const typeInput = document.getElementById('noteTypeInput').value;
-            const isReminder = typeInput === 'reminder';
-            const timeVal = isReminder ? (document.getElementById('noteTimeInput').value || '') : '';
 
             if (!dateInput || !textInput) {
                 showFeedbackBanner('لطفاً تاریخ و متن یادداشت را وارد کنید.', 'warn');
                 return;
             }
-            if (isReminder && !timeVal) {
-                showFeedbackBanner('برای یادآوری، ساعت را هم انتخاب کنید.', 'warn');
-                return;
-            }
-            const extra = {
-                time: timeVal,
-                lead: isReminder ? Number(document.getElementById('noteLeadInput').value) : 0,
-                sound: isReminder ? document.getElementById('noteSoundInput').checked : true,
-                repeat: isReminder ? document.getElementById('noteRepeatInput').value : 'none'
-            };
 
-            let note;
-            if (editingNoteId != null) {
-                const old = dailyNotes.find(x => x.id === editingNoteId);
-                if (!old) { resetNoteForm(); return; }
-                // ویرایش فقط وقتی انجام می‌شود که کاربر صراحتاً «ویرایش» را زده باشد
-                Object.assign(old, sanitizeNote({ ...old, date: dateInput, text: textInput, type: typeInput, ...extra, done: false, fired: 0, snoozeUntil: 0, updatedAt: Date.now() }));
-                note = old;
+            const existingNoteIndex = dailyNotes.findIndex(n => n.date === dateInput);
+            if (existingNoteIndex !== -1) {
+                dailyNotes[existingNoteIndex].text = textInput;
+                dailyNotes[existingNoteIndex].type = typeInput;
+                dailyNotes[existingNoteIndex].updatedAt = Date.now();
             } else {
-                // هر یادداشت جدید جدا ثبت می‌شود و یادداشت‌های قبلیِ همان تاریخ دست‌نخورده می‌مانند
-                let id = Date.now();
-                while (dailyNotes.some(n => n.id === id)) id++;
-                note = sanitizeNote({ id, date: dateInput, text: textInput, type: typeInput, hidden: false, updatedAt: Date.now(), ...extra });
-                dailyNotes.unshift(note);
+                dailyNotes.unshift({ id: Date.now(), date: dateInput, text: textInput, type: typeInput, hidden: false, updatedAt: Date.now() });
             }
-            const wasEdit = editingNoteId != null;
 
             saveRecords();
             renderDailyNotes();
-            resetNoteForm();
-            if (isReminder) {
-                unlockNoteAudio();
-                askNoteNotifyPermission();
-                const due = noteDueTs(note);
-                if (due != null && due < Date.now() - 60000) showFeedbackBanner('یادآوری ثبت شد؛ زمان آن گذشته است و بلافاصله هشدار داده می‌شود.', 'warn');
-                else if (isRunningInInstalledApp() && !noteNativeLN()) showFeedbackBanner('یادآوری ثبت شد؛ اما افزونه‌ی اعلان محلی در این نسخه‌ی اندروید نصب نیست و هشدار فقط وقتی برنامه باز است اجرا می‌شود.', 'warn');
-                else showFeedbackBanner(wasEdit ? 'یادآوری ویرایش شد.' : 'یادآوری ثبت شد.', 'success');
-                setTimeout(checkNoteReminders, 300);
-            } else {
-                showFeedbackBanner(wasEdit ? 'یادداشت ویرایش شد.' : 'یادداشت روزانه با موفقیت ثبت شد.', 'success');
-            }
-            addLog(`یادداشت برای تاریخ ${dateInput} ${wasEdit ? 'ویرایش' : 'ثبت'} شد.`, 'success');
+            document.getElementById('noteTextInput').value = '';
+            document.getElementById('noteTypeInput').value = 'normal';
+            showFeedbackBanner('یادداشت روزانه با موفقیت ثبت شد.', 'success');
+            addLog(`یادداشت برای تاریخ ${dateInput} ثبت شد.`, 'success');
         }
 
         function toggleNoteVisibility(id) {
@@ -9299,25 +8887,13 @@
 
             // یادداشت‌ها هم مثل جدول کارکردها باید فقط برای دوره/ماهِ در حال نمایش فیلتر شوند؛
             // قبلاً همیشه یادداشت‌های همه‌ی ماه‌ها با هم نشان داده می‌شدند.
-            scheduleNoteNativeSync();
-            const q = toEnglishDigits(noteSearchQ || '').trim().toLowerCase();
-            const todayCmp = toEnglishDigits((typeof currentJalali !== 'undefined' && currentJalali.fullDateStr) || '');
-            const filtering = !!q || noteFilter !== 'all';
             const periodNotes = dailyNotes.filter(n => {
-                if (!filtering) {
-                    const info = getMonthInfoFromDateStr(n.date);
-                    return info ? info.monthKey === selectedMonthFilter : true;
-                }
-                if (q && !(toEnglishDigits(n.text).toLowerCase().includes(q) || toEnglishDigits(n.date).includes(q))) return false;
-                if (noteFilter === 'today') return toEnglishDigits(n.date) === todayCmp;
-                if (noteFilter === 'pending') return n.type === 'reminder' && !n.done;
-                if (noteFilter === 'done') return n.type === 'reminder' && n.done;
-                if (noteFilter === 'holiday') return n.type === 'holiday';
-                return true;
+                const info = getMonthInfoFromDateStr(n.date);
+                return info ? info.monthKey === selectedMonthFilter : true;
             });
 
             if (periodNotes.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">${filtering ? 'نتیجه‌ای یافت نشد.' : 'هیچ یادداشتی برای این دوره ثبت نشده است.'}</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">هیچ یادداشتی برای این دوره ثبت نشده است.</p>`;
                 return;
             }
 
@@ -9345,303 +8921,22 @@
                 const meta = NOTE_TYPE_META[n.type] || NOTE_TYPE_META.normal;
                 const isToday = n.date === todayStr;
                 const weekday = getWeekdayLabelForJalaliDate(n.date);
-                const isRem = n.type === 'reminder' && n.time;
-                const doneCls = (isRem && n.done) ? ' opacity-60' : '';
-                const strike = (isRem && n.done) ? ' line-through' : '';
                 return `
-                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-300 dark:border-slate-600 ${meta.border} text-xs overflow-hidden${doneCls}">
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-300 dark:border-slate-600 ${meta.border} text-xs overflow-hidden">
                     <div class="flex items-center justify-between p-3 cursor-pointer" data-action="toggle-note" data-id="${Number(n.id)}">
                         <div class="flex items-center gap-2 min-w-0 flex-wrap">
                             <i class="fa-solid fa-chevron-${n.hidden ? 'left' : 'down'} text-slate-400 text-[10px] transition-transform shrink-0"></i>
                             <span class="font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">${weekday ? escapeHTML(weekday) + '، ' : ''}${escapeHTML(n.date)}</span>
                             ${isToday ? '<span class="bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full">امروز</span>' : ''}
                             ${meta.label ? `<span class="${meta.badge} text-[10px] font-bold px-2 py-0.5 rounded-full">${meta.label}</span>` : ''}
-                            ${isRem ? `<span class="bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap"><i class="fa-solid fa-bell"></i> ${toPersianDigits(n.time)}${n.lead ? ' (' + toPersianDigits(n.lead >= 1440 ? '۱ روز' : n.lead >= 60 ? '1 ساعت' : n.lead + ' دقیقه') + ' قبل)' : ''}${n.sound ? ' <i class="fa-solid fa-volume-high"></i>' : ''}</span>` : ''}
-                            ${isRem && n.repeat && n.repeat !== 'none' ? `<span class="bg-sky-100 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap"><i class="fa-solid fa-repeat"></i> ${{ daily: 'روزانه', weekly: 'هفتگی', monthly: 'ماهانه' }[n.repeat]}</span>` : ''}
-                            ${isRem && n.done ? '<span class="bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full">انجام شد</span>' : ''}
                         </div>
-                        <div class="flex items-center shrink-0">
-                        ${isRem ? `<button data-action="done-note" data-id="${Number(n.id)}" class="text-emerald-600 hover:text-emerald-800 p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors" title="${n.done ? 'بازگردانی' : 'انجام شد'}" aria-label="انجام شد"><i class="fa-solid ${n.done ? 'fa-rotate-left' : 'fa-circle-check'}"></i></button>` : ''}
-                        <button data-action="edit-note" data-id="${Number(n.id)}" class="text-sky-600 hover:text-sky-800 p-1.5 rounded-lg hover:bg-sky-50 dark:hover:bg-sky-950/30 transition-colors" title="ویرایش یادداشت" aria-label="ویرایش یادداشت"><i class="fa-solid fa-pen"></i></button>
                         <button data-action="delete-note" data-id="${Number(n.id)}" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors shrink-0" title="حذف یادداشت" aria-label="حذف یادداشت"><i class="fa-solid fa-trash-can"></i></button>
-                        </div>
                     </div>
-                    ${n.hidden ? '' : `<div class="px-3 pb-3 pr-9 text-slate-700 dark:text-slate-200 whitespace-pre-wrap${strike}">${escapeHTML(n.text)}</div>`}
+                    ${n.hidden ? '' : `<div class="px-3 pb-3 pr-9 text-slate-700 dark:text-slate-200 whitespace-pre-wrap">${escapeHTML(n.text)}</div>`}
                 </div>
             `;
             }).join('');
         }
-
-
-        /* ==================== یادآورهای یادداشت: زمان‌بندی، هشدار صوتی، اعلان ==================== */
-        let _noteAudioCtx = null, _noteAlarmTimer = null, _noteActiveAlarms = [];
-        function unlockNoteAudio() {
-            try {
-                if (!_noteAudioCtx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; _noteAudioCtx = new AC(); }
-                if (_noteAudioCtx.state === 'suspended') _noteAudioCtx.resume();
-            } catch (e) {}
-        }
-        ['click', 'touchstart', 'keydown'].forEach(ev => document.addEventListener(ev, unlockNoteAudio, { passive: true }));
-        function playNoteBeepOnce() {
-            if (!_noteAudioCtx) return;
-            try {
-                const ctx = _noteAudioCtx, t = ctx.currentTime;
-                [880, 1175, 880, 1175].forEach((f, i) => {
-                    const o = ctx.createOscillator(), g = ctx.createGain(), st = t + i * 0.24;
-                    o.type = 'sine'; o.frequency.value = f; o.connect(g); g.connect(ctx.destination);
-                    g.gain.setValueAtTime(0.0001, st);
-                    g.gain.exponentialRampToValueAtTime(0.4, st + 0.02);
-                    g.gain.exponentialRampToValueAtTime(0.0001, st + 0.22);
-                    o.start(st); o.stop(st + 0.23);
-                });
-            } catch (e) {}
-        }
-        function testNoteSound() { unlockNoteAudio(); setTimeout(playNoteBeepOnce, 80); }
-        function stopNoteAlarmSound() { if (_noteAlarmTimer) { clearInterval(_noteAlarmTimer); _noteAlarmTimer = null; } }
-        function startNoteAlarmSound() {
-            stopNoteAlarmSound(); unlockNoteAudio();
-            const ring = () => { playNoteBeepOnce(); try { navigator.vibrate && navigator.vibrate([300, 150, 300]); } catch (e) {} };
-            ring();
-            let n = 0;
-            _noteAlarmTimer = setInterval(() => { if (++n > 30) { stopNoteAlarmSound(); return; } ring(); }, 2500);
-        }
-        async function askNoteNotifyPermission() {
-            try {
-                const LN = noteNativeLN();
-                if (LN) { const pr = await LN.checkPermissions(); if (pr && pr.display !== 'granted' && pr.display !== 'denied') await LN.requestPermissions(); await ensureNoteExactAlarm(LN); scheduleNoteNativeSync(); return; }
-                if (!isNotificationSupported()) return;
-                if ((await getDeviceNotificationPermission()) !== 'granted' && (await getDeviceNotificationPermission()) !== 'denied') {
-                    if (isNativeNotifyAvailable()) await window.NativeNotify.requestPermission(); else await Notification.requestPermission();
-                    updateDeviceNotificationStatusUI();
-                }
-            } catch (e) {}
-        }
-        function noteDueTs(n) {
-            if (!n || n.type !== 'reminder' || !n.time) return null;
-            const p = toEnglishDigits(n.date || '').trim().split('/').map(x => parseInt(x, 10));
-            if (p.length !== 3 || p.some(isNaN)) return null;
-            try {
-                const g = jalaaliToGregorian(p[0], p[1], p[2]);
-                const hm = n.time.split(':').map(Number);
-                return new Date(g.gy, g.gm - 1, g.gd, hm[0], hm[1], 0).getTime() - (n.lead || 0) * 60000;
-            } catch (e) { return null; }
-        }
-        function advanceNoteDate(n) {
-            const p = toEnglishDigits(n.date || '').trim().split('/').map(x => parseInt(x, 10));
-            if (p.length !== 3 || p.some(isNaN)) return false;
-            let [jy, jm, jd] = p;
-            if (n.repeat === 'daily' || n.repeat === 'weekly') {
-                const r = d2j(j2d(jy, jm, jd) + (n.repeat === 'daily' ? 1 : 7));
-                jy = r.jy; jm = r.jm; jd = r.jd;
-            } else {
-                jm++; if (jm > 12) { jm = 1; jy++; }
-                jd = Math.min(jd, jalaaliMonthLength(jy, jm));
-            }
-            n.date = `${toPersianDigits(jy)}/${toPersianDigits(jm)}/${toPersianDigits(jd)}`;
-            return true;
-        }
-        function checkNoteReminders() {
-            if (typeof dailyNotes === 'undefined') return;
-            const now = Date.now(), fired = [];
-            dailyNotes.forEach(n => {
-                if (n.type !== 'reminder' || !n.time || n.done || n.fired) return;
-                const snoozed = n.snoozeUntil > 0;
-                const ts = snoozed ? n.snoozeUntil : noteDueTs(n);
-                if (ts == null || now < ts) return;
-                fired.push({ k: n.id + '_' + now, id: n.id, text: n.text, date: n.date, time: n.time, sound: n.sound !== false, missed: now - ts > 3 * 60000 });
-                n.snoozeUntil = 0; n.updatedAt = now;
-                if (n.repeat && n.repeat !== 'none') {
-                    if (!snoozed) { let g = 0; do { if (!advanceNoteDate(n)) break; g++; } while (g < 800 && (noteDueTs(n) || 0) <= now); }
-                    n.fired = 0;
-                } else n.fired = now;
-            });
-            if (!fired.length) return;
-            saveRecords(); renderDailyNotes();
-            fired.forEach(f => _noteActiveAlarms.push(f));
-            showNoteAlarmModal();
-            if (fired.some(f => f.sound)) startNoteAlarmSound();
-            if (document.hidden) {
-                const title = 'یادآوری';
-                const body = fired.map(f => f.text).join(' | ').slice(0, 200);
-                (async () => {
-                    try {
-                        if (!isNotificationSupported() || (await getDeviceNotificationPermission()) !== 'granted') return;
-                        if (isNativeNotifyAvailable()) await window.NativeNotify.notify(title, body, 'note-reminder');
-                        else new Notification(title, { body, icon: 'icon-192.png', tag: 'note-reminder' });
-                    } catch (e) {}
-                })();
-            }
-        }
-        function showNoteAlarmModal() {
-            let m = document.getElementById('noteAlarmModal');
-            if (!_noteActiveAlarms.length) { if (m) m.remove(); stopNoteAlarmSound(); return; }
-            if (!m) {
-                m = document.createElement('div');
-                m.id = 'noteAlarmModal';
-                m.setAttribute('role', 'alertdialog');
-                m.style.cssText = 'position:fixed;inset:0;z-index:100000;background:rgba(15,23,42,.6);display:flex;align-items:center;justify-content:center;padding:16px;';
-                document.body.appendChild(m);
-            }
-            m.innerHTML = `<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-amber-400 w-full max-w-sm max-h-[85vh] overflow-y-auto p-4 space-y-3" dir="rtl">
-                <div class="flex items-center gap-2 text-amber-600 font-bold text-sm"><i class="fa-solid fa-bell fa-shake"></i> یادآوری</div>
-                ${_noteActiveAlarms.map(a => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 text-xs space-y-2">
-                        <div class="text-slate-500 dark:text-slate-400">${escapeHTML(a.date)} — ${toPersianDigits(a.time)}${a.missed ? ' <span class="text-rose-500 font-bold">(از دست رفته)</span>' : ''}</div>
-                        <div class="text-sm text-slate-800 dark:text-slate-100 whitespace-pre-wrap">${escapeHTML(a.text)}</div>
-                        <div class="flex gap-2">
-                            <button type="button" onclick="noteAlarmAction('${a.k}','done')" class="flex-1 bg-emerald-600 text-white rounded-lg py-2 text-xs">انجام شد</button>
-                            <button type="button" onclick="noteAlarmAction('${a.k}','snooze')" class="flex-1 bg-amber-500 text-white rounded-lg py-2 text-xs">۱۰ دقیقه بعد</button>
-                            <button type="button" onclick="noteAlarmAction('${a.k}','close')" class="flex-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg py-2 text-xs">بستن</button>
-                        </div>
-                    </div>`).join('')}
-            </div>`;
-        }
-        function noteAlarmAction(k, act) {
-            stopNoteAlarmSound();
-            const a = _noteActiveAlarms.find(x => x.k === k);
-            _noteActiveAlarms = _noteActiveAlarms.filter(x => x.k !== k);
-            const n = a && dailyNotes.find(x => x.id === a.id);
-            if (n) {
-                const repeating = n.repeat && n.repeat !== 'none';
-                if (act === 'done' && !repeating) n.done = true;
-                if (act === 'snooze') { n.fired = 0; n.snoozeUntil = Date.now() + 10 * 60000; }
-                n.updatedAt = Date.now();
-                saveRecords(); renderDailyNotes();
-            }
-            showNoteAlarmModal();
-        }
-        function toggleNoteDone(id) {
-            const n = dailyNotes.find(x => x.id === id);
-            if (!n) return;
-            n.done = !n.done; n.snoozeUntil = 0; n.updatedAt = Date.now();
-            _noteActiveAlarms = _noteActiveAlarms.filter(a => a.id !== id);
-            saveRecords(); renderDailyNotes(); showNoteAlarmModal();
-        }
-
-        /* ---- زمان‌بندی بومی (Capacitor LocalNotifications): هشدار حتی با بسته بودن برنامه ---- */
-        const NOTE_NATIVE_IDS_KEY = 'sewing_note_native_ids_v1';
-        const NOTE_CH_LOUD = 'note-reminders', NOTE_CH_QUIET = 'note-reminders-quiet';
-        let _noteNativeTimer = null, _noteChannelsReady = false, _noteNativeBusy = false, _noteNativeAgain = false;
-        function noteNativeLN() { try { return (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) || null; } catch (e) { return null; } }
-        function scheduleNoteNativeSync(immediate) {
-            try {
-                if (!noteNativeLN()) return;
-                clearTimeout(_noteNativeTimer);
-                if (immediate) { syncNoteNative(); return; } // هنگام رفتن به پس‌زمینه تایمر ممکن است دیگر اجرا نشود
-                _noteNativeTimer = setTimeout(syncNoteNative, 800);
-            } catch (e) {}
-        }
-        // کانال اعلان با اهمیت بالا: بدون آن در اندروید ۸+ اعلان بی‌صدا/بدون نمایش سریع می‌آید
-        async function ensureNoteChannels(LN) {
-            if (_noteChannelsReady || !LN.createChannel) return;
-            try {
-                await LN.createChannel({ id: NOTE_CH_LOUD, name: 'یادآوری‌ها', description: 'هشدار یادآوری‌های ثبت‌شده', importance: 5, visibility: 1, vibration: true, lights: true });
-                await LN.createChannel({ id: NOTE_CH_QUIET, name: 'یادآوری‌ها (بدون صدا)', description: 'یادآوری‌هایی که هشدار صوتی ندارند', importance: 2, visibility: 1, vibration: false });
-                _noteChannelsReady = true;
-            } catch (e) {}
-        }
-        // اندروید ۱۲+: بدون مجوز «آلارم‌ها و یادآورها» اعلان دقیق و سرِ وقت اجرا نمی‌شود (یک‌بار درخواست می‌شود)
-        async function ensureNoteExactAlarm(LN) {
-            try {
-                if (!LN.checkExactNotificationSetting) return;
-                const st = await LN.checkExactNotificationSetting();
-                if (st && st.exact_alarm && st.exact_alarm !== 'granted' && localStorage.getItem('note_exact_asked') !== '1') {
-                    localStorage.setItem('note_exact_asked', '1');
-                    showFeedbackBanner('برای اینکه هشدار دقیقاً سرِ وقت و حتی با بسته بودن برنامه اجرا شود، در صفحه‌ی بعد «آلارم‌ها و یادآورها» را برای این برنامه مجاز کنید.', 'info');
-                    setTimeout(() => { try { LN.changeExactNotificationSetting(); } catch (e) {} }, 1800);
-                }
-            } catch (e) {}
-        }
-        // زمان‌های آینده‌ی یک یادآوری؛ برای یادآورِ تکراری چند نوبت جلوتر هم ثبت می‌شود تا با بسته ماندن برنامه هم ادامه پیدا کند
-        function noteNativeTimes(n, now) {
-            const rep = n.repeat && n.repeat !== 'none', out = [];
-            if (n.snoozeUntil > 0) { if (n.snoozeUntil > now + 1000) out.push(n.snoozeUntil); if (!rep) return out; }
-            const max = rep ? ({ daily: 14, weekly: 8, monthly: 6 }[n.repeat] || 6) : 1, c = { ...n };
-            for (let g = 0, k = 0; k < max && g < 900; g++) {
-                const ts = noteDueTs(c);
-                if (ts != null && ts > now + 1000) { out.push(ts); k++; }
-                if (!rep || !advanceNoteDate(c)) break;
-            }
-            return out;
-        }
-        async function syncNoteNative() {
-            const LN = noteNativeLN();
-            if (!LN) return;
-            if (_noteNativeBusy) { _noteNativeAgain = true; return; }
-            _noteNativeBusy = true;
-            try {
-                await ensureNoteChannels(LN);
-                let old = [];
-                try { old = JSON.parse(localStorage.getItem(NOTE_NATIVE_IDS_KEY) || '[]'); } catch (e) {}
-                if (old.length) { try { await LN.cancel({ notifications: old.map(id => ({ id })) }); } catch (e) {} }
-                const now = Date.now(), list = [];
-                dailyNotes.forEach(n => {
-                    if (n.type !== 'reminder' || !n.time || n.done || n.fired) return;
-                    const base = 1000000000 + (Number(n.id) % 50000000) * 20;
-                    noteNativeTimes(n, now).slice(0, 20).forEach((ts, j) => {
-                        list.push({ id: base + j, title: 'یادآوری', body: String(n.text).slice(0, 200), channelId: n.sound === false ? NOTE_CH_QUIET : NOTE_CH_LOUD, schedule: { at: new Date(ts), allowWhileIdle: true }, extra: { noteId: n.id } });
-                    });
-                });
-                list.sort((a, b) => a.schedule.at - b.schedule.at);
-                const seen = new Set();
-                const uniq = list.filter(x => !seen.has(x.id) && seen.add(x.id)).slice(0, 400);
-                if (uniq.length) await LN.schedule({ notifications: uniq });
-                localStorage.setItem(NOTE_NATIVE_IDS_KEY, JSON.stringify(uniq.map(x => x.id)));
-            } catch (e) { console.warn('زمان‌بندی بومی یادآور ناموفق بود:', e); }
-            finally { _noteNativeBusy = false; if (_noteNativeAgain) { _noteNativeAgain = false; scheduleNoteNativeSync(); } }
-        }
-        // با رفتن برنامه به پس‌زمینه یا بازگشت به آن، زمان‌بندی دوباره همگام می‌شود
-        (function () {
-            try {
-                const a = nativeAppPlugin();
-                if (a && a.addListener) a.addListener('appStateChange', st => { if (st && st.isActive === false) scheduleNoteNativeSync(true); else { checkNoteReminders(); scheduleNoteNativeSync(); } });
-                const LN = noteNativeLN();
-                if (LN && LN.addListener) LN.addListener('localNotificationActionPerformed', () => { setTimeout(checkNoteReminders, 300); });
-            } catch (e) {}
-            document.addEventListener('visibilitychange', () => { if (document.hidden) scheduleNoteNativeSync(true); });
-            setTimeout(() => scheduleNoteNativeSync(), 3000);
-        })();
-
-        /* ---- یادآوری از روی موعد تحویل کار جاری ---- */
-        function computeRecordDueTs(rec) {
-            const target = parseDurationStrToMinutes(rec.workDuration);
-            const sJ = parseJalaliDateToJdn(rec.date), sM = parseTimeToMinutes(rec.time);
-            if (!target || target <= 0 || !sJ) return null;
-            for (let d = sJ; d < sJ + 150; d++) {
-                if (calculateActualWorkingMinutesElapsed(sJ, sM, d, 1440) < target) continue;
-                let lo = 0, hi = 1440;
-                while (lo < hi) {
-                    const mid = (lo + hi) >> 1;
-                    if (calculateActualWorkingMinutesElapsed(sJ, sM, d, mid) >= target) hi = mid; else lo = mid + 1;
-                }
-                const g = d2g(d);
-                return new Date(g.gy, g.gm - 1, g.gd, Math.floor(lo / 60), lo % 60, 0).getTime();
-            }
-            return null;
-        }
-        function createDeadlineReminder(id) {
-            const rec = allRecords.find(r => Number(r.id) === Number(id));
-            if (!rec) return;
-            const ts = computeRecordDueTs(rec);
-            if (ts == null) { showFeedbackBanner('موعد تحویل این کار قابل محاسبه نیست.', 'warn'); return; }
-            if (ts <= Date.now()) { showFeedbackBanner('موعد تحویل این کار گذشته است.', 'warn'); return; }
-            const ref = 'rec:' + rec.id;
-            if (dailyNotes.some(n => n.ref === ref && !n.done)) { showFeedbackBanner('برای این کار قبلاً یادآوری ثبت شده است.', 'warn'); return; }
-            const d = new Date(ts), j = gregorianToJalaali(d.getFullYear(), d.getMonth() + 1, d.getDate());
-            const pad = x => String(x).padStart(2, '0');
-            let nid = Date.now(); while (dailyNotes.some(n => n.id === nid)) nid++;
-            dailyNotes.unshift(sanitizeNote({
-                id: nid, type: 'reminder', ref, sound: true, hidden: false, updatedAt: Date.now(),
-                date: `${toPersianDigits(j.jy)}/${toPersianDigits(j.jm)}/${toPersianDigits(j.jd)}`,
-                time: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
-                lead: (ts - 30 * 60000 > Date.now()) ? 30 : 0,
-                text: `موعد تحویل کد ${rec.itemCode || '-'} — ${rec.itemTitle || '-'}`
-            }));
-            saveRecords(); renderDailyNotes(); unlockNoteAudio(); askNoteNotifyPermission();
-            showFeedbackBanner('یادآوری موعد تحویل ثبت شد.', 'success');
-        }
-        setInterval(checkNoteReminders, 15000);
-        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkNoteReminders(); });
-        /* ==================== پایان یادآورهای یادداشت ==================== */
 
         const PERSIAN_WEEKDAYS_FULL = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"];
         function getWeekdayLabelForJalaliDate(dateStr) {
@@ -10455,7 +9750,6 @@
         }
 
         function renderRecordsSummaryFooter(records) {
-            try { renderRecordsPayroll(); } catch (e) { console.warn('لیست حقوق:', e); }
             const bar = document.getElementById('recordsSummaryButtonsBar');
             const delayText = document.getElementById('totalDelaySummaryText');
             const dupText = document.getElementById('duplicateCodesSummaryText');
@@ -10932,7 +10226,7 @@
                 + (isStale ? '<div class="text-[10px] text-amber-600 dark:text-amber-400">این کار بیش از ۳ روز کاری معوق است؛ اگر تمام شده، «کار تمام شد» را بزنید.</div>' : '');
 
             list.className = 'mgr-body mgr-page' + (first ? ' mgr-enter' : '');
-            list.innerHTML = `<div class="mgr-jobpanel">${who}<div class="flex items-center gap-3">${mgrRing(st, 64)}<div class="min-w-0 flex-1">${mgrJobInfo(st, true)}</div></div>${mgrBar(st)}${extra}${mgrFinishBtn(st)}${isOverdue ? '' : `<button type="button" data-action="deadline-reminder" data-id="${Number(rec.id)}" class="no-print w-full mt-2 py-2 rounded-xl border border-amber-500 text-amber-700 dark:text-amber-300 text-xs font-medium"><i class="fa-solid fa-bell"></i> یادآور موعد تحویل</button>`}</div>`
+            list.innerHTML = `<div class="mgr-jobpanel">${who}<div class="flex items-center gap-3">${mgrRing(st, 64)}<div class="min-w-0 flex-1">${mgrJobInfo(st, true)}</div></div>${mgrBar(st)}${extra}${mgrFinishBtn(st)}</div>`
                 + `<div class="mt-2">${mgrRecDetailHTML(rec)}</div>`;
             updateAttentionIndicators();
         }
@@ -11020,7 +10314,9 @@
                                     <span class="font-semibold text-slate-800 dark:text-slate-100 text-sm truncate">${escapeHTML(r.itemTitle)}</span>
                                 </div>
                                 <div class="mt-1 flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
-                                    ${isFieldHidden('itemColor') ? '' : `${renderColorSwatchDot(r.itemColor)}<span>${escapeHTML(r.itemColor) || '-'}</span><span class="opacity-40">•</span>`}
+                                    ${renderColorSwatchDot(r.itemColor)}
+                                    <span>${escapeHTML(r.itemColor) || '-'}</span>
+                                    <span class="opacity-40">•</span>
                                     <span>#${formatNumber(index + 1)}</span>${(mgrOn() && mgrRecWorker(r)) ? `<span class="opacity-40">•</span>${mgrWorker(r.workerId) ? `<button type="button" data-action="worker-info" data-id="${Number(r.id)}" aria-haspopup="dialog" aria-expanded="false" title="نمایش اطلاعات مالی" class="wi-name"><i class="fa-solid fa-user-gear text-[10px]"></i>${escapeHTML(mgrRecWorker(r))}</button>` : `<span class="text-indigo-600 dark:text-indigo-300"><i class="fa-solid fa-user-gear text-[10px] ml-1"></i>${escapeHTML(mgrRecWorker(r))}</span>`}` : ''}
                                 </div>
                             </div>
@@ -11033,7 +10329,7 @@
 
                     <div class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs pt-3 border-t border-dashed border-slate-300 dark:border-slate-600">
                         <div class="text-slate-500 dark:text-slate-400">${getFormLabel('receivedQuantity')}: <b class="text-slate-700 dark:text-slate-200 tabular-nums">${formatNumber(r.quantity)}</b></div>
-                        ${isFieldHidden('dailyStat') ? '' : `<div class="text-slate-500 dark:text-slate-400">${getFormLabel('dailyStat')}: <b class="text-slate-700 dark:text-slate-200 tabular-nums">${(r.dailyStat === null || r.dailyStat === undefined) ? '-' : formatNumber(r.dailyStat)}</b></div>`}
+                        <div class="text-slate-500 dark:text-slate-400">${getFormLabel('dailyStat')}: <b class="text-slate-700 dark:text-slate-200 tabular-nums">${(r.dailyStat === null || r.dailyStat === undefined) ? '-' : formatNumber(r.dailyStat)}</b></div>
                         <div class="text-slate-500 dark:text-slate-400">${getFormLabel('unitPrice')}: <b class="text-slate-700 dark:text-slate-200 tabular-nums">${formatPriceValue(r.unitPrice)}</b></div>
                         <div class="text-slate-500 dark:text-slate-400">مبلغ کل: <b class="tabular-nums ${r.totalPrice === null || r.totalPrice === undefined ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}">${formatPriceValue(r.totalPrice)} ${escapeHTML(currency)}</b></div>
                     </div>
@@ -11041,7 +10337,6 @@
                     <div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px] text-slate-500 dark:text-slate-400">
                         <div>${getFormLabel('recordWorkDuration')}: <span class="text-slate-700 dark:text-slate-200">${r.workDuration ? escapeHTML(r.workDuration) : '-'}</span></div>
                         <div>${getFormLabel('recordEndDateTime')}: <span class="text-slate-700 dark:text-slate-200">${r.endDateTime ? escapeHTML(r.endDateTime) : '-'}</span></div>
-                        ${cfCards(r)}
                         <div class="col-span-2">شروع کد بعد: <span class="text-slate-700 dark:text-slate-200">${nextCodeHTML}</span></div>
                     </div>
 
@@ -11065,7 +10360,7 @@
         /* ==================== قابلیت کارفرما (مدیر کارگاه): بخش‌ها، پرسنل و ارجاع کار ==================== */
         var mgrTab = 'workers', mgrEditW = '', mgrEditS = '', mgrLastTab = '';
         var mgrFormPhoto; // undefined = بدون تغییر نسبت به عکس ذخیره‌شده؛ null = حذف؛ رشته = عکس جدید
-        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها']];
+        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها'], ['attendance', 'fa-calendar-check', 'حضور و غیاب'], ['finance', 'fa-coins', 'مالی']];
         const MI = 'w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all';
         var mgrVer = 0;
         function mgrId(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -11109,7 +10404,7 @@
             const M = appSettings && appSettings.manager;
             if (!M) return false;
             const n = o => (o && typeof o === 'object') ? Object.keys(o).length : 0;
-            return !!((M.workers && M.workers.length) || (M.sections && M.sections.length) || n(M.attendance) || n(M.attMin) || n(M.otMin) || (M.finance && M.finance.txns && M.finance.txns.length));
+            return !!((M.workers && M.workers.length) || (M.sections && M.sections.length) || n(M.attendance) || n(M.attMin) || (M.finance && M.finance.txns && M.finance.txns.length));
         }
 
         /* ---------- نمای صفحه‌ی اصلی در حالت کارفرما ---------- */
@@ -11265,22 +10560,12 @@
         function mgrFinishBtn(st) {
             return st.rec ? `<button type="button" data-action="finish-active" data-id="${Number(st.rec.id)}" class="mgr-finish no-print"><i class="fa-solid fa-check"></i> کار تمام شد</button>` : '';
         }
-        // تاریخ و ساعت پایان را کامل (ساعت ۲ رقمی) و با ترتیب درست راست‌به‌چپ نشان می‌دهد؛ بدون برش با «…»
-        function mgrEndDTHTML(v) {
-            const raw = String(v == null ? '' : v).trim();
-            if (!raw) return '—';
-            const mt = toEnglishDigits(raw).match(/^(\d{3,4})\/(\d{1,2})\/(\d{1,2})\s*[-–—]?\s*(\d{1,2}):(\d{1,2})$/);
-            if (!mt) return escapeHTML(raw);
-            const p2 = x => String(x).padStart(2, '0');
-            const d = formatDateDigits(`${mt[1]}/${p2(mt[2])}/${p2(mt[3])}`), t = formatDateDigits(`${p2(mt[4])}:${p2(mt[5])}`);
-            return `<bdi dir="ltr">${d}</bdi><span>-</span><bdi dir="ltr">${t}</bdi>`;
-        }
         // جزئیات رکورد مربوط به ویجت (جایگزین کادرهای آماریِ کوچک پایین ویجت)
         function mgrRecDetailHTML(r) {
             if (!r) return '';
             try {
                 const cur = escapeHTML(appSettings.currency || 'تومان'), dash = '—';
-                const kv = (k, v, c, wide) => `<div class="mgr-kv${wide ? ' kf-kv-wide' : ''}"><span>${k}</span><b${c ? ' class="' + c + '"' : ''}>${v}</b></div>`;
+                const kv = (k, v, c) => `<div class="mgr-kv"><span>${k}</span><b${c ? ' class="' + c + '"' : ''}>${v}</b></div>`;
                 const noTotal = r.totalPrice === null || r.totalPrice === undefined;
                 return '<div class="mgr-rec">'
                     + kv('رنگ / مشخصات', `${renderColorSwatchDot(r.itemColor)}${escapeHTML(r.itemColor) || dash}`)
@@ -11289,7 +10574,7 @@
                     + kv('مبلغ کل', `${formatPriceValue(r.totalPrice)} ${cur}`, noTotal ? 'mgr-warnc' : 'mgr-pos')
                     + kv(getFormLabel('dailyStat'), (r.dailyStat === null || r.dailyStat === undefined) ? dash : formatNumber(r.dailyStat))
                     + kv(getFormLabel('recordWorkDuration'), r.workDuration ? escapeHTML(r.workDuration) : dash)
-                    + kv(getFormLabel('recordEndDateTime'), mgrEndDTHTML(r.endDateTime), '', true)
+                    + kv(getFormLabel('recordEndDateTime'), r.endDateTime ? escapeHTML(r.endDateTime) : dash)
                     + kv('وضعیت', formatStatusWithDuration(getDisplayStatus(r), r.durationTime))
                     + '</div>';
             } catch (e) { return ''; }
@@ -11431,20 +10716,18 @@
             else mgrReportLocalFailure();
         }
         function openManagerPanel() { if (!mgrOn()) return; setAppTab('mgr'); }
-        function closeManagerPanel() { if (['mgr', 'att', 'fin'].indexOf(appTab) >= 0) setAppTab('home'); }
+        function closeManagerPanel() { if (appTab === 'mgr') setAppTab('home'); }
 
         function mgrRender() {
             document.getElementById('mgrHeaderSub').innerText = `دوره‌ی گزارش: ${mgrMonthLabel()}`;
-            { const sep = (appTab === 'att' || appTab === 'fin'); document.getElementById('mgrTabs').classList.toggle('hidden', sep); const hd = document.getElementById('mgrHeaderSub').parentElement; if (hd) hd.classList.toggle('hidden', sep); }
             document.getElementById('mgrTabs').innerHTML = MGR_TABS.map(([k, ic, t]) => `<button type="button" data-mgr="tab" data-k="${k}" class="shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold ${k === mgrTab ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-b-2 border-purple-600' : 'text-slate-400 dark:text-slate-500'}"><i class="fa-solid ${ic}"></i> ${t}</button>`).join('');
             const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections, finance: mgrHtmlFinance, attendance: mgrHtmlAttendance }[mgrTab];
             const bodyEl = document.getElementById('mgrBody'), keepTop = (mgrLastTab === mgrTab) ? bodyEl.scrollTop : 0;
-            bodyEl.innerHTML = ((appTab === 'att' || appTab === 'fin') ? mgrPageHead() : '') + fn(); bodyEl.scrollTop = keepTop; mgrLastTab = mgrTab; mgrApplyMainView();
+            bodyEl.innerHTML = fn(); bodyEl.scrollTop = keepTop; mgrLastTab = mgrTab; mgrApplyMainView();
             const tabs = document.getElementById('mgrTabs'); tabs.setAttribute('role', 'tablist');
             tabs.querySelectorAll('[data-k]').forEach(b => { b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', b.dataset.k === mgrTab ? 'true' : 'false'); });
             mgrA11y(document.getElementById('managerModal'));
             document.querySelectorAll('#mgrBody [data-thousands]').forEach(el => { if (el.value) el.value = formatNumber(parsePersianInt(el.value)); });
-            try { renderRecordsPayroll(); } catch (e) { /* بی‌اهمیت */ }
         }
         const mgrStat = (t, v, c) => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 text-center"><p class="text-[11px] text-slate-500 dark:text-slate-400">${t}</p><p class="text-lg font-bold ${c || 'text-slate-800 dark:text-slate-100'} mt-1">${v}</p></div>`;
         const mgrEmpty = t => `<p class="text-[11px] text-slate-400 text-center py-4">${t}</p>`;
@@ -11489,12 +10772,6 @@
         }
         function mgrRemovePhoto() { mgrFormPhoto = null; mgrPaintPhotoBox(); }
 
-        function mgrWageToggle(sel) {
-            const r = document.getElementById('mgrWRate'); if (!r) return;
-            const on = sel.value === 'daily' || sel.value === 'monthly';
-            r.classList.toggle('hidden', !on); if (!on) r.value = '';
-            r.placeholder = sel.value === 'monthly' ? 'حقوق ماهانه' : 'نرخ روزانه';
-        }
         const MGR_WAGE_TYPES = [['', '— نوع دستمزد —'], ['piece', 'کارمزدی'], ['daily', 'روزمزدی'], ['monthly', 'ماهانه (ثابت)']];
         const mgrWageLabel = k => (MGR_WAGE_TYPES.find(x => x[0] === k && k) || [])[1] || '';
         function mgrHtmlWorkers() {
@@ -11528,8 +10805,8 @@
                     <input id="mgrWPhone" inputmode="tel" maxlength="40" placeholder="شماره تماس" value="${escapeHTML(e.phone || '')}" class="${MI}">
                     <select id="mgrWSection" class="${MI}">${secOpts}</select>
                     <input id="mgrWRole" maxlength="60" placeholder="سمت / مهارت (${escapeHTML(currentBusinessHints().role)})" value="${escapeHTML(e.role || '')}" class="${MI}">
-                    <select id="mgrWWage" onchange="mgrWageToggle(this)" class="${MI}" aria-label="نوع دستمزد">${MGR_WAGE_TYPES.map(([k, t]) => `<option value="${k}" ${(e.wageType || '') === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
-                    <input id="mgrWRate" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="${e.wageType === 'monthly' ? 'حقوق ماهانه' : 'نرخ روزانه'}" value="${e.rate ? escapeHTML(formatNumber(e.rate)) : ''}" class="${MI}${(e.wageType === 'daily' || e.wageType === 'monthly') ? '' : ' hidden'}">
+                    <input id="mgrWRate" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="نرخ روزانه یا حقوق ماهانه (روزمزد/ماهانه)" value="${e.rate ? escapeHTML(formatNumber(e.rate)) : ''}" class="${MI}">
+                    <select id="mgrWWage" class="${MI}" aria-label="نوع دستمزد">${MGR_WAGE_TYPES.map(([k, t]) => `<option value="${k}" ${(e.wageType || '') === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
                     <input id="mgrWStart" maxlength="10" inputmode="numeric" placeholder="شروع همکاری (مثلاً ۱۴۰۵/۰۱/۱۵)" value="${escapeHTML(e.startDate || '')}" class="${MI}">
                     <input id="mgrWEnd" maxlength="10" inputmode="numeric" placeholder="پایان همکاری (اختیاری)" value="${escapeHTML(e.endDate || '')}" class="${MI}">
                 </div>
@@ -11553,48 +10830,10 @@
             else if (m[d]) { delete m[d][wid]; if (!Object.keys(m[d]).length) delete m[d]; }
         }
         function mgrJdnStr(j) { const d = d2j(j); return `${d.jy}/${String(d.jm).padStart(2, '0')}/${String(d.jd).padStart(2, '0')}`; }
-        function mgrOtMinGet(d, wid) { const m = mgr() && mgr().otMin; return (m && m[d] && m[d][wid]) || 0; }
-        function mgrOtMinSet(d, wid, n) {
-            const M = mgr(); if (!M.otMin) M.otMin = {};
-            const m = M.otMin; n = Math.max(0, Math.min(1440, Math.floor(n) || 0));
-            if (n > 0) (m[d] || (m[d] = {}))[wid] = n;
-            else if (m[d]) { delete m[d][wid]; if (!Object.keys(m[d]).length) delete m[d]; }
-        }
-        var mgrOtOpen = {};
         function mgrAttCount(wid, mk) {
-            const c = { p: 0, t: 0, l: 0, a: 0, tMin: 0, lMin: 0, lPart: 0, oMin: 0, oDays: 0 }, A = (mgr() && mgr().attendance) || {}, O = (mgr() && mgr().otMin) || {};
-            Object.keys(A).forEach(d => { const [y, m] = d.split('/').map(Number); if (`${y}-${m}` === mk && A[d][wid]) { const k = A[d][wid]; c[k]++; if (k === 't') c.tMin += mgrAttMinGet(d, wid); if (k === 'l') { const lm = mgrAttMinGet(d, wid); c.lMin += lm; if (lm > 0) c.lPart++; } } });
-            Object.keys(O).forEach(d => { const [y, m] = d.split('/').map(Number); if (`${y}-${m}` === mk && O[d] && O[d][wid]) { c.oMin += O[d][wid]; c.oDays++; } });
+            const c = { p: 0, t: 0, l: 0, a: 0, tMin: 0, lMin: 0 }, A = (mgr() && mgr().attendance) || {};
+            Object.keys(A).forEach(d => { const [y, m] = d.split('/').map(Number); if (`${y}-${m}` === mk && A[d][wid]) { const k = A[d][wid]; c[k]++; if (k === 't') c.tMin += mgrAttMinGet(d, wid); if (k === 'l') c.lMin += mgrAttMinGet(d, wid); } });
             return c;
-        }
-        function mgrListCard(icon, title, heads, rows, empty, key) {
-            const th = 'sticky top-0 z-10 p-2.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 shadow-sm';
-            return `<div class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden"><div class="px-4 py-3 border-b border-slate-300 dark:border-slate-600 flex flex-wrap items-center justify-between gap-2"><h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid ${icon} text-indigo-600 dark:text-indigo-400"></i> ${title}</h3><input placeholder="جستجو…" oninput="mgrFilterRows(this.value,'${key}')" class="${MI} !w-auto !py-1.5 !text-xs"></div>${rows ? `<div class="overflow-x-auto"><table class="w-full text-right text-sm"><thead class="text-slate-600 dark:text-slate-300 text-xs"><tr>${heads.map(h => `<th class="${th}">${h}</th>`).join('')}<th class="${th} no-print">عملیات</th></tr></thead><tbody id="${key}">${rows}</tbody></table></div>` : mgrEmpty(empty)}</div>`;
-        }
-        function mgrFilterRows(v, id) { const q = normalizeSearchText(v); document.querySelectorAll('#' + id + ' > tr').forEach(r => r.classList.toggle('hidden', !!q && !normalizeSearchText(r.textContent).includes(q))); }
-        function mgrActBtns(ed, del, id, st) {
-            const s = st !== undefined ? ` data-st="${escapeHTML(st)}"` : '';
-            return `<td class="p-2.5 no-print whitespace-nowrap"><button type="button" data-mgr="${ed}" data-id="${escapeHTML(id)}"${s} title="ویرایش" class="w-8 h-8 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="${del}" data-id="${escapeHTML(id)}"${s} title="حذف" class="w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></td>`;
-        }
-        function mgrPageHead() {
-            const att = appTab === 'att';
-            return `<div class="flex justify-between items-center pb-3 border-b border-slate-300 dark:border-slate-600"><h2 class="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2.5 tracking-tight"><i class="fa-solid ${att ? 'fa-calendar-check' : 'fa-coins'} text-indigo-600 dark:text-indigo-400 text-lg"></i> ${att ? 'ثبت حضور و غیاب' : 'ثبت حقوق و مالی'}</h2></div>`;
-        }
-        function mgrAttEntries(mk) {
-            const A = mgrAtt(), O = (mgr().otMin) || {}, out = [];
-            new Set([...Object.keys(A), ...Object.keys(O)]).forEach(d => {
-                const [y, m] = d.split('/').map(Number); if (`${y}-${m}` !== mk) return;
-                new Set([...Object.keys(A[d] || {}), ...Object.keys(O[d] || {})]).forEach(id => out.push({ d, id }));
-            });
-            return out.sort((a, b) => a.d < b.d ? 1 : a.d > b.d ? -1 : 0);
-        }
-        function mgrAttListHTML(mk) {
-            const clr = { p: 'text-emerald-600', t: 'text-amber-600', l: 'text-sky-600', a: 'text-rose-600' };
-            const rows = mgrAttEntries(mk).map(({ d, id }) => {
-                const w = mgrWorker(id), k = (mgrAtt()[d] || {})[id], mins = mgrAttMinGet(d, id), ot = mgrOtMinGet(d, id);
-                return `<tr class="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50"><td class="p-2.5 tabular-nums">${escapeHTML(toPersianDigits(d))}</td><td class="p-2.5 font-semibold">${escapeHTML(w ? w.name : 'حذف‌شده')}</td><td class="p-2.5 font-bold ${k ? clr[k] : 'text-slate-400'}">${k ? MGR_ATT[k][0] : '—'}</td><td class="p-2.5">${mins ? formatMinutesDuration(mins) : '—'}</td><td class="p-2.5 kf-ot-txt">${ot ? formatMinutesDuration(ot) : '—'}</td>${mgrActBtns('a-edit', 'a-del', id, d)}</tr>`;
-            }).join('');
-            return mgrListCard('fa-calendar-check', 'لیست حضور و غیاب — ' + mgrMonthLabel(), ['تاریخ', 'پرسنل', 'وضعیت', 'مدت تاخیر / مرخصی', 'اضافه‌کاری'], rows, 'هنوز حضور و غیابی برای این ماه ثبت نشده است.', 'mgrAttRows');
         }
         function mgrHtmlAttendance() {
             const M = mgr(), A = mgrAtt(), mk = selectedMonthFilter;
@@ -11610,29 +10849,18 @@
                     <input type="text" inputmode="numeric" maxlength="2" placeholder="دقیقه" value="${mm ? toPersianDigits(mm) : ''}" data-mgr-change="a-minm" data-id="${escapeHTML(w.id)}" class="${inp}">
                     ${k === 'l' && !mins ? '<span class="text-sky-600 dark:text-sky-400">(خالی = تمام روز)</span>' : mins ? `<span class="font-bold">${formatMinutesDuration(mins)}</span>` : ''}</div>`;
             };
-            const otBtn = w => { const on = mgrOtMinGet(mgrAttDate, w.id) > 0 || !!mgrOtOpen[mgrAttDate + '|' + w.id]; return `<button type="button" data-mgr="a-ot" data-id="${escapeHTML(w.id)}" aria-pressed="${on}" style="flex:1.35 1 0" class="kf-ot-btn${on ? ' on' : ''} py-1.5 rounded-lg border text-[11px]">اضافه‌کاری</button>`; };
-            const otRow = w => {
-                const mins = mgrOtMinGet(mgrAttDate, w.id);
-                if (!(mins > 0 || mgrOtOpen[mgrAttDate + '|' + w.id])) return '';
-                const h = Math.floor(mins / 60), mm = mins % 60, inp = 'w-14 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100';
-                return `<div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400"><span>مدت اضافه‌کاری:</span>
-                    <input type="text" inputmode="numeric" maxlength="2" placeholder="ساعت" value="${h ? toPersianDigits(h) : ''}" data-mgr-change="a-oth" data-id="${escapeHTML(w.id)}" class="${inp}">
-                    <input type="text" inputmode="numeric" maxlength="2" placeholder="دقیقه" value="${mm ? toPersianDigits(mm) : ''}" data-mgr-change="a-otm" data-id="${escapeHTML(w.id)}" class="${inp}">
-                    ${mins ? `<span class="font-bold kf-ot-txt">${formatMinutesDuration(mins)}</span>` : ''}</div>`;
-            };
-            const otCnt = ws.filter(w => mgrOtMinGet(mgrAttDate, w.id) > 0).length;
-            const rows = ws.map(w => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-2.5 space-y-2"><div class="flex items-center gap-2">${mgrMiniAvatar(w, 30)}<p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p></div><div class="flex gap-1.5">${['p', 't', 'l', 'a'].map(k => btn(w, k)).join('') + otBtn(w)}</div>${durRow(w)}${otRow(w)}</div>`).join('');
+            const rows = ws.map(w => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-2.5 space-y-2"><div class="flex items-center gap-2">${mgrMiniAvatar(w, 30)}<p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p></div><div class="flex gap-1.5">${['p', 't', 'l', 'a'].map(k => btn(w, k)).join('')}</div>${durRow(w)}</div>`).join('');
             const cnt = Object.keys(MGR_ATT).reduce((o, k) => (o[k] = ws.filter(w => day[w.id] === k).length, o), {});
-            const sumRows = ws.map(w => { const c = mgrAttCount(w.id, mk); return `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2 text-right">${escapeHTML(w.name)}</td><td class="p-2 text-emerald-600">${toPersianDigits(c.p)}</td><td class="p-2 text-amber-600">${toPersianDigits(c.t)}${c.tMin ? `<span class="block text-[10px] opacity-80">${formatMinutesDuration(c.tMin)}</span>` : ''}</td><td class="p-2 text-sky-600">${toPersianDigits(c.l)}${c.lMin ? `<span class="block text-[10px] opacity-80">${formatMinutesDuration(c.lMin)}</span>` : ''}</td><td class="p-2 text-rose-600">${toPersianDigits(c.a)}</td><td class="p-2 kf-ot-txt">${c.oMin ? formatMinutesDuration(c.oMin) : '—'}</td></tr>`; }).join('');
+            const sumRows = ws.map(w => { const c = mgrAttCount(w.id, mk); return `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2 text-right">${escapeHTML(w.name)}</td><td class="p-2 text-emerald-600">${toPersianDigits(c.p)}</td><td class="p-2 text-amber-600">${toPersianDigits(c.t)}${c.tMin ? `<span class="block text-[10px] opacity-80">${formatMinutesDuration(c.tMin)}</span>` : ''}</td><td class="p-2 text-sky-600">${toPersianDigits(c.l)}${c.lMin ? `<span class="block text-[10px] opacity-80">${formatMinutesDuration(c.lMin)}</span>` : ''}</td><td class="p-2 text-rose-600">${toPersianDigits(c.a)}</td></tr>`; }).join('');
             return `<div class="flex items-center gap-2">
                     <button type="button" data-mgr="a-next" title="روز بعد" class="w-9 h-9 shrink-0 rounded-xl border border-slate-400 dark:border-slate-500 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-chevron-right text-xs"></i></button>
                     <input id="mgrADate" maxlength="10" inputmode="numeric" value="${escapeHTML(toPersianDigits(mgrAttDate))}" data-mgr-change="a-date" class="${MI} text-center">
                     <button type="button" data-mgr="a-prev" title="روز قبل" class="w-9 h-9 shrink-0 rounded-xl border border-slate-400 dark:border-slate-500 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-chevron-left text-xs"></i></button>
                     <button type="button" data-mgr="a-today" class="tactile-btn shrink-0 px-3 h-9 rounded-xl border border-purple-500 text-purple-700 dark:text-purple-300 text-xs">امروز</button></div>
-                <p class="text-[11px] text-center ${fri ? 'text-rose-500' : 'text-slate-500 dark:text-slate-400'}">${wd}${fri ? ' (تعطیل)' : ''} • حاضر ${toPersianDigits(cnt.p)} • تاخیر ${toPersianDigits(cnt.t)} • مرخصی ${toPersianDigits(cnt.l)} • غایب ${toPersianDigits(cnt.a)} • اضافه‌کاری ${toPersianDigits(otCnt)}</p>
+                <p class="text-[11px] text-center ${fri ? 'text-rose-500' : 'text-slate-500 dark:text-slate-400'}">${wd}${fri ? ' (تعطیل)' : ''} • حاضر ${toPersianDigits(cnt.p)} • تاخیر ${toPersianDigits(cnt.t)} • مرخصی ${toPersianDigits(cnt.l)} • غایب ${toPersianDigits(cnt.a)}</p>
                 ${ws.length ? `<button type="button" data-mgr="a-all" class="tactile-btn w-full py-2 rounded-xl bg-emerald-600 text-white text-xs font-medium">همه حاضر (بدون وضعیت قبلی)</button>` : ''}
                 <div class="space-y-2">${rows || mgrEmpty('ابتدا پرسنل فعال را در تب «پرسنل» اضافه کنید.')}</div>
-                ${mgrAttListHTML(mk)}`;
+                ${ws.length ? `<h4 class="text-xs font-bold text-slate-700 dark:text-slate-200 pt-1">خلاصه‌ی ${mgrMonthLabel()}</h4><div class="overflow-x-auto rounded-xl border border-slate-300 dark:border-slate-600"><table class="w-full text-center text-[11px]"><thead class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"><tr><th class="p-2 text-right">پرسنل</th><th class="p-2">حاضر</th><th class="p-2">تاخیر</th><th class="p-2">مرخصی</th><th class="p-2">غایب</th></tr></thead><tbody>${sumRows}</tbody></table></div><p class="text-[11px] text-slate-400 text-center">برای روزمزدها، روز کارکرد در بخش مالی از روزهای «حاضر» و «تاخیر» محاسبه می‌شود.</p>` : ''}`;
         }
 
         /* ---------- بخش مالی پنل کارفرما ---------- */
@@ -11646,30 +10874,17 @@
             return map;
         }
         function mgrYm(str) { const p = String(str || '').split('/').map(Number); return p.length === 3 && p[0] > 1200 ? p[0] * 12 + p[1] : 0; }
-        // مبلغ هر ساعت اضافه‌کاری و مرخصی (کسر): نرخ اختصاصی پرسنل، وگرنه نرخ پیش‌فرض
-        function mgrFinRate(w) {
-            const F = mgrFin(), r = (F.rates && F.rates[w.id]) || {}, d = F.def || {};
-            return { ot: Number(r.ot) || Number(d.ot) || 0, lv: Number(r.lv) || Number(d.lv) || 0 };
-        }
         function mgrFinCalc(w, mk) {
             const F = mgrFin(), sum = { advance: 0, bonus: 0, deduction: 0, payment: 0 };
             for (const x of F.txns) if (x.workerId === w.id && x.monthKey === mk) sum[x.type] += x.amount;
-            const at = mgrAttCount(w.id, mk), rt = mgrFinRate(w), daysAuto = (at.p + at.t + at.l + at.a) > 0;
-            // مرخصی ساعتی (با مدت) وقتی نرخ مرخصی ثبت شده باشد، روز کامل کارکرد حساب می‌شود و فقط ساعت‌های مرخصی کسر می‌شود
-            const partialLeaveDays = (daysAuto && rt.lv > 0) ? at.lPart : 0;
-            const days = daysAuto ? at.p + at.t + partialLeaveDays : (F.days[w.id + '|' + mk] || 0);
+            const at = mgrAttCount(w.id, mk), daysAuto = (at.p + at.t + at.l + at.a) > 0, days = daysAuto ? at.p + at.t : (F.days[w.id + '|' + mk] || 0);
             const [my, mm] = mk.split('-').map(Number), cur = my * 12 + mm, st = mgrYm(w.startDate), en = mgrYm(w.endDate), outOfRange = (st && st > cur) || (en && en < cur);
             let earn = 0;
             if (w.wageType === 'daily') earn = (w.rate || 0) * days;
             else if (w.wageType === 'monthly') earn = outOfRange ? 0 : (w.rate || 0);
             else earn = mgrPieceTotals(mk).get(w.id) || 0;
-            let mLen = 30; try { mLen = jalaaliMonthLength(my, mm) || 30; } catch (e) { mLen = 30; }
-            const absentDeduct = (w.wageType === 'monthly' && daysAuto && !outOfRange && at.a > 0) ? Math.round((w.rate || 0) / mLen * at.a) : 0;
-            const leaveDeduct = rt.lv > 0 ? Math.round(at.lMin / 60 * rt.lv) : 0;
-            const otPay = rt.ot > 0 ? Math.round(at.oMin / 60 * rt.ot) : 0;
             const bonus = sum.bonus, deduction = sum.deduction, advance = sum.advance, payment = sum.payment;
-            const addAll = bonus + otPay, subAll = deduction + absentDeduct + leaveDeduct, net = earn + addAll - subAll;
-            return { earn, days, daysAuto, bonus, deduction, advance, payment, otMin: at.oMin, otPay, otRate: rt.ot, leaveMin: at.lMin, leaveDeduct, leaveRate: rt.lv, absent: at.a, absentDeduct, addAll, subAll, net, remain: net - advance - payment };
+            return { earn, days, daysAuto, bonus, deduction, advance, payment, remain: earn + bonus - deduction - advance - payment };
         }
         /* ---- کادر کوچک اطلاعات مالی پرسنل با کلیک روی نام در لیست کارکردها ---- */
         var wiState = { anchor: null, raf: 0, bound: false };
@@ -11700,7 +10915,7 @@
             const f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان');
             const mk = r.monthKey || selectedMonthFilter, c = mgrFinCalc(w, mk), at = mgrAttCount(w.id, mk);
             const [my, mm] = String(mk).split('-'), monthLabel = `${PERSIAN_MONTHS[parseInt(mm, 10) - 1] || ''} ${toPersianDigits(my)}`;
-            const net = c.net, settled = c.advance + c.payment;
+            const net = c.earn + c.bonus - c.deduction, settled = c.advance + c.payment;
             const pct = net > 0 ? Math.min(100, Math.round(settled / net * 100)) : (settled > 0 ? 100 : 0);
             const tone = c.remain > 0 ? ['#10b981', '#06b6d4', 'rgba(16,185,129,.45)', 'text-emerald-600 dark:text-emerald-400', 'مانده‌ی قابل پرداخت']
                 : c.remain < 0 ? ['#f43f5e', '#f59e0b', 'rgba(244,63,94,.45)', 'text-rose-600 dark:text-rose-400', 'بدهکار به کارفرما']
@@ -11713,8 +10928,7 @@
             const attHTML = [chip(at.p, 'حاضر', 'text-emerald-600 border-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 dark:border-emerald-800 dark:text-emerald-400'),
                 chip(at.t, 'تاخیر', 'text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-400'),
                 chip(at.l, 'مرخصی', 'text-sky-600 border-sky-300 bg-sky-50 dark:bg-sky-950/30 dark:border-sky-800 dark:text-sky-400'),
-                chip(at.a, 'غیبت', 'text-rose-600 border-rose-300 bg-rose-50 dark:bg-rose-950/30 dark:border-rose-800 dark:text-rose-400'),
-                chip(at.oDays, 'اضافه‌کاری', 'text-indigo-600 border-indigo-300 bg-indigo-50 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-400')].join('');
+                chip(at.a, 'غیبت', 'text-rose-600 border-rose-300 bg-rose-50 dark:bg-rose-950/30 dark:border-rose-800 dark:text-rose-400')].join('');
             const cell = (t, v, i, col) => `<div class="wi-cell" data-i style="--i:${i}"><span class="text-slate-500 dark:text-slate-400">${t}</span><b class="${col || ''}">${f(v)}</b></div>`;
             const el = document.createElement('div');
             el.id = 'wiPop'; el.className = 'wi-pop no-print'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'اطلاعات مالی ' + w.name);
@@ -11725,7 +10939,7 @@
                     <button type="button" class="wi-close" aria-label="بستن" onclick="wiClose()"><i class="fa-solid fa-xmark text-xs"></i></button></div>
                 <p class="text-[10.5px] text-slate-400 mt-2" data-i style="--i:1"><i class="fa-regular fa-calendar ml-1"></i>دوره‌ی مالی: ${monthLabel}</p>
                 <div class="wi-main mt-2 flex items-center justify-between gap-2" data-i style="--i:2"><span class="text-[11px] text-slate-600 dark:text-slate-300">${tone[4]}</span><span class="text-base ${tone[3]}"><b id="wiRemain" data-v="${Math.abs(c.remain)}">${f(0)}</b> <span class="text-[10px] font-normal">${cur}</span></span></div>
-                <div class="grid grid-cols-2 gap-2 mt-2">${cell(w.wageType === 'daily' || w.wageType === 'monthly' ? 'حقوق' : 'کارکرد', c.earn, 3)}${cell('پاداش و اضافه‌کاری', c.addAll, 4, 'text-emerald-600 dark:text-emerald-400')}${cell('مساعده', c.advance, 5, 'text-rose-600 dark:text-rose-400')}${cell('کسری، غیبت و مرخصی', c.subAll, 6, 'text-amber-600 dark:text-amber-400')}</div>
+                <div class="grid grid-cols-2 gap-2 mt-2">${cell(w.wageType === 'daily' || w.wageType === 'monthly' ? 'حقوق' : 'کارکرد', c.earn, 3)}${cell('پاداش', c.bonus, 4, 'text-emerald-600 dark:text-emerald-400')}${cell('مساعده', c.advance, 5, 'text-rose-600 dark:text-rose-400')}${cell('کسری / جریمه', c.deduction, 6, 'text-amber-600 dark:text-amber-400')}</div>
                 <div class="mt-2" data-i style="--i:7"><div class="flex items-center justify-between text-[11px] mb-1"><span class="text-slate-500 dark:text-slate-400">پرداخت‌شده: <b class="text-slate-700 dark:text-slate-200">${f(c.payment)}</b></span><span class="font-bold ${tone[3]}">${toPersianDigits(pct)}٪</span></div><div class="wi-bar"><i style="--w:${pct}%"></i></div></div>
                 ${attHTML ? `<div class="flex flex-wrap gap-1.5 mt-2.5" data-i style="--i:8">${attHTML}</div>` : ''}
                 <p class="text-[10.5px] text-slate-400 mt-2.5 pt-2 border-t border-dashed border-slate-300 dark:border-slate-600" data-i style="--i:9"><i class="fa-solid fa-boxes-stacked ml-1"></i>${f(my2.length)} کارکرد در این دوره • ${f(qty)} عدد${w.wageType === 'daily' && c.days ? ' • ' + f(c.days) + ' روز کارکرد' : ''}</p>
@@ -11745,59 +10959,44 @@
                 wiState.raf = requestAnimationFrame(step);
             } else if (num) num.textContent = f(target);
         }
-        var mgrEditF = '';
         function mgrHtmlFinance() {
             const M = mgr(), F = mgrFin(), mk = selectedMonthFilter, cur = escapeHTML(appSettings.currency || 'تومان'), f = formatNumber;
             const ws = M.workers.filter(w => w.active || F.txns.some(x => x.workerId === w.id && x.monthKey === mk));
             mgrPieceCache = { mk, map: mgrPieceTotals(mk) };
             const rows = ws.map(w => ({ w, c: mgrFinCalc(w, mk) }));
             mgrPieceCache = null;
-            const tot = rows.reduce((a, r) => ({ earn: a.earn + r.c.net, adv: a.adv + r.c.advance, pay: a.pay + r.c.payment, remain: a.remain + r.c.remain }), { earn: 0, adv: 0, pay: 0, remain: 0 });
-            const ef = F.txns.find(x => x.id === mgrEditF) || null;
-            const wOpts = ws.map(w => `<option value="${escapeHTML(w.id)}" ${ef && ef.workerId === w.id ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('');
-            const tOpts = Object.keys(MGR_FIN_TYPES).map(k => `<option value="${k}" ${ef && ef.type === k ? 'selected' : ''}>${MGR_FIN_TYPES[k][0]}</option>`).join('');
+            const tot = rows.reduce((a, r) => ({ earn: a.earn + r.c.earn + r.c.bonus - r.c.deduction, adv: a.adv + r.c.advance, pay: a.pay + r.c.payment, remain: a.remain + r.c.remain }), { earn: 0, adv: 0, pay: 0, remain: 0 });
+            const wOpts = ws.map(w => `<option value="${escapeHTML(w.id)}">${escapeHTML(w.name)}</option>`).join('');
+            const tOpts = Object.keys(MGR_FIN_TYPES).map(k => `<option value="${k}">${MGR_FIN_TYPES[k][0]}</option>`).join('');
             const cards = rows.map(({ w, c }) => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 space-y-2">
                 <div class="flex items-center justify-between gap-2"><div class="flex items-center gap-2 min-w-0">${mgrMiniAvatar(w, 34)}<div class="min-w-0"><p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p><p class="text-[11px] text-slate-500 dark:text-slate-400">${mgrWageLabel(w.wageType) || 'کارمزدی (از کارکردها)'}${w.wageType && w.wageType !== 'piece' ? (w.rate ? ' • ' + f(w.rate) + ' ' + cur : ' • نرخ ثبت نشده') : ''}</p></div></div>
-                ${w.wageType === 'daily' && c.daysAuto ? `<span class="text-[11px] text-slate-500 shrink-0">روز کارکرد: <b>${toPersianDigits(c.days)}</b> (از حضور و غیاب)</span>` : w.wageType === 'daily' ? `<label class="flex items-center gap-1 text-[11px] text-slate-500 shrink-0">روز کارکرد <input type="text" inputmode="numeric" maxlength="2" value="${c.days ? toPersianDigits(c.days) : ''}" data-mgr-change="f-days" data-id="${escapeHTML(w.id)}" class="w-14 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100"></label>` : w.wageType === 'monthly' ? `<label class="flex items-center gap-1.5 text-[11px] text-slate-500 shrink-0">حقوق ماهانه (${cur}) <input type="text" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="ثبت نشده" value="${w.rate ? escapeHTML(f(w.rate)) : ''}" data-mgr-change="w-rate" data-id="${escapeHTML(w.id)}" class="w-32 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100"></label>` : ''}</div>
+                ${w.wageType === 'daily' && c.daysAuto ? `<span class="text-[11px] text-slate-500 shrink-0">روز کارکرد: <b>${toPersianDigits(c.days)}</b> (از حضور و غیاب)</span>` : w.wageType === 'daily' ? `<label class="flex items-center gap-1 text-[11px] text-slate-500 shrink-0">روز کارکرد <input type="text" inputmode="numeric" maxlength="2" value="${c.days ? toPersianDigits(c.days) : ''}" data-mgr-change="f-days" data-id="${escapeHTML(w.id)}" class="w-14 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100"></label>` : ''}</div>
                 <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-slate-600 dark:text-slate-300">
                     <span>${w.wageType === 'daily' || w.wageType === 'monthly' ? 'حقوق' : 'کارکرد'}: <b>${f(c.earn)}</b></span><span>پاداش: <b>${f(c.bonus)}</b></span>
                     <span>مساعده: <b>${f(c.advance)}</b></span><span>کسری: <b>${f(c.deduction)}</b></span>
-                    <span>اضافه‌کاری${c.otMin ? ' (' + formatMinutesDuration(c.otMin) + ')' : ''}: <b>${f(c.otPay)}</b></span><span>کسر مرخصی${c.leaveMin ? ' (' + formatMinutesDuration(c.leaveMin) + ')' : ''}: <b>${f(c.leaveDeduct)}</b></span>
-                    <span>کسر غیبت${c.absentDeduct ? ' (' + toPersianDigits(c.absent) + ' روز)' : ''}: <b>${f(c.absentDeduct)}</b></span><span>پرداخت‌شده: <b>${f(c.payment)}</b></span></div>
-                <div class="grid grid-cols-2 gap-2">
-                    <label class="kf-rate-box">مبلغ هر ساعت اضافه‌کاری<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="${(mgrFin().def && mgrFin().def.ot) ? f(mgrFin().def.ot) : 'ثبت نشده'}" value="${(F.rates && F.rates[w.id] && F.rates[w.id].ot) ? escapeHTML(f(F.rates[w.id].ot)) : ''}" data-mgr-change="f-rot" data-id="${escapeHTML(w.id)}" class="${MI}"></label>
-                    <label class="kf-rate-box">مبلغ هر ساعت مرخصی (کسر)<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="${(mgrFin().def && mgrFin().def.lv) ? f(mgrFin().def.lv) : 'ثبت نشده'}" value="${(F.rates && F.rates[w.id] && F.rates[w.id].lv) ? escapeHTML(f(F.rates[w.id].lv)) : ''}" data-mgr-change="f-rlv" data-id="${escapeHTML(w.id)}" class="${MI}"></label></div>
-                ${c.otMin && !c.otRate ? '<p class="text-[11px] text-amber-600 dark:text-amber-400">اضافه‌کاری ثبت شده ولی مبلغ هر ساعت آن تعیین نشده است.</p>' : ''}
-                ${c.leaveMin && !c.leaveRate ? '<p class="text-[11px] text-amber-600 dark:text-amber-400">مرخصی ساعتی ثبت شده ولی مبلغ هر ساعت مرخصی تعیین نشده است.</p>' : ''}
+                    <span class="col-span-2">پرداخت‌شده: <b>${f(c.payment)}</b></span></div>
                 <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-200 dark:border-slate-700"><span class="text-xs font-bold ${c.remain > 0 ? 'text-emerald-600 dark:text-emerald-400' : c.remain < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}">مانده: ${f(Math.abs(c.remain))} ${cur}${c.remain < 0 ? ' (بدهکار)' : ''}</span>
                 ${c.remain > 0 ? `<button type="button" data-mgr="f-settle" data-id="${escapeHTML(w.id)}" class="tactile-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-[11px]">تسویه‌ی مانده</button>` : ''}</div></div>`).join('');
             const tx = F.txns.filter(x => x.monthKey === mk).slice().reverse().map(x => {
                 const w = mgrWorker(x.workerId), t = MGR_FIN_TYPES[x.type];
-                return `<tr class="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50"><td class="p-2.5 tabular-nums">${escapeHTML(toPersianDigits(x.date || '—'))}</td><td class="p-2.5 font-semibold">${escapeHTML(w ? w.name : 'حذف‌شده')}</td><td class="p-2.5 font-bold ${t[1]}">${t[0]}</td><td class="p-2.5 tabular-nums">${f(x.amount)} ${cur}</td><td class="p-2.5">${escapeHTML(x.note || '—')}</td>${mgrActBtns('f-edit', 'f-del', x.id)}</tr>`;
+                return `<div class="flex items-center justify-between gap-2 rounded-xl border border-slate-300 dark:border-slate-600 p-2.5"><div class="min-w-0"><p class="text-xs font-bold ${t[1]}">${t[0]} • ${f(x.amount)} ${cur}</p><p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">${escapeHTML(w ? w.name : 'حذف‌شده')}${x.date ? ' • ' + escapeHTML(x.date) : ''}${x.note ? ' • ' + escapeHTML(x.note) : ''}</p></div>
+                    <button type="button" data-mgr="f-del" data-id="${escapeHTML(x.id)}" title="حذف" class="w-8 h-8 shrink-0 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></div>`;
             }).join('');
             return `<div class="grid grid-cols-2 gap-2">${mgrStat('مجموع حقوق و کارکرد', f(tot.earn) + ' ' + cur, 'text-indigo-600 dark:text-indigo-400')}${mgrStat('مساعده‌ها', f(tot.adv) + ' ' + cur, 'text-rose-600 dark:text-rose-400')}${mgrStat('پرداخت‌شده', f(tot.pay) + ' ' + cur, 'text-slate-700 dark:text-slate-200')}${mgrStat('مانده‌ی قابل پرداخت', f(tot.remain) + ' ' + cur, 'text-emerald-600 dark:text-emerald-400')}</div>
                 <p class="text-[11px] text-slate-400 text-center">دوره‌ی مالی: ${mgrMonthLabel()}</p>
                 <div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
-                    <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">مبلغ ساعتی اضافه‌کاری و مرخصی (پیش‌فرض همه‌ی پرسنل)</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <label class="kf-rate-box">مبلغ هر ساعت اضافه‌کاری (${cur})<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="مثلاً ۸۰٬۰۰۰" value="${(F.def && F.def.ot) ? escapeHTML(f(F.def.ot)) : ''}" data-mgr-change="f-dot" class="${MI}"></label>
-                        <label class="kf-rate-box">مبلغ هر ساعت مرخصی — کسر از حقوق (${cur})<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="مثلاً ۵۰٬۰۰۰" value="${(F.def && F.def.lv) ? escapeHTML(f(F.def.lv)) : ''}" data-mgr-change="f-dlv" class="${MI}"></label>
-                    </div>
-                    <p class="text-[11px] text-slate-400">برای هر نفر می‌توانید در کارت خودش مبلغ جداگانه بگذارید؛ در غیر این صورت همین مبلغ اعمال می‌شود. اضافه‌کاری را در تب «حضور» ثبت کنید.</p>
-                </div>
-                <div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
-                    <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">${ef ? 'ویرایش تراکنش' : 'ثبت تراکنش'}</h4>
+                    <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">ثبت تراکنش</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <select id="mgrFWorker" class="${MI}"><option value="">— انتخاب پرسنل —</option>${wOpts}</select>
                         <select id="mgrFType" class="${MI}">${tOpts}</select>
-                        <input id="mgrFAmount" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="مبلغ (${cur})" value="${ef ? escapeHTML(f(ef.amount)) : ''}" class="${MI}">
-                        <input id="mgrFDate" maxlength="10" inputmode="numeric" value="${escapeHTML(ef ? (ef.date || '') : getCurrentJalaliInfo().fullDateStr)}" class="${MI}">
+                        <input id="mgrFAmount" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="مبلغ (${cur})" class="${MI}">
+                        <input id="mgrFDate" maxlength="10" inputmode="numeric" value="${escapeHTML(getCurrentJalaliInfo().fullDateStr)}" class="${MI}">
                     </div>
-                    <input id="mgrFNote" maxlength="200" placeholder="توضیحات (اختیاری)" value="${ef ? escapeHTML(ef.note || '') : ''}" class="${MI}">
-                    <div class="flex gap-2"><button type="button" data-mgr="f-add" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">${ef ? 'ذخیره‌ی ویرایش' : 'ثبت'}</button>${ef ? '<button type="button" data-mgr="f-cancel" class="px-4 py-2 border border-slate-400 rounded-xl text-xs text-slate-600 dark:text-slate-300">انصراف</button>' : ''}</div>
+                    <input id="mgrFNote" maxlength="200" placeholder="توضیحات (اختیاری)" class="${MI}">
+                    <button type="button" data-mgr="f-add" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">ثبت</button>
                 </div>
                 <div class="space-y-2">${cards || mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.')}</div>
-                ${mgrListCard('fa-coins', 'لیست حقوق و مالی — ' + mgrMonthLabel(), ['تاریخ', 'پرسنل', 'نوع', 'مبلغ', 'توضیحات'], tx, 'هنوز تراکنشی برای این ماه ثبت نشده است.', 'mgrFinRows')}`;
+                ${tx ? `<h4 class="text-xs font-bold text-slate-700 dark:text-slate-200 pt-1">تراکنش‌های این ماه</h4><div class="space-y-2">${tx}</div>` : ''}`;
         }
 
         function mgrHtmlSections() {
@@ -11821,7 +11020,7 @@
             if (mgrEditW && !mgrWorker(mgrEditW)) mgrEditW = ''; // پرسنلِ در حال ویرایش در تب دیگر حذف شده باشد
             if (mgrEditS && !mgrSection(mgrEditS)) mgrEditS = '';
             const M = mgr(), val = i => (document.getElementById(i) || {}).value || '';
-            if (a === 'tab') { mgrTab = id; const pg = id === 'attendance' ? 'att' : id === 'finance' ? 'fin' : 'mgr'; if (appTab !== pg) return setAppTab(pg); return mgrRender(); }
+            if (a === 'tab') { mgrTab = id; return mgrRender(); }
             if (a === 'w-dl') return mgrDownloadWorker(id);
             if (a === 'w-dl-all') return mgrDownloadAll();
             if (a === 'w-save') {
@@ -11868,16 +11067,6 @@
                     mgrSaveReport(); applyManagerToUI(); mgrRender();
                 });
             }
-            else if (a === 'a-edit') { mgrAttDate = st; mgrRender(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-            else if (a === 'a-del') {
-                const w = mgrWorker(id);
-                return showCustomConfirm(`ثبت حضور و غیاب «${w ? w.name : 'حذف‌شده'}» در تاریخ ${st} حذف شود؟`, ok => {
-                    if (!ok) return;
-                    const A = mgrAtt(); if (A[st]) { delete A[st][id]; if (!Object.keys(A[st]).length) delete A[st]; }
-                    mgrAttMinSet(st, id, 0); mgrOtMinSet(st, id, 0); delete mgrOtOpen[st + '|' + id];
-                    mgrSaveReport('حذف شد.'); mgrRender();
-                });
-            }
             else if (a === 'a-set') {
                 const A = mgrAtt(), d = A[mgrAttDate] || (A[mgrAttDate] = {});
                 if (!mgrWorker(id) || !MGR_ATT[st]) return;
@@ -11889,20 +11078,6 @@
                 const cur = mgrAttMinGet(mgrAttDate, id), v = parsePersianInt(st);
                 const n = a === 'a-minh' ? Math.min(v, 23) * 60 + cur % 60 : Math.floor(cur / 60) * 60 + Math.min(v, 59);
                 mgrAttMinSet(mgrAttDate, id, n);
-            }
-            else if (a === 'a-ot') {
-                if (!mgrWorker(id)) return;
-                const k = mgrAttDate + '|' + id;
-                if (mgrOtMinGet(mgrAttDate, id) > 0) { mgrOtMinSet(mgrAttDate, id, 0); delete mgrOtOpen[k]; }
-                else if (mgrOtOpen[k]) delete mgrOtOpen[k];
-                else mgrOtOpen[k] = true;
-            }
-            else if (a === 'a-oth' || a === 'a-otm') {
-                if (!mgrWorker(id)) return;
-                const cur = mgrOtMinGet(mgrAttDate, id), v = parsePersianInt(st) || 0;
-                const n = a === 'a-oth' ? Math.min(v, 23) * 60 + cur % 60 : Math.floor(cur / 60) * 60 + Math.min(v, 59);
-                mgrOtMinSet(mgrAttDate, id, n);
-                mgrOtOpen[mgrAttDate + '|' + id] = true;
             }
             else if (a === 'a-all') {
                 const A = mgrAtt(), d = A[mgrAttDate] || (A[mgrAttDate] = {});
@@ -11922,13 +11097,10 @@
                 if (!MGR_FIN_TYPES[type]) return showFeedbackBanner('نوع تراکنش نامعتبر است.', 'warn');
                 if (amount <= 0) return showFeedbackBanner('مبلغ را وارد کنید.', 'warn');
                 if (ds && !date) return showFeedbackBanner('تاریخ را به شکل ۱۴۰۵/۰۱/۱۵ وارد کنید.', 'warn');
-                const ex = F.txns.find(x => x.id === mgrEditF);
-                if (ex) { Object.assign(ex, { workerId: wid, type, amount, date, note: val('mgrFNote').trim().slice(0, 200) }); mgrEditF = ''; showFeedbackBanner('تراکنش ویرایش شد.', 'success'); }
-                else { F.txns.push({ id: mgrId('f'), workerId: wid, type, amount, date, monthKey: selectedMonthFilter, note: val('mgrFNote').trim().slice(0, 200) }); showFeedbackBanner('تراکنش ثبت شد.', 'success'); }
+                F.txns.push({ id: mgrId('f'), workerId: wid, type, amount, date, monthKey: selectedMonthFilter, note: val('mgrFNote').trim().slice(0, 200) });
+                showFeedbackBanner('تراکنش ثبت شد.', 'success');
             }
-            else if (a === 'f-edit') { mgrEditF = id; mgrRender(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-            else if (a === 'f-cancel') { mgrEditF = ''; }
-            else if (a === 'f-del') { const F = mgrFin(); F.txns = F.txns.filter(x => x.id !== id); if (mgrEditF === id) mgrEditF = ''; }
+            else if (a === 'f-del') { const F = mgrFin(); F.txns = F.txns.filter(x => x.id !== id); }
             else if (a === 'f-settle') {
                 const w = mgrWorker(id); if (!w) return;
                 const c = mgrFinCalc(w, selectedMonthFilter); if (c.remain <= 0) return;
@@ -11937,22 +11109,6 @@
             }
             else if (a === 'f-days') {
                 const n = Math.min(31, parsePersianInt(st)); mgrFin().days[id + '|' + selectedMonthFilter] = n;
-            }
-            else if (a === 'w-rate') {
-                const w = mgrWorker(id); if (!w || w.wageType !== 'monthly') return;
-                w.rate = Math.max(0, Math.min(1e13, parsePersianInt(st) || 0));
-                okMsg = 'حقوق ماهانه ثبت شد.';
-            }
-            else if (a === 'f-dot' || a === 'f-dlv') {
-                const F = mgrFin(); if (!F.def) F.def = {};
-                F.def[a === 'f-dot' ? 'ot' : 'lv'] = Math.max(0, Math.min(1e10, parsePersianInt(st) || 0));
-            }
-            else if (a === 'f-rot' || a === 'f-rlv') {
-                if (!mgrWorker(id)) return;
-                const F = mgrFin(); if (!F.rates) F.rates = {};
-                const r = F.rates[id] || (F.rates[id] = {});
-                r[a === 'f-rot' ? 'ot' : 'lv'] = Math.max(0, Math.min(1e10, parsePersianInt(st) || 0));
-                if (!r.ot && !r.lv) delete F.rates[id];
             }
             else if (a === 'asg') {
                 const r = allRecords.find(x => String(x.id) === String(id)), w = mgrWorker(st); if (!r || !w) return;
@@ -12146,7 +11302,6 @@
                     <td class="c-total p-2.5 whitespace-nowrap tabular-nums font-bold ${noTotal ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}">${formatPriceValue(r.totalPrice)}</td>
                     <td class="c-due p-2.5 whitespace-nowrap text-slate-500 dark:text-slate-400">${r.workDuration ? escapeHTML(r.workDuration) : '-'}</td>
                     <td class="c-end p-2.5 whitespace-nowrap text-slate-500 dark:text-slate-400">${r.endDateTime ? escapeHTML(r.endDateTime) : '-'}</td>
-                    ${cfCells(r)}
                     <td class="c-next p-2.5 whitespace-nowrap text-slate-500 dark:text-slate-400">${nextHTML}</td>
                     <td class="c-status p-2.5">
                         <span class="text-xs px-2.5 py-0.5 rounded-full border font-medium whitespace-nowrap inline-flex items-center gap-2.5 ${getStatusBadgeClass(dispSt)}">
@@ -12490,8 +11645,6 @@
         renderStreakBadge();
         checkDeliveryProgressNotifications();
         setInterval(checkDeliveryProgressNotifications, 60 * 1000);
-        setTimeout(checkNoteReminders, 2500);
-        setTimeout(scheduleNoteNativeSync, 4000);
         setInterval(() => { if (!document.hidden) renderActiveProgressWidget(); }, 20 * 1000);
         // [رفع درخواست] رندرِ دوره‌ای کادر انگیزشی تا چرخشِ پیام‌ها (حداقل ۱۰ پیامِ متفاوت در روز، بدون
         // تکرار) حتی وقتی کاربر کاری انجام نمی‌دهد هم پیش برود؛ خودِ pickFromPool تضمین می‌کند که پیام
