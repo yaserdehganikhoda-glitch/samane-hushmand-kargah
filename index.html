@@ -3800,7 +3800,8 @@
                 sections: A(m.sections).map(x => x && { id: I(x.id) || mgrId('s'), name: T(x.name, 60) }).filter(x => x && x.name).slice(0, 50),
                 workers: A(m.workers).map(x => x && { id: I(x.id) || mgrId('w'), name: T(x.name, 100), phone: T(x.phone, 40), sectionId: I(x.sectionId), role: T(x.role, 60), code: T(x.code, 20), note: T(x.note, 300), startDate: dk(x.startDate), endDate: dk(x.endDate), active: x.active !== false, photo: (isSafeImageDataUrl(x.photo) && x.photo.length <= 60000) ? x.photo : null }).filter(x => x && x.name).slice(0, 500),
                 company: T(m.company, 80),
-                payslips: A(m.payslips).map(p => p && { id: I(p.id) || mgrId('p'), workerId: I(p.workerId), name: T(p.name, 100), code: T(p.code, 20), monthKey: /^\d{4}-\d{1,2}$/.test(String(p.monthKey)) ? String(p.monthKey) : '', base: N(p.base), ot: N(p.ot), bonus: N(p.bonus), insurance: N(p.insurance), tax: N(p.tax), advance: N(p.advance), status: p.status === 'paid' ? 'paid' : 'unpaid' }).filter(p => p && p.workerId && p.monthKey).slice(0, 5000),
+                payCfg: { ins: Math.min(100, Math.max(0, Number(m.payCfg && m.payCfg.ins) || 0)) },
+                payslips: A(m.payslips).map(p => p && { id: I(p.id) || mgrId('p'), workerId: I(p.workerId), name: T(p.name, 100), code: T(p.code, 20), monthKey: /^\d{4}-\d{1,2}$/.test(String(p.monthKey)) ? String(p.monthKey) : '', base: N(p.base), ot: N(p.ot), bonus: N(p.bonus), advance: N(p.advance), fine: N(p.fine), status: p.status === 'paid' ? 'paid' : 'unpaid' }).filter(p => p && p.workerId && p.monthKey).slice(0, 5000),
                 schema: 3
             };
             return s;
@@ -10850,7 +10851,7 @@
         /* ==================== قابلیت کارفرما (مدیر کارگاه): بخش‌ها، پرسنل و ارجاع کار ==================== */
         var mgrTab = 'workers', mgrEditW = '', mgrEditS = '', mgrLastTab = '';
         var mgrFormPhoto; // undefined = بدون تغییر نسبت به عکس ذخیره‌شده؛ null = حذف؛ رشته = عکس جدید
-        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها']];
+        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها'], ['settings', 'fa-gear', 'تنظیمات']];
         const MI = 'w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all';
         var mgrVer = 0;
         function mgrId(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -11221,7 +11222,7 @@
             document.getElementById('mgrHeaderSub').innerText = `دوره‌ی گزارش: ${mgrMonthLabel()}`;
             { const sep = appTab === 'fin'; document.getElementById('mgrTabs').classList.toggle('hidden', sep); const hd = document.getElementById('mgrHeaderSub').parentElement; if (hd) hd.classList.toggle('hidden', sep); }
             document.getElementById('mgrTabs').innerHTML = MGR_TABS.map(([k, ic, t]) => `<button type="button" data-mgr="tab" data-k="${k}" class="shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold ${k === mgrTab ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-b-2 border-purple-600' : 'text-slate-400 dark:text-slate-500'}"><i class="fa-solid ${ic}"></i> ${t}</button>`).join('');
-            const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections, finance: mgrHtmlFinance }[mgrTab];
+            const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections, finance: mgrHtmlFinance, settings: mgrHtmlSettings }[mgrTab];
             const bodyEl = document.getElementById('mgrBody'), keepTop = (mgrLastTab === mgrTab) ? bodyEl.scrollTop : 0;
             bodyEl.innerHTML = fn(); bodyEl.scrollTop = keepTop; mgrLastTab = mgrTab; mgrApplyMainView();
             const tabs = document.getElementById('mgrTabs'); tabs.setAttribute('role', 'tablist');
@@ -11315,54 +11316,74 @@
 
 
 
-        /* ---------- حقوق و مالی (فیش حقوقی پرسنل) ---------- */
+        /* ---------- حقوق و مالی: دریافت خودکار از لیست کارکردهای هر پرسنل + کسورات + گزارش کلی ---------- */
         var mgrEditP = '';
-        const MGR_PF = [['base', 'حقوق پایه'], ['ot', 'اضافه‌کاری'], ['bonus', 'پاداش و تشویقی']], MGR_PD = [['insurance', 'حق بیمه'], ['tax', 'مالیات'], ['advance', 'مساعده / پیش‌پرداخت']];
-        function mgrPCalc(p) { const b = (p.base || 0) + (p.ot || 0) + (p.bonus || 0), d = (p.insurance || 0) + (p.tax || 0) + (p.advance || 0); return { b, d, net: b - d }; }
-        function mgrSlipHTML(p) {
-            const f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان'), c = mgrPCalc(p), w = mgrWorker(p.workerId), sc = w ? mgrSection(w.sectionId) : null;
-            const [y, m] = String(p.monthKey).split('-'), mon = `${PERSIAN_MONTHS[parseInt(m, 10) - 1] || ''} ${toPersianDigits(y)}`;
-            const no = `PAY-${y}-${String(m).padStart(2, '0')}-${escapeHTML(p.code || '000')}`;
-            const kv = (k, v, cl) => `<div class="mb-3"><p class="text-xs text-slate-400">${k}</p><p class="text-base font-bold ${cl || 'text-slate-800'}">${v}</p></div>`;
-            const rows = a => a.map(([k, t]) => `<div class="flex justify-between py-2.5 border-b border-slate-100 text-sm text-slate-700"><span>${t}</span><span>${f(p[k] || 0)}</span></div>`).join('');
-            const tot = (t, v) => `<div class="flex justify-between pt-3 mt-1 border-t-2 border-slate-200 font-bold text-slate-800"><span>${t}</span><span>${f(v)}</span></div>`;
-            return `<div class="bg-white text-slate-800 rounded-3xl overflow-hidden" dir="rtl">
-                <div class="flex justify-between items-start p-5 border-b border-dashed border-slate-200"><div><h3 class="text-lg font-extrabold text-blue-600">${escapeHTML(mgr().company || 'کارگاه')}</h3><p class="text-xs text-slate-400 mt-1">فیش حقوقی و دستمزد پرسنل</p></div>
-                    <div class="text-left"><p class="font-extrabold">${mon}</p><p class="text-xs text-slate-400 mt-1" dir="ltr">${no}</p></div></div>
-                <div class="p-5 bg-slate-50">${kv('نام و نام خانوادگی', escapeHTML(p.name))}${kv('کد پرسنلی', escapeHTML(p.code || '—'))}${kv('سمت / نقش', escapeHTML((w && w.role) || (sc && sc.name) || '—'))}${kv('وضعیت پرداخت', p.status === 'paid' ? 'پرداخت شده' : 'پرداخت نشده', p.status === 'paid' ? 'text-emerald-500' : 'text-amber-500')}</div>
-                <div class="p-5"><h4 class="font-extrabold mb-1">حقوق و مزایا</h4>${rows(MGR_PF)}${tot('جمع مزایا', c.b)}
-                    <h4 class="font-extrabold mt-6 mb-1">کسورات</h4>${rows(MGR_PD)}${tot('جمع کسورات', c.d)}</div>
-                <div class="p-6 text-center bg-blue-50"><p class="text-sm font-bold text-blue-600">خالص پرداختی (${cur})</p><p class="text-3xl font-extrabold mt-2">${f(c.net)}</p></div></div>`;
+        function mgrPayCfg() { const c = mgr().payCfg || {}; return { ins: c.ins || 0 }; }
+        function mgrSlip(wid, mk) { return mgr().payslips.find(x => x.workerId === wid && x.monthKey === mk) || null; }
+        function mgrPayRow(w, mk) {
+            const recs = allRecords.filter(r => r.monthKey === mk && String(r.workerId || '') === w.id), p = mgrSlip(w.id, mk) || {}, cfg = mgrPayCfg();
+            const qty = recs.reduce((a, r) => a + (Number(r.quantity) || 0), 0), piece = recs.reduce((a, r) => a + (typeof r.totalPrice === 'number' ? r.totalPrice : 0), 0);
+            const extra = (p.base || 0) + (p.ot || 0) + (p.bonus || 0), gross = piece + extra, ins = Math.round(gross * cfg.ins / 100), adv = (p.advance || 0) + (p.fine || 0), ded = ins + adv;
+            return { w, p, recs, qty, piece, extra, gross, ins, adv, ded, net: gross - ded, paid: p.status === 'paid', noPrice: recs.filter(r => typeof r.totalPrice !== 'number').length };
         }
-        function slipClose() { const e = document.getElementById('slipOverlay'); if (e) e.remove(); document.body.classList.remove('slip-open'); }
-        function mgrSlipOpen(id) {
-            const p = mgr().payslips.find(x => x.id === id); if (!p) return; slipClose();
-            const el = document.createElement('div'); el.id = 'slipOverlay'; el.className = 'fixed inset-0 z-[90] overflow-y-auto bg-slate-900/60 p-3';
-            el.innerHTML = `<div class="max-w-md mx-auto"><div class="no-print flex gap-2 mb-2"><button type="button" onclick="window.print()" class="tactile-btn flex-1 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold"><i class="fa-solid fa-print ml-1"></i>چاپ فیش</button><button type="button" onclick="slipClose()" class="tactile-btn flex-1 py-2.5 rounded-xl bg-white text-slate-700 text-xs font-bold">بستن</button></div>${mgrSlipHTML(p)}</div>`;
+        function mgrPayRows(mk) { const M = mgr(); return M.workers.filter(w => w.active || mgrSlip(w.id, mk) || allRecords.some(r => r.monthKey === mk && String(r.workerId || '') === w.id)).map(w => mgrPayRow(w, mk)); }
+        function mgrPaySummary(rows, cur) {
+            const f = formatNumber, t = { recs: 0, qty: 0, piece: 0, extra: 0, gross: 0, ded: 0, net: 0, paid: 0, noPrice: 0 };
+            rows.forEach(r => { t.recs += r.recs.length; t.qty += r.qty; t.piece += r.piece; t.extra += r.extra; t.gross += r.gross; t.ded += r.ded; t.net += r.net; if (r.paid) t.paid += r.net; t.noPrice += r.noPrice; });
+            const card = (k, v, c) => `<div class="rounded-xl border border-slate-200 dark:border-slate-700 p-2.5"><p class="text-[10.5px] text-slate-500">${k}</p><p class="text-sm font-extrabold ${c || ''}">${v}</p></div>`;
+            const g = {}; rows.forEach(r => { const k = (mgrSection(r.w.sectionId) || {}).name || 'بدون بخش', o = g[k] || (g[k] = { n: 0, qty: 0, gross: 0, ded: 0, net: 0 }); o.n++; o.qty += r.qty; o.gross += r.gross; o.ded += r.ded; o.net += r.net; });
+            const secRows = Object.keys(g).map(k => `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2 font-bold">${escapeHTML(k)}</td><td class="p-2">${f(g[k].n)}</td><td class="p-2">${f(g[k].qty)}</td><td class="p-2">${f(g[k].gross)}</td><td class="p-2 text-rose-600">${f(g[k].ded)}</td><td class="p-2 font-bold">${f(g[k].net)}</td></tr>`).join('');
+            return { t, html: `<div class="grid grid-cols-2 sm:grid-cols-4 gap-2">${card('پرسنل', f(rows.length))}${card('کارکردهای ثبت‌شده', f(t.recs) + ' • ' + f(t.qty) + ' عدد')}${card('درآمد کارکرد (' + cur + ')', f(t.piece), 'text-indigo-600')}${card('ثابت، اضافه‌کاری و پاداش', f(t.extra))}${card('جمع ناخالص', f(t.gross))}${card('جمع کسورات', f(t.ded), 'text-rose-600')}${card('جمع خالص پرداختی', f(t.net), 'text-emerald-600')}${card('پرداخت‌شده / مانده', f(t.paid) + ' / ' + f(t.net - t.paid), 'text-amber-600')}</div>
+                ${t.noPrice ? `<p class="text-[11px] text-amber-600 mt-2"><i class="fa-solid fa-triangle-exclamation ml-1"></i>${f(t.noPrice)} کارکرد بدون قیمت است و در درآمد حساب نشده (قیمت را در لیست کارکردها کامل کنید).</p>` : ''}
+                ${secRows ? `<div class="overflow-x-auto mt-3"><table class="w-full text-xs text-center"><thead class="bg-slate-100 dark:bg-slate-800"><tr>${['بخش', 'پرسنل', 'تعداد', 'ناخالص', 'کسورات', 'خالص'].map(h => `<th class="p-2">${h}</th>`).join('')}</tr></thead><tbody>${secRows}</tbody></table></div>` : ''}` };
+        }
+        function mgrOverlay(html) {
+            slipClose(); const el = document.createElement('div'); el.id = 'slipOverlay'; el.className = 'fixed inset-0 z-[90] overflow-y-auto bg-slate-900/60 p-3';
+            el.innerHTML = `<div class="max-w-3xl mx-auto"><div class="no-print flex gap-2 mb-2 max-w-md"><button type="button" onclick="window.print()" class="tactile-btn flex-1 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold"><i class="fa-solid fa-print ml-1"></i>چاپ</button><button type="button" onclick="slipClose()" class="tactile-btn flex-1 py-2.5 rounded-xl bg-white text-slate-700 text-xs font-bold">بستن</button></div>${html}</div>`;
             document.body.appendChild(el); document.body.classList.add('slip-open');
         }
+        function slipClose() { const e = document.getElementById('slipOverlay'); if (e) e.remove(); document.body.classList.remove('slip-open'); }
+        function mgrSlipHTML(r) {
+            const f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان'), p = r.p, w = r.w, sc = mgrSection(w.sectionId), cfg = mgrPayCfg();
+            const [y, m] = selectedMonthFilter.split('-'), mon = mgrMonthLabel(), no = `PAY-${y}-${String(m).padStart(2, '0')}-${escapeHTML(w.code || '000')}`;
+            const kv = (k, v, cl) => `<div class="mb-3"><p class="text-xs text-slate-400">${k}</p><p class="text-base font-bold ${cl || 'text-slate-800'}">${v}</p></div>`;
+            const row = (t, v) => v ? `<div class="flex justify-between py-2.5 border-b border-slate-100 text-sm text-slate-700"><span>${t}</span><span>${f(v)}</span></div>` : '';
+            const tot = (t, v) => `<div class="flex justify-between pt-3 mt-1 border-t-2 border-slate-200 font-bold text-slate-800"><span>${t}</span><span>${f(v)}</span></div>`;
+            const items = r.recs.slice(0, 80).map(x => `<tr class="border-t border-slate-100"><td class="p-1.5">${escapeHTML(x.itemCode || '')} ${escapeHTML(x.itemTitle || '')}</td><td class="p-1.5">${f(Number(x.quantity) || 0)}</td><td class="p-1.5">${typeof x.unitPrice === 'number' ? f(x.unitPrice) : '—'}</td><td class="p-1.5">${typeof x.totalPrice === 'number' ? f(x.totalPrice) : '—'}</td></tr>`).join('');
+            return `<div class="bg-white text-slate-800 rounded-3xl overflow-hidden max-w-md mx-auto" dir="rtl">
+                <div class="flex justify-between items-start p-5 border-b border-dashed border-slate-200"><div><h3 class="text-lg font-extrabold text-blue-600">${escapeHTML(mgr().company || 'کارگاه')}</h3><p class="text-xs text-slate-400 mt-1">فیش حقوقی و دستمزد پرسنل</p></div><div class="text-left"><p class="font-extrabold">${mon}</p><p class="text-xs text-slate-400 mt-1" dir="ltr">${no}</p></div></div>
+                <div class="p-5 bg-slate-50">${kv('نام و نام خانوادگی', escapeHTML(w.name))}${kv('کد پرسنلی', escapeHTML(w.code || '—'))}${kv('سمت / نقش', escapeHTML(w.role || (sc && sc.name) || '—'))}${kv('وضعیت پرداخت', r.paid ? 'پرداخت شده' : 'پرداخت نشده', r.paid ? 'text-emerald-500' : 'text-amber-500')}</div>
+                <div class="p-5"><h4 class="font-extrabold mb-1">حقوق و مزایا</h4>${row('درآمد کارکرد (' + f(r.recs.length) + ' کارکرد • ' + f(r.qty) + ' عدد)', r.piece)}${row('حقوق ثابت', p.base)}${row('اضافه‌کاری', p.ot)}${row('پاداش و تشویقی', p.bonus)}${tot('جمع مزایا', r.gross)}
+                    <h4 class="font-extrabold mt-6 mb-1">کسورات</h4>${row('حق بیمه (' + f(cfg.ins) + '٪)', r.ins)}${row('مساعده / پیش‌پرداخت', p.advance)}${row('جریمه و سایر کسورات', p.fine)}${tot('جمع کسورات', r.ded)}
+                    ${items ? `<h4 class="font-extrabold mt-6 mb-1">ریز کارکردها</h4><table class="w-full text-[11px] text-center"><thead class="text-slate-400"><tr><th class="p-1.5">کار</th><th>تعداد</th><th>قیمت</th><th>مبلغ</th></tr></thead><tbody>${items}</tbody></table>` : ''}</div>
+                <div class="p-6 text-center bg-blue-50"><p class="text-sm font-bold text-blue-600">خالص پرداختی (${cur})</p><p class="text-3xl font-extrabold mt-2">${f(r.net)}</p></div></div>`;
+        }
         function mgrHtmlFinance() {
-            const M = mgr(), mk = selectedMonthFilter, f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان');
-            const e = M.payslips.find(x => x.id === mgrEditP) || {}, ws = M.workers.filter(w => w.active || w.id === e.workerId);
-            const list = M.payslips.filter(p => p.monthKey === mk);
+            const M = mgr(), mk = selectedMonthFilter, f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان'), cfg = mgrPayCfg();
+            const rows = mgrPayRows(mk), sm = mgrPaySummary(rows, cur), ew = mgrWorker(mgrEditP), er = ew ? rows.find(r => r.w.id === ew.id) || mgrPayRow(ew, mk) : null, e = er ? er.p : {};
             const inp = ([k, t]) => `<label class="block text-[11px] text-slate-500">${t} (${cur})<input id="mgrP_${k}" data-thousands="1" inputmode="numeric" maxlength="15" value="${e[k] ? escapeHTML(f(e[k])) : ''}" class="${MI} mt-1"></label>`;
-            const rows = list.map(p => { const c = mgrPCalc(p); return `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2.5 font-bold whitespace-nowrap">${escapeHTML(p.name)}</td><td class="p-2.5">${f(c.b)}</td><td class="p-2.5 text-rose-600">${f(c.d)}</td><td class="p-2.5 font-bold">${f(c.net)}</td>
-                <td class="p-2.5"><button type="button" data-mgr="p-status" data-id="${escapeHTML(p.id)}" class="px-2 py-1 rounded-full text-[11px] border ${p.status === 'paid' ? 'text-emerald-600 border-emerald-300' : 'text-amber-600 border-amber-300'}">${p.status === 'paid' ? 'پرداخت شده' : 'پرداخت نشده'}</button></td>
-                <td class="p-2.5 whitespace-nowrap"><button type="button" data-mgr="p-view" data-id="${escapeHTML(p.id)}" title="مشاهده و چاپ فیش" class="w-8 h-8 text-indigo-600"><i class="fa-solid fa-file-invoice"></i></button><button type="button" data-mgr="p-edit" data-id="${escapeHTML(p.id)}" title="ویرایش" class="w-8 h-8 text-amber-600"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="p-del" data-id="${escapeHTML(p.id)}" title="حذف" class="w-8 h-8 text-rose-500"><i class="fa-solid fa-trash text-xs"></i></button></td></tr>`; }).join('');
-            const sum = list.reduce((a, p) => a + mgrPCalc(p).net, 0);
-            return `<div class="space-y-3"><h2 class="text-base font-bold flex items-center gap-2"><i class="fa-solid fa-coins text-indigo-600"></i>حقوق و مالی — ${mgrMonthLabel()}</h2>
-                <input data-mgr-change="p-company" maxlength="80" placeholder="نام کارگاه (بالای فیش چاپ می‌شود)" value="${escapeHTML(M.company || '')}" class="${MI}">
-                <div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
-                    <h4 class="text-xs font-bold">${e.id ? 'ویرایش فیش حقوقی' : 'ثبت فیش حقوقی'}</h4>
-                    <select id="mgrPWorker" class="${MI}"><option value="">— انتخاب پرسنل —</option>${ws.map(w => `<option value="${escapeHTML(w.id)}" ${e.workerId === w.id ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('')}</select>
-                    <p class="text-[11px] font-bold text-emerald-600">حقوق و مزایا</p><div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${MGR_PF.map(inp).join('')}</div>
-                    <p class="text-[11px] font-bold text-rose-600">کسورات</p><div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${MGR_PD.map(inp).join('')}</div>
-                    <select id="mgrPStatus" class="${MI}"><option value="unpaid" ${e.status !== 'paid' ? 'selected' : ''}>پرداخت نشده</option><option value="paid" ${e.status === 'paid' ? 'selected' : ''}>پرداخت شده</option></select>
-                    <p class="text-[11px] text-slate-400">برای هر پرسنل در هر ماه یک فیش ثبت می‌شود؛ ثبت دوباره، همان فیش را به‌روز می‌کند.</p>
-                    <div class="flex gap-2"><button type="button" data-mgr="p-save" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">${e.id ? 'ذخیره' : 'ثبت فیش'}</button>${e.id ? '<button type="button" data-mgr="p-cancel" class="px-4 py-2 border border-slate-400 rounded-xl text-xs">انصراف</button>' : ''}</div></div>
-                ${list.length ? `<div class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-x-auto"><table class="w-full text-xs text-center"><thead class="bg-slate-100 dark:bg-slate-800"><tr>${['پرسنل', 'جمع مزایا', 'جمع کسورات', 'خالص', 'وضعیت', ''].map(h => `<th class="p-2.5">${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table><p class="p-2.5 text-xs font-bold border-t border-slate-300 dark:border-slate-600">جمع خالص پرداختی: ${f(sum)} ${cur}</p></div>` : mgrEmpty('هنوز فیشی برای این ماه ثبت نشده است.')}</div>`;
+            const form = er ? `<div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600"><h4 class="text-xs font-bold">محاسبه‌ی «${escapeHTML(er.w.name)}» — ${mgrMonthLabel()}</h4>
+                    <p class="text-[11px] text-indigo-600">از لیست کارکردها: ${f(er.recs.length)} کارکرد • ${f(er.qty)} عدد • درآمد ${f(er.piece)} ${cur}${er.noPrice ? ' • ' + f(er.noPrice) + ' کارکرد بدون قیمت' : ''}</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${[['base', 'حقوق ثابت'], ['ot', 'اضافه‌کاری'], ['bonus', 'پاداش و تشویقی'], ['advance', 'مساعده / پیش‌پرداخت'], ['fine', 'جریمه و سایر کسورات']].map(inp).join('')}
+                    <label class="block text-[11px] text-slate-500">وضعیت پرداخت<select id="mgrPStatus" class="${MI} mt-1"><option value="unpaid" ${!er.paid ? 'selected' : ''}>پرداخت نشده</option><option value="paid" ${er.paid ? 'selected' : ''}>پرداخت شده</option></select></label></div>
+                    <div class="flex gap-2 flex-wrap"><button type="button" data-mgr="p-save" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">ذخیره</button><button type="button" data-mgr="p-cancel" class="px-4 py-2 border border-slate-400 rounded-xl text-xs">انصراف</button>${er.p.id ? '<button type="button" data-mgr="p-del" data-id="' + escapeHTML(er.w.id) + '" class="px-4 py-2 border border-rose-400 text-rose-600 rounded-xl text-xs">پاک‌کردن موارد دستی</button>' : ''}</div></div>` : '';
+            const body = rows.map(r => `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2.5 font-bold whitespace-nowrap">${escapeHTML(r.w.name)}</td><td class="p-2.5 whitespace-nowrap">${f(r.recs.length)} • ${f(r.qty)}</td><td class="p-2.5">${f(r.piece)}</td><td class="p-2.5">${f(r.extra)}</td><td class="p-2.5">${f(r.gross)}</td><td class="p-2.5 text-rose-600">${f(r.ded)}</td><td class="p-2.5 font-bold">${f(r.net)}</td>
+                <td class="p-2.5"><button type="button" data-mgr="p-status" data-id="${escapeHTML(r.w.id)}" class="px-2 py-1 rounded-full text-[11px] border ${r.paid ? 'text-emerald-600 border-emerald-300' : 'text-amber-600 border-amber-300'}">${r.paid ? 'پرداخت شده' : 'پرداخت نشده'}</button></td>
+                <td class="p-2.5 whitespace-nowrap"><button type="button" data-mgr="p-view" data-id="${escapeHTML(r.w.id)}" title="فیش حقوقی" class="w-8 h-8 text-indigo-600"><i class="fa-solid fa-file-invoice"></i></button><button type="button" data-mgr="p-edit" data-id="${escapeHTML(r.w.id)}" title="موارد دستی و کسورات" class="w-8 h-8 text-amber-600"><i class="fa-solid fa-pen text-xs"></i></button></td></tr>`).join('');
+            return `<div class="space-y-3"><div class="flex items-center justify-between gap-2"><h2 class="text-base font-bold flex items-center gap-2"><i class="fa-solid fa-coins text-indigo-600"></i>حقوق و مالی — ${mgrMonthLabel()}</h2><button type="button" data-mgr="p-rep" class="tactile-btn px-3 py-2 rounded-xl border border-indigo-500 text-indigo-600 dark:text-indigo-300 text-xs"><i class="fa-solid fa-print ml-1"></i>گزارش کلی</button></div>
+                <p class="text-[11px] text-slate-500">حق بیمه: <b>${escapeHTML(toPersianDigits(String(cfg.ins)))}٪</b> از ناخالص هر پرسنل — در تب «تنظیمات» پنل کارفرما تعیین می‌شود. <button type="button" onclick="mgrTab='settings'; setAppTab('mgr')" class="text-indigo-600 underline">تغییر</button></p>
+                <p class="text-[11px] text-slate-400">درآمد هر پرسنل خودکار از مجموع «مبلغ کل» کارکردهای ارجاع‌شده به او در همین ماه گرفته می‌شود.</p>
+                ${form}${sm.html}
+                ${rows.length ? `<div class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-x-auto"><table class="w-full text-xs text-center"><thead class="bg-slate-100 dark:bg-slate-800"><tr>${['پرسنل', 'کارکرد • تعداد', 'درآمد کارکرد', 'ثابت و اضافات', 'ناخالص', 'کسورات', 'خالص', 'وضعیت', ''].map(h => `<th class="p-2.5 whitespace-nowrap">${h}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>` : mgrEmpty('پرسنلی برای محاسبه وجود ندارد؛ ابتدا در تب «پرسنل» اضافه کنید.')}</div>`;
         }
 
+        function mgrHtmlSettings() {
+            const M = mgr(), ins = mgrPayCfg().ins;
+            return `<div class="space-y-3"><div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600"><h4 class="text-xs font-bold">تنظیمات مالی کارفرما</h4>
+                <label class="block text-[11px] text-slate-500">درصد حق بیمه (یک بار برای همه‌ی پرسنل)<input data-mgr-change="p-cfg" data-id="ins" inputmode="decimal" maxlength="5" value="${escapeHTML(toPersianDigits(String(ins)))}" class="${MI} mt-1"></label>
+                <label class="block text-[11px] text-slate-500">نام کارگاه (بالای فیش و گزارش حقوق چاپ می‌شود)<input data-mgr-change="p-company" maxlength="80" value="${escapeHTML(M.company || '')}" class="${MI} mt-1"></label>
+                <p class="text-[11px] text-slate-400">حق بیمه به‌صورت درصدی از جمع ناخالص هر پرسنل (درآمد کارکرد + حقوق ثابت + اضافه‌کاری + پاداش) در بخش «حقوق و مالی» کسر می‌شود.</p></div></div>`;
+        }
         function mgrHtmlSections() {
             const M = mgr(), e = M.sections.find(x => x.id === mgrEditS) || {};
             const list = M.sections.map(x => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 flex items-center justify-between gap-2"><div><p class="text-sm font-bold text-slate-800 dark:text-slate-100">${escapeHTML(x.name)}</p><p class="text-[11px] text-slate-500">${formatNumber(M.workers.filter(w => w.sectionId === x.id).length)} پرسنل</p></div>
@@ -11432,22 +11453,25 @@
                 });
             }
             else if (a === 'p-company') { M.company = String(st || '').trim().slice(0, 80); }
-            else if (a === 'p-save') {
-                const wid = val('mgrPWorker'), w = mgrWorker(wid); if (!w) return showFeedbackBanner('پرسنل را انتخاب کنید.', 'warn');
-                const d = {}; [...MGR_PF, ...MGR_PD].forEach(([k]) => { d[k] = Math.min(1e13, parsePersianInt(val('mgrP_' + k)) || 0); });
-                if (!d.base && !d.ot && !d.bonus) return showFeedbackBanner('حداقل یکی از مبلغ‌های حقوق و مزایا را وارد کنید.', 'warn');
-                d.status = val('mgrPStatus') === 'paid' ? 'paid' : 'unpaid';
-                const ex = M.payslips.find(x => x.id === mgrEditP) || M.payslips.find(x => x.workerId === wid && x.monthKey === selectedMonthFilter), b = { workerId: wid, name: w.name, code: w.code || '', ...d };
-                if (ex) Object.assign(ex, b); else M.payslips.push({ id: mgrId('p'), monthKey: selectedMonthFilter, ...b });
-                mgrEditP = ''; okMsg = 'فیش حقوقی ذخیره شد.';
-            }
+            else if (a === 'p-cfg') { M.payCfg = M.payCfg || { ins: 0 }; M.payCfg.ins = Math.min(100, Math.max(0, parseFloat(toEnglishDigits(String(st)).replace('٫', '.')) || 0)); }
             else if (a === 'p-edit') { mgrEditP = id; mgrRender(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
             else if (a === 'p-cancel') { mgrEditP = ''; mgrRender(); return; }
-            else if (a === 'p-view') return mgrSlipOpen(id);
-            else if (a === 'p-status') { const p = M.payslips.find(x => x.id === id); if (p) p.status = p.status === 'paid' ? 'unpaid' : 'paid'; }
+            else if (a === 'p-view') { const w = mgrWorker(id); if (w) mgrOverlay(mgrSlipHTML(mgrPayRow(w, selectedMonthFilter))); return; }
+            else if (a === 'p-rep') {
+                const cur = escapeHTML(appSettings.currency || 'تومان'), rows = mgrPayRows(selectedMonthFilter), sm = mgrPaySummary(rows, cur), f = formatNumber;
+                const tr = rows.map(r => `<tr class="border-t border-slate-200"><td class="p-2 font-bold">${escapeHTML(r.w.name)}</td><td class="p-2">${f(r.recs.length)} • ${f(r.qty)}</td><td class="p-2">${f(r.piece)}</td><td class="p-2">${f(r.extra)}</td><td class="p-2">${f(r.ins)}</td><td class="p-2">${f(r.adv)}</td><td class="p-2 font-bold">${f(r.net)}</td><td class="p-2">${r.paid ? 'پرداخت شده' : 'پرداخت نشده'}</td></tr>`).join('');
+                return mgrOverlay(`<div class="bg-white text-slate-800 rounded-3xl p-5 space-y-3" dir="rtl"><h3 class="text-lg font-extrabold text-blue-600">${escapeHTML(M.company || 'کارگاه')} — گزارش کلی حقوق و مالی ${mgrMonthLabel()}</h3>${sm.html}<div class="overflow-x-auto"><table class="w-full text-xs text-center"><thead class="bg-slate-100"><tr>${['پرسنل', 'کارکرد • تعداد', 'درآمد کارکرد', 'ثابت و اضافات', 'حق بیمه', 'مساعده و جریمه', 'خالص', 'وضعیت'].map(h => `<th class="p-2">${h}</th>`).join('')}</tr></thead><tbody>${tr}</tbody></table></div></div>`);
+            }
+            else if (a === 'p-save' || a === 'p-status') {
+                const w = mgrWorker(a === 'p-save' ? mgrEditP : id); if (!w) return;
+                let p = mgrSlip(w.id, selectedMonthFilter); if (!p) { p = { id: mgrId('p'), workerId: w.id, monthKey: selectedMonthFilter, base: 0, ot: 0, bonus: 0, advance: 0, fine: 0, status: 'unpaid' }; M.payslips.push(p); }
+                p.name = w.name; p.code = w.code || '';
+                if (a === 'p-status') p.status = p.status === 'paid' ? 'unpaid' : 'paid';
+                else { ['base', 'ot', 'bonus', 'advance', 'fine'].forEach(k => { p[k] = Math.min(1e13, parsePersianInt(val('mgrP_' + k)) || 0); }); p.status = val('mgrPStatus') === 'paid' ? 'paid' : 'unpaid'; mgrEditP = ''; okMsg = 'محاسبات حقوق ذخیره شد.'; }
+            }
             else if (a === 'p-del') {
-                const p = M.payslips.find(x => x.id === id); if (!p) return;
-                return showCustomConfirm(`فیش حقوقی «${p.name}» حذف شود؟`, ok => { if (!ok) return; M.payslips = M.payslips.filter(x => x.id !== id); if (mgrEditP === id) mgrEditP = ''; mgrSaveReport('حذف شد.'); mgrRender(); });
+                const w = mgrWorker(id); if (!w) return;
+                return showCustomConfirm(`موارد دستی و کسورات «${w.name}» در این ماه پاک شود؟ (درآمد کارکرد دوباره از لیست کارکردها محاسبه می‌شود.)`, ok => { if (!ok) return; M.payslips = M.payslips.filter(x => !(x.workerId === id && x.monthKey === selectedMonthFilter)); mgrEditP = ''; mgrSaveReport('پاک شد.'); mgrRender(); });
             }
             else if (a === 'asg') {
                 const r = allRecords.find(x => String(x.id) === String(id)), w = mgrWorker(st); if (!r || !w) return;
