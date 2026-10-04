@@ -948,30 +948,51 @@
         .kf-rate-box { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: #64748b; }
     </style>
     <style id="finListCss">
-        /* ===== لیست حقوق و مالی: هم‌قالب لیست کارکردها ===== */
-        @media screen {
-            #mgrFinCard table { font-size: calc(12px * var(--rt, 1)); line-height: 1.5; }
-            #mgrFinCard thead th { font-size: .92em; font-weight: 700; line-height: 1.4; padding: .6em .85em; }
-            #mgrFinCard tbody td, #mgrFinCard tfoot td { padding: .5em .85em; line-height: 1.5; }
-            #mgrFinCard .fin-ic { width: 2.3em; height: 2.3em; font-size: 1em; }
-            #mgrFinCard td button.kf-settle { width: auto; height: auto; font-size: .92em; padding: .35em .85em; margin-inline-end: .25em; }
-            #mgrFinCards .rc-card { padding: .8rem .9rem; font-size: calc(12px * var(--rt, 1)); }
-            #mgrFinCards .rc-card .text-sm { font-size: calc(13px * var(--rt, 1)); line-height: 1.45; }
-            #mgrFinCards .rc-card .text-xs { font-size: calc(11.5px * var(--rt, 1)); }
-            #mgrFinCards .rc-card .text-\[11px\] { font-size: calc(10.5px * var(--rt, 1)); }
-        }
-        /* انتخاب دستی نمای جدولی/کارتی روی حالت خودکار (واکنش‌گرا) اولویت دارد */
-        #mgrFinCard[data-view="table"] #mgrFinCards { display: none !important; }
-        #mgrFinCard[data-view="table"] #mgrFinTableWrap { display: block !important; }
-        #mgrFinCard[data-view="card"] #mgrFinTableWrap { display: none !important; }
-        #mgrFinCard[data-view="card"] #mgrFinCards { display: block !important; }
-        #mgrFinCard .fin-c1 { text-align: right; }
-        #mgrFinCard tbody.fin-grp > tr:first-child > td { border-top: 1px solid #cbd5e1; }
-        .dark #mgrFinCard tbody.fin-grp > tr:first-child > td { border-top-color: #475569; }
-        #mgrFinCard tfoot td { position: sticky; bottom: 0; z-index: 2; font-weight: 700; background: #f8fafc; border-top: 2px solid #94a3b8; }
-        .dark #mgrFinCard tfoot td { background: #1e293b; border-top-color: #64748b; }
-        #mgrFinCard tfoot td.fin-c1 { z-index: 3; background: #f8fafc; }
-        .dark #mgrFinCard tfoot td.fin-c1 { background: #1e293b; }
+        /* ===== لیست حقوق و مالی: فقط کارتی ===== */
+        #mgrFinCards { font-size: calc(12px * var(--rt, 1)); display: grid; grid-template-columns: 1fr; gap: .75rem; padding: .75rem; align-content: start; }
+        #mgrFinCards > .hidden { display: none !important; }
+        @media (min-width: 900px) { #mgrFinCards { grid-template-columns: 1fr 1fr; } }
+        #mgrFinCard .fin-ic { width: 2.3em; height: 2.3em; font-size: 1em; }
+        #mgrFinCard .fin-card { border: 1px solid #cbd5e1; border-radius: 1rem; padding: .85rem .9rem; background: #fff; }
+        .dark #mgrFinCard .fin-card { border-color: #475569; background: #0f172a; }
+        #mgrFinCard .fin-tl { font-size: .85em; color: #64748b; }
+        .dark #mgrFinCard .fin-tl { color: #94a3b8; }
+        #mgrFinCard .fin-hero { display: flex; justify-content: space-between; align-items: flex-end; gap: .75rem; margin-top: .7rem; }
+        #mgrFinCard .fin-left { text-align: left; }
+        #mgrFinCard .fin-big { font-size: 1.55em; font-weight: 800; line-height: 1.25; }
+        #mgrFinCard .fin-big small { font-size: .5em; font-weight: 500; color: #94a3b8; }
+        #mgrFinCard .fin-mid { font-size: 1.1em; font-weight: 700; }
+        #mgrFinCard .fin-bar { height: .42rem; border-radius: 99px; background: #e2e8f0; overflow: hidden; margin-top: .5rem; }
+        .dark #mgrFinCard .fin-bar { background: #334155; }
+        #mgrFinCard .fin-bar i { display: block; height: 100%; border-radius: 99px; transition: width .4s; }
+        #mgrFinCard .fin-cap { font-size: .82em; color: #94a3b8; margin-top: .25rem; }
+        #mgrFinCard .fin-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+        #mgrFinCard .fin-chip { font-size: .85em; padding: .12em .65em; border-radius: 99px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+        .dark #mgrFinCard .fin-chip { background: #1e293b; color: #cbd5e1; border-color: #334155; }
+        #mgrFinCard .fin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-top: .65rem; padding-top: .65rem; border-top: 1px dashed #cbd5e1; }
+        .dark #mgrFinCard .fin-grid { border-top-color: #475569; }
+        #mgrFinCard .fin-kv { display: flex; flex-direction: column; gap: .1em; padding: .4em .6em; border-radius: .7rem; background: #f8fafc; border: 1px solid #e2e8f0; min-width: 0; }
+        .dark #mgrFinCard .fin-kv { background: #1e293b; border-color: #334155; }
+        #mgrFinCard .fin-kv > span:first-child { font-size: .85em; color: #64748b; }
+        .dark #mgrFinCard .fin-kv > span:first-child { color: #94a3b8; }
+        #mgrFinCard .fin-kv b { font-size: 1.05em; }
+        #mgrFinCard .fin-acts { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; padding-top: .65rem; border-top: 1px solid #e2e8f0; }
+        .dark #mgrFinCard .fin-acts { border-top-color: #334155; }
+        #mgrFinCard .fin-qa { display: inline-flex; align-items: center; gap: .35em; padding: .38em .85em; border: 1px solid #cbd5e1; border-radius: .75rem; font-size: .92em; color: #475569; background: #fff; }
+        .dark #mgrFinCard .fin-qa { background: #1e293b; border-color: #475569; color: #cbd5e1; }
+        #mgrFinCard .fin-settle { background: #4f46e5; border-color: #4f46e5; color: #fff; font-weight: 700; }
+        .dark #mgrFinCard .fin-settle { background: #4f46e5; color: #fff; }
+        #mgrFinCard .fin-txb { margin-inline-start: auto; }
+        #mgrFinCard .fin-sum { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; padding: .75rem .75rem 0; }
+        @media (min-width: 640px) { #mgrFinCard .fin-sum { grid-template-columns: repeat(4, 1fr); } }
+        #mgrFinCard .fin-tile { padding: .55em .75em; border-radius: .9rem; border: 1px solid #e2e8f0; background: #f8fafc; }
+        .dark #mgrFinCard .fin-tile { background: #1e293b; border-color: #334155; }
+        #mgrFinCard .fin-tv { font-weight: 800; font-size: 1.12em; margin-top: .1em; }
+        #mgrFinCard .fin-sumbar { padding: 0 .85rem; }
+        #mgrFinCard .fin-flt { display: flex; gap: .4rem; overflow-x: auto; padding: .6rem .75rem 0; }
+        #mgrFinCard .fin-f { white-space: nowrap; font-size: .92em; padding: .3em .85em; border-radius: 99px; border: 1px solid #cbd5e1; background: #fff; color: #475569; }
+        .dark #mgrFinCard .fin-f { background: #1e293b; border-color: #475569; color: #cbd5e1; }
+        #mgrFinCard .fin-f.on { background: #4f46e5; border-color: #4f46e5; color: #fff; }
         #mgrFinCard .fin-p0 { padding: 0 !important; }
         #mgrFinCard .fin-tx-item:last-child { border-bottom: 0; }
         #mgrFinCard .kf-sub { display: block; font-size: .82em; font-weight: 400; color: #64748b; }
@@ -11690,15 +11711,14 @@
         /* ---------- لیست حقوق و مالی: هم‌قالب «لیست کارکردها» (جدول + کارت موبایل، جستجو، ترتیب، فیلدها، چاپ، تمام‌صفحه) ---------- */
         const FIN_COLS = [['earn', 'حقوق / کارکرد'], ['ot', 'اضافه‌کاری'], ['bonus', 'پاداش'], ['leave', 'کسر مرخصی'], ['absent', 'کسر غیبت'], ['ded', 'کسری / جریمه'], ['adv', 'مساعده'], ['net', 'خالص'], ['pay', 'پرداخت‌شده'], ['remain', 'مانده'], ['status', 'وضعیت']];
         const FIN_KEYS = ['earn', 'ot', 'bonus', 'leave', 'absent', 'ded', 'adv', 'net', 'pay', 'remain'];
-        const FIN_SORTS = [['default', 'ترتیب پرسنل'], ['name_asc', 'نام: الف تا ی'], ['name_desc', 'نام: ی تا الف'], ['remain_desc', 'مانده: بیشترین'], ['net_desc', 'خالص: بیشترین']];
+        const FIN_SORTS = [['default', 'ترتیب پرسنل'], ['name_asc', 'نام: الف تا ی'], ['name_desc', 'نام: ی تا الف'], ['remain_desc', 'مانده: بیشترین'], ['net_desc', 'خالص: بیشترین'], ['earn_desc', 'حقوق: بیشترین']];
         const FIN_CLR = { ot: 'text-indigo-600 dark:text-indigo-400', bonus: 'text-emerald-600 dark:text-emerald-400', leave: 'text-amber-600 dark:text-amber-400', absent: 'text-amber-600 dark:text-amber-400', ded: 'text-amber-600 dark:text-amber-400', adv: 'text-rose-600 dark:text-rose-400' };
-        var mgrFinQuery = '', mgrFinFull = false, mgrFinOpen = {}, mgrFinSort = 'default', mgrFinView = null, finColsHidden = [];
+        var mgrFinQuery = '', mgrFinFull = false, mgrFinOpen = {}, mgrFinSort = 'default', mgrFinCat = '', finColsHidden = [];
         try {
             const v = JSON.parse(localStorage.getItem('fin_cols_hidden') || '[]'); if (Array.isArray(v)) finColsHidden = v.map(String);
             const s = localStorage.getItem('fin_sort'); if (FIN_SORTS.some(x => x[0] === s)) mgrFinSort = s;
-            const m = localStorage.getItem('fin_view_mode'); if (m === 'table' || m === 'card') mgrFinView = m;
         } catch (e) { /* بی‌اهمیت */ }
-        function finSave() { try { localStorage.setItem('fin_cols_hidden', JSON.stringify(finColsHidden)); localStorage.setItem('fin_sort', mgrFinSort); if (mgrFinView) localStorage.setItem('fin_view_mode', mgrFinView); } catch (e) { /* بی‌اهمیت */ } }
+        function finSave() { try { localStorage.setItem('fin_cols_hidden', JSON.stringify(finColsHidden)); localStorage.setItem('fin_sort', mgrFinSort); } catch (e) { /* بی‌اهمیت */ } }
         // مبلغ با علامت درست (مقدار منفی با «−» و بدون به‌هم‌ریختگی جهت متن)
         function finMoney(n) { n = Math.round(Number(n) || 0); return (n < 0 ? '−' : '') + formatNumber(Math.abs(n)); }
         function mgrFinClr(k, n) {
@@ -11712,13 +11732,13 @@
         function mgrFinTotals(rows) { const T = {}; FIN_KEYS.forEach(k => { T[k] = 0; }); rows.forEach(r => { mgrFinVals(r.c).forEach((v, i) => { T[FIN_KEYS[i]] += v; }); }); return T; }
         function mgrFinStatus(c) {
             // کلیدها همان کلیدهای وضعیت لیست کارکردها هستند تا رنگ و قالب نشان‌ها دقیقاً یکی باشد
-            if (c.remain > 0) return { label: 'قابل پرداخت', key: 'زودتر از موعد' };
-            if (c.remain < 0) return { label: 'بدهکار', key: 'تاخیر' };
-            if (!c.earn && !c.addAll && !c.subAll && !c.payment && !c.advance) return { label: 'بدون محاسبه', key: 'در انتظار' };
-            return { label: 'تسویه‌شده', key: 'به موقع' };
+            if (c.remain > 0) return { label: 'قابل پرداخت', key: 'زودتر از موعد', cat: 'due' };
+            if (c.remain < 0) return { label: 'بدهکار', key: 'تاخیر', cat: 'debt' };
+            if (!c.earn && !c.addAll && !c.subAll && !c.payment && !c.advance) return { label: 'بدون محاسبه', key: 'در انتظار', cat: 'none' };
+            return { label: 'تسویه‌شده', key: 'به موقع', cat: 'done' };
         }
         function mgrFinHit(text) { const q = normalizeSearchText(mgrFinQuery); return !q || normalizeSearchText(text).includes(q); }
-        function mgrFinEffView() { return mgrFinView || (window.innerWidth < 640 ? 'card' : 'table'); }
+        function mgrFinShow(text, cat) { return mgrFinHit(text) && (!mgrFinCat || cat === mgrFinCat); }
         function mgrFinModel() {
             const M = mgr(), F = mgrFin(), mk = selectedMonthFilter, f = formatNumber;
             mgrPieceCache = { mk, map: mgrPieceTotals(mk) };
@@ -11739,7 +11759,7 @@
                 });
             } finally { mgrPieceCache = null; }
             const nm = (a, b) => String(a.w.name).localeCompare(String(b.w.name), 'fa');
-            const S = { name_asc: nm, name_desc: (a, b) => nm(b, a), remain_desc: (a, b) => b.c.remain - a.c.remain, net_desc: (a, b) => b.c.net - a.c.net }[mgrFinSort];
+            const S = { name_asc: nm, name_desc: (a, b) => nm(b, a), remain_desc: (a, b) => b.c.remain - a.c.remain, earn_desc: (a, b) => b.c.earn - a.c.earn, net_desc: (a, b) => b.c.net - a.c.net }[mgrFinSort];
             if (S) rows.sort(S);
             const orphans = F.txns.filter(x => x.monthKey === mk && !M.workers.some(w => w.id === x.workerId)).slice().reverse();
             return { rows, orphans, mk };
@@ -11757,75 +11777,64 @@
         function mgrFinCardHTML(model) {
             const { rows, orphans } = model || mgrFinModel(), cur = escapeHTML(appSettings.currency || 'تومان'), f = formatNumber;
             const LBL = {}; FIN_COLS.forEach(c => { LBL[c[0]] = c[1]; });
-            const shown = FIN_COLS.filter(c => finColsHidden.indexOf(c[0]) < 0), nCols = 3 + shown.length;
-            const hits = rows.filter(r => mgrFinHit(r.text)), T = mgrFinTotals(hits);
-            const th = 'sticky top-0 z-10 p-2.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 shadow-sm';
+            const vis = k => finColsHidden.indexOf(k) < 0;
+            const hits = rows.filter(r => mgrFinShow(r.text, r.st.cat)), T = mgrFinTotals(hits);
             const mini = 'kf-mini border border-slate-400 dark:border-slate-500 rounded-lg text-center bg-white dark:bg-slate-800 dark:text-slate-100';
             const sub = s => s ? `<span class="kf-sub">${s}</span>` : '';
             const warn = s => `<span class="kf-warn">${s}</span>`;
             const badge = st => `<span class="text-xs px-2.5 py-0.5 rounded-full border font-medium whitespace-nowrap inline-flex items-center gap-2.5 ${getStatusBadgeClass(st.key)}"><span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background-color:${getStatusAccentColor(st.key)}"></span>${st.label}</span>`;
+            const pct = (net, paid) => net > 0 ? Math.max(0, Math.min(100, Math.round(paid / net * 100))) : 0;
             const earnIn = (w, c) => w.wageType === 'daily' && c.daysAuto ? sub(toPersianDigits(c.days) + ' روز (از حضور و غیاب)')
                 : w.wageType === 'daily' ? `<label class="kf-inl">روز <input type="text" inputmode="numeric" maxlength="2" value="${c.days ? toPersianDigits(c.days) : ''}" data-mgr-change="f-days" data-id="${escapeHTML(w.id)}" class="${mini}"></label>`
                 : w.wageType === 'monthly' ? `<label class="kf-inl">ماهانه <input type="text" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="ثبت نشده" value="${w.rate ? escapeHTML(f(w.rate)) : ''}" data-mgr-change="w-rate" data-id="${escapeHTML(w.id)}" class="${mini} kf-wide"></label>` : '';
-            const cellHTML = (k, r) => {
-                const c = r.c, v = mgrFinVals(c)[FIN_KEYS.indexOf(k)];
-                if (k === 'status') return badge(r.st);
-                if (k === 'earn') return mgrFinFmt('earn', c.earn) + earnIn(r.w, c);
-                if (k === 'ot') return mgrFinFmt('ot', c.otPay) + (c.otMin ? sub(formatMinutesDuration(c.otMin)) : '') + (c.otMin && !c.otRate ? warn('نرخ ثبت نشده') : '');
-                if (k === 'leave') return mgrFinFmt('leave', c.leaveDeduct) + (c.leaveMin ? sub(formatMinutesDuration(c.leaveMin)) : '') + (c.leaveMin && !c.leaveRate ? warn('نرخ ثبت نشده') : '');
-                if (k === 'absent') return mgrFinFmt('absent', c.absentDeduct) + (c.absentDeduct ? sub(toPersianDigits(c.absent) + ' روز') : '');
-                if (k === 'net' || k === 'remain') return `<b>${mgrFinFmt(k, v)}</b>`;
-                return mgrFinFmt(k, v);
-            };
-            const actBtns = (r, withLabel) => `${r.c.remain > 0 ? `<button type="button" data-mgr="f-settle" data-id="${escapeHTML(r.w.id)}" title="تسویه‌ی مانده" class="kf-settle tactile-btn rounded-lg bg-indigo-600 text-white">تسویه</button>` : ''}<button type="button" data-wid="${escapeHTML(r.w.id)}" onclick="mgrFinQuickAdd(this.dataset.wid)" title="ثبت تراکنش" class="fin-ic w-8 h-8 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"><i class="fa-solid fa-plus text-xs"></i></button>`;
             const chev = open => `<i data-fin-chev class="fa-solid ${open ? 'fa-chevron-down' : 'fa-chevron-left'} text-[9px] ml-1"></i>`;
-            // ---- جدول (نمای دسکتاپ/تبلت) ----
-            const tbodies = rows.map((r, i) => {
-                const { w, c, sc } = r, open = !!mgrFinOpen[w.id], wid = escapeHTML(w.id);
-                const nameBtn = `<button type="button" data-fin-tgl onclick="mgrFinToggle(this)" aria-expanded="${open}" title="نمایش تراکنش‌ها" class="inline-flex items-center text-right font-semibold text-slate-800 dark:text-slate-100">${chev(open)}${escapeHTML(w.name)}${w.active ? '' : ' <span class="text-[10px] font-normal text-slate-400">(غیرفعال)</span>'}</button>`;
-                const wcell = `<td class="fin-c1 fc-worker p-2.5 whitespace-nowrap"><div class="flex items-center gap-2"><div class="min-w-0">${nameBtn}${sub([sc ? escapeHTML(sc.name) : '', escapeHTML(r.wage)].filter(Boolean).join(' • '))}${r.txns.length ? sub(f(r.txns.length) + ' تراکنش') : ''}</div></div></td>`;
-                return `<tbody class="fin-grp${mgrFinHit(r.text) ? '' : ' hidden'}" data-fin-row data-fin-wid="${wid}" data-fin-text="${escapeHTML(r.text)}" data-t="${mgrFinVals(c).join(',')}">`
-                    + `<tr class="group hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors" style="box-shadow: inset 3px 0 0 ${getStatusAccentColor(r.st.key)};"><td class="p-2.5 whitespace-nowrap text-slate-400">${f(i + 1)}</td>${wcell}`
-                    + shown.map(([k]) => `<td class="fc-${k} p-2.5 whitespace-nowrap tabular-nums">${cellHTML(k, r)}</td>`).join('')
-                    + `<td class="p-2.5 text-center no-print whitespace-nowrap">${actBtns(r)}</td></tr>`
-                    + `<tr data-fin-detail class="${open ? '' : 'hidden'}"><td colspan="${nCols}" class="fin-p0">${mgrFinTxHTML(w, r.txns, cur)}</td></tr></tbody>`;
-            }).join('');
-            const orphanBody = orphans.length ? `<tbody class="fin-grp" data-fin-orphan><tr style="box-shadow: inset 3px 0 0 #94a3b8;"><td class="p-2.5 text-slate-400">—</td><td class="fin-c1 p-2.5 whitespace-nowrap font-semibold">پرسنل حذف‌شده${sub(f(orphans.length) + ' تراکنش — در جمع کل نیامده')}</td><td colspan="${nCols - 2}"></td></tr><tr><td colspan="${nCols}" class="fin-p0">${mgrFinTxHTML(null, orphans, cur)}</td></tr></tbody>` : '';
-            const foot = `<tfoot><tr><td class="p-2.5"></td><td class="fin-c1 p-2.5 whitespace-nowrap">جمع کل <span class="text-[10px] font-normal text-slate-400">(<span data-fin-cnt>${f(hits.length)}</span> نفر)</span></td>${shown.map(([k]) => k === 'status' ? '<td></td>' : `<td class="fc-${k} p-2.5 whitespace-nowrap tabular-nums" data-ft="${k}">${mgrFinFmt(k, T[k])}</td>`).join('')}<td class="no-print"></td></tr></tfoot>`;
-            const table = `<div id="mgrFinTableWrap" class="overflow-x-auto max-h-[60vh] hidden sm:block"${mgrFinFull ? ' style="max-height:calc(100vh - 10rem)"' : ''}><table id="mgrFinList" class="w-full text-right text-sm"><thead class="text-slate-600 dark:text-slate-300 text-xs"><tr><th class="${th}">#</th><th class="fin-c1 ${th}">پرسنل / بخش</th>${shown.map(([k, l]) => `<th class="fc-${k} ${th}">${l}</th>`).join('')}<th class="text-center no-print ${th}">عملیات</th></tr></thead>${tbodies}${orphanBody}${foot}</table></div>`;
-            // ---- کارت (نمای موبایل، مثل کارت‌های لیست کارکردها) ----
+            const QA = [['advance', 'fa-hand-holding-dollar', 'مساعده'], ['bonus', 'fa-gift', 'پاداش'], ['deduction', 'fa-circle-minus', 'جریمه'], ['payment', 'fa-money-bill-wave', 'پرداخت']];
             const cards = rows.map((r, i) => {
-                const { w, c, sc } = r, open = !!mgrFinOpen[w.id], vals = mgrFinVals(c);
-                const kv = k => { const n = vals[FIN_KEYS.indexOf(k)]; return `<div class="text-slate-500 dark:text-slate-400">${LBL[k]}: <b class="tabular-nums">${mgrFinFmt(k, n)}</b></div>`; };
-                const extra = ['ot', 'bonus', 'leave', 'absent', 'ded', 'adv'].filter(k => vals[FIN_KEYS.indexOf(k)]).map(kv).join('');
-                return `<div class="rc-card p-4${mgrFinHit(r.text) ? '' : ' hidden'}" data-fin-row data-fin-wid="${escapeHTML(w.id)}" data-fin-text="${escapeHTML(r.text)}" style="box-shadow: inset 3px 0 0 ${getStatusAccentColor(r.st.key)};">`
-                    + `<div class="flex items-start justify-between gap-3"><div class="flex items-center gap-3 min-w-0"><div class="min-w-0"><button type="button" data-fin-tgl onclick="mgrFinToggle(this)" aria-expanded="${open}" class="inline-flex items-center text-right font-semibold text-slate-800 dark:text-slate-100 text-sm">${chev(open)}${escapeHTML(w.name)}${w.active ? '' : ' <span class="text-[10px] font-normal text-slate-400">(غیرفعال)</span>'}</button><div class="mt-1 text-[11px] text-slate-500 dark:text-slate-400"><span>#${f(i + 1)}</span>${sc ? ' <span class="opacity-40">•</span> ' + escapeHTML(sc.name) : ''} <span class="opacity-40">•</span> ${escapeHTML(r.wage)}</div></div></div><div class="shrink-0">${badge(r.st)}</div></div>`
-                    + `<div class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs pt-3 border-t border-dashed border-slate-300 dark:border-slate-600">${['earn', 'net', 'pay', 'remain'].map(kv).join('')}</div>`
-                    + (extra ? `<div class="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px]">${extra}</div>` : '')
-                    + ((c.otMin && !c.otRate) || (c.leaveMin && !c.leaveRate) ? `<div class="mt-1">${warn('نرخ ساعتی اضافه‌کاری/مرخصی ثبت نشده است')}</div>` : '')
-                    + earnIn(w, c)
-                    + `<div class="mt-3 flex items-center justify-between gap-2 pt-2 border-t border-slate-200 dark:border-slate-700"><span class="text-[11px] text-slate-500 dark:text-slate-400">${r.txns.length ? f(r.txns.length) + ' تراکنش' : 'بدون تراکنش'}</span><div class="flex items-center gap-1.5 no-print">${actBtns(r)}</div></div>`
+                const { w, c, sc } = r, open = !!mgrFinOpen[w.id], vals = mgrFinVals(c), wid = escapeHTML(w.id), p = pct(c.net, c.payment + c.advance);
+                const barClr = c.remain < 0 ? '#e11d48' : (c.net > 0 && c.remain === 0 ? '#10b981' : '#6366f1');
+                const items = ['earn', 'ot', 'bonus', 'leave', 'absent', 'ded', 'adv', 'pay'].filter(k => vis(k) && (k === 'earn' || vals[FIN_KEYS.indexOf(k)] || (k === 'ot' && c.otMin) || (k === 'leave' && c.leaveMin))).map(k => {
+                    let ex = '';
+                    if (k === 'earn') ex = earnIn(w, c);
+                    else if (k === 'ot' && c.otMin) ex = sub(formatMinutesDuration(c.otMin)) + (!c.otRate ? warn('نرخ ثبت نشده') : '');
+                    else if (k === 'leave' && c.leaveMin) ex = sub(formatMinutesDuration(c.leaveMin)) + (!c.leaveRate ? warn('نرخ ثبت نشده') : '');
+                    else if (k === 'absent') ex = sub(toPersianDigits(c.absent) + ' روز');
+                    return `<div class="fin-kv"><span>${LBL[k]}</span><b class="tabular-nums">${mgrFinFmt(k, vals[FIN_KEYS.indexOf(k)])}</b>${ex}</div>`;
+                }).join('');
+                const chips = [c.days ? 'کارکرد: ' + toPersianDigits(c.days) + ' روز' : '', c.otMin ? 'اضافه‌کاری: ' + formatMinutesDuration(c.otMin) : '', c.absent ? 'غیبت: ' + toPersianDigits(c.absent) + ' روز' : '', c.leaveMin ? 'مرخصی: ' + formatMinutesDuration(c.leaveMin) : ''].filter(Boolean).map(t => `<span class="fin-chip">${t}</span>`).join('');
+                const hero = (vis('remain') || vis('net')) ? `<div class="fin-hero">${vis('remain') ? `<div><p class="fin-tl">${LBL.remain}</p><p class="fin-big tabular-nums">${mgrFinFmt('remain', c.remain)} <small>${cur}</small></p></div>` : '<div></div>'}${vis('net') ? `<div class="fin-left"><p class="fin-tl">${LBL.net}</p><p class="fin-mid tabular-nums">${mgrFinFmt('net', c.net)}</p></div>` : ''}</div>` : '';
+                const bar = (vis('net') || vis('remain')) ? `<div class="fin-bar" title="سهم پرداخت و مساعده از خالص"><i style="width:${p}%;background:${barClr}"></i></div><p class="fin-cap">${f(p)}٪ از خالص، پرداخت یا مساعده شده</p>` : '';
+                const act = `<div class="fin-acts no-print">${c.remain > 0 ? `<button type="button" data-mgr="f-settle" data-id="${wid}" title="تسویه‌ی کامل مانده" class="fin-qa fin-settle tactile-btn"><i class="fa-solid fa-circle-check"></i>تسویه</button>` : ''}`
+                    + QA.map(([t, ic, l]) => `<button type="button" data-wid="${wid}" data-type="${t}" onclick="mgrFinQuickAdd(this.dataset.wid,this.dataset.type)" title="ثبت ${l}" class="fin-qa tactile-btn"><i class="fa-solid ${ic}"></i>${l}</button>`).join('')
+                    + `<button type="button" data-fin-tgl onclick="mgrFinToggle(this)" aria-expanded="${open}" class="fin-qa fin-txb">${chev(open)}تراکنش‌ها (${f(r.txns.length)})</button></div>`;
+                return `<div class="rc-card fin-card${mgrFinShow(r.text, r.st.cat) ? '' : ' hidden'}" data-fin-row data-fin-wid="${wid}" data-fin-text="${escapeHTML(r.text)}" data-fin-cat="${r.st.cat}" data-t="${vals.join(',')}" style="box-shadow: inset 3px 0 0 ${getStatusAccentColor(r.st.key)};">`
+                    + `<div class="flex items-start justify-between gap-3"><div class="min-w-0"><button type="button" data-fin-tgl onclick="mgrFinToggle(this)" aria-expanded="${open}" class="inline-flex items-center text-right font-bold text-slate-800 dark:text-slate-100 text-sm">${chev(open)}${escapeHTML(w.name)}${w.active ? '' : ' <span class="text-[10px] font-normal text-slate-400">(غیرفعال)</span>'}</button><div class="mt-1 text-[11px] text-slate-500 dark:text-slate-400"><span>#${f(i + 1)}</span>${sc ? ' <span class="opacity-40">•</span> ' + escapeHTML(sc.name) : ''} <span class="opacity-40">•</span> ${escapeHTML(r.wage)}</div></div>${vis('status') ? `<div class="shrink-0">${badge(r.st)}</div>` : ''}</div>`
+                    + hero + bar
+                    + (chips ? `<div class="fin-chips">${chips}</div>` : '')
+                    + (items ? `<div class="fin-grid">${items}</div>` : '')
+                    + act
                     + `<div data-fin-detail class="mt-2 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700${open ? '' : ' hidden'}">${mgrFinTxHTML(w, r.txns, cur)}</div></div>`;
             }).join('');
-            const orphanCard = orphans.length ? `<div class="rc-card p-4" data-fin-orphan style="box-shadow: inset 3px 0 0 #94a3b8;"><p class="font-semibold text-sm text-slate-800 dark:text-slate-100">پرسنل حذف‌شده ${sub(f(orphans.length) + ' تراکنش — در جمع کل نیامده')}</p><div class="mt-2 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">${mgrFinTxHTML(null, orphans, cur)}</div></div>` : '';
-            const cardTotals = `<div class="p-4 bg-slate-50/50 dark:bg-slate-800/40"><p class="text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-2">جمع کل (<span data-fin-cnt>${f(hits.length)}</span> نفر)</p><div class="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs">${['net', 'pay', 'remain', 'adv'].map(k => `<div class="text-slate-500 dark:text-slate-400">${LBL[k]}: <b class="tabular-nums" data-ft="${k}">${mgrFinFmt(k, T[k])}</b></div>`).join('')}</div></div>`;
-            const cardsWrap = `<div id="mgrFinCards" class="sm:hidden divide-y divide-slate-300 dark:divide-slate-600 max-h-[60vh] overflow-y-auto"${mgrFinFull ? ' style="max-height:calc(100vh - 10rem)"' : ''}>${cards}${orphanCard}${cardTotals}</div>`;
+            const orphanCard = orphans.length ? `<div class="rc-card fin-card" data-fin-orphan style="box-shadow: inset 3px 0 0 #94a3b8;"><p class="font-semibold text-sm text-slate-800 dark:text-slate-100">پرسنل حذف‌شده ${sub(f(orphans.length) + ' تراکنش — در جمع کل نیامده')}</p><div class="mt-2 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">${mgrFinTxHTML(null, orphans, cur)}</div></div>` : '';
+            const sp = pct(T.net, T.pay + T.adv);
+            const tile = (k, c) => `<div class="fin-tile"><p class="fin-tl">${LBL[k]}</p><p class="fin-tv tabular-nums ${c || ''}" data-ft="${k}">${mgrFinFmt(k, T[k])}</p></div>`;
+            const summary = `<div class="fin-sum">${tile('net')}${tile('pay')}${tile('adv')}${tile('remain')}</div><div class="fin-sumbar"><div class="fin-bar"><i data-fin-sumbar style="width:${sp}%;background:#6366f1"></i></div><p class="fin-cap"><span data-fin-sumpct>${f(sp)}</span>٪ از مجموع خالص، پرداخت یا مساعده شده • <span data-fin-cnt>${f(hits.length)}</span> نفر</p></div>`;
+            const cnt = c => rows.filter(r => !c || r.st.cat === c).length;
+            const flt = `<div class="fin-flt no-print">${[['', 'همه'], ['due', 'قابل پرداخت'], ['debt', 'بدهکار'], ['done', 'تسویه‌شده']].map(([k, l]) => `<button type="button" onclick="mgrFinSetCat('${k}')" class="fin-f${mgrFinCat === k ? ' on' : ''}">${l} (${f(cnt(k))})</button>`).join('')}</div>`;
             const empty = !rows.length && !orphans.length;
+            const cardsWrap = `<div id="mgrFinCards" class="max-h-[60vh] overflow-y-auto"${mgrFinFull ? ' style="max-height:calc(100vh - 10rem)"' : ''}>${cards}${orphanCard}</div>`;
             const sel = 'no-print w-full appearance-none pr-9 pl-3 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all cursor-pointer';
             const btn = 'no-print p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5 whitespace-nowrap bg-white dark:bg-slate-800 field-box-bg';
-            const effTable = mgrFinEffView() === 'table';
             const header = `<div class="p-4 border-b border-slate-300 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50/50 dark:bg-slate-900/50">`
-                + `<div class="flex items-center gap-3 w-full sm:w-auto"><h3 class="font-bold text-slate-700 dark:text-slate-200 text-sm flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-coins text-indigo-600 dark:text-indigo-400"></i> لیست حقوق و مالی</h3><span class="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-medium whitespace-nowrap border border-indigo-100 dark:border-indigo-900/40">${mgrMonthLabel()} • <span data-fin-cnt>${f(hits.length)}</span> نفر</span></div>`
+                + `<div class="flex items-center gap-3 w-full sm:w-auto"><h3 class="font-bold text-slate-700 dark:text-slate-200 text-sm flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-coins text-indigo-600 dark:text-indigo-400"></i> لیست حقوق و مالی</h3><span class="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-medium whitespace-nowrap border border-indigo-100 dark:border-indigo-900/40">${mgrMonthLabel()}</span></div>`
                 + `<div class="flex items-center gap-2 w-full sm:w-auto justify-end">`
                 + `<div class="relative w-full sm:w-40"><span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400"><i class="fa-solid fa-arrow-down-wide-short text-xs"></i></span><select onchange="mgrFinSetSort(this.value)" title="ترتیب نمایش لیست" class="${sel}">${FIN_SORTS.map(([v, l]) => `<option value="${v}"${v === mgrFinSort ? ' selected' : ''}>${l}</option>`).join('')}</select></div>`
                 + `<div class="relative w-full sm:w-64"><span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span><input type="text" id="mgrFinSearch" value="${escapeHTML(mgrFinQuery)}" oninput="mgrFinFilter(this.value)" placeholder="جستجو در لیست..." class="w-full pr-10 pl-3.5 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"></div>`
-                + `<button type="button" onclick="mgrFinToggleView()" class="${btn}" title="تغییر نمای نمایش (جدولی/کارتی)"><i class="fa-solid ${effTable ? 'fa-table-cells-large' : 'fa-table'}"></i><span class="hidden md:inline">${effTable ? 'نمای کارتی' : 'نمای جدولی'}</span></button>`
                 + `<button type="button" onclick="finColsToggle(this)" id="finColsBtn" title="انتخاب فیلدهای نمایشی" aria-label="انتخاب فیلدهای نمایشی" aria-haspopup="dialog" class="${btn}${finColsHidden.length ? ' ring-2 ring-indigo-300' : ''}"><i class="fa-solid fa-table-columns"></i><span class="hidden md:inline">فیلدها</span></button>`
                 + `<button type="button" onclick="mgrFinPrint()" class="${btn}" title="چاپ لیست حقوق و مالی"><i class="fa-solid fa-print"></i><span class="hidden md:inline">چاپ لیست</span></button>`
                 + `<button type="button" onclick="mgrFinToggleFull()" class="${btn}" title="تمام صفحه کردن لیست"><i id="mgrFinFullIcon" class="fa-solid ${mgrFinFull ? 'fa-compress' : 'fa-expand'}"></i><span class="hidden md:inline">تمام صفحه</span></button></div></div>`;
             const full = mgrFinFull ? ' fixed inset-0 z-50 rounded-none overflow-y-auto m-0 p-4' : '';
-            return `<div id="mgrFinCard" data-view="${mgrFinView || 'auto'}" class="bg-white dark:bg-slate-900 pro-card rounded-2xl shadow-sm border border-slate-300 dark:border-slate-600 overflow-hidden transition-all${full}">${header}`
-                + (empty ? mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.') : `${table}${cardsWrap}<p id="mgrFinNoHit" class="${hits.length ? 'hidden ' : ''}p-8 text-center text-sm text-slate-400">موردی یافت نشد.</p><p class="px-4 py-2 text-[11px] text-slate-400 border-t border-slate-200 dark:border-slate-700">مبالغ به ${cur}. روی نام هر نفر بزنید تا تراکنش‌هایش باز یا بسته شود.</p>`)
+            return `<div id="mgrFinCard" class="bg-white dark:bg-slate-900 pro-card rounded-2xl shadow-sm border border-slate-300 dark:border-slate-600 overflow-hidden transition-all${full}">${header}`
+                + (empty ? mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.') : `${summary}${flt}${cardsWrap}<p id="mgrFinNoHit" class="${hits.length ? 'hidden ' : ''}p-8 text-center text-sm text-slate-400">موردی یافت نشد.</p><p class="px-4 py-2 text-[11px] text-slate-400 border-t border-slate-200 dark:border-slate-700">مبالغ به ${cur}. با دکمه‌های هر کارت، مساعده، پاداش، جریمه یا پرداخت ثبت کنید؛ «تراکنش‌ها» فهرست و ویرایش را باز می‌کند.</p>`)
                 + `</div>`;
         }
         function mgrFinRefresh() {
@@ -11834,20 +11843,24 @@
             host.querySelectorAll('[data-thousands]').forEach(el => { if (el.value) el.value = formatNumber(parsePersianInt(el.value)); });
             mgrA11y(host);
         }
-        // جستجوی زنده: ردیف‌ها و کارت‌ها را فیلتر می‌کند و «جمع کل» را فقط برای موارد نمایان دوباره می‌شمارد
+        // جستجوی زنده و فیلتر وضعیت: کارت‌ها را فیلتر می‌کند و جمع‌ها و نوار پیشرفت را فقط برای کارت‌های نمایان دوباره می‌شمارد
         function mgrFinFilter(v) {
-            mgrFinQuery = String(v == null ? '' : v);
+            if (v !== undefined && v !== null) mgrFinQuery = String(v);
             const host = document.getElementById('mgrFinCard'); if (!host) return;
             const T = FIN_KEYS.map(() => 0); let n = 0, total = 0;
             host.querySelectorAll('[data-fin-row]').forEach(el => {
-                const hit = mgrFinHit(el.getAttribute('data-fin-text') || '');
-                el.classList.toggle('hidden', !hit);
-                if (el.tagName === 'TBODY') { total++; if (hit) { n++; (el.getAttribute('data-t') || '').split(',').forEach((x, i) => { T[i] += Number(x) || 0; }); } }
+                const hit = mgrFinShow(el.getAttribute('data-fin-text') || '', el.getAttribute('data-fin-cat') || '');
+                el.classList.toggle('hidden', !hit); total++;
+                if (hit) { n++; (el.getAttribute('data-t') || '').split(',').forEach((x, i) => { T[i] += Number(x) || 0; }); }
             });
             host.querySelectorAll('[data-ft]').forEach(el => { const k = el.getAttribute('data-ft'), i = FIN_KEYS.indexOf(k); if (i >= 0) el.innerHTML = mgrFinFmt(k, T[i]); });
             host.querySelectorAll('[data-fin-cnt]').forEach(el => { el.textContent = formatNumber(n); });
+            const sp = T[7] > 0 ? Math.max(0, Math.min(100, Math.round((T[8] + T[6]) / T[7] * 100))) : 0;
+            const bar = host.querySelector('[data-fin-sumbar]'); if (bar) bar.style.width = sp + '%';
+            const pc = host.querySelector('[data-fin-sumpct]'); if (pc) pc.textContent = formatNumber(sp);
             const none = document.getElementById('mgrFinNoHit'); if (none) none.classList.toggle('hidden', n > 0 || total === 0);
         }
+        function mgrFinSetCat(k) { mgrFinCat = String(k || ''); mgrFinRefresh(); }
         function mgrFinToggle(el) {
             const row = el.closest('[data-fin-row]'); if (!row) return;
             const id = row.getAttribute('data-fin-wid'), open = !mgrFinOpen[id]; mgrFinOpen[id] = open;
@@ -11859,21 +11872,21 @@
             });
         }
         function mgrFinSetSort(v) { if (!FIN_SORTS.some(x => x[0] === v)) return; mgrFinSort = v; finSave(); mgrFinRefresh(); }
-        function mgrFinToggleView() { mgrFinView = mgrFinEffView() === 'table' ? 'card' : 'table'; finSave(); mgrFinRefresh(); }
         function mgrFinToggleFull() {
             mgrFinFull = !mgrFinFull;
             const card = document.getElementById('mgrFinCard'); if (!card) { mgrFinFull = false; document.body.style.overflow = 'auto'; return; }
             ['fixed', 'inset-0', 'z-50', 'rounded-none', 'overflow-y-auto', 'm-0', 'p-4'].forEach(c => card.classList.toggle(c, mgrFinFull));
-            card.querySelectorAll('#mgrFinTableWrap, #mgrFinCards').forEach(s => { s.style.maxHeight = mgrFinFull ? 'calc(100vh - 10rem)' : ''; });
+            card.querySelectorAll('#mgrFinCards').forEach(s => { s.style.maxHeight = mgrFinFull ? 'calc(100vh - 10rem)' : ''; });
             const ic = document.getElementById('mgrFinFullIcon'); if (ic) ic.className = 'fa-solid ' + (mgrFinFull ? 'fa-compress' : 'fa-expand');
             document.body.style.overflow = mgrFinFull ? 'hidden' : 'auto';
         }
         function mgrFinResetFull() { if (!mgrFinFull) return; mgrFinFull = false; document.body.style.overflow = 'auto'; }
         document.addEventListener('keydown', function (e) { if ((e.key === 'Escape' || e.key === 'Esc') && mgrFinFull && !document.getElementById('finColsPop')) mgrFinToggleFull(); });
         // ثبت تراکنش برای یک نفر: فرم بالای صفحه با همان نفر پر می‌شود
-        function mgrFinQuickAdd(wid) {
+        function mgrFinQuickAdd(wid, type) {
             if (mgrFinFull) mgrFinToggleFull();
             const s = document.getElementById('mgrFWorker'), a = document.getElementById('mgrFAmount'); if (!s) return;
+            const tp = document.getElementById('mgrFType'); if (tp && type && MGR_FIN_TYPES[type]) tp.value = type;
             if (Array.prototype.some.call(s.options, o => o.value === wid)) s.value = wid;
             s.scrollIntoView({ behavior: 'smooth', block: 'center' });
             setTimeout(() => { try { (a || s).focus({ preventScroll: true }); } catch (e) { /* بی‌اهمیت */ } }, 350);
