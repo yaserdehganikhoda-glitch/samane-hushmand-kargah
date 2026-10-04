@@ -875,6 +875,53 @@
     </style>
 <style>html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}</style>
 <script>try{if(localStorage.getItem("sewing_no_anim")==="1")document.documentElement.classList.add("no-anim")}catch(e){}</script>
+    <style id="payrollStyle">
+        /* مالی و حقوق (زبانه‌ی پنل کارفرما) */
+        .pay-sub { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+        .pay-sub button { flex: 1 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; border-radius: 12px; font-size: 12px; font-weight: 700; border: 1px solid rgb(203 213 225); color: rgb(100 116 139); background: transparent; white-space: nowrap; }
+        .pay-sub button.on { background: #f3e8ff; color: #7e22ce; border-color: #a855f7; }
+        .dark .pay-sub button { border-color: rgb(71 85 105); color: rgb(148 163 184); }
+        .dark .pay-sub button.on { background: rgba(88, 28, 135, .35); color: #d8b4fe; border-color: #a855f7; }
+        .pay-card { border: 1px solid rgb(203 213 225); border-radius: 14px; padding: 12px; background: #fff; }
+        .dark .pay-card { border-color: rgb(71 85 105); background: rgb(15 23 42); }
+        .pay-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .pay-stat { border: 1px solid rgb(203 213 225); border-radius: 12px; padding: 9px 8px; text-align: center; background: rgb(248 250 252); }
+        .dark .pay-stat { border-color: rgb(71 85 105); background: rgba(30, 41, 59, .6); }
+        .pay-stat small { display: block; font-size: 10.5px; color: rgb(100 116 139); margin-bottom: 3px; }
+        .dark .pay-stat small { color: rgb(148 163 184); }
+        .pay-stat b { display: block; font-size: 13.5px; font-weight: 800; color: rgb(30 41 59); line-height: 1.5; }
+        .dark .pay-stat b { color: rgb(241 245 249); }
+        .pay-line { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 0; font-size: 12px; border-bottom: 1px dashed rgba(148, 163, 184, .4); }
+        .pay-line:last-of-type { border-bottom: 0; }
+        .pay-line .k { color: rgb(51 65 85); font-weight: 600; min-width: 0; }
+        .dark .pay-line .k { color: rgb(203 213 225); }
+        .pay-line .k small { display: block; font-size: 10.5px; font-weight: 400; color: rgb(100 116 139); margin-top: 1px; }
+        .pay-line .v { font-weight: 800; white-space: nowrap; }
+        .pay-pos { color: #059669; }
+        .pay-neg { color: #e11d48; }
+        .dark .pay-pos { color: #34d399; }
+        .dark .pay-neg { color: #fb7185; }
+        .pay-total { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; padding: 10px 12px; border-radius: 12px; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; font-weight: 800; font-size: 13px; }
+        .pay-total.neg { background: linear-gradient(135deg, #be123c, #e11d48); }
+        .pay-hint { font-size: 11px; line-height: 1.9; color: rgb(100 116 139); }
+        .dark .pay-hint { color: rgb(148 163 184); }
+        .pay-ent { display: flex; align-items: center; gap: 10px; }
+        .pay-ent-ico { width: 34px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+        .pay-ent-ico.pos { background: #d1fae5; color: #047857; }
+        .pay-ent-ico.neg { background: #ffe4e6; color: #be123c; }
+        .dark .pay-ent-ico.pos { background: rgba(16, 185, 129, .18); color: #6ee7b7; }
+        .dark .pay-ent-ico.neg { background: rgba(244, 63, 94, .18); color: #fda4af; }
+        .pay-ent-main { flex: 1; min-width: 0; }
+        .pay-ent-amt { font-weight: 800; font-size: 12.5px; white-space: nowrap; }
+        .pay-preview { min-height: 18px; font-size: 11.5px; font-weight: 700; color: #7c3aed; }
+        .dark .pay-preview { color: #c4b5fd; }
+        #mgrPRate, #mgrPWorker, #mgrPKind { text-overflow: ellipsis; }
+        .pay-chip { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 999px; }
+        .pay-chip.pos { background: #d1fae5; color: #047857; }
+        .pay-chip.neg { background: #ffe4e6; color: #be123c; }
+        .dark .pay-chip.pos { background: rgba(16, 185, 129, .18); color: #6ee7b7; }
+        .dark .pay-chip.neg { background: rgba(244, 63, 94, .18); color: #fda4af; }
+    </style>
     <!-- Tailwind CSS: فایل نهایی و کم‌حجم که با Tailwind CLI ساخته می‌شود (npm run build:css).
          عمداً بعد از استایل‌های بالا آمده تا ترتیب اولویت همان رفتار قبلی را داشته باشد. -->
     <link rel="stylesheet" href="style.css">
@@ -3769,6 +3816,19 @@
                 enabled: !!m.enabled,
                 sections: A(m.sections).map(x => x && { id: I(x.id) || mgrId('s'), name: T(x.name, 60) }).filter(x => x && x.name).slice(0, 50),
                 workers: A(m.workers).map(x => x && { id: I(x.id) || mgrId('w'), name: T(x.name, 100), phone: T(x.phone, 40), sectionId: I(x.sectionId), role: T(x.role, 60), note: T(x.note, 300), startDate: dk(x.startDate), endDate: dk(x.endDate), active: x.active !== false, photo: (isSafeImageDataUrl(x.photo) && x.photo.length <= 60000) ? x.photo : null }).filter(x => x && x.name).slice(0, 500),
+                // مالی و حقوق: نرخ‌های ساعتی (اضافه‌کاری/غیبت/مرخصی) و موارد ثبت‌شده‌ی ماهانه برای هر پرسنل
+                payroll: (() => {
+                    const pr = (m.payroll && typeof m.payroll === 'object' && !Array.isArray(m.payroll)) ? m.payroll : {};
+                    const HK = ['overtime', 'absence', 'leave'], AK = ['overtime', 'absence', 'leave', 'bonus', 'deduction'];
+                    const HR = v => { const n = Math.round(Number(v) * 10000) / 10000; return (Number.isFinite(n) && n > 0) ? Math.min(n, 744) : 0; };
+                    return {
+                        bases: A(pr.bases).map(x => x && { workerId: I(x.workerId), from: /^\d{4}-\d{1,2}$/.test(String(x.from)) ? String(x.from) : '', amount: Math.round(N(x.amount)) }).filter(x => x && x.workerId && x.from).slice(0, 3000),
+                        rates: A(pr.rates).map(x => x && { id: I(x.id) || mgrId('r'), kind: HK.includes(x.kind) ? x.kind : '', title: T(x.title, 60), hourly: Math.round(N(x.hourly)), effect: x.effect === 'minus' ? 'minus' : 'plus' })
+                            .filter(x => x && x.kind && x.title && x.hourly > 0).slice(0, 60),
+                        entries: A(pr.entries).map(x => x && { id: I(x.id) || mgrId('p'), workerId: I(x.workerId), monthKey: /^\d{4}-\d{1,2}$/.test(String(x.monthKey)) ? String(x.monthKey) : '', kind: AK.includes(x.kind) ? x.kind : '', rateTitle: T(x.rateTitle, 60), hourly: Math.round(N(x.hourly)), hours: HR(x.hours), amount: Math.round(N(x.amount)), effect: x.effect === 'minus' ? 'minus' : 'plus', note: T(x.note, 200), at: Number(x.at) || 0 })
+                            .filter(x => x && x.workerId && x.monthKey && x.kind && x.amount > 0).slice(0, 5000)
+                    };
+                })(),
                 schema: 3
             };
             return s;
@@ -10061,6 +10121,7 @@
         function onMonthFilterChange(event) {
             selectedMonthFilter = event.target.value;
             renderDashboard();
+            try { if (typeof appTab !== 'undefined' && appTab === 'mgr') mgrRender(); } catch (e) { /* بی‌اهمیت */ }
             
             const [year, monthNum] = selectedMonthFilter.split('-');
             const monthName = PERSIAN_MONTHS[parseInt(monthNum, 10) - 1] || '';
@@ -10778,7 +10839,7 @@
         /* ==================== قابلیت کارفرما (مدیر کارگاه): بخش‌ها، پرسنل و ارجاع کار ==================== */
         var mgrTab = 'workers', mgrEditW = '', mgrEditS = '', mgrLastTab = '';
         var mgrFormPhoto; // undefined = بدون تغییر نسبت به عکس ذخیره‌شده؛ null = حذف؛ رشته = عکس جدید
-        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها']];
+        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها'], ['payroll', 'fa-wallet', 'مالی و حقوق']];
         const MI = 'w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all';
         var mgrVer = 0;
         function mgrId(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -11142,7 +11203,7 @@
             document.getElementById('mgrHeaderSub').innerText = `دوره‌ی گزارش: ${mgrMonthLabel()}`;
             document.getElementById('mgrTabs').classList.remove('hidden'); { const hd = document.getElementById('mgrHeaderSub').parentElement; if (hd) hd.classList.remove('hidden'); }
             document.getElementById('mgrTabs').innerHTML = MGR_TABS.map(([k, ic, t]) => `<button type="button" data-mgr="tab" data-k="${k}" class="shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold ${k === mgrTab ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-b-2 border-purple-600' : 'text-slate-400 dark:text-slate-500'}"><i class="fa-solid ${ic}"></i> ${t}</button>`).join('');
-            const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections }[mgrTab];
+            const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections, payroll: mgrHtmlPayroll }[mgrTab] || mgrHtmlWorkers;
             const bodyEl = document.getElementById('mgrBody'), keepTop = (mgrLastTab === mgrTab) ? bodyEl.scrollTop : 0;
             bodyEl.innerHTML = fn(); bodyEl.scrollTop = keepTop; mgrLastTab = mgrTab; mgrApplyMainView();
             const tabs = document.getElementById('mgrTabs'); tabs.setAttribute('role', 'tablist');
@@ -11278,11 +11339,13 @@
             else if (a === 'w-toggle') { const w = mgrWorker(id); if (w) w.active = !w.active; }
             else if (a === 'w-del') {
                 const w = mgrWorker(id); if (!w) return;
-                return showCustomConfirm(`پرسنل «${w.name}» حذف شود؟ (برای حفظ سوابق، به‌جای حذف «غیرفعال» کنید). کارکردهای ارجاع‌شده فقط نامش را نگه می‌دارند.`, ok => {
+                return showCustomConfirm(`پرسنل «${w.name}» حذف شود؟ (برای حفظ سوابق، به‌جای حذف «غیرفعال» کنید). کارکردهای ارجاع‌شده فقط نامش را نگه می‌دارند.${(() => { const pn = mgrPay().entries.filter(e => e.workerId === id).length; return pn ? ` ${formatNumber(pn)} مورد مالی ثبت‌شده برای او (اضافه‌کاری، غیبت، پاداش و...) هم پاک می‌شود.` : ''; })()}`, ok => {
                     if (!ok) return;
                     let ch = false; allRecords.forEach(r => { if (r.workerId === id) { r.workerName = w.name; r.workerId = null; r.updatedAt = Date.now(); ch = true; } });
                     if (ch) saveRecords();
                     M.workers = M.workers.filter(x => x.id !== id);
+                    mgrPay().entries = mgrPay().entries.filter(e => e.workerId !== id);
+                    mgrPay().bases = mgrPay().bases.filter(b => b.workerId !== id);
                     mgrSaveReport(); applyManagerToUI(); mgrRender(); renderDashboard();
                 });
             }
@@ -11305,6 +11368,72 @@
             else if (a === 'asg') {
                 const r = allRecords.find(x => String(x.id) === String(id)), w = mgrWorker(st); if (!r || !w) return;
                 r.workerId = w.id; r.workerName = w.name; r.updatedAt = Date.now(); recomputeAllLinks(); saveRecords();
+            }
+            else if (a === 'pay-view') { mgrPayView = ['summary', 'entries', 'rates', 'base'].includes(id) ? id : 'summary'; return mgrRender(); }
+            else if (a === 'pay-quick') { mgrPayView = 'entries'; mgrPayDraft.w = id || ''; return mgrRender(); }
+            else if (a === 'pay-filter') { mgrPayFilterW = st || ''; return mgrRender(); }
+            else if (a === 'pay-base-save') {
+                const P = mgrPay(), w = mgrWorker(id); if (!w) return;
+                const amount = parsePersianInt(val('mgrB_' + id)), from = selectedMonthFilter;
+                if (amount > 1e12) return showFeedbackBanner('مبلغ بیش از حد بزرگ است.', 'warn');
+                P.bases = P.bases.filter(b => !(b.workerId === id && b.from === from));
+                if (amount === 0 && payBaseFor(id, from) === 0) { okMsg = `حقوق پایه‌ی «${w.name}» تعریف نشده است.`; }
+                else {
+                    if (P.bases.length >= 3000) return showFeedbackBanner('سقف تعداد ثبت‌های حقوق پایه پر شده است.', 'warn');
+                    P.bases.push({ workerId: id, from, amount });
+                    okMsg = amount ? `حقوق پایه‌ی «${w.name}» از ${payMonthLabel(from)} ثبت شد.` : `حقوق پایه‌ی «${w.name}» از ${payMonthLabel(from)} حذف شد.`;
+                }
+            }
+            else if (a === 'pay-add') {
+                const P = mgrPay(), kind = val('mgrPKind'), K = PAY_KINDS[kind], w = mgrWorker(val('mgrPWorker'));
+                if (!K) return;
+                if (!w) return showFeedbackBanner('پرسنل را انتخاب کنید.', 'warn');
+                if (P.entries.length >= 5000) return showFeedbackBanner('سقف تعداد موارد مالی پر شده است.', 'warn');
+                const e = { id: mgrId('p'), workerId: w.id, monthKey: selectedMonthFilter, kind, rateTitle: '', hourly: 0, hours: 0, amount: 0, effect: K.eff, note: val('mgrPNote').trim().slice(0, 200), at: Date.now() };
+                if (K.hour) {
+                    const rate = P.rates.find(r => r.id === val('mgrPRate') && r.kind === kind);
+                    if (!rate) return showFeedbackBanner(`ابتدا از زبانه‌ی «نرخ‌های ساعتی» یک نرخ برای ${K.t} تعریف کنید.`, 'warn');
+                    const h = payParseHours(val('mgrPHours'));
+                    if (!h) return showFeedbackBanner('مدت را به ساعت وارد کنید (مثلاً ۲:۳۰ یا ۲.۵).', 'warn');
+                    e.rateTitle = rate.title; e.hourly = rate.hourly; e.hours = h; e.effect = rate.effect; e.amount = Math.round(h * rate.hourly);
+                } else {
+                    e.amount = parsePersianInt(val('mgrPAmount'));
+                }
+                if (!(e.amount > 0)) return showFeedbackBanner(K.hour ? 'مبلغ محاسبه‌شده صفر است؛ مدت یا نرخ را بررسی کنید.' : 'مبلغ را وارد کنید.', 'warn');
+                if (e.amount > 1e12) return showFeedbackBanner('مبلغ بیش از حد بزرگ است.', 'warn');
+                P.entries.push(e); mgrPayDraft = { w: w.id, k: kind };
+                okMsg = `${K.t} برای «${w.name}» ثبت شد.`;
+            }
+            else if (a === 'pay-del') {
+                const P = mgrPay(), e = P.entries.find(x => x.id === id); if (!e) return;
+                return showCustomConfirm('این مورد مالی حذف شود؟', ok => {
+                    if (!ok) return;
+                    P.entries = P.entries.filter(x => x.id !== id);
+                    mgrSaveReport(); mgrRender();
+                });
+            }
+            else if (a === 'pay-rate-save') {
+                const P = mgrPay(), kind = val('mgrRKind'), title = val('mgrRTitle').trim().slice(0, 60), hourly = parsePersianInt(val('mgrRHourly')), effect = val('mgrREffect') === 'minus' ? 'minus' : 'plus';
+                if (!PAY_HOUR_KINDS.includes(kind)) return;
+                if (!title) return showFeedbackBanner('عنوان نرخ را وارد کنید.', 'warn');
+                if (!hourly) return showFeedbackBanner('مبلغ هر ساعت را وارد کنید.', 'warn');
+                if (hourly > 1e10) return showFeedbackBanner('مبلغ نرخ ساعتی بیش از حد بزرگ است.', 'warn');
+                if (P.rates.some(r => r.id !== mgrPayEditR && r.kind === kind && normalizeSearchText(r.title) === normalizeSearchText(title))) return showFeedbackBanner('نرخی با این عنوان برای همین مورد قبلاً تعریف شده است.', 'warn');
+                const cur = P.rates.find(r => r.id === mgrPayEditR);
+                if (cur) Object.assign(cur, { kind, title, hourly, effect });
+                else { if (P.rates.length >= 60) return showFeedbackBanner('سقف تعداد نرخ‌ها پر شده است.', 'warn'); P.rates.push({ id: mgrId('r'), kind, title, hourly, effect }); }
+                mgrPayEditR = ''; okMsg = 'نرخ ساعتی ذخیره شد.';
+            }
+            else if (a === 'pay-rate-edit') { mgrPayEditR = id; mgrPayView = 'rates'; return mgrRender(); }
+            else if (a === 'pay-rate-cancel') { mgrPayEditR = ''; return mgrRender(); }
+            else if (a === 'pay-rate-del') {
+                const P = mgrPay(), r = P.rates.find(x => x.id === id); if (!r) return;
+                return showCustomConfirm(`نرخ «${r.title}» حذف شود؟ مواردی که قبلاً با این نرخ ثبت شده‌اند تغییری نمی‌کنند.`, ok => {
+                    if (!ok) return;
+                    P.rates = P.rates.filter(x => x.id !== id);
+                    if (mgrPayEditR === id) mgrPayEditR = '';
+                    mgrSaveReport(); mgrRender();
+                });
             }
             else return;
             mgrSaveReport(okMsg); applyManagerToUI(); mgrRender(); renderDashboard();
@@ -11402,6 +11531,212 @@
             mgrSave(); applyManagerToUI(); mgrRender(); renderDashboard();
             showFeedbackBanner(`${formatNumber(n)} فایل پرسنل بازیابی شد.`, 'success');
         }
+        /* ==================== مالی و حقوق (زبانه‌ی «مالی و حقوق» در پنل کارفرما) ====================
+         * کارکرد هر پرسنل = جمع «مبلغ کل» رکوردهای ارجاع‌شده به او در ماهِ در حال نمایش.
+         * اضافه‌کاری، غیبت و مرخصی با نرخ ساعتی، و پاداش و کسورات با مبلغ مستقیم توسط کارفرما ثبت می‌شوند.
+         * هر مورد، نرخ ساعتیِ لحظه‌ی ثبت را نگه می‌دارد؛ تغییر نرخ بعدی روی ثبت‌های قبلی اثر نمی‌گذارد. */
+        var mgrPayView = 'summary', mgrPayFilterW = '', mgrPayEditR = '', mgrPayDraft = { w: '', k: 'overtime' };
+        const PAY_KINDS = {
+            overtime: { t: 'اضافه‌کاری', ic: 'fa-clock', hour: true, eff: 'plus' },
+            absence: { t: 'غیبت', ic: 'fa-user-slash', hour: true, eff: 'minus' },
+            leave: { t: 'مرخصی', ic: 'fa-umbrella-beach', hour: true, eff: 'minus' },
+            bonus: { t: 'پاداش', ic: 'fa-gift', hour: false, eff: 'plus' },
+            deduction: { t: 'کسورات', ic: 'fa-circle-minus', hour: false, eff: 'minus' }
+        };
+        const PAY_HOUR_KINDS = ['overtime', 'absence', 'leave'];
+        function mgrPay() { const M = mgr(); if (!M.payroll) M.payroll = { rates: [], entries: [], bases: [] }; if (!M.payroll.bases) M.payroll.bases = []; return M.payroll; }
+        // حقوق پایه‌ی ماهانه: هر ثبت «از ماهِ X به بعد» معتبر است؛ برای هر ماه، آخرین ثبتِ مربوط به همان ماه یا قبل از آن اعمال می‌شود (ماه‌های گذشته با تغییر جدید عوض نمی‌شوند)
+        function payKeyNum(k) { const p = String(k).split('-').map(Number); return (p[0] || 0) * 100 + (p[1] || 0); }
+        function payMonthLabel(k) { const [y, m] = String(k).split('-'); return `${PERSIAN_MONTHS[parseInt(m, 10) - 1] || ''} ${payDigits(y)}`; }
+        function payBaseInfo(wid, mk) {
+            let best = null; const lim = payKeyNum(mk);
+            mgrPay().bases.forEach(b => { if (b.workerId !== wid || payKeyNum(b.from) > lim) return; if (!best || payKeyNum(b.from) >= payKeyNum(best.from)) best = b; });
+            return best ? { amount: best.amount, from: best.from } : { amount: 0, from: '' };
+        }
+        function payBaseFor(wid, mk) { return payBaseInfo(wid, mk).amount; }
+        function payDigits(s) { return appSettings.numFormat === 'english' ? String(s) : toPersianDigits(String(s)); }
+        function payHours(h) {
+            const m = Math.round((Number(h) || 0) * 60), hh = Math.floor(m / 60), mm = m % 60;
+            return mm ? `${payDigits(hh + ':' + String(mm).padStart(2, '0'))} ساعت` : `${payDigits(hh)} ساعت`;
+        }
+        function payMoney(n, signed) {
+            const v = Math.round(Number(n) || 0), cur = appSettings.currency || 'تومان';
+            const sg = v < 0 ? '−' : (signed && v > 0 ? '+' : '');
+            return `${sg}${formatNumber(Math.abs(v))} ${cur}`;
+        }
+        function payCls(n) { return n > 0 ? 'pay-pos' : n < 0 ? 'pay-neg' : ''; }
+        // «۲:۳۰» یا «۲.۵» یا «۲٫۵» → ساعت اعشاری؛ ورودی نامعتبر = ۰
+        function payParseHours(v) {
+            const s = toEnglishDigits(String(v == null ? '' : v)).replace(/[\u066B\u060C,]/g, '.').replace(/[\s\u200c\u200e\u200f]/g, '');
+            if (!s) return 0;
+            let h = 0, m;
+            if ((m = /^(\d{1,3}):(\d{1,2})$/.exec(s))) { if (Number(m[2]) > 59) return 0; h = Number(m[1]) + Number(m[2]) / 60; }
+            else if (/^\d{1,3}(\.\d{1,2})?$/.test(s)) h = Number(s);
+            else return 0;
+            h = Math.round(h * 10000) / 10000;
+            return (h > 0 && h <= 744) ? h : 0;
+        }
+        // پرسنلِ قابل نمایش در ماه: فعال‌ها + غیرفعال‌هایی که در همین ماه کارکرد یا مورد مالی دارند
+        function mgrPayWorkersOfMonth(mk) {
+            const P = mgrPay();
+            return mgr().workers.filter(w => w.active
+                || P.entries.some(e => e.workerId === w.id && e.monthKey === mk)
+                || allRecords.some(r => r.monthKey === mk && String(r.workerId || '') === w.id));
+        }
+        function mgrPayCalc(w, mk) {
+            const P = mgrPay();
+            const recs = allRecords.filter(r => r.monthKey === mk && String(r.workerId || '') === w.id);
+            let work = 0, unknown = 0, qty = 0;
+            recs.forEach(r => {
+                qty += Number(r.quantity) || 0;
+                if (typeof r.totalPrice === 'number' && Number.isFinite(r.totalPrice)) work += r.totalPrice; else unknown++;
+            });
+            const by = {}; Object.keys(PAY_KINDS).forEach(k => { by[k] = { n: 0, hours: 0, amount: 0 }; });
+            const base = payBaseFor(w.id, mk);
+            let plus = work + base, minus = 0;
+            P.entries.forEach(e => {
+                if (e.workerId !== w.id || e.monthKey !== mk || !by[e.kind]) return;
+                const b = by[e.kind], sg = e.effect === 'minus' ? -1 : 1;
+                b.n++; b.hours += e.hours || 0; b.amount += sg * e.amount;
+                if (sg > 0) plus += e.amount; else minus += e.amount;
+            });
+            return { w, recs: recs.length, qty, work, base, unknown, by, plus, minus, total: plus - minus };
+        }
+
+        function mgrHtmlPayroll() {
+            const subs = [['summary', 'fa-table-list', 'خلاصه‌ی حقوق'], ['entries', 'fa-pen-to-square', 'ثبت موارد'], ['rates', 'fa-coins', 'نرخ‌های ساعتی'], ['base', 'fa-money-bill-wave', 'حقوق پایه']];
+            if (!subs.some(s => s[0] === mgrPayView)) mgrPayView = 'summary';
+            const nav = `<div class="pay-sub" role="tablist">${subs.map(([k, ic, t]) => `<button type="button" role="tab" aria-selected="${k === mgrPayView}" data-mgr="pay-view" data-id="${k}" class="${k === mgrPayView ? 'on' : ''}"><i class="fa-solid ${ic}"></i> ${t}</button>`).join('')}</div>`;
+            const body = mgrPayView === 'entries' ? mgrPayEntriesHTML() : mgrPayView === 'rates' ? mgrPayRatesHTML() : mgrPayView === 'base' ? mgrPayBaseHTML() : mgrPaySummaryHTML();
+            return nav + body;
+        }
+
+        function mgrPaySummaryHTML() {
+            const mk = selectedMonthFilter;
+            const rows = mgrPayWorkersOfMonth(mk).map(w => mgrPayCalc(w, mk));
+            if (!rows.length) return mgrEmpty('هنوز پرسنلی برای محاسبه‌ی حقوق وجود ندارد؛ از زبانه‌ی «پرسنل» اضافه کنید.');
+            const sum = f => rows.reduce((a, r) => a + f(r), 0), total = sum(r => r.total);
+            const stat = (t, v, c) => `<div class="pay-stat"><small>${t}</small><b class="${c || ''}">${v}</b></div>`;
+            const head = `<div class="pay-card space-y-2"><div class="flex items-center justify-between gap-2"><h4 class="text-xs font-bold text-slate-700 dark:text-slate-200"><i class="fa-solid fa-calendar-days ml-1"></i> ${mgrMonthLabel()}</h4><span class="pay-hint">${formatNumber(rows.length)} نفر</span></div>
+                <div class="pay-stats">${stat('جمع کارکرد', payMoney(sum(r => r.work)))}${stat('جمع اضافات (با حقوق پایه)', payMoney(sum(r => r.plus), false), 'pay-pos')}${stat('جمع کسورات', payMoney(sum(r => r.minus), false), sum(r => r.minus) > 0 ? 'pay-neg' : '')}${stat('مجموع قابل پرداخت', payMoney(total), total < 0 ? 'pay-neg' : 'pay-pos')}</div>
+                <p class="pay-hint">قابل پرداخت = حقوق پایه + کارکرد + اضافه‌کاری + پاداش − غیبت − کسورات ± مرخصی (طبق نرخ هر مورد). ماه را از انتخابگر ماهِ برنامه عوض کنید.</p></div>`;
+            const card = r => {
+                const w = r.w, sc = mgrSection(w.sectionId);
+                const line = (k, sub, v, cls) => `<div class="pay-line"><span class="k">${k}${sub ? `<small>${sub}</small>` : ''}</span><span class="v ${cls || ''}">${v}</span></div>`;
+                let lines = (r.base > 0 ? line('حقوق پایه', 'مبلغ ثابت ماهانه', payMoney(r.base, true), 'pay-pos') : '') + line('کارکرد ثبت‌شده', `${payDigits(r.recs)} رکورد • ${formatNumber(r.qty)} واحد${r.unknown ? ` • ${payDigits(r.unknown)} رکورد بدون قیمت` : ''}`, payMoney(r.work, true), payCls(r.work));
+                Object.keys(PAY_KINDS).forEach(k => {
+                    const b = r.by[k], K = PAY_KINDS[k]; if (!b.n) return;
+                    lines += line(K.t, `${K.hour ? payHours(b.hours) + ' • ' : ''}${payDigits(b.n)} مورد`, payMoney(b.amount, true), payCls(b.amount));
+                });
+                return `<div class="pay-card ${w.active ? '' : 'opacity-60'}"><div class="flex items-center justify-between gap-2 mb-1"><div class="flex items-center gap-2.5 min-w-0">${mgrMiniAvatar(w, 36)}<div class="min-w-0"><p class="text-sm font-bold text-slate-800 dark:text-slate-100">${escapeHTML(w.name)}${w.active ? '' : ' <span class="text-[10px] text-rose-500">(غیرفعال)</span>'}</p>${sc ? `<p class="pay-hint">${escapeHTML(sc.name)}</p>` : ''}</div></div>
+                    <button type="button" data-mgr="pay-quick" data-id="${escapeHTML(w.id)}" class="tactile-btn shrink-0 px-3 py-1.5 rounded-xl border border-purple-500 text-purple-700 dark:text-purple-300 text-[11px]"><i class="fa-solid fa-plus ml-1"></i> ثبت مورد</button></div>
+                    ${lines}<div class="pay-total ${r.total < 0 ? 'neg' : ''}"><span>قابل پرداخت</span><span>${payMoney(r.total)}</span></div></div>`;
+            };
+            return head + rows.map(card).join('');
+        }
+
+        function mgrPayRateOptions(kind, selId) {
+            const cur = appSettings.currency || 'تومان', rates = mgrPay().rates.filter(r => r.kind === kind);
+            if (!rates.length) return '<option value="">— نرخی تعریف نشده —</option>';
+            return rates.map(r => `<option value="${escapeHTML(r.id)}" ${r.id === selId ? 'selected' : ''}>${escapeHTML(r.title)} — ${formatNumber(r.hourly)} در ساعت${r.effect !== PAY_KINDS[kind].eff ? ' (' + (r.effect === 'minus' ? 'کسر' : 'افزایش') + ')' : ''}</option>`).join('');
+        }
+        function mgrPayFormKind(k) {
+            if (!PAY_KINDS[k]) return;
+            mgrPayDraft.k = k;
+            const K = PAY_KINDS[k], hb = document.getElementById('mgrPHourBox'), ab = document.getElementById('mgrPAmtBox'), sel = document.getElementById('mgrPRate');
+            if (hb) hb.classList.toggle('hidden', !K.hour);
+            if (ab) ab.classList.toggle('hidden', K.hour);
+            if (sel) sel.innerHTML = mgrPayRateOptions(k);
+            mgrPayPreview();
+        }
+        function mgrPayPreview() {
+            const el = document.getElementById('mgrPPrev'); if (!el) return;
+            const k = (document.getElementById('mgrPKind') || {}).value, K = PAY_KINDS[k];
+            const rate = K && K.hour ? mgrPay().rates.find(r => r.id === (document.getElementById('mgrPRate') || {}).value && r.kind === k) : null;
+            const h = payParseHours((document.getElementById('mgrPHours') || {}).value);
+            if (!rate || !h) { el.textContent = ''; return; }
+            const amt = Math.round(h * rate.hourly);
+            el.textContent = `${payHours(h)} × ${formatNumber(rate.hourly)} = ${rate.effect === 'minus' ? '−' : '+'}${formatNumber(amt)} ${appSettings.currency || 'تومان'}`;
+        }
+        function mgrPayRateKind(k) { const el = document.getElementById('mgrREffect'); if (el && PAY_KINDS[k]) el.value = PAY_KINDS[k].eff; }
+
+        function mgrPayEntriesHTML() {
+            const mk = selectedMonthFilter, M = mgr(), P = mgrPay(), cur = appSettings.currency || 'تومان';
+            const act = M.workers.filter(w => w.active);
+            if (!act.length) return mgrEmpty('ابتدا از زبانه‌ی «پرسنل» حداقل یک پرسنل فعال اضافه کنید.');
+            const dw = act.some(w => w.id === mgrPayDraft.w) ? mgrPayDraft.w : '';
+            const k = PAY_KINDS[mgrPayDraft.k] ? mgrPayDraft.k : 'overtime', K = PAY_KINDS[k];
+            const wOpts = '<option value="">— انتخاب پرسنل —</option>' + act.map(w => `<option value="${escapeHTML(w.id)}" ${w.id === dw ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('');
+            const kOpts = Object.keys(PAY_KINDS).map(x => `<option value="${x}" ${x === k ? 'selected' : ''}>${PAY_KINDS[x].t}</option>`).join('');
+            const noRate = K.hour && !P.rates.some(r => r.kind === k);
+            const form = `<div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
+                <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">ثبت مورد مالی — ${mgrMonthLabel()}</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <select id="mgrPWorker" onchange="mgrPayDraft.w=this.value" class="${MI}">${wOpts}</select>
+                    <select id="mgrPKind" onchange="mgrPayFormKind(this.value)" class="${MI}">${kOpts}</select>
+                </div>
+                <div id="mgrPHourBox" class="grid grid-cols-1 sm:grid-cols-2 gap-2 ${K.hour ? '' : 'hidden'}">
+                    <select id="mgrPRate" onchange="mgrPayPreview()" class="${MI}">${mgrPayRateOptions(k)}</select>
+                    <input id="mgrPHours" inputmode="decimal" maxlength="7" oninput="mgrPayPreview()" placeholder="مدت (ساعت) مثلاً ۲:۳۰ یا ۲.۵" class="${MI}">
+                </div>
+                <div id="mgrPAmtBox" class="${K.hour ? 'hidden' : ''}"><input id="mgrPAmount" inputmode="numeric" data-thousands="1" placeholder="مبلغ (${cur})" class="${MI}"></div>
+                <p id="mgrPPrev" class="pay-preview"></p>
+                <input id="mgrPNote" maxlength="200" placeholder="توضیحات (اختیاری؛ مثلاً تاریخ یا علت)" class="${MI}">
+                <button type="button" data-mgr="pay-add" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium"><i class="fa-solid fa-plus ml-1"></i> ثبت</button>
+                ${noRate ? '<p class="pay-hint pay-neg">برای این مورد هنوز نرخ ساعتی تعریف نشده؛ از زبانه‌ی «نرخ‌های ساعتی» اضافه کنید.</p>' : ''}</div>`;
+            let list = P.entries.filter(e => e.monthKey === mk && (!mgrPayFilterW || e.workerId === mgrPayFilterW)).sort((a, b) => (b.at || 0) - (a.at || 0));
+            const fOpts = '<option value="">همه‌ی پرسنل</option>' + M.workers.map(w => `<option value="${escapeHTML(w.id)}" ${w.id === mgrPayFilterW ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('');
+            const rows = list.map(e => {
+                const KK = PAY_KINDS[e.kind], w = mgrWorker(e.workerId), pos = e.effect !== 'minus', sg = pos ? 1 : -1;
+                const det = KK.hour ? `${payHours(e.hours)} × ${formatNumber(e.hourly)} ${cur}` : '';
+                return `<div class="pay-card pay-ent"><span class="pay-ent-ico ${pos ? 'pos' : 'neg'}"><i class="fa-solid ${KK.ic}"></i></span>
+                    <div class="pay-ent-main"><p class="text-sm font-bold text-slate-800 dark:text-slate-100">${KK.t}${e.rateTitle ? ' — ' + escapeHTML(e.rateTitle) : ''}</p>
+                    <p class="pay-hint">${escapeHTML(w ? w.name : 'پرسنل حذف‌شده')}${det ? ' • ' + det : ''}</p>${e.note ? `<p class="pay-hint">${escapeHTML(e.note)}</p>` : ''}</div>
+                    <span class="pay-ent-amt ${pos ? 'pay-pos' : 'pay-neg'}">${payMoney(sg * e.amount, true)}</span>
+                    <button type="button" data-mgr="pay-del" data-id="${escapeHTML(e.id)}" title="حذف" aria-label="حذف" class="w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 shrink-0"><i class="fa-solid fa-trash text-xs"></i></button></div>`;
+            }).join('');
+            return form + `<div class="flex items-center justify-between gap-2"><h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">موارد ثبت‌شده‌ی ${mgrMonthLabel()}</h4><select data-mgr-change="pay-filter" class="${MI}" style="width:auto;max-width:55%">${fOpts}</select></div>
+                <div class="space-y-2">${rows || mgrEmpty('در این ماه موردی ثبت نشده است.')}</div>`;
+        }
+
+        function mgrPayRatesHTML() {
+            const P = mgrPay(), cur = appSettings.currency || 'تومان', e = P.rates.find(r => r.id === mgrPayEditR) || {};
+            const kind = PAY_HOUR_KINDS.includes(e.kind) ? e.kind : 'overtime', eff = e.effect || PAY_KINDS[kind].eff;
+            const kOpts = PAY_HOUR_KINDS.map(k => `<option value="${k}" ${k === kind ? 'selected' : ''}>${PAY_KINDS[k].t}</option>`).join('');
+            const form = `<div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
+                <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">${e.id ? 'ویرایش نرخ ساعتی' : 'افزودن نرخ ساعتی'}</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <select id="mgrRKind" onchange="mgrPayRateKind(this.value)" class="${MI}">${kOpts}</select>
+                    <input id="mgrRTitle" maxlength="60" placeholder="عنوان نرخ (مثلاً اضافه‌کاری شب)" value="${escapeHTML(e.title || '')}" class="${MI}">
+                    <input id="mgrRHourly" inputmode="numeric" data-thousands="1" placeholder="مبلغ هر ساعت (${cur})" value="${e.hourly || ''}" class="${MI}">
+                    <select id="mgrREffect" class="${MI}"><option value="plus" ${eff === 'plus' ? 'selected' : ''}>اثر: اضافه به حقوق</option><option value="minus" ${eff === 'minus' ? 'selected' : ''}>اثر: کسر از حقوق</option></select>
+                </div>
+                <p class="pay-hint">هر نوع (اضافه‌کاری، غیبت، مرخصی) می‌تواند چند نرخ داشته باشد. تغییر یا حذف نرخ روی مواردی که قبلاً ثبت شده اثر نمی‌گذارد.</p>
+                <div class="flex gap-2"><button type="button" data-mgr="pay-rate-save" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">${e.id ? 'ذخیره' : 'افزودن'}</button>
+                ${e.id ? '<button type="button" data-mgr="pay-rate-cancel" class="px-4 py-2 border border-slate-400 rounded-xl text-xs text-slate-600 dark:text-slate-300">انصراف</button>' : ''}</div></div>`;
+            const groups = PAY_HOUR_KINDS.map(k => {
+                const rs = P.rates.filter(r => r.kind === k); if (!rs.length) return '';
+                return `<div class="space-y-2"><h4 class="text-xs font-bold text-slate-700 dark:text-slate-200"><i class="fa-solid ${PAY_KINDS[k].ic} ml-1"></i> ${PAY_KINDS[k].t}</h4>${rs.map(r => `<div class="pay-card pay-ent"><div class="pay-ent-main"><p class="text-sm font-bold text-slate-800 dark:text-slate-100">${escapeHTML(r.title)}</p><p class="pay-hint">${formatNumber(r.hourly)} ${cur} / ساعت • <span class="pay-chip ${r.effect === 'minus' ? 'neg' : 'pos'}">${r.effect === 'minus' ? 'کسر از حقوق' : 'اضافه به حقوق'}</span></p></div>
+                    <button type="button" data-mgr="pay-rate-edit" data-id="${escapeHTML(r.id)}" title="ویرایش" aria-label="ویرایش" class="w-8 h-8 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40 shrink-0"><i class="fa-solid fa-pen text-xs"></i></button>
+                    <button type="button" data-mgr="pay-rate-del" data-id="${escapeHTML(r.id)}" title="حذف" aria-label="حذف" class="w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 shrink-0"><i class="fa-solid fa-trash text-xs"></i></button></div>`).join('')}</div>`;
+            }).join('');
+            return form + (groups || mgrEmpty('هنوز نرخ ساعتی تعریف نشده است.'));
+        }
+
+
+        function mgrPayBaseHTML() {
+            const mk = selectedMonthFilter, cur = appSettings.currency || 'تومان', ws = mgrPayWorkersOfMonth(mk);
+            if (!ws.length) return mgrEmpty('ابتدا از زبانه‌ی «پرسنل» پرسنل اضافه کنید.');
+            const rows = ws.map(w => {
+                const bi = payBaseInfo(w.id, mk);
+                const st = bi.amount > 0 ? `<span class="pay-chip pos">${formatNumber(bi.amount)} ${cur}</span> <span class="pay-hint">از ${payMonthLabel(bi.from)}</span>` : '<span class="pay-hint">حقوق پایه تعریف نشده</span>';
+                return `<div class="pay-card space-y-2"><div class="flex items-center gap-2.5 min-w-0">${mgrMiniAvatar(w, 36)}<div class="min-w-0"><p class="text-sm font-bold text-slate-800 dark:text-slate-100">${escapeHTML(w.name)}${w.active ? '' : ' <span class="text-[10px] text-rose-500">(غیرفعال)</span>'}</p><p>${st}</p></div></div>
+                    <div class="flex gap-2"><input id="mgrB_${escapeHTML(w.id)}" inputmode="numeric" data-thousands="1" placeholder="مبلغ حقوق پایه‌ی ماهانه (${cur})" value="${bi.amount || ''}" class="${MI}" onkeydown="if(event.key==='Enter'){event.preventDefault();mgrAct('pay-base-save','${escapeHTML(w.id)}');}">
+                    <button type="button" data-mgr="pay-base-save" data-id="${escapeHTML(w.id)}" class="tactile-btn shrink-0 px-4 bg-purple-600 text-white rounded-xl text-xs font-medium">ثبت</button></div></div>`;
+            }).join('');
+            return `<div class="pay-card"><p class="pay-hint">مبلغ ثابت ماهانه‌ی هر پرسنل را وارد کنید (برای پرسنل حقوق‌بگیر ماهانه). مبلغ از <b>${mgrMonthLabel()}</b> به بعد اعمال می‌شود و ماه‌های قبل تغییر نمی‌کنند. برای حذف، مبلغ را خالی/۰ بگذارید و ثبت کنید. غیبت و مرخصی را از زبانه‌ی «ثبت موارد» کسر کنید.</p></div>` + rows;
+        }
+
         /* ==================== پایان قابلیت کارفرما ==================== */
 
         function renderDashboardBase() {
