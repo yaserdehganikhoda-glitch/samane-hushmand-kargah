@@ -311,6 +311,43 @@
         #recordsTableCard[data-view="table"] .overflow-x-auto { display: block !important; }
         #recordsTableCard[data-view="card"] #recordsCardView { display: block !important; }
         body[data-grouped="1"] #recordsTableWrap, body[data-grouped="1"] #recordsCardView { display: none !important; }
+        /* ===== اندازه‌ی فونت و فاصله‌های لیست کارکردها =====
+           فاصله‌ها با واحد em نوشته شده‌اند، پس همیشه متناسب با فونت جدول/کارت تغییر می‌کنند.
+           برای بزرگ‌تر یا کوچک‌تر کردن کل لیست فقط مقدار --rt (ضریب مقیاس) را عوض کنید.
+           ضریب مقیاس با گزینه‌ی «اندازه‌ی فونت» در تنظیمات هم هماهنگ است. */
+        @media screen {
+            body { --rt: 1; }
+            body.font-small-size { --rt: .92; }
+            body.font-large-size { --rt: 1.1; }
+            body.font-xlarge-size { --rt: 1.22; }
+            /* نمای جدولی */
+            #recordsTableCard #recordsTableWrap table { font-size: calc(12px * var(--rt)); line-height: 1.5; }
+            #recordsTableCard #recordsTableWrap thead th { font-size: .92em; font-weight: 700; line-height: 1.4; padding: .6em .85em; }
+            #recordsTableCard #recordsTableBody td { padding: .5em .85em; line-height: 1.5; }
+            #recordsTableCard #recordsTableBody td.c-status { padding-top: .35em; padding-bottom: .35em; }
+            #recordsTableCard #recordsTableBody td .text-xs { font-size: .92em; }
+            #recordsTableCard #recordsTableBody td .text-xs.px-2\.5 { padding: .15em .65em; }
+            #recordsTableCard #recordsTableBody td .text-\[11px\] { font-size: .9em; }
+            #recordsTableCard #recordsTableBody td.c-photo > * { width: 2.6em; height: 2.6em; border-radius: .6em; }
+            #recordsTableCard #recordsTableBody td:last-child button[data-action] { width: 2.3em; height: 2.3em; font-size: 1em; }
+            /* نمای کارتی (موبایل) */
+            #recordsCardView .rc-card { padding: .8rem .9rem; font-size: calc(12px * var(--rt)); }
+            #recordsCardView .rc-card .text-sm { font-size: calc(13px * var(--rt)); line-height: 1.45; }
+            #recordsCardView .rc-card .text-xs { font-size: calc(11.5px * var(--rt)); }
+            #recordsCardView .rc-card .text-\[11px\] { font-size: calc(10.5px * var(--rt)); }
+            #recordsCardView .rc-card .mt-3 { margin-top: .55rem; }
+            #recordsCardView .rc-card .mt-2 { margin-top: .4rem; }
+            #recordsCardView .rc-card .mt-1 { margin-top: .2rem; }
+            #recordsCardView .rc-card .pt-3 { padding-top: .55rem; }
+            #recordsCardView .rc-card .pt-2 { padding-top: .4rem; }
+            #recordsCardView .rc-card .gap-y-1\.5 { row-gap: .3rem; }
+            #recordsCardView .rc-card .w-12.h-12 { width: 2.7rem; height: 2.7rem; }
+            #recordsCardView .rc-card button[data-action="edit"], #recordsCardView .rc-card button[data-action="delete"] { width: 1.9rem; height: 1.9rem; font-size: calc(12px * var(--rt)); }
+            #recordsCardView .rc-card .py-1.rounded-full { padding-top: .15rem; padding-bottom: .15rem; }
+            /* جدول‌های گروه‌بندی‌شده‌ی پرسنل (حالت کارفرما) */
+            #mgrWorkerLists table { font-size: calc(11.5px * var(--rt)); }
+            #mgrWorkerLists th, #mgrWorkerLists td { padding: .5em .75em; }
+        }
         @media print {
             body[data-grouped="1"] #recordsTableWrap { display: block !important; max-height: none !important; overflow: visible !important; }
             #mgrWorkerLists, #mgrMainStats, #mgrFilterBar, #mgrListSummary { display: none !important; }
