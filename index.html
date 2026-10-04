@@ -423,13 +423,34 @@
             -webkit-backdrop-filter: blur(16px) saturate(170%);
         }
         .dark #bottomNavBar { background-color: rgba(2,6,23,0.82) !important; }
-        /* نوار تب پایین (مثل پروژه‌ی کافه‌رستوران): هر تب یک صفحه */
-        #bottomNavBar .bottom-nav-item { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 0; background: none; border: 0; color: #64748b; font-size: 11px; font-weight: 500; transition: color .15s; }
+        /* نوار تب پایین: هر تب یک صفحه؛ دکمه‌ی «ثبت» در وسط، بزرگ‌تر و برجسته */
+        #bottomNavBar { border-radius: 22px 22px 0 0; box-shadow: 0 -8px 28px -10px rgba(15,23,42,.22); }
+        .dark #bottomNavBar { box-shadow: 0 -8px 28px -10px rgba(0,0,0,.6); }
+        #bottomNavBar .bottom-nav-item { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 3px 0 1px; background: none; border: 0; color: #64748b; font-size: 11px; font-weight: 500; transition: color .2s; -webkit-tap-highlight-color: transparent; }
         .dark #bottomNavBar .bottom-nav-item { color: #94a3b8; }
-        #bottomNavBar .bottom-nav-item i { font-size: 17px; }
+        #bottomNavBar .nav-ico { display: flex; align-items: center; justify-content: center; width: 46px; height: 28px; border-radius: 14px; transition: background-color .25s, transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .25s; }
+        #bottomNavBar .bottom-nav-item i { font-size: 17px; transition: transform .3s cubic-bezier(.34,1.56,.64,1); }
+        #bottomNavBar .bottom-nav-item:active .nav-ico { transform: scale(.86); }
         #bottomNavBar .bottom-nav-item.nav-on { color: #4f46e5; font-weight: 700; }
-        .dark #bottomNavBar .bottom-nav-item.nav-on { color: #818cf8; }
-        #bottomNavBar .bottom-nav-item.nav-on::after { content: ''; position: absolute; top: -7px; left: 28%; right: 28%; height: 3px; border-radius: 0 0 3px 3px; background: currentColor; }
+        .dark #bottomNavBar .bottom-nav-item.nav-on { color: #a5b4fc; }
+        #bottomNavBar .bottom-nav-item.nav-on .nav-ico { background: linear-gradient(135deg, rgba(99,102,241,.18), rgba(139,92,246,.18)); box-shadow: 0 2px 10px -2px rgba(79,70,229,.35); transform: translateY(-2px); }
+        .dark #bottomNavBar .bottom-nav-item.nav-on .nav-ico { background: linear-gradient(135deg, rgba(129,140,248,.26), rgba(167,139,250,.22)); }
+        #bottomNavBar .bottom-nav-item.nav-on i { transform: scale(1.14); }
+        /* دکمه‌ی وسطیِ «ثبت» */
+        #bottomNavBar .bottom-nav-item[data-nav="add"] { flex: 1.25; margin-top: -24px; color: #4f46e5; font-weight: 700; font-size: 12px; }
+        .dark #bottomNavBar .bottom-nav-item[data-nav="add"] { color: #a5b4fc; }
+        #bottomNavBar .bottom-nav-item[data-nav="add"] .nav-ico { width: 60px; height: 60px; border-radius: 50%; color: #fff; background: linear-gradient(135deg, #6366f1, #4f46e5 55%, #7c3aed); box-shadow: 0 10px 22px -6px rgba(79,70,229,.6), 0 0 0 5px rgba(255,255,255,.92); transform: none; }
+        .dark #bottomNavBar .bottom-nav-item[data-nav="add"] .nav-ico { box-shadow: 0 10px 22px -6px rgba(99,102,241,.55), 0 0 0 5px rgba(2,6,23,.92); }
+        #bottomNavBar .bottom-nav-item[data-nav="add"] i { font-size: 26px; }
+        #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on .nav-ico { background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 12px 26px -6px rgba(124,58,237,.7), 0 0 0 5px rgba(255,255,255,.92); transform: translateY(-2px) scale(1.06); }
+        .dark #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on .nav-ico { box-shadow: 0 12px 26px -6px rgba(139,92,246,.65), 0 0 0 5px rgba(2,6,23,.92); }
+        #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on i { transform: rotate(90deg) scale(1.05); }
+        @media (prefers-reduced-motion: reduce) { #bottomNavBar *, #bottomNavBar { transition: none !important; } }
+        /* دکمه‌ی پنل کارفرما در تب خانه */
+        #homeMgrBtn { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-bottom: 12px; padding: 12px 16px; border: 0; border-radius: 16px; color: #fff; font-size: 14px; font-weight: 700; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 8px 20px -8px rgba(79,70,229,.6); transition: transform .15s, box-shadow .2s; }
+        #homeMgrBtn:active { transform: scale(.98); }
+        #homeMgrBtn.hidden { display: none; }
+        body:not([data-apptab="home"]) #homeMgrBtn { display: none !important; }
         .box-off { display: none !important; }
         @media screen {
             body[data-apptab="home"] :is(#mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
@@ -951,12 +972,11 @@
     <!-- نوار ناوبری پایین صفحه: نسخه‌ی شیشه‌ای شناور -->
     <div id="bottomNavBar" class="no-print fixed bottom-0 inset-x-0 z-30 border-t border-slate-200/70 dark:border-slate-700/60">
         <div class="max-w-5xl mx-auto px-2 flex items-stretch justify-around pt-1.5" role="tablist" aria-label="تب‌های اصلی" style="padding-bottom: calc(0.4rem + env(safe-area-inset-bottom));">
-            <button type="button" role="tab" data-nav="home" onclick="setAppTab('home')" class="bottom-nav-item"><i class="fa-solid fa-house"></i><span>خانه</span></button>
-            <button type="button" role="tab" data-nav="add" onclick="setAppTab('add')" class="bottom-nav-item"><i class="fa-solid fa-circle-plus"></i><span>ثبت</span></button>
-            <button type="button" role="tab" data-nav="list" onclick="setAppTab('list')" class="bottom-nav-item"><i class="fa-solid fa-table-list"></i><span>رکوردها</span></button>
-            <button type="button" role="tab" data-nav="notes" onclick="setAppTab('notes')" class="bottom-nav-item"><i class="fa-solid fa-note-sticky"></i><span>یادداشت‌ها</span></button>
-            <button type="button" role="tab" data-nav="progress" onclick="setAppTab('progress')" class="bottom-nav-item"><i class="fa-solid fa-stopwatch"></i><span>پیشرفت کار</span></button>
-            <button type="button" role="tab" data-nav="mgr" id="navMgrBtn" onclick="setAppTab('mgr')" class="bottom-nav-item" style="display:none"><i class="fa-solid fa-user-tie"></i><span>کارفرما</span></button>
+            <button type="button" role="tab" data-nav="home" onclick="setAppTab('home')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-house"></i></span><span>خانه</span></button>
+            <button type="button" role="tab" data-nav="list" onclick="setAppTab('list')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-table-list"></i></span><span>رکوردها</span></button>
+            <button type="button" role="tab" data-nav="add" onclick="setAppTab('add')" class="bottom-nav-item" aria-label="ثبت کارکرد جدید"><span class="nav-ico"><i class="fa-solid fa-plus"></i></span><span>ثبت</span></button>
+            <button type="button" role="tab" data-nav="notes" onclick="setAppTab('notes')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-note-sticky"></i></span><span>یادداشت‌ها</span></button>
+            <button type="button" role="tab" data-nav="progress" onclick="setAppTab('progress')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-stopwatch"></i></span><span>پیشرفت کار</span></button>
         </div>
     </div>
 
@@ -1256,6 +1276,8 @@
             <div id="folderStatusLine" class="hidden mt-2"></div>
         </div>
         </header>
+
+        <button type="button" id="homeMgrBtn" class="hidden no-print" onclick="setAppTab('mgr')"><span class="flex items-center gap-2.5"><i class="fa-solid fa-user-tie"></i> پنل کارفرما</span><i class="fa-solid fa-chevron-left text-xs opacity-80"></i></button>
 
         <!-- کادر نمایش لاگ‌ها -->
         <div id="logDropdownPanel" class="hidden bg-slate-900 text-slate-200 rounded-2xl p-4 mb-6 shadow-xl text-xs font-mono transition-all duration-300 border border-slate-800">
@@ -1562,9 +1584,7 @@
                 </h2>
                 <div class="flex items-center gap-3">
                     <span class="text-xs text-slate-400 hidden sm:inline">یادداشت برای تاریخ انتخابی</span>
-                    <button type="button" onclick="toggleDailyNotesSection()" class="text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 p-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors" title="بستن یادداشت‌ها">
-                        <i class="fa-solid fa-xmark text-sm"></i>
-                    </button>
+                    
                 </div>
             </div>
 
@@ -1581,15 +1601,46 @@
                     </div>
                     <div class="w-28 shrink-0">
                         <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">نوع یادداشت</label>
-                        <select id="noteTypeInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
+                        <select id="noteTypeInput" onchange="onNoteTypeChange()" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
                             <option value="normal">عادی</option>
                             <option value="reminder">یادآوری</option>
                             <option value="holiday">تعطیلی</option>
                         </select>
                     </div>
                     <button type="button" onclick="saveDailyNote()" class="bg-amber-500 hover:bg-amber-600 text-white px-3.5 py-2.5 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm whitespace-nowrap">
-                        <i class="fa-solid fa-plus"></i> ثبت یادداشت
+                        <i id="noteSaveIcon" class="fa-solid fa-plus"></i> <span id="noteSaveLabel">ثبت یادداشت</span>
                     </button>
+                    <button type="button" id="noteCancelEditBtn" onclick="cancelNoteEdit()" class="hidden bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-3.5 py-2.5 rounded-xl font-medium text-xs whitespace-nowrap">انصراف</button>
+                </div>
+                <div id="noteReminderOpts" class="hidden">
+                    <div class="flex items-end gap-3 flex-wrap">
+                        <div class="w-28 shrink-0">
+                            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">ساعت یادآوری</label>
+                            <input type="time" id="noteTimeInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
+                        </div>
+                        <div class="w-36 shrink-0">
+                            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">زمان هشدار</label>
+                            <select id="noteLeadInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
+                                <option value="0">همان لحظه</option>
+                                <option value="5">۵ دقیقه قبل</option>
+                                <option value="10">۱۰ دقیقه قبل</option>
+                                <option value="30">۳۰ دقیقه قبل</option>
+                                <option value="60">۱ ساعت قبل</option>
+                                <option value="1440">۱ روز قبل</option>
+                            </select>
+                        </div>
+                        <div class="w-28 shrink-0">
+                            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">تکرار</label>
+                            <select id="noteRepeatInput" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all">
+                                <option value="none">بدون تکرار</option>
+                                <option value="daily">هر روز</option>
+                                <option value="weekly">هر هفته</option>
+                                <option value="monthly">هر ماه</option>
+                            </select>
+                        </div>
+                        <label class="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300 pb-2.5 cursor-pointer"><input type="checkbox" id="noteSoundInput" checked class="accent-amber-500"> هشدار صوتی</label>
+                        <button type="button" onclick="testNoteSound()" class="pb-2.5 text-xs text-amber-600 dark:text-amber-400 hover:underline"><i class="fa-solid fa-volume-high"></i> تست صدا</button>
+                    </div>
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">متن یادداشت / نکته</label>
@@ -1599,7 +1650,17 @@
                 <!-- لیست یادداشت‌های ثبت شده در ماه جاری -->
                 <div class="mt-4 pt-3 border-t border-slate-300 dark:border-slate-600">
                     <h3 class="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">یادداشت‌های ثبت‌شده این دوره:</h3>
-                    <div id="notesContainer" class="space-y-2 max-h-40 overflow-y-auto">
+                    <div class="flex gap-2 mb-2">
+                        <input type="search" id="noteSearchInput" oninput="noteSearchQ=this.value;renderDailyNotes()" placeholder="جستجو در یادداشت‌ها..." class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all flex-1 min-w-0">
+                        <select id="noteFilterInput" onchange="noteFilter=this.value;renderDailyNotes()" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 outline-none transition-all w-36 shrink-0">
+                            <option value="all">همه</option>
+                            <option value="today">امروز</option>
+                            <option value="pending">یادآورهای انجام‌نشده</option>
+                            <option value="done">انجام‌شده</option>
+                            <option value="holiday">تعطیلی</option>
+                        </select>
+                    </div>
+                    <div id="notesContainer" class="space-y-2 max-h-64 overflow-y-auto">
                     </div>
                 </div>
             </div>
@@ -3636,6 +3697,14 @@
                 text: String(n.text == null ? '' : n.text).slice(0, 5000),
                 type: NOTE_TYPES.includes(n.type) ? n.type : 'normal',
                 hidden: !!n.hidden,
+                time: /^([01]\d|2[0-3]):[0-5]\d$/.test(String(n.time || '')) ? String(n.time) : '',
+                lead: (Number.isFinite(Number(n.lead)) && Number(n.lead) >= 0 && Number(n.lead) <= 10080) ? Math.round(Number(n.lead)) : 0,
+                sound: n.sound !== false,
+                done: !!n.done,
+                repeat: ['daily', 'weekly', 'monthly'].includes(n.repeat) ? n.repeat : 'none',
+                ref: String(n.ref == null ? '' : n.ref).slice(0, 40),
+                fired: (Number.isFinite(Number(n.fired)) && Number(n.fired) > 0) ? Number(n.fired) : 0,
+                snoozeUntil: (Number.isFinite(Number(n.snoozeUntil)) && Number(n.snoozeUntil) > 0) ? Number(n.snoozeUntil) : 0,
                 updatedAt: (Number.isFinite(upd) && upd > 0) ? upd : id
             };
         }
@@ -4366,11 +4435,6 @@
             const staleLinksCount = allRecords.filter(r => r.nextCodeStartDate && !allRecords.some(o => o.id !== r.id && recOwnerKey(o) === recOwnerKey(r) && sameDT(o.date, o.time, r.nextCodeStartDate, r.nextCodeStartTime))).length;
             if (staleLinksCount) issues.push({ key: 'stale_links', severity: 'warn', text: `${formatNumber(staleLinksCount)} رکورد با اشاره‌گر «شروع کد بعد» نامعتبر/قدیمی.`, fixable: true });
 
-            const noteDateCounts = new Map();
-            dailyNotes.forEach(n => noteDateCounts.set(n.date, (noteDateCounts.get(n.date) || 0) + 1));
-            const dupNoteCount = [...noteDateCounts.values()].filter(c => c > 1).length;
-            if (dupNoteCount) issues.push({ key: 'dup_notes', severity: 'warn', text: `${formatNumber(dupNoteCount)} تاریخ دارای بیش از یک یادداشت.`, fixable: true });
-
             const missingPhotoCount = allRecords.filter(r => r.hasPhoto && !r.photo).length;
             if (missingPhotoCount) issues.push({ key: 'missing_photo', severity: 'info', text: `${formatNumber(missingPhotoCount)} رکورد به عکسی اشاره می‌کند که پیدا نشد.`, fixable: true });
 
@@ -4407,27 +4471,6 @@
                         fixedCount++;
                     }
                 });
-            } else if (key === 'dup_notes') {
-                // متن یادداشت‌های هم‌تاریخ ادغام می‌شود (نه حذف)؛ نسخه‌های ادغام‌شده هم به سطل بازیافت می‌روند
-                const groups = new Map();
-                dailyNotes.forEach(n => { if (!groups.has(n.date)) groups.set(n.date, []); groups.get(n.date).push(n); });
-                const prio = { holiday: 3, reminder: 2, normal: 1 };
-                const kept = [];
-                groups.forEach(list => {
-                    if (list.length === 1) { kept.push(list[0]); return; }
-                    list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-                    const primary = list[0];
-                    const texts = [];
-                    list.forEach(n => { const t = (n.text || '').trim(); if (t && !texts.includes(t)) texts.push(t); });
-                    const merged = texts.join('\n———\n');
-                    if (merged.length > 5000) { list.forEach(n => kept.push(n)); return; } // سقف طول یادداشت؛ دست نمی‌زنیم
-                    primary.text = merged;
-                    primary.type = list.reduce((best, n) => ((prio[n.type] || 0) > (prio[best] || 0) ? n.type : best), primary.type);
-                    primary.updatedAt = Date.now();
-                    list.slice(1).forEach(n => { addTombstone('notes', n.id); moveToTrash(TRASH_NOTES_STORE, n); fixedCount++; });
-                    kept.push(primary);
-                });
-                dailyNotes = kept;
             } else if (key === 'missing_photo') {
                 allRecords.forEach(r => {
                     if (r.hasPhoto && !r.photo) { r.hasPhoto = false; r.updatedAt = Date.now(); fixedCount++; }
@@ -4493,6 +4536,9 @@
                 case 'photo': viewRecordPhoto(id); break;
                 case 'toggle-note': toggleNoteVisibility(id); break;
                 case 'delete-note': deleteDailyNote(id); break;
+                case 'done-note': toggleNoteDone(id); break;
+                case 'edit-note': editDailyNote(id); break;
+                case 'deadline-reminder': createDeadlineReminder(id); break;
                 case 'finish-active': finishRecordNow(id); break;
                 case 'unfinish': unfinishRecord(id); break;
                 case 'worker-info': showWorkerInfoPop(id, el); break;
@@ -6538,8 +6584,8 @@
         }
         function syncMgrTab() {
             const on = (typeof mgrOn === 'function') && mgrOn();
-            const b = document.getElementById('navMgrBtn');
-            if (b) b.style.display = on ? '' : 'none';
+            const b = document.getElementById('homeMgrBtn');
+            if (b) b.classList.toggle('hidden', !on);
             if (!on && appTab === 'mgr') setAppTab('home', { noScroll: true });
         }
         function syncProgressEmpty() {
@@ -8869,31 +8915,100 @@
             localStorage.setItem('sewing_kpi_price_collapsed', collapsed ? '1' : '0');
         }
 
+        let editingNoteId = null, noteSearchQ = '', noteFilter = 'all';
+
+        function onNoteTypeChange() {
+            const box = document.getElementById('noteReminderOpts');
+            if (box) box.classList.toggle('hidden', document.getElementById('noteTypeInput').value !== 'reminder');
+        }
+
+        function resetNoteForm() {
+            editingNoteId = null;
+            document.getElementById('noteTextInput').value = '';
+            document.getElementById('noteTimeInput').value = '';
+            document.getElementById('noteTypeInput').value = 'normal';
+            document.getElementById('noteLeadInput').value = '0';
+            document.getElementById('noteRepeatInput').value = 'none';
+            document.getElementById('noteSoundInput').checked = true;
+            document.getElementById('noteSaveLabel').textContent = 'ثبت یادداشت';
+            document.getElementById('noteSaveIcon').className = 'fa-solid fa-plus';
+            document.getElementById('noteCancelEditBtn').classList.add('hidden');
+            onNoteTypeChange();
+        }
+        function cancelNoteEdit() { resetNoteForm(); }
+
+        function editDailyNote(id) {
+            const n = dailyNotes.find(x => x.id === id);
+            if (!n) return;
+            editingNoteId = id;
+            document.getElementById('noteDateInput').value = n.date;
+            document.getElementById('noteTypeInput').value = n.type;
+            document.getElementById('noteTextInput').value = n.text;
+            document.getElementById('noteTimeInput').value = n.time || '';
+            document.getElementById('noteLeadInput').value = String(n.lead || 0);
+            document.getElementById('noteRepeatInput').value = n.repeat || 'none';
+            document.getElementById('noteSoundInput').checked = n.sound !== false;
+            document.getElementById('noteSaveLabel').textContent = 'ذخیره‌ی ویرایش';
+            document.getElementById('noteSaveIcon').className = 'fa-solid fa-check';
+            document.getElementById('noteCancelEditBtn').classList.remove('hidden');
+            onNoteTypeChange();
+            const ta = document.getElementById('noteTextInput');
+            ta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            ta.focus();
+        }
+
         function saveDailyNote() {
             const dateInput = document.getElementById('noteDateInput').value.trim();
             const textInput = document.getElementById('noteTextInput').value.trim();
             const typeInput = document.getElementById('noteTypeInput').value;
+            const isReminder = typeInput === 'reminder';
+            const timeVal = isReminder ? (document.getElementById('noteTimeInput').value || '') : '';
 
             if (!dateInput || !textInput) {
                 showFeedbackBanner('لطفاً تاریخ و متن یادداشت را وارد کنید.', 'warn');
                 return;
             }
-
-            const existingNoteIndex = dailyNotes.findIndex(n => n.date === dateInput);
-            if (existingNoteIndex !== -1) {
-                dailyNotes[existingNoteIndex].text = textInput;
-                dailyNotes[existingNoteIndex].type = typeInput;
-                dailyNotes[existingNoteIndex].updatedAt = Date.now();
-            } else {
-                dailyNotes.unshift({ id: Date.now(), date: dateInput, text: textInput, type: typeInput, hidden: false, updatedAt: Date.now() });
+            if (isReminder && !timeVal) {
+                showFeedbackBanner('برای یادآوری، ساعت را هم انتخاب کنید.', 'warn');
+                return;
             }
+            const extra = {
+                time: timeVal,
+                lead: isReminder ? Number(document.getElementById('noteLeadInput').value) : 0,
+                sound: isReminder ? document.getElementById('noteSoundInput').checked : true,
+                repeat: isReminder ? document.getElementById('noteRepeatInput').value : 'none'
+            };
+
+            let note;
+            if (editingNoteId != null) {
+                const old = dailyNotes.find(x => x.id === editingNoteId);
+                if (!old) { resetNoteForm(); return; }
+                // ویرایش فقط وقتی انجام می‌شود که کاربر صراحتاً «ویرایش» را زده باشد
+                Object.assign(old, sanitizeNote({ ...old, date: dateInput, text: textInput, type: typeInput, ...extra, done: false, fired: 0, snoozeUntil: 0, updatedAt: Date.now() }));
+                note = old;
+            } else {
+                // هر یادداشت جدید جدا ثبت می‌شود و یادداشت‌های قبلیِ همان تاریخ دست‌نخورده می‌مانند
+                let id = Date.now();
+                while (dailyNotes.some(n => n.id === id)) id++;
+                note = sanitizeNote({ id, date: dateInput, text: textInput, type: typeInput, hidden: false, updatedAt: Date.now(), ...extra });
+                dailyNotes.unshift(note);
+            }
+            const wasEdit = editingNoteId != null;
 
             saveRecords();
             renderDailyNotes();
-            document.getElementById('noteTextInput').value = '';
-            document.getElementById('noteTypeInput').value = 'normal';
-            showFeedbackBanner('یادداشت روزانه با موفقیت ثبت شد.', 'success');
-            addLog(`یادداشت برای تاریخ ${dateInput} ثبت شد.`, 'success');
+            resetNoteForm();
+            if (isReminder) {
+                unlockNoteAudio();
+                askNoteNotifyPermission();
+                const due = noteDueTs(note);
+                if (due != null && due < Date.now() - 60000) showFeedbackBanner('یادآوری ثبت شد؛ زمان آن گذشته است و بلافاصله هشدار داده می‌شود.', 'warn');
+                else showFeedbackBanner(wasEdit ? 'یادآوری ویرایش شد.' : 'یادآوری ثبت شد.', 'success');
+                setTimeout(checkNoteReminders, 300);
+            } else {
+                showFeedbackBanner(wasEdit ? 'یادداشت ویرایش شد.' : 'یادداشت روزانه با موفقیت ثبت شد.', 'success');
+            }
+            addLog(`یادداشت برای تاریخ ${dateInput} ${wasEdit ? 'ویرایش' : 'ثبت'} شد.`, 'success');
         }
 
         function toggleNoteVisibility(id) {
@@ -8924,13 +9039,25 @@
 
             // یادداشت‌ها هم مثل جدول کارکردها باید فقط برای دوره/ماهِ در حال نمایش فیلتر شوند؛
             // قبلاً همیشه یادداشت‌های همه‌ی ماه‌ها با هم نشان داده می‌شدند.
+            scheduleNoteNativeSync();
+            const q = toEnglishDigits(noteSearchQ || '').trim().toLowerCase();
+            const todayCmp = toEnglishDigits((typeof currentJalali !== 'undefined' && currentJalali.fullDateStr) || '');
+            const filtering = !!q || noteFilter !== 'all';
             const periodNotes = dailyNotes.filter(n => {
-                const info = getMonthInfoFromDateStr(n.date);
-                return info ? info.monthKey === selectedMonthFilter : true;
+                if (!filtering) {
+                    const info = getMonthInfoFromDateStr(n.date);
+                    return info ? info.monthKey === selectedMonthFilter : true;
+                }
+                if (q && !(toEnglishDigits(n.text).toLowerCase().includes(q) || toEnglishDigits(n.date).includes(q))) return false;
+                if (noteFilter === 'today') return toEnglishDigits(n.date) === todayCmp;
+                if (noteFilter === 'pending') return n.type === 'reminder' && !n.done;
+                if (noteFilter === 'done') return n.type === 'reminder' && n.done;
+                if (noteFilter === 'holiday') return n.type === 'holiday';
+                return true;
             });
 
             if (periodNotes.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">هیچ یادداشتی برای این دوره ثبت نشده است.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">${filtering ? 'نتیجه‌ای یافت نشد.' : 'هیچ یادداشتی برای این دوره ثبت نشده است.'}</p>`;
                 return;
             }
 
@@ -8958,22 +9085,251 @@
                 const meta = NOTE_TYPE_META[n.type] || NOTE_TYPE_META.normal;
                 const isToday = n.date === todayStr;
                 const weekday = getWeekdayLabelForJalaliDate(n.date);
+                const isRem = n.type === 'reminder' && n.time;
+                const doneCls = (isRem && n.done) ? ' opacity-60' : '';
+                const strike = (isRem && n.done) ? ' line-through' : '';
                 return `
-                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-300 dark:border-slate-600 ${meta.border} text-xs overflow-hidden">
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-300 dark:border-slate-600 ${meta.border} text-xs overflow-hidden${doneCls}">
                     <div class="flex items-center justify-between p-3 cursor-pointer" data-action="toggle-note" data-id="${Number(n.id)}">
                         <div class="flex items-center gap-2 min-w-0 flex-wrap">
                             <i class="fa-solid fa-chevron-${n.hidden ? 'left' : 'down'} text-slate-400 text-[10px] transition-transform shrink-0"></i>
                             <span class="font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">${weekday ? escapeHTML(weekday) + '، ' : ''}${escapeHTML(n.date)}</span>
                             ${isToday ? '<span class="bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full">امروز</span>' : ''}
                             ${meta.label ? `<span class="${meta.badge} text-[10px] font-bold px-2 py-0.5 rounded-full">${meta.label}</span>` : ''}
+                            ${isRem ? `<span class="bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap"><i class="fa-solid fa-bell"></i> ${toPersianDigits(n.time)}${n.lead ? ' (' + toPersianDigits(n.lead >= 1440 ? '۱ روز' : n.lead >= 60 ? '1 ساعت' : n.lead + ' دقیقه') + ' قبل)' : ''}${n.sound ? ' <i class="fa-solid fa-volume-high"></i>' : ''}</span>` : ''}
+                            ${isRem && n.repeat && n.repeat !== 'none' ? `<span class="bg-sky-100 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap"><i class="fa-solid fa-repeat"></i> ${{ daily: 'روزانه', weekly: 'هفتگی', monthly: 'ماهانه' }[n.repeat]}</span>` : ''}
+                            ${isRem && n.done ? '<span class="bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full">انجام شد</span>' : ''}
                         </div>
+                        <div class="flex items-center shrink-0">
+                        ${isRem ? `<button data-action="done-note" data-id="${Number(n.id)}" class="text-emerald-600 hover:text-emerald-800 p-1.5 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-colors" title="${n.done ? 'بازگردانی' : 'انجام شد'}" aria-label="انجام شد"><i class="fa-solid ${n.done ? 'fa-rotate-left' : 'fa-circle-check'}"></i></button>` : ''}
+                        <button data-action="edit-note" data-id="${Number(n.id)}" class="text-sky-600 hover:text-sky-800 p-1.5 rounded-lg hover:bg-sky-50 dark:hover:bg-sky-950/30 transition-colors" title="ویرایش یادداشت" aria-label="ویرایش یادداشت"><i class="fa-solid fa-pen"></i></button>
                         <button data-action="delete-note" data-id="${Number(n.id)}" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors shrink-0" title="حذف یادداشت" aria-label="حذف یادداشت"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
                     </div>
-                    ${n.hidden ? '' : `<div class="px-3 pb-3 pr-9 text-slate-700 dark:text-slate-200 whitespace-pre-wrap">${escapeHTML(n.text)}</div>`}
+                    ${n.hidden ? '' : `<div class="px-3 pb-3 pr-9 text-slate-700 dark:text-slate-200 whitespace-pre-wrap${strike}">${escapeHTML(n.text)}</div>`}
                 </div>
             `;
             }).join('');
         }
+
+
+        /* ==================== یادآورهای یادداشت: زمان‌بندی، هشدار صوتی، اعلان ==================== */
+        let _noteAudioCtx = null, _noteAlarmTimer = null, _noteActiveAlarms = [];
+        function unlockNoteAudio() {
+            try {
+                if (!_noteAudioCtx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return; _noteAudioCtx = new AC(); }
+                if (_noteAudioCtx.state === 'suspended') _noteAudioCtx.resume();
+            } catch (e) {}
+        }
+        ['click', 'touchstart', 'keydown'].forEach(ev => document.addEventListener(ev, unlockNoteAudio, { passive: true }));
+        function playNoteBeepOnce() {
+            if (!_noteAudioCtx) return;
+            try {
+                const ctx = _noteAudioCtx, t = ctx.currentTime;
+                [880, 1175, 880, 1175].forEach((f, i) => {
+                    const o = ctx.createOscillator(), g = ctx.createGain(), st = t + i * 0.24;
+                    o.type = 'sine'; o.frequency.value = f; o.connect(g); g.connect(ctx.destination);
+                    g.gain.setValueAtTime(0.0001, st);
+                    g.gain.exponentialRampToValueAtTime(0.4, st + 0.02);
+                    g.gain.exponentialRampToValueAtTime(0.0001, st + 0.22);
+                    o.start(st); o.stop(st + 0.23);
+                });
+            } catch (e) {}
+        }
+        function testNoteSound() { unlockNoteAudio(); setTimeout(playNoteBeepOnce, 80); }
+        function stopNoteAlarmSound() { if (_noteAlarmTimer) { clearInterval(_noteAlarmTimer); _noteAlarmTimer = null; } }
+        function startNoteAlarmSound() {
+            stopNoteAlarmSound(); unlockNoteAudio();
+            const ring = () => { playNoteBeepOnce(); try { navigator.vibrate && navigator.vibrate([300, 150, 300]); } catch (e) {} };
+            ring();
+            let n = 0;
+            _noteAlarmTimer = setInterval(() => { if (++n > 30) { stopNoteAlarmSound(); return; } ring(); }, 2500);
+        }
+        async function askNoteNotifyPermission() {
+            try {
+                const LN = noteNativeLN();
+                if (LN) { const pr = await LN.checkPermissions(); if (pr && pr.display !== 'granted' && pr.display !== 'denied') await LN.requestPermissions(); scheduleNoteNativeSync(); return; }
+                if (!isNotificationSupported()) return;
+                if ((await getDeviceNotificationPermission()) !== 'granted' && (await getDeviceNotificationPermission()) !== 'denied') {
+                    if (isNativeNotifyAvailable()) await window.NativeNotify.requestPermission(); else await Notification.requestPermission();
+                    updateDeviceNotificationStatusUI();
+                }
+            } catch (e) {}
+        }
+        function noteDueTs(n) {
+            if (!n || n.type !== 'reminder' || !n.time) return null;
+            const p = toEnglishDigits(n.date || '').trim().split('/').map(x => parseInt(x, 10));
+            if (p.length !== 3 || p.some(isNaN)) return null;
+            try {
+                const g = jalaaliToGregorian(p[0], p[1], p[2]);
+                const hm = n.time.split(':').map(Number);
+                return new Date(g.gy, g.gm - 1, g.gd, hm[0], hm[1], 0).getTime() - (n.lead || 0) * 60000;
+            } catch (e) { return null; }
+        }
+        function advanceNoteDate(n) {
+            const p = toEnglishDigits(n.date || '').trim().split('/').map(x => parseInt(x, 10));
+            if (p.length !== 3 || p.some(isNaN)) return false;
+            let [jy, jm, jd] = p;
+            if (n.repeat === 'daily' || n.repeat === 'weekly') {
+                const r = d2j(j2d(jy, jm, jd) + (n.repeat === 'daily' ? 1 : 7));
+                jy = r.jy; jm = r.jm; jd = r.jd;
+            } else {
+                jm++; if (jm > 12) { jm = 1; jy++; }
+                jd = Math.min(jd, jalaaliMonthLength(jy, jm));
+            }
+            n.date = `${toPersianDigits(jy)}/${toPersianDigits(jm)}/${toPersianDigits(jd)}`;
+            return true;
+        }
+        function checkNoteReminders() {
+            if (typeof dailyNotes === 'undefined') return;
+            const now = Date.now(), fired = [];
+            dailyNotes.forEach(n => {
+                if (n.type !== 'reminder' || !n.time || n.done || n.fired) return;
+                const snoozed = n.snoozeUntil > 0;
+                const ts = snoozed ? n.snoozeUntil : noteDueTs(n);
+                if (ts == null || now < ts) return;
+                fired.push({ k: n.id + '_' + now, id: n.id, text: n.text, date: n.date, time: n.time, sound: n.sound !== false, missed: now - ts > 3 * 60000 });
+                n.snoozeUntil = 0; n.updatedAt = now;
+                if (n.repeat && n.repeat !== 'none') {
+                    if (!snoozed) { let g = 0; do { if (!advanceNoteDate(n)) break; g++; } while (g < 800 && (noteDueTs(n) || 0) <= now); }
+                    n.fired = 0;
+                } else n.fired = now;
+            });
+            if (!fired.length) return;
+            saveRecords(); renderDailyNotes();
+            fired.forEach(f => _noteActiveAlarms.push(f));
+            showNoteAlarmModal();
+            if (fired.some(f => f.sound)) startNoteAlarmSound();
+            if (document.hidden) {
+                const title = 'یادآوری';
+                const body = fired.map(f => f.text).join(' | ').slice(0, 200);
+                (async () => {
+                    try {
+                        if (!isNotificationSupported() || (await getDeviceNotificationPermission()) !== 'granted') return;
+                        if (isNativeNotifyAvailable()) await window.NativeNotify.notify(title, body, 'note-reminder');
+                        else new Notification(title, { body, icon: 'icon-192.png', tag: 'note-reminder' });
+                    } catch (e) {}
+                })();
+            }
+        }
+        function showNoteAlarmModal() {
+            let m = document.getElementById('noteAlarmModal');
+            if (!_noteActiveAlarms.length) { if (m) m.remove(); stopNoteAlarmSound(); return; }
+            if (!m) {
+                m = document.createElement('div');
+                m.id = 'noteAlarmModal';
+                m.setAttribute('role', 'alertdialog');
+                m.style.cssText = 'position:fixed;inset:0;z-index:100000;background:rgba(15,23,42,.6);display:flex;align-items:center;justify-content:center;padding:16px;';
+                document.body.appendChild(m);
+            }
+            m.innerHTML = `<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-amber-400 w-full max-w-sm max-h-[85vh] overflow-y-auto p-4 space-y-3" dir="rtl">
+                <div class="flex items-center gap-2 text-amber-600 font-bold text-sm"><i class="fa-solid fa-bell fa-shake"></i> یادآوری</div>
+                ${_noteActiveAlarms.map(a => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 text-xs space-y-2">
+                        <div class="text-slate-500 dark:text-slate-400">${escapeHTML(a.date)} — ${toPersianDigits(a.time)}${a.missed ? ' <span class="text-rose-500 font-bold">(از دست رفته)</span>' : ''}</div>
+                        <div class="text-sm text-slate-800 dark:text-slate-100 whitespace-pre-wrap">${escapeHTML(a.text)}</div>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="noteAlarmAction('${a.k}','done')" class="flex-1 bg-emerald-600 text-white rounded-lg py-2 text-xs">انجام شد</button>
+                            <button type="button" onclick="noteAlarmAction('${a.k}','snooze')" class="flex-1 bg-amber-500 text-white rounded-lg py-2 text-xs">۱۰ دقیقه بعد</button>
+                            <button type="button" onclick="noteAlarmAction('${a.k}','close')" class="flex-1 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg py-2 text-xs">بستن</button>
+                        </div>
+                    </div>`).join('')}
+            </div>`;
+        }
+        function noteAlarmAction(k, act) {
+            stopNoteAlarmSound();
+            const a = _noteActiveAlarms.find(x => x.k === k);
+            _noteActiveAlarms = _noteActiveAlarms.filter(x => x.k !== k);
+            const n = a && dailyNotes.find(x => x.id === a.id);
+            if (n) {
+                const repeating = n.repeat && n.repeat !== 'none';
+                if (act === 'done' && !repeating) n.done = true;
+                if (act === 'snooze') { n.fired = 0; n.snoozeUntil = Date.now() + 10 * 60000; }
+                n.updatedAt = Date.now();
+                saveRecords(); renderDailyNotes();
+            }
+            showNoteAlarmModal();
+        }
+        function toggleNoteDone(id) {
+            const n = dailyNotes.find(x => x.id === id);
+            if (!n) return;
+            n.done = !n.done; n.snoozeUntil = 0; n.updatedAt = Date.now();
+            _noteActiveAlarms = _noteActiveAlarms.filter(a => a.id !== id);
+            saveRecords(); renderDailyNotes(); showNoteAlarmModal();
+        }
+
+        /* ---- زمان‌بندی بومی (Capacitor LocalNotifications): هشدار حتی با بسته بودن برنامه ---- */
+        const NOTE_NATIVE_IDS_KEY = 'sewing_note_native_ids_v1';
+        let _noteNativeTimer = null;
+        function noteNativeLN() { try { return (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications) || null; } catch (e) { return null; } }
+        function scheduleNoteNativeSync() {
+            try {
+                if (!noteNativeLN()) return;
+                clearTimeout(_noteNativeTimer);
+                _noteNativeTimer = setTimeout(syncNoteNative, 800);
+            } catch (e) {}
+        }
+        async function syncNoteNative() {
+            const LN = noteNativeLN();
+            if (!LN) return;
+            try {
+                let old = [];
+                try { old = JSON.parse(localStorage.getItem(NOTE_NATIVE_IDS_KEY) || '[]'); } catch (e) {}
+                if (old.length) await LN.cancel({ notifications: old.map(id => ({ id })) });
+                const now = Date.now(), list = [];
+                dailyNotes.forEach(n => {
+                    if (n.type !== 'reminder' || !n.time || n.done || n.fired) return;
+                    const ts = n.snoozeUntil > 0 ? n.snoozeUntil : noteDueTs(n);
+                    if (ts == null || ts <= now + 1000) return;
+                    list.push({ id: 1000000000 + (Number(n.id) % 1000000000), title: 'یادآوری', body: String(n.text).slice(0, 200), schedule: { at: new Date(ts), allowWhileIdle: true } });
+                });
+                const seen = new Set();
+                const uniq = list.filter(x => !seen.has(x.id) && seen.add(x.id));
+                if (uniq.length) await LN.schedule({ notifications: uniq });
+                localStorage.setItem(NOTE_NATIVE_IDS_KEY, JSON.stringify(uniq.map(x => x.id)));
+            } catch (e) { console.warn('زمان‌بندی بومی یادآور ناموفق بود:', e); }
+        }
+
+        /* ---- یادآوری از روی موعد تحویل کار جاری ---- */
+        function computeRecordDueTs(rec) {
+            const target = parseDurationStrToMinutes(rec.workDuration);
+            const sJ = parseJalaliDateToJdn(rec.date), sM = parseTimeToMinutes(rec.time);
+            if (!target || target <= 0 || !sJ) return null;
+            for (let d = sJ; d < sJ + 150; d++) {
+                if (calculateActualWorkingMinutesElapsed(sJ, sM, d, 1440) < target) continue;
+                let lo = 0, hi = 1440;
+                while (lo < hi) {
+                    const mid = (lo + hi) >> 1;
+                    if (calculateActualWorkingMinutesElapsed(sJ, sM, d, mid) >= target) hi = mid; else lo = mid + 1;
+                }
+                const g = d2g(d);
+                return new Date(g.gy, g.gm - 1, g.gd, Math.floor(lo / 60), lo % 60, 0).getTime();
+            }
+            return null;
+        }
+        function createDeadlineReminder(id) {
+            const rec = allRecords.find(r => Number(r.id) === Number(id));
+            if (!rec) return;
+            const ts = computeRecordDueTs(rec);
+            if (ts == null) { showFeedbackBanner('موعد تحویل این کار قابل محاسبه نیست.', 'warn'); return; }
+            if (ts <= Date.now()) { showFeedbackBanner('موعد تحویل این کار گذشته است.', 'warn'); return; }
+            const ref = 'rec:' + rec.id;
+            if (dailyNotes.some(n => n.ref === ref && !n.done)) { showFeedbackBanner('برای این کار قبلاً یادآوری ثبت شده است.', 'warn'); return; }
+            const d = new Date(ts), j = gregorianToJalaali(d.getFullYear(), d.getMonth() + 1, d.getDate());
+            const pad = x => String(x).padStart(2, '0');
+            let nid = Date.now(); while (dailyNotes.some(n => n.id === nid)) nid++;
+            dailyNotes.unshift(sanitizeNote({
+                id: nid, type: 'reminder', ref, sound: true, hidden: false, updatedAt: Date.now(),
+                date: `${toPersianDigits(j.jy)}/${toPersianDigits(j.jm)}/${toPersianDigits(j.jd)}`,
+                time: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
+                lead: (ts - 30 * 60000 > Date.now()) ? 30 : 0,
+                text: `موعد تحویل کد ${rec.itemCode || '-'} — ${rec.itemTitle || '-'}`
+            }));
+            saveRecords(); renderDailyNotes(); unlockNoteAudio(); askNoteNotifyPermission();
+            showFeedbackBanner('یادآوری موعد تحویل ثبت شد.', 'success');
+        }
+        setInterval(checkNoteReminders, 15000);
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) checkNoteReminders(); });
+        /* ==================== پایان یادآورهای یادداشت ==================== */
 
         const PERSIAN_WEEKDAYS_FULL = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"];
         function getWeekdayLabelForJalaliDate(dateStr) {
@@ -10263,7 +10619,7 @@
                 + (isStale ? '<div class="text-[10px] text-amber-600 dark:text-amber-400">این کار بیش از ۳ روز کاری معوق است؛ اگر تمام شده، «کار تمام شد» را بزنید.</div>' : '');
 
             list.className = 'mgr-body mgr-page' + (first ? ' mgr-enter' : '');
-            list.innerHTML = `<div class="mgr-jobpanel">${who}<div class="flex items-center gap-3">${mgrRing(st, 64)}<div class="min-w-0 flex-1">${mgrJobInfo(st, true)}</div></div>${mgrBar(st)}${extra}${mgrFinishBtn(st)}</div>`
+            list.innerHTML = `<div class="mgr-jobpanel">${who}<div class="flex items-center gap-3">${mgrRing(st, 64)}<div class="min-w-0 flex-1">${mgrJobInfo(st, true)}</div></div>${mgrBar(st)}${extra}${mgrFinishBtn(st)}${isOverdue ? '' : `<button type="button" data-action="deadline-reminder" data-id="${Number(rec.id)}" class="no-print w-full mt-2 py-2 rounded-xl border border-amber-500 text-amber-700 dark:text-amber-300 text-xs font-medium"><i class="fa-solid fa-bell"></i> یادآور موعد تحویل</button>`}</div>`
                 + `<div class="mt-2">${mgrRecDetailHTML(rec)}</div>`;
             updateAttentionIndicators();
         }
@@ -11682,6 +12038,8 @@
         renderStreakBadge();
         checkDeliveryProgressNotifications();
         setInterval(checkDeliveryProgressNotifications, 60 * 1000);
+        setTimeout(checkNoteReminders, 2500);
+        setTimeout(scheduleNoteNativeSync, 4000);
         setInterval(() => { if (!document.hidden) renderActiveProgressWidget(); }, 20 * 1000);
         // [رفع درخواست] رندرِ دوره‌ای کادر انگیزشی تا چرخشِ پیام‌ها (حداقل ۱۰ پیامِ متفاوت در روز، بدون
         // تکرار) حتی وقتی کاربر کاری انجام نمی‌دهد هم پیش برود؛ خودِ pickFromPool تضمین می‌کند که پیام
