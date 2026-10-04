@@ -349,12 +349,6 @@
             #recordsCardView .rc-card button[data-action="edit"], #recordsCardView .rc-card button[data-action="delete"] { width: 1.9rem; height: 1.9rem; font-size: calc(12px * var(--rt)); }
             #recordsCardView .rc-card .py-1.rounded-full { padding-top: .15rem; padding-bottom: .15rem; }
             /* جدول‌های گروه‌بندی‌شده‌ی پرسنل (حالت کارفرما) */
-            /* لیست‌های حضور و غیاب و حقوق و مالی: هم‌اندازه‌ی لیست کارکردها (فونت 12px × --rt و فاصله‌ها با em) */
-            .kf-lst table { font-size: calc(12px * var(--rt)); line-height: 1.5; }
-            .kf-lst thead th { font-size: .92em; font-weight: 700; line-height: 1.4; padding: .6em .85em; }
-            .kf-lst tbody td { padding: .5em .85em; line-height: 1.5; }
-            .kf-lst td button { width: 2.3em; height: 2.3em; font-size: 1em; }
-            /* جدول یکپارچه‌ی حقوق و مالی */
             #mgrWorkerLists table { font-size: calc(11.5px * var(--rt)); }
             #mgrWorkerLists th, #mgrWorkerLists td { padding: .5em .75em; }
         }
@@ -479,7 +473,7 @@
             body[data-apptab="notes"] :is(#kpiCardWrap, #activeProgressCard, #mainTabBar, #recordFormCard) { display: none !important; }
             body[data-apptab="list"] :is(#kpiCardWrap, #activeProgressCard, #mainTabBar) { display: none !important; }
             body[data-apptab="progress"] :is(#kpiCardWrap, #mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
-            body:is([data-apptab="mgr"], [data-apptab="att"], [data-apptab="fin"]) :is(#kpiCardWrap, #activeProgressCard, #mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
+            body:is([data-apptab="mgr"], [data-apptab="fin"]) :is(#kpiCardWrap, #activeProgressCard, #mainTabBar, #mainTabPanel-entry, #mainTabPanel-list) { display: none !important; }
         }
 
         /* مدال‌ها: سایه‌ی عمیق‌تر و حرفه‌ای‌تر به‌جای shadow-2xl خام */
@@ -619,40 +613,6 @@
         @media (hover: none), (pointer: coarse) { #toolsMenuTrigger:not([aria-expanded="true"]):not(:focus-visible) { animation: none; } }
         .exit-btn:active { transform: scale(.95); }
         @media (prefers-reduced-motion: reduce) { .exit-btn:hover, .exit-btn:focus-visible, #toolsMenuTrigger[aria-expanded="true"] { animation: none !important; } .exit-btn i { transition: none; } }
-        /* ===== کادر اطلاعات مالی پرسنل (با کلیک روی نام پرسنل در لیست کارکردها) ===== */
-        @property --wi-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
-        @keyframes wiSpin { to { --wi-a: 360deg; } }
-        @keyframes wiIn { from { opacity: 0; transform: scale(.82) translateY(-8px); } 60% { transform: scale(1.025); } to { opacity: 1; transform: none; } }
-        @keyframes wiRise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-        @keyframes wiGrow { from { width: 0; } }
-        @keyframes wiFlow { to { background-position: -200% 0; } }
-        @keyframes wiSweep { from { transform: translateX(120%); } to { transform: translateX(-120%); } }
-        @keyframes wiBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
-        .wi-name { display: inline-flex; align-items: center; gap: 3px; padding: 2px 9px; border-radius: 999px; border: 1px solid rgba(99,102,241,.28); background: rgba(99,102,241,.07); color: #4f46e5; font-weight: 600; font-size: inherit; cursor: pointer; transition: transform .2s, box-shadow .2s, background .2s; }
-        .wi-name:hover, .wi-name[aria-expanded="true"] { background: rgba(99,102,241,.16); transform: translateY(-1px); box-shadow: 0 4px 12px -4px rgba(99,102,241,.55); }
-        .dark .wi-name { color: #a5b4fc; border-color: rgba(165,180,252,.3); background: rgba(99,102,241,.14); }
-        .wi-pop { --wi-c1: #6366f1; --wi-c2: #a855f7; --wi-sh: rgba(99,102,241,.45); position: absolute; z-index: 75; width: 304px; max-width: calc(100vw - 16px); padding: 2px; border-radius: 22px;
-            background: conic-gradient(from var(--wi-a), var(--wi-c1), var(--wi-c2), #22d3ee, var(--wi-c1));
-            box-shadow: 0 22px 44px -14px var(--wi-sh), 0 0 30px -8px var(--wi-c1);
-            animation: wiIn .42s cubic-bezier(.2,1.1,.3,1) both, wiSpin 5s linear infinite; }
-        .wi-in { position: relative; overflow: hidden; border-radius: 20px; padding: 14px; background: #fff; color: #334155; direction: rtl; text-align: right; }
-        .dark .wi-in { background: #0f172a; color: #cbd5e1; }
-        .wi-in::before { content: ''; position: absolute; top: -50px; left: -40px; width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, var(--wi-c1), transparent 70%); opacity: .2; pointer-events: none; }
-        .wi-in::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%); transform: translateX(120%); animation: wiSweep 1.1s .25s ease-out 1 both; pointer-events: none; }
-        .dark .wi-in::after { background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.08) 50%, transparent 65%); }
-        .wi-in [data-i] { animation: wiRise .45s calc(var(--i, 0) * 60ms + 120ms) both; }
-        .wi-close { width: 26px; height: 26px; flex-shrink: 0; border-radius: 50%; color: #94a3b8; transition: background .2s, color .2s, transform .2s; }
-        .wi-close:hover { background: rgba(148,163,184,.2); color: #475569; transform: rotate(90deg); }
-        .wi-main { border-radius: 14px; padding: 10px 12px; background: linear-gradient(135deg, color-mix(in srgb, var(--wi-c1) 14%, transparent), color-mix(in srgb, var(--wi-c2) 10%, transparent)); border: 1px solid color-mix(in srgb, var(--wi-c1) 30%, transparent); }
-        .wi-main b { animation: wiBeat 2.6s ease-in-out infinite; display: inline-block; }
-        .wi-cell { border-radius: 12px; padding: 7px 9px; border: 1px solid rgba(148,163,184,.3); background: rgba(148,163,184,.07); font-size: 11px; }
-        .wi-cell b { display: block; margin-top: 1px; font-size: 12.5px; color: #1e293b; }
-        .dark .wi-cell b { color: #f1f5f9; }
-        .wi-bar { height: 7px; border-radius: 99px; background: rgba(148,163,184,.25); overflow: hidden; }
-        .wi-bar > i { display: block; height: 100%; width: var(--w, 0%); border-radius: inherit; background: linear-gradient(90deg, var(--wi-c1), var(--wi-c2), var(--wi-c1)); background-size: 200% 100%; animation: wiGrow .9s .35s cubic-bezier(.2,.8,.2,1) both, wiFlow 2.4s linear infinite; }
-        .wi-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 600; border: 1px solid; }
-        @media print { .wi-pop { display: none !important; } .wi-name { border: 0; background: none; padding: 0; color: inherit; } }
-        @media (prefers-reduced-motion: reduce) { .wi-pop, .wi-in::after, .wi-in [data-i], .wi-main b, .wi-bar > i { animation: none !important; } .wi-in::after { display: none; } }
 
         /* ============ عکس پرسنل ============ */
         .mgr-photo { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: inherit; }
@@ -940,128 +900,7 @@
         /* ردیف تاریخ و زمان پایان در ویجت پرسنل: تمام‌عرض و بدون برش */
         .mgr-kv.kf-kv-wide { grid-column: 1 / -1; }
         .mgr-kv.kf-kv-wide > b { overflow: visible; text-overflow: clip; white-space: normal; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
-        /* دکمه‌ی اضافه‌کاری در حضور و غیاب */
-        .kf-ot-btn { border-color: #a5b4fc; color: #4f46e5; }
-        .dark .kf-ot-btn { border-color: #4338ca; color: #a5b4fc; }
-        .kf-ot-btn.on { background: #4f46e5; border-color: #4f46e5; color: #fff; font-weight: 700; }
-        .kf-ot-txt { color: #4f46e5; } .dark .kf-ot-txt { color: #a5b4fc; }
-        .kf-rate-box { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: #64748b; }
-    </style>
-    <style id="attListCss">
-        /* ===== حضور و غیاب: کارتی ===== */
-        #managerModal .att-tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: .4rem; }
-        #managerModal .att-tiles-m { padding: .75rem .75rem 0; }
-        @media (max-width: 420px) { #managerModal .att-tiles { grid-template-columns: repeat(3, 1fr); } }
-        #managerModal .att-tile { padding: .5em .3em; border-radius: .85rem; border: 1px solid #e2e8f0; background: #f8fafc; text-align: center; min-width: 0; }
-        .dark #managerModal .att-tile { background: #1e293b; border-color: #334155; }
-        #managerModal .att-tile b { display: block; font-size: 1.2rem; font-weight: 800; line-height: 1.3; }
-        #managerModal .att-tile span { font-size: .7rem; color: #64748b; }
-        .dark #managerModal .att-tile span { color: #94a3b8; }
-        #managerModal .att-bar { height: .42rem; border-radius: 99px; background: #e2e8f0; overflow: hidden; margin-top: .5rem; }
-        .dark #managerModal .att-bar { background: #334155; }
-        #managerModal .att-bar i { display: block; height: 100%; border-radius: 99px; transition: width .4s; }
-        #managerModal .att-cap { font-size: .7rem; color: #94a3b8; margin-top: .25rem; text-align: center; }
-        #managerModal .att-day { border: 1px solid #cbd5e1; border-radius: 1rem; padding: .7rem .8rem; display: flex; flex-direction: column; gap: .5rem; background: #fff; box-shadow: inset 3px 0 0 var(--ac, #cbd5e1); }
-        .dark #managerModal .att-day { border-color: #475569; background: #0f172a; }
-        #managerModal .att-st { font-size: .7rem; padding: .15em .75em; border-radius: 99px; border: 1px solid var(--c); color: var(--c); white-space: nowrap; font-weight: 700; }
-        #managerModal .att-chips { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
-        #managerModal .att-day .att-chips { margin-top: 0; }
-        #managerModal .att-chip { display: inline-flex; align-items: center; gap: .3em; font-size: .72rem; padding: .12em .65em; border-radius: 99px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-        .dark #managerModal .att-chip { background: #1e293b; color: #cbd5e1; border-color: #334155; }
-        #managerModal .att-chip i { width: .45rem; height: .45rem; border-radius: 50%; background: var(--c); display: inline-block; }
-        #managerModal .att-chip small { opacity: .75; }
-        #managerModal .att-card { border: 1px solid #cbd5e1; border-radius: 1rem; padding: .85rem .9rem; background: #fff; }
-        .dark #managerModal .att-card { border-color: #475569; background: #0f172a; }
-        #managerModal #mgrAttCards { display: grid; grid-template-columns: 1fr; gap: .75rem; padding: .75rem; align-content: start; font-size: calc(12px * var(--rt, 1)); }
-        @media (min-width: 900px) { #managerModal #mgrAttCards { grid-template-columns: 1fr 1fr; } }
-        #managerModal #mgrAttCards > .hidden { display: none !important; }
-        #managerModal .att-rate { text-align: center; min-width: 3.4rem; padding: .3em .5em; border-radius: .8rem; border: 1px solid var(--c); color: var(--c); }
-        #managerModal .att-rate b { display: block; font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
-        #managerModal .att-rate span { font-size: .65rem; opacity: .85; }
-        #managerModal .att-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(1.5rem, 1fr)); gap: .25rem; margin-top: .65rem; }
-        #managerModal .att-dot { height: 1.5rem; border-radius: .45rem; font-size: .62rem; line-height: 1; background: var(--c); color: #fff; font-weight: 700; border: 0; padding: 0; }
-        #managerModal .att-dot.none { background: #f1f5f9; color: #94a3b8; border: 1px dashed #cbd5e1; font-weight: 400; }
-        .dark #managerModal .att-dot.none { background: #1e293b; border-color: #475569; color: #64748b; }
-        #managerModal .att-dot.fri { opacity: .55; }
-        #managerModal .att-dot.ot { box-shadow: 0 0 0 2px #6366f1; }
-        #managerModal .att-logs { margin-top: .6rem; border-top: 1px solid #e2e8f0; padding-top: .3rem; }
-        .dark #managerModal .att-logs { border-top-color: #334155; }
-        #managerModal .att-log { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .4rem 0; border-bottom: 1px solid #e2e8f0; font-size: .8rem; }
-        .dark #managerModal .att-log { border-bottom-color: #334155; }
-        #managerModal .att-log:last-child { border-bottom: 0; }
-        #managerModal .att-flt { display: flex; gap: .4rem; overflow-x: auto; padding: .6rem .75rem 0; }
-        #managerModal .att-f { white-space: nowrap; font-size: .75rem; padding: .3em .85em; border-radius: 99px; border: 1px solid #cbd5e1; background: #fff; color: #475569; }
-        .dark #managerModal .att-f { background: #1e293b; border-color: #475569; color: #cbd5e1; }
-        #managerModal .att-f.on { background: #4f46e5; border-color: #4f46e5; color: #fff; }
-    </style>
-    <style id="finListCss">
-        /* ===== لیست حقوق و مالی: فقط کارتی ===== */
-        #mgrFinCards { font-size: calc(12px * var(--rt, 1)); display: grid; grid-template-columns: 1fr; gap: .75rem; padding: .75rem; align-content: start; }
-        #mgrFinCards > .hidden { display: none !important; }
-        @media (min-width: 900px) { #mgrFinCards { grid-template-columns: 1fr 1fr; } }
-        #mgrFinCard .fin-ic { width: 2.3em; height: 2.3em; font-size: 1em; }
-        #mgrFinCard .fin-card { border: 1px solid #cbd5e1; border-radius: 1rem; padding: .85rem .9rem; background: #fff; }
-        .dark #mgrFinCard .fin-card { border-color: #475569; background: #0f172a; }
-        #mgrFinCard .fin-tl { font-size: .85em; color: #64748b; }
-        .dark #mgrFinCard .fin-tl { color: #94a3b8; }
-        #mgrFinCard .fin-hero { display: flex; justify-content: space-between; align-items: flex-end; gap: .75rem; margin-top: .7rem; }
-        #mgrFinCard .fin-left { text-align: left; }
-        #mgrFinCard .fin-big { font-size: 1.55em; font-weight: 800; line-height: 1.25; }
-        #mgrFinCard .fin-big small { font-size: .5em; font-weight: 500; color: #94a3b8; }
-        #mgrFinCard .fin-mid { font-size: 1.1em; font-weight: 700; }
-        #mgrFinCard .fin-bar { height: .42rem; border-radius: 99px; background: #e2e8f0; overflow: hidden; margin-top: .5rem; }
-        .dark #mgrFinCard .fin-bar { background: #334155; }
-        #mgrFinCard .fin-bar i { display: block; height: 100%; border-radius: 99px; transition: width .4s; }
-        #mgrFinCard .fin-cap { font-size: .82em; color: #94a3b8; margin-top: .25rem; }
-        #mgrFinCard .fin-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
-        #mgrFinCard .fin-chip { font-size: .85em; padding: .12em .65em; border-radius: 99px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-        .dark #mgrFinCard .fin-chip { background: #1e293b; color: #cbd5e1; border-color: #334155; }
-        #mgrFinCard .fin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; margin-top: .65rem; padding-top: .65rem; border-top: 1px dashed #cbd5e1; }
-        .dark #mgrFinCard .fin-grid { border-top-color: #475569; }
-        #mgrFinCard .fin-kv { display: flex; flex-direction: column; gap: .1em; padding: .4em .6em; border-radius: .7rem; background: #f8fafc; border: 1px solid #e2e8f0; min-width: 0; }
-        .dark #mgrFinCard .fin-kv { background: #1e293b; border-color: #334155; }
-        #mgrFinCard .fin-kv > span:first-child { font-size: .85em; color: #64748b; }
-        .dark #mgrFinCard .fin-kv > span:first-child { color: #94a3b8; }
-        #mgrFinCard .fin-kv b { font-size: 1.05em; }
-        #mgrFinCard .fin-acts { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; padding-top: .65rem; border-top: 1px solid #e2e8f0; }
-        .dark #mgrFinCard .fin-acts { border-top-color: #334155; }
-        #mgrFinCard .fin-qa { display: inline-flex; align-items: center; gap: .35em; padding: .38em .85em; border: 1px solid #cbd5e1; border-radius: .75rem; font-size: .92em; color: #475569; background: #fff; }
-        .dark #mgrFinCard .fin-qa { background: #1e293b; border-color: #475569; color: #cbd5e1; }
-        #mgrFinCard .fin-settle { background: #4f46e5; border-color: #4f46e5; color: #fff; font-weight: 700; }
-        .dark #mgrFinCard .fin-settle { background: #4f46e5; color: #fff; }
-        #mgrFinCard .fin-txb { margin-inline-start: auto; }
-        #mgrFinCard .fin-sum { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; padding: .75rem .75rem 0; }
-        @media (min-width: 640px) { #mgrFinCard .fin-sum { grid-template-columns: repeat(4, 1fr); } }
-        #mgrFinCard .fin-tile { padding: .55em .75em; border-radius: .9rem; border: 1px solid #e2e8f0; background: #f8fafc; }
-        .dark #mgrFinCard .fin-tile { background: #1e293b; border-color: #334155; }
-        #mgrFinCard .fin-tv { font-weight: 800; font-size: 1.12em; margin-top: .1em; }
-        #mgrFinCard .fin-sumbar { padding: 0 .85rem; }
-        #mgrFinCard .fin-flt { display: flex; gap: .4rem; overflow-x: auto; padding: .6rem .75rem 0; }
-        #mgrFinCard .fin-f { white-space: nowrap; font-size: .92em; padding: .3em .85em; border-radius: 99px; border: 1px solid #cbd5e1; background: #fff; color: #475569; }
-        .dark #mgrFinCard .fin-f { background: #1e293b; border-color: #475569; color: #cbd5e1; }
-        #mgrFinCard .fin-f.on { background: #4f46e5; border-color: #4f46e5; color: #fff; }
-        #mgrFinCard .fin-p0 { padding: 0 !important; }
-        #mgrFinCard .fin-tx-item:last-child { border-bottom: 0; }
-        #mgrFinCard .kf-sub { display: block; font-size: .82em; font-weight: 400; color: #64748b; }
-        .dark #mgrFinCard .kf-sub { color: #94a3b8; }
-        #mgrFinCard .kf-warn { display: block; font-size: .82em; font-weight: 400; color: #d97706; }
-        #mgrFinCard .kf-inl { display: flex; align-items: center; gap: .3em; margin-top: .25em; font-size: .85em; font-weight: 400; color: #64748b; }
-        #mgrFinCard .kf-mini { width: 3.6em; padding: .15em .3em; font-size: 1em; }
-        #mgrFinCard .kf-mini.kf-wide { width: 8em; }
-        /* پنجره‌ی انتخاب فیلدها (همان ظاهر «فیلدها» در لیست کارکردها) */
-        #finColsPop { position: fixed; z-index: 90; width: 230px; max-width: calc(100vw - 16px); padding: 10px 12px; border-radius: 14px; background: #fff; border: 1px solid rgb(203 213 225); box-shadow: 0 18px 40px -12px rgba(15,23,42,.45); }
-        .dark #finColsPop { background: rgb(15 23 42); border-color: rgb(71 85 105); }
-        #finColsPop .rc-pop-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; font-size: 12px; font-weight: 800; color: rgb(51 65 85); } .dark #finColsPop .rc-pop-head { color: rgb(226 232 240); }
-        #finColsPop label { display: flex; align-items: center; gap: 8px; padding: 4px 2px; font-size: 12px; cursor: pointer; color: rgb(51 65 85); } .dark #finColsPop label { color: rgb(226 232 240); }
-        #finColsPop input { accent-color: #6366f1; }
-        /* چاپ */
-        #finPrintArea { display: none; }
-        @media print {
-            body[data-printfin="1"] #recordsTableCard, body[data-printfin="1"] #recordsTableCard * { visibility: hidden !important; }
-            body[data-printfin="1"] #finPrintArea, body[data-printfin="1"] #finPrintArea * { visibility: visible !important; }
-            body[data-printfin="1"] #finPrintArea { display: block !important; position: absolute !important; left: 0; top: 0; width: 100%; padding: 8px; background: #fff; color: #0f172a; }
-            body[data-printfin="1"] #finPrintArea table { width: 100%; border-collapse: collapse; font-size: 9.5px; }
-        }
+        @media print { body.slip-open > *:not(#slipOverlay) { display: none !important; } body.slip-open #slipOverlay { position: static !important; background: none !important; overflow: visible !important; padding: 0 !important; } }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen pb-28 font-normal-size" id="appBody">
@@ -1122,7 +961,6 @@
         <div class="max-w-5xl mx-auto px-2 flex items-stretch justify-around pt-1.5" role="tablist" aria-label="تب‌های اصلی" style="padding-bottom: calc(0.4rem + env(safe-area-inset-bottom));">
             <button type="button" role="tab" data-nav="home" onclick="setAppTab('home')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-house"></i></span><span>خانه</span></button>
             <button type="button" role="tab" data-nav="list" onclick="setAppTab('list')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-table-list"></i></span><span>رکوردها</span></button>
-            <button type="button" role="tab" data-nav="att" data-mgr-only="1" onclick="setAppTab('att')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-calendar-check"></i></span><span>حضور و غیاب</span></button>
             <button type="button" role="tab" data-nav="add" onclick="setAppTab('add')" class="bottom-nav-item" aria-label="ثبت کارکرد جدید"><span class="nav-ico"><i class="fa-solid fa-plus"></i></span><span>ثبت</span></button>
             <button type="button" role="tab" data-nav="fin" data-mgr-only="1" onclick="setAppTab('fin')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-coins"></i></span><span>حقوق و مالی</span></button>
             <button type="button" role="tab" data-nav="notes" onclick="setAppTab('notes')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-note-sticky"></i></span><span>یادداشت‌ها</span></button>
@@ -3960,52 +3798,9 @@
             s.manager = {
                 enabled: !!m.enabled,
                 sections: A(m.sections).map(x => x && { id: I(x.id) || mgrId('s'), name: T(x.name, 60) }).filter(x => x && x.name).slice(0, 50),
-                workers: A(m.workers).map(x => x && { id: I(x.id) || mgrId('w'), name: T(x.name, 100), phone: T(x.phone, 40), sectionId: I(x.sectionId), role: T(x.role, 60), wageType: ['piece', 'daily', 'monthly'].includes(x.wageType) ? x.wageType : '', rate: N(x.rate), note: T(x.note, 300), startDate: dk(x.startDate), endDate: dk(x.endDate), active: x.active !== false, photo: (isSafeImageDataUrl(x.photo) && x.photo.length <= 60000) ? x.photo : null }).filter(x => x && x.name).slice(0, 500),
-                attendance: (() => {
-                    const a = (m.attendance && typeof m.attendance === 'object' && !Array.isArray(m.attendance)) ? m.attendance : {}, out = {};
-                    Object.keys(a).slice(0, 4000).forEach(d => {
-                        const k = dk(d), day = a[d];
-                        if (!k || k !== d || !day || typeof day !== 'object') return;
-                        const o = {};
-                        Object.keys(day).slice(0, 600).forEach(w => { const id = I(w); if (id && ['p', 't', 'l', 'a'].includes(day[w])) o[id] = day[w]; });
-                        if (Object.keys(o).length) out[k] = o;
-                    });
-                    return out;
-                })(),
-                attMin: (() => {
-                    const a = (m.attMin && typeof m.attMin === 'object' && !Array.isArray(m.attMin)) ? m.attMin : {}, out = {};
-                    Object.keys(a).slice(0, 4000).forEach(d => {
-                        const k = dk(d), day = a[d];
-                        if (!k || k !== d || !day || typeof day !== 'object') return;
-                        const o = {};
-                        Object.keys(day).slice(0, 600).forEach(w => { const id = I(w), n = Math.floor(Number(day[w])); if (id && Number.isFinite(n) && n > 0 && n <= 1440) o[id] = n; });
-                        if (Object.keys(o).length) out[k] = o;
-                    });
-                    return out;
-                })(),
-                otMin: (() => {
-                    const a = (m.otMin && typeof m.otMin === 'object' && !Array.isArray(m.otMin)) ? m.otMin : {}, out = {};
-                    Object.keys(a).slice(0, 4000).forEach(d => {
-                        const k = dk(d), day = a[d];
-                        if (!k || k !== d || !day || typeof day !== 'object') return;
-                        const o = {};
-                        Object.keys(day).slice(0, 600).forEach(w => { const id = I(w), n = Math.floor(Number(day[w])); if (id && Number.isFinite(n) && n > 0 && n <= 1440) o[id] = n; });
-                        if (Object.keys(o).length) out[k] = o;
-                    });
-                    return out;
-                })(),
-                finance: (() => {
-                    const f = (m.finance && typeof m.finance === 'object' && !Array.isArray(m.finance)) ? m.finance : {};
-                    const days = {};
-                    if (f.days && typeof f.days === 'object' && !Array.isArray(f.days)) Object.keys(f.days).slice(0, 5000).forEach(k => { const n = Math.floor(Number(f.days[k])); if (/^[\w-]{1,40}\|\d{4}-\d{1,2}$/.test(k) && Number.isFinite(n) && n >= 0 && n <= 31) days[k] = n; });
-                    const rates = {};
-                    if (f.rates && typeof f.rates === 'object' && !Array.isArray(f.rates)) Object.keys(f.rates).slice(0, 600).forEach(k => { const id = I(k), r = f.rates[k]; if (id && r && typeof r === 'object') { const ot = N(r.ot), lv = N(r.lv); if (ot || lv) rates[id] = { ot, lv }; } });
-                    const dfo = (f.def && typeof f.def === 'object' && !Array.isArray(f.def)) ? f.def : {};
-                    return {
-                        txns: A(f.txns).map(t => t && { id: I(t.id) || mgrId('f'), workerId: I(t.workerId), type: ['advance', 'bonus', 'deduction', 'payment'].includes(t.type) ? t.type : '', amount: N(t.amount), date: dk(t.date), monthKey: /^\d{4}-\d{1,2}$/.test(String(t.monthKey)) ? String(t.monthKey) : '', note: T(t.note, 200) }).filter(t => t && t.type && t.amount > 0 && t.workerId && t.monthKey).slice(0, 20000),
-                        days, rates, def: { ot: N(dfo.ot), lv: N(dfo.lv) }
-                    };
-                })(),
+                workers: A(m.workers).map(x => x && { id: I(x.id) || mgrId('w'), name: T(x.name, 100), phone: T(x.phone, 40), sectionId: I(x.sectionId), role: T(x.role, 60), code: T(x.code, 20), note: T(x.note, 300), startDate: dk(x.startDate), endDate: dk(x.endDate), active: x.active !== false, photo: (isSafeImageDataUrl(x.photo) && x.photo.length <= 60000) ? x.photo : null }).filter(x => x && x.name).slice(0, 500),
+                company: T(m.company, 80),
+                payslips: A(m.payslips).map(p => p && { id: I(p.id) || mgrId('p'), workerId: I(p.workerId), name: T(p.name, 100), code: T(p.code, 20), monthKey: /^\d{4}-\d{1,2}$/.test(String(p.monthKey)) ? String(p.monthKey) : '', base: N(p.base), ot: N(p.ot), bonus: N(p.bonus), insurance: N(p.insurance), tax: N(p.tax), advance: N(p.advance), status: p.status === 'paid' ? 'paid' : 'unpaid' }).filter(p => p && p.workerId && p.monthKey).slice(0, 5000),
                 schema: 3
             };
             return s;
@@ -4176,7 +3971,7 @@
         const NOTES_STORE = 'notes';
         const TRASH_RECORDS_STORE = 'trash_records';
         const TRASH_NOTES_STORE = 'trash_notes';
-        const SETTINGS_STORE = 'settings'; // نسخه‌ی پشتیبان اطلاعات کارفرما (پرسنل، بخش‌ها، حضور و غیاب) خارج از سقف localStorage
+        const SETTINGS_STORE = 'settings'; // نسخه‌ی پشتیبان اطلاعات کارفرما (پرسنل و بخش‌ها) خارج از سقف localStorage
         const TRASH_TTL_MS = 30 * 24 * 3600 * 1000; // ۳۰ روز نگه‌داری در سطل بازیافت
         let dataIdbOk = false;
         let dataDbPromise = null;
@@ -4720,7 +4515,6 @@
                 case 'deadline-reminder': createDeadlineReminder(id); break;
                 case 'finish-active': finishRecordNow(id); break;
                 case 'unfinish': unfinishRecord(id); break;
-                case 'worker-info': showWorkerInfoPop(id, el); break;
                 case 'restore-trash': restoreFromTrash(el.dataset.kind, id); break;
                 case 'delete-trash-permanent': permanentlyDeleteFromTrash(el.dataset.kind, id); break;
             }
@@ -4910,26 +4704,8 @@
         const MGR_LS_KEY = 'sewing_app_settings_v13';
         function mgrSigNow() { try { return JSON.stringify(appSettings.manager); } catch (e) { return ''; } }
 
-        // ادغامِ تغییراتِ ذخیره‌نشده‌ی همین تب (حضور و غیاب/مالی که با تاخیر ذخیره می‌شوند) روی نسخه‌ی جدیدترِ تب دیگر؛
-        // برای کلیدهای مشترک، مقدار همین تب ارجح است. پرسنل/بخش‌ها از نسخه‌ی جدیدتر گرفته می‌شوند.
-        function mgrMergeLocalInto(theirs, ours) {
-            if (!ours) return theirs;
-            const out = theirs;
-            ['attendance', 'attMin', 'otMin'].forEach(k => {
-                const o = (ours[k] && typeof ours[k] === 'object') ? ours[k] : {};
-                out[k] = out[k] || {};
-                Object.keys(o).forEach(d => { out[k][d] = { ...(out[k][d] || {}), ...o[d] }; });
-            });
-            if (ours.finance) {
-                out.finance = out.finance || { txns: [], days: {} };
-                const ids = new Set((out.finance.txns || []).map(t => t.id));
-                (ours.finance.txns || []).forEach(t => { if (!ids.has(t.id)) out.finance.txns.push(t); });
-                out.finance.days = { ...(out.finance.days || {}), ...(ours.finance.days || {}) };
-                out.finance.rates = { ...(out.finance.rates || {}), ...(ours.finance.rates || {}) };
-                out.finance.def = { ...(out.finance.def || {}), ...(ours.finance.def || {}) };
-            }
-            return out;
-        }
+        // پرسنل/بخش‌ها از نسخه‌ی جدیدترِ تب دیگر گرفته می‌شوند (داده‌ی دیگری برای ادغام وجود ندارد).
+        function mgrMergeLocalInto(theirs, ours) { return theirs; }
         function mgrAdopt(st, opts) {
             opts = opts || {};
             const incoming = sanitizeSettings({ manager: st.manager }).manager;
@@ -5453,7 +5229,6 @@
                         const monthFolder = filename.replace(/\.json$/i, '');
                         const path = `کارگاه_هوشمند_پشتیبان/${currentModeFolderName()}/${monthFolder}/${filename}`;
                         await FS.writeFile({ path, data: jsonString, directory: 'DOCUMENTS', encoding: 'utf8', recursive: true });
-                        await mgrBackupAuxFiles(null);
                         updateBackupFolderStatusUI();
                         if (onSuccess) onSuccess('native-documents');
                         return true;
@@ -5480,7 +5255,6 @@
                         const writable = await fileHandle.createWritable();
                         await writable.write(jsonString);
                         await writable.close();
-                        await mgrBackupAuxFiles(modeBackupDir);
                         // مهاجرت: اگر از قبل فایل همین ماه مستقیماً در ریشه‌ی پوشه پشتیبان بوده (ساختار قبل از این
                         // به‌روزرسانی)، بعد از نوشتن موفق داخل زیرپوشه حذف می‌شود تا فقط یک نسخه باقی بماند.
                         try { await backupDirHandle.removeEntry(filename); } catch (e) { /* از قبل وجود نداشت؛ بی‌اهمیت */ }
@@ -5758,7 +5532,7 @@
 
         function resetFolderWriteCache() {
             folderWrittenSig.clear();
-            mgrWrittenSig.clear(); mgrKnown.clear(); mgrPending = []; mgrFolderOk = false; mgrAuxSig.clear(); mgrAuxKnown.clear(); mgrAttOk = false; mgrFinOk = false;
+            mgrWrittenSig.clear(); mgrKnown.clear(); mgrPending = []; mgrFolderOk = false;
             folderSettingsSig = null;
             folderStaleScanDone = false;
             folderModeName = null;
@@ -5820,7 +5594,6 @@
                 }
 
                 mgrFolderOk = mgrOn() ? await mgrSyncWorkerFiles(FS) : false; // فایل‌های پرسنل فقط در پوشه‌ی «کارفرما»
-                { const aux = mgrOn() ? await mgrSyncAuxFiles(FS) : { att: false, fin: false }; mgrAttOk = aux.att; mgrFinOk = aux.fin; } // حضور و غیاب و حقوق و مالی: هرکدام در پوشه‌ی مخصوص خودش
                 const settingsPayload = { notes: notesSnapshot, settings: mgrSettingsForFolder(), installSalt: getOrCreateInstallSalt(), tombstones: tombstones };
                 const settingsSig = JSON.stringify(settingsPayload);
                 if (settingsSig !== folderSettingsSig) {
@@ -5849,7 +5622,7 @@
             function absorbParsedFile(parsed) {
                 if (!parsed || parsed.app !== 'sewing_statistics') return;
                 result.hasAnyFile = true;
-                if (parsed.kind === 'worker' || parsed.kind === 'attendance' || parsed.kind === 'finance' || parsed.kind === 'finance-settings') { mgrCollectWorkerFile(parsed); return; }
+                if (parsed.kind === 'worker') { mgrCollectWorkerFile(parsed); return; }
                 if (Array.isArray(parsed.records)) parsed.records.forEach(rr => { const clean = sanitizeRecord(rr); if (clean) result.records.push(clean); });
                 if (parsed.notes || parsed.settings) {
                     result.notes = parsed.notes || result.notes;
@@ -5996,7 +5769,6 @@
                 }
 
                 mgrFolderOk = mgrOn() ? await mgrSyncWorkerFiles(null) : false; // فایل‌های پرسنل فقط در پوشه‌ی «کارفرما»
-                { const aux = mgrOn() ? await mgrSyncAuxFiles(null) : { att: false, fin: false }; mgrAttOk = aux.att; mgrFinOk = aux.fin; }
                 const settingsPayload = {
                     notes: notesSnapshot,
                     settings: mgrSettingsForFolder(),
@@ -6037,7 +5809,7 @@
             function absorbParsedFile(parsed) {
                 if (!parsed || parsed.app !== 'sewing_statistics') return;
                 hasAnyFile = true;
-                if (parsed.kind === 'worker' || parsed.kind === 'attendance' || parsed.kind === 'finance' || parsed.kind === 'finance-settings') { mgrCollectWorkerFile(parsed); return; }
+                if (parsed.kind === 'worker') { mgrCollectWorkerFile(parsed); return; }
                 if (Array.isArray(parsed.records)) {
                     parsed.records.forEach(rr => { const clean = sanitizeRecord(rr); if (clean) collectedRecords.push(clean); });
                 }
@@ -6742,16 +6514,15 @@
         // ===== تب‌بندی اصلی (مثل کافه‌رستوران): خانه | ثبت | رکوردها | یادداشت‌ها =====
         let appTab = 'home';
         function setAppTab(tab, opts) {
-            if (['home', 'add', 'list', 'notes', 'progress', 'mgr', 'att', 'fin'].indexOf(tab) < 0) tab = 'home';
-            if ((tab === 'mgr' || tab === 'att' || tab === 'fin') && !mgrOn()) tab = 'home';
-            if (tab === 'att') mgrTab = 'attendance'; else if (tab === 'fin') mgrTab = 'finance'; else if (tab === 'mgr' && (mgrTab === 'attendance' || mgrTab === 'finance')) mgrTab = 'workers';
+            if (['home', 'add', 'list', 'notes', 'progress', 'mgr', 'fin'].indexOf(tab) < 0) tab = 'home';
+            if ((tab === 'mgr' || tab === 'fin') && !mgrOn()) tab = 'home';
+            if (tab === 'fin') mgrTab = 'finance'; else if (tab === 'mgr' && mgrTab === 'finance') mgrTab = 'workers';
             if (tab !== 'progress' && typeof mgrPageW !== 'undefined' && mgrPageW) { try { mgrCloseWorkerPage(); } catch (e) { /* بی‌اهمیت */ } }
             appTab = tab;
-            if (tab !== 'fin' && typeof mgrFinResetFull === 'function') mgrFinResetFull();
             document.body.dataset.apptab = tab;
             _switchMainPanel(tab === 'list' ? 'list' : 'entry');
             const mgrPage = document.getElementById('managerModal');
-            if (mgrPage) { const isM = tab === 'mgr' || tab === 'att' || tab === 'fin'; mgrPage.classList.toggle('hidden', !isM); if (isM) { try { mgrRender(); } catch (e) { /* بی‌اهمیت */ } } }
+            if (mgrPage) { const isM = tab === 'mgr' || tab === 'fin'; mgrPage.classList.toggle('hidden', !isM); if (isM) { try { mgrRender(); } catch (e) { /* بی‌اهمیت */ } } }
             if (!(opts && opts.noScroll)) window.scrollTo({ top: 0, behavior: 'smooth' });
             if (tab === 'notes') {
                 const sec = document.getElementById('dailyNotesSection');
@@ -6763,7 +6534,7 @@
             updateTabHeaderBar(tab);
         }
         function updateTabHeaderBar(tab) {
-            const TAB_HEADERS = { add: ['fa-circle-plus', 'ثبت کارکرد جدید', 'ثبت سریع رکورد کار'], list: ['fa-table', 'لیست کارکردها', 'مشاهده، جستجو و ویرایش رکوردها'], notes: ['fa-note-sticky', 'یادداشت‌ها', 'یادداشت‌های روزانه'], progress: ['fa-stopwatch', 'پیشرفت کار', 'وضعیت زنده‌ی کار جاری'], att: ['fa-calendar-check', 'حضور و غیاب', 'ثبت و مدیریت حضور و غیاب پرسنل'], fin: ['fa-coins', 'حقوق و مالی', 'ثبت و مدیریت تراکنش‌های مالی پرسنل'], mgr: ['fa-user-tie', 'پنل کارفرما', 'مدیریت پرسنل و بخش‌ها'] };
+            const TAB_HEADERS = { add: ['fa-circle-plus', 'ثبت کارکرد جدید', 'ثبت سریع رکورد کار'], list: ['fa-table', 'لیست کارکردها', 'مشاهده، جستجو و ویرایش رکوردها'], notes: ['fa-note-sticky', 'یادداشت‌ها', 'یادداشت‌های روزانه'], progress: ['fa-stopwatch', 'پیشرفت کار', 'وضعیت زنده‌ی کار جاری'], fin: ['fa-coins', 'حقوق و مالی', 'فیش حقوقی و دستمزد پرسنل'], mgr: ['fa-user-tie', 'پنل کارفرما', 'مدیریت پرسنل و بخش‌ها'] };
             const bar = document.getElementById('brandTabTitle'); if (!bar) return;
             const c = TAB_HEADERS[tab];
             bar.classList.toggle('hidden', !c);
@@ -6781,7 +6552,7 @@
             const on = (typeof mgrOn === 'function') && mgrOn();
             const b = document.getElementById('homeMgrBtn');
             if (b) b.classList.toggle('hidden', !on);
-            if (!on && ['mgr', 'att', 'fin'].indexOf(appTab) >= 0) setAppTab('home', { noScroll: true });
+            if (!on && (appTab === 'mgr' || appTab === 'fin')) setAppTab('home', { noScroll: true });
         }
         function syncProgressEmpty() {
             syncMgrTab();
@@ -11035,7 +10806,7 @@
                                 </div>
                                 <div class="mt-1 flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400">
                                     ${isFieldHidden('itemColor') ? '' : `${renderColorSwatchDot(r.itemColor)}<span>${escapeHTML(r.itemColor) || '-'}</span><span class="opacity-40">•</span>`}
-                                    <span>#${formatNumber(index + 1)}</span>${(mgrOn() && mgrRecWorker(r)) ? `<span class="opacity-40">•</span>${mgrWorker(r.workerId) ? `<button type="button" data-action="worker-info" data-id="${Number(r.id)}" aria-haspopup="dialog" aria-expanded="false" title="نمایش اطلاعات مالی" class="wi-name"><i class="fa-solid fa-user-gear text-[10px]"></i>${escapeHTML(mgrRecWorker(r))}</button>` : `<span class="text-indigo-600 dark:text-indigo-300"><i class="fa-solid fa-user-gear text-[10px] ml-1"></i>${escapeHTML(mgrRecWorker(r))}</span>`}` : ''}
+                                    <span>#${formatNumber(index + 1)}</span>${(mgrOn() && mgrRecWorker(r)) ? `<span class="opacity-40">•</span><span class="text-indigo-600 dark:text-indigo-300"><i class="fa-solid fa-user-gear text-[10px] ml-1"></i>${escapeHTML(mgrRecWorker(r))}</span>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -11118,12 +10889,11 @@
                 ? 'حافظه‌ی اصلی مرورگر پر است؛ تغییرات در ذخیره‌گاه تکمیلی (IndexedDB) ذخیره شد. بهتر است پشتیبان بگیرید.'
                 : 'ذخیره‌سازی انجام نشد (حافظه‌ی مرورگر پر است). تغییرات فقط تا بستن برنامه می‌مانند؛ همین حالا پشتیبان بگیرید.', 'warn'));
         }
-        // آیا اطلاعاتی در بخش کارفرما (پرسنل، بخش‌ها، حضور و غیاب، مالی) وجود دارد؟
+        // آیا اطلاعاتی در بخش کارفرما (پرسنل، بخش‌ها) وجود دارد؟
         function mgrHasData() {
             const M = appSettings && appSettings.manager;
             if (!M) return false;
-            const n = o => (o && typeof o === 'object') ? Object.keys(o).length : 0;
-            return !!((M.workers && M.workers.length) || (M.sections && M.sections.length) || n(M.attendance) || n(M.attMin) || n(M.otMin) || (M.finance && M.finance.txns && M.finance.txns.length));
+            return !!((M.workers && M.workers.length) || (M.sections && M.sections.length) || (M.payslips && M.payslips.length));
         }
 
         /* ---------- نمای صفحه‌ی اصلی در حالت کارفرما ---------- */
@@ -11445,15 +11215,15 @@
             else mgrReportLocalFailure();
         }
         function openManagerPanel() { if (!mgrOn()) return; setAppTab('mgr'); }
-        function closeManagerPanel() { if (['mgr', 'att', 'fin'].indexOf(appTab) >= 0) setAppTab('home'); }
+        function closeManagerPanel() { if (appTab === 'mgr' || appTab === 'fin') setAppTab('home'); }
 
         function mgrRender() {
             document.getElementById('mgrHeaderSub').innerText = `دوره‌ی گزارش: ${mgrMonthLabel()}`;
-            { const sep = (appTab === 'att' || appTab === 'fin'); document.getElementById('mgrTabs').classList.toggle('hidden', sep); const hd = document.getElementById('mgrHeaderSub').parentElement; if (hd) hd.classList.toggle('hidden', sep); }
+            { const sep = appTab === 'fin'; document.getElementById('mgrTabs').classList.toggle('hidden', sep); const hd = document.getElementById('mgrHeaderSub').parentElement; if (hd) hd.classList.toggle('hidden', sep); }
             document.getElementById('mgrTabs').innerHTML = MGR_TABS.map(([k, ic, t]) => `<button type="button" data-mgr="tab" data-k="${k}" class="shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold ${k === mgrTab ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-b-2 border-purple-600' : 'text-slate-400 dark:text-slate-500'}"><i class="fa-solid ${ic}"></i> ${t}</button>`).join('');
-            const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections, finance: mgrHtmlFinance, attendance: mgrHtmlAttendance }[mgrTab];
+            const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections, finance: mgrHtmlFinance }[mgrTab];
             const bodyEl = document.getElementById('mgrBody'), keepTop = (mgrLastTab === mgrTab) ? bodyEl.scrollTop : 0;
-            bodyEl.innerHTML = ((appTab === 'att' || appTab === 'fin') ? mgrPageHead() : '') + fn(); bodyEl.scrollTop = keepTop; mgrLastTab = mgrTab; mgrApplyMainView();
+            bodyEl.innerHTML = fn(); bodyEl.scrollTop = keepTop; mgrLastTab = mgrTab; mgrApplyMainView();
             const tabs = document.getElementById('mgrTabs'); tabs.setAttribute('role', 'tablist');
             tabs.querySelectorAll('[data-k]').forEach(b => { b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', b.dataset.k === mgrTab ? 'true' : 'false'); });
             mgrA11y(document.getElementById('managerModal'));
@@ -11502,14 +11272,6 @@
         }
         function mgrRemovePhoto() { mgrFormPhoto = null; mgrPaintPhotoBox(); }
 
-        function mgrWageToggle(sel) {
-            const r = document.getElementById('mgrWRate'); if (!r) return;
-            const on = sel.value === 'daily' || sel.value === 'monthly';
-            r.classList.toggle('hidden', !on); if (!on) r.value = '';
-            r.placeholder = sel.value === 'monthly' ? 'حقوق ماهانه' : 'نرخ روزانه';
-        }
-        const MGR_WAGE_TYPES = [['', '— نوع دستمزد —'], ['piece', 'کارمزدی'], ['daily', 'روزمزدی'], ['monthly', 'ماهانه (ثابت)']];
-        const mgrWageLabel = k => (MGR_WAGE_TYPES.find(x => x[0] === k && k) || [])[1] || '';
         function mgrHtmlWorkers() {
             const M = mgr(), e = M.workers.find(w => w.id === mgrEditW) || {};
             const secOpts = '<option value="">— بدون بخش —</option>' + M.sections.map(x => `<option value="${escapeHTML(x.id)}" ${e.sectionId === x.id ? 'selected' : ''}>${escapeHTML(x.name)}</option>`).join('');
@@ -11517,7 +11279,7 @@
                 const sc = mgrSection(w.sectionId);
                 return `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 flex items-start justify-between gap-2 ${w.active ? '' : 'opacity-60'}">
                     <div class="flex items-start gap-2.5 min-w-0">${mgrMiniAvatar(w, 40)}<div class="min-w-0"><p class="text-sm font-bold text-slate-800 dark:text-slate-100">${escapeHTML(w.name)} ${w.active ? '' : '<span class="text-[10px] text-rose-500">(غیرفعال)</span>'}</p>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400">${[sc ? escapeHTML(sc.name) : '', escapeHTML(w.role), mgrWageLabel(w.wageType) + (w.rate && w.wageType !== 'piece' ? ' ' + formatNumber(w.rate) : ''), w.startDate ? 'از ' + escapeHTML(w.startDate) : '', w.endDate ? 'تا ' + escapeHTML(w.endDate) : '', escapeHTML(w.phone)].filter(Boolean).join(' • ')}</p>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400">${[sc ? escapeHTML(sc.name) : '', escapeHTML(w.role), w.code ? 'کد ' + escapeHTML(w.code) : '', w.startDate ? 'از ' + escapeHTML(w.startDate) : '', w.endDate ? 'تا ' + escapeHTML(w.endDate) : '', escapeHTML(w.phone)].filter(Boolean).join(' • ')}</p>
                     ${w.note ? `<p class="text-[11px] text-slate-400">${escapeHTML(w.note)}</p>` : ''}</div></div>
                     <div class="flex items-center gap-1 shrink-0">
                         <button type="button" data-mgr="w-dl" data-id="${escapeHTML(w.id)}" title="دانلود فایل این پرسنل" class="w-8 h-8 rounded-full text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"><i class="fa-solid fa-file-arrow-down text-xs"></i></button>
@@ -11541,8 +11303,7 @@
                     <input id="mgrWPhone" inputmode="tel" maxlength="40" placeholder="شماره تماس" value="${escapeHTML(e.phone || '')}" class="${MI}">
                     <select id="mgrWSection" class="${MI}">${secOpts}</select>
                     <input id="mgrWRole" maxlength="60" placeholder="سمت / مهارت (${escapeHTML(currentBusinessHints().role)})" value="${escapeHTML(e.role || '')}" class="${MI}">
-                    <select id="mgrWWage" onchange="mgrWageToggle(this)" class="${MI}" aria-label="نوع دستمزد">${MGR_WAGE_TYPES.map(([k, t]) => `<option value="${k}" ${(e.wageType || '') === k ? 'selected' : ''}>${t}</option>`).join('')}</select>
-                    <input id="mgrWRate" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="${e.wageType === 'monthly' ? 'حقوق ماهانه' : 'نرخ روزانه'}" value="${e.rate ? escapeHTML(formatNumber(e.rate)) : ''}" class="${MI}${(e.wageType === 'daily' || e.wageType === 'monthly') ? '' : ' hidden'}">
+                    <input id="mgrWCode" maxlength="20" inputmode="numeric" placeholder="کد پرسنلی" value="${escapeHTML(e.code || '')}" class="${MI}">
                     <input id="mgrWStart" maxlength="10" inputmode="numeric" placeholder="شروع همکاری (مثلاً ۱۴۰۵/۰۱/۱۵)" value="${escapeHTML(e.startDate || '')}" class="${MI}">
                     <input id="mgrWEnd" maxlength="10" inputmode="numeric" placeholder="پایان همکاری (اختیاری)" value="${escapeHTML(e.endDate || '')}" class="${MI}">
                 </div>
@@ -11553,559 +11314,53 @@
         }
 
 
-        /* ---------- حضور و غیاب پنل کارفرما ---------- */
-        const MGR_ATT = { p: ['حاضر', 'emerald'], t: ['تاخیر', 'amber'], l: ['مرخصی', 'sky'], a: ['غایب', 'rose'] };
-        const MGR_WEEKDAYS = ['دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه', 'یکشنبه'];
-        var mgrAttDate = '';
-        function mgrAtt() { const M = mgr(); if (!M.attendance) M.attendance = {}; return M.attendance; }
-        function mgrAttMinMap() { const M = mgr(); if (!M.attMin) M.attMin = {}; return M.attMin; }
-        function mgrAttMinGet(d, wid) { const m = mgr() && mgr().attMin; return (m && m[d] && m[d][wid]) || 0; }
-        function mgrAttMinSet(d, wid, n) {
-            const m = mgrAttMinMap(); n = Math.max(0, Math.min(1440, Math.floor(n) || 0));
-            if (n > 0) (m[d] || (m[d] = {}))[wid] = n;
-            else if (m[d]) { delete m[d][wid]; if (!Object.keys(m[d]).length) delete m[d]; }
-        }
-        function mgrJdnStr(j) { const d = d2j(j); return `${d.jy}/${String(d.jm).padStart(2, '0')}/${String(d.jd).padStart(2, '0')}`; }
-        function mgrOtMinGet(d, wid) { const m = mgr() && mgr().otMin; return (m && m[d] && m[d][wid]) || 0; }
-        function mgrOtMinSet(d, wid, n) {
-            const M = mgr(); if (!M.otMin) M.otMin = {};
-            const m = M.otMin; n = Math.max(0, Math.min(1440, Math.floor(n) || 0));
-            if (n > 0) (m[d] || (m[d] = {}))[wid] = n;
-            else if (m[d]) { delete m[d][wid]; if (!Object.keys(m[d]).length) delete m[d]; }
-        }
-        var mgrOtOpen = {};
-        function mgrAttCount(wid, mk) {
-            const c = { p: 0, t: 0, l: 0, a: 0, tMin: 0, lMin: 0, lPart: 0, oMin: 0, oDays: 0 }, A = (mgr() && mgr().attendance) || {}, O = (mgr() && mgr().otMin) || {};
-            Object.keys(A).forEach(d => { const [y, m] = d.split('/').map(Number); if (`${y}-${m}` === mk && A[d][wid]) { const k = A[d][wid]; c[k]++; if (k === 't') c.tMin += mgrAttMinGet(d, wid); if (k === 'l') { const lm = mgrAttMinGet(d, wid); c.lMin += lm; if (lm > 0) c.lPart++; } } });
-            Object.keys(O).forEach(d => { const [y, m] = d.split('/').map(Number); if (`${y}-${m}` === mk && O[d] && O[d][wid]) { c.oMin += O[d][wid]; c.oDays++; } });
-            return c;
-        }
-        function mgrListCard(icon, title, heads, rows, empty, key) {
-            const th = 'sticky top-0 z-10 p-2.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 shadow-sm';
-            return `<div class="kf-lst rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden"><div class="px-4 py-3 border-b border-slate-300 dark:border-slate-600 flex flex-wrap items-center justify-between gap-2"><h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid ${icon} text-indigo-600 dark:text-indigo-400"></i> ${title}</h3><input placeholder="جستجو…" oninput="mgrFilterRows(this.value,'${key}')" class="${MI} !w-auto !py-1.5 !text-xs"></div>${rows ? `<div class="overflow-x-auto"><table class="w-full text-right text-sm"><thead class="text-slate-600 dark:text-slate-300 text-xs"><tr>${heads.map(h => `<th class="${th}">${h}</th>`).join('')}<th class="${th} no-print">عملیات</th></tr></thead><tbody id="${key}">${rows}</tbody></table></div>` : mgrEmpty(empty)}</div>`;
-        }
-        function mgrFilterRows(v, id) { const q = normalizeSearchText(v); document.querySelectorAll('#' + id + ' > tr').forEach(r => r.classList.toggle('hidden', !!q && !normalizeSearchText(r.textContent).includes(q))); }
-        function mgrFilterGroups(v, id) { const q = normalizeSearchText(v); document.querySelectorAll('#' + id + ' > tbody').forEach(r => r.classList.toggle('hidden', !!q && !normalizeSearchText(r.textContent).includes(q))); }
-        function mgrActBtns(ed, del, id, st) {
-            const s = st !== undefined ? ` data-st="${escapeHTML(st)}"` : '';
-            return `<td class="p-2.5 no-print whitespace-nowrap"><button type="button" data-mgr="${ed}" data-id="${escapeHTML(id)}"${s} title="ویرایش" class="w-8 h-8 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="${del}" data-id="${escapeHTML(id)}"${s} title="حذف" class="w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></td>`;
-        }
-        function mgrPageHead() {
-            const att = appTab === 'att';
-            return `<div class="flex justify-between items-center pb-3 border-b border-slate-300 dark:border-slate-600"><h2 class="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2.5 tracking-tight"><i class="fa-solid ${att ? 'fa-calendar-check' : 'fa-coins'} text-indigo-600 dark:text-indigo-400 text-lg"></i> ${att ? 'ثبت حضور و غیاب' : 'ثبت حقوق و مالی'}</h2></div>`;
-        }
-        function mgrAttEntries(mk) {
-            const A = mgrAtt(), O = (mgr().otMin) || {}, out = [];
-            new Set([...Object.keys(A), ...Object.keys(O)]).forEach(d => {
-                const [y, m] = d.split('/').map(Number); if (`${y}-${m}` !== mk) return;
-                new Set([...Object.keys(A[d] || {}), ...Object.keys(O[d] || {})]).forEach(id => out.push({ d, id }));
-            });
-            return out.sort((a, b) => a.d < b.d ? 1 : a.d > b.d ? -1 : 0);
-        }
-        /* ---- لیست ماهانه‌ی حضور و غیاب: کارت برای هر پرسنل (نوار ماه، آمار، فیلتر، ترتیب، ریز ثبت‌ها) ---- */
-        var mgrAttQuery = '', mgrAttFlt = '', mgrAttSort = 'default', mgrAttOpen = {};
-        const ATT_CLR = { p: '#10b981', t: '#f59e0b', l: '#0ea5e9', a: '#f43f5e' };
-        const ATT_TXT = { p: 'text-emerald-600 dark:text-emerald-400', t: 'text-amber-600 dark:text-amber-400', l: 'text-sky-600 dark:text-sky-400', a: 'text-rose-600 dark:text-rose-400' };
-        const ATT_SORTS = [['default', 'ترتیب پرسنل'], ['name_asc', 'نام: الف تا ی'], ['abs_desc', 'غیبت: بیشترین'], ['late_desc', 'تاخیر: بیشترین'], ['ot_desc', 'اضافه‌کاری: بیشترین'], ['rate_asc', 'حضور: کمترین']];
-        function mgrAttWeekday(d) { const j = parseJalaliDateToJdn(d); return j ? MGR_WEEKDAYS[((j % 7) + 7) % 7] : ''; }
-        function mgrAttModel(mk) {
-            const [y, m] = mk.split('-').map(Number); let mLen = 30; try { mLen = jalaaliMonthLength(y, m) || 30; } catch (e) { mLen = 30; }
-            const ids = new Map();
-            mgrAttEntries(mk).forEach(({ d, id }) => { if (!ids.has(id)) ids.set(id, []); ids.get(id).push(d); });
-            const order = new Map(mgr().workers.map((w, i) => [w.id, i]));
-            mgr().workers.forEach(w => { if (w.active && !ids.has(w.id)) ids.set(w.id, []); });
-            const rows = [...ids].map(([id, ds]) => {
-                const w = mgrWorker(id), sc = w ? mgrSection(w.sectionId) : null, c = mgrAttCount(id, mk), rec = c.p + c.t + c.l + c.a;
-                return { id, w, sc, c, ds, rec, rate: rec ? Math.round((c.p + c.t) / rec * 100) : null, ord: order.has(id) ? order.get(id) : 1e6, text: (w ? w.name : 'حذف‌شده') + ' ' + (sc ? sc.name : '') };
-            });
-            const nm = (a, b) => String(a.w ? a.w.name : '').localeCompare(String(b.w ? b.w.name : ''), 'fa');
-            const S = { default: (a, b) => a.ord - b.ord, name_asc: nm, abs_desc: (a, b) => b.c.a - a.c.a, late_desc: (a, b) => (b.c.t - a.c.t) || (b.c.tMin - a.c.tMin), ot_desc: (a, b) => b.c.oMin - a.c.oMin, rate_asc: (a, b) => (a.rate == null ? 101 : a.rate) - (b.rate == null ? 101 : b.rate) }[mgrAttSort] || ((a, b) => a.ord - b.ord);
-            rows.sort(S);
-            return { rows, mLen, y, m };
-        }
-        function mgrAttFlag(r, f) { return !f || (f === 'late' && r.c.t > 0) || (f === 'abs' && r.c.a > 0) || (f === 'ot' && r.c.oMin > 0) || (f === 'none' && !r.ds.length); }
-        function mgrAttShow(text, flags) { const q = normalizeSearchText(mgrAttQuery); return (!q || normalizeSearchText(text).includes(q)) && (!mgrAttFlt || String(flags).split(',').includes(mgrAttFlt)); }
-        function mgrAttTot(rows) { const T = { p: 0, t: 0, l: 0, a: 0, tMin: 0, lMin: 0, oMin: 0 }; rows.forEach(r => { Object.keys(T).forEach(k => { T[k] += r.c[k] || 0; }); }); return T; }
-        function mgrAttListHTML(mk) {
-            const A = mgrAtt(), f = formatNumber, { rows, mLen, y, m } = mgrAttModel(mk);
-            const flagsOf = r => ['late', 'abs', 'ot', 'none'].filter(k => mgrAttFlag(r, k)).join(',');
-            const vis = rows.filter(r => mgrAttShow(r.text, flagsOf(r))), T = mgrAttTot(vis);
-            const dur = n => n ? formatMinutesDuration(n) : '';
-            const chip = (k, n, mins) => `<span class="att-chip" style="--c:${ATT_CLR[k]}"><i></i>${MGR_ATT[k][0]} <b>${f(n)}</b>${mins ? ` <small>${dur(mins)}</small>` : ''}</span>`;
-            const cards = rows.map((r, idx) => {
-                const { c, w } = r, wid = escapeHTML(r.id), open = !!mgrAttOpen[r.id], flags = flagsOf(r);
-                const rateClr = r.rate == null ? '#94a3b8' : r.rate >= 90 ? '#10b981' : r.rate >= 75 ? '#f59e0b' : '#f43f5e';
-                const strip = Array.from({ length: mLen }, (_, i) => {
-                    const dd = `${y}/${String(m).padStart(2, '0')}/${String(i + 1).padStart(2, '0')}`, k = (A[dd] || {})[r.id], ot = mgrOtMinGet(dd, r.id), fri = mgrAttWeekday(dd) === 'جمعه';
-                    const tip = `${toPersianDigits(dd)} ${mgrAttWeekday(dd)}${fri ? ' (تعطیل)' : ''} — ${k ? MGR_ATT[k][0] : 'ثبت نشده'}${(k === 't' || k === 'l') && mgrAttMinGet(dd, r.id) ? ' ' + formatMinutesDuration(mgrAttMinGet(dd, r.id)) : ''}${ot ? ' • اضافه‌کاری ' + formatMinutesDuration(ot) : ''}`;
-                    return `<button type="button" data-mgr="a-edit" data-id="${wid}" data-st="${dd}" title="${escapeHTML(tip)}" class="att-dot${k ? '' : ' none'}${fri ? ' fri' : ''}${ot ? ' ot' : ''}" style="${k ? '--c:' + ATT_CLR[k] : ''}">${f(i + 1)}</button>`;
-                }).join('');
-                const log = r.ds.map(d => {
-                    const k = A[d] && A[d][r.id], mins = mgrAttMinGet(d, r.id), ot = mgrOtMinGet(d, r.id);
-                    return `<div class="att-log"><div class="min-w-0"><span class="tabular-nums font-semibold">${escapeHTML(toPersianDigits(d))}</span> <span class="text-[10px] text-slate-400">${mgrAttWeekday(d)}</span><div class="mt-0.5 text-[11px]"><b class="${k ? ATT_TXT[k] : 'text-slate-400'}">${k ? MGR_ATT[k][0] : 'بدون وضعیت'}</b>${mins ? ` • ${formatMinutesDuration(mins)}` : ''}${ot ? ` • <span class="kf-ot-txt">اضافه‌کاری ${formatMinutesDuration(ot)}</span>` : ''}</div></div><div class="flex gap-1 shrink-0 no-print"><button type="button" data-mgr="a-edit" data-id="${wid}" data-st="${escapeHTML(d)}" title="ویرایش" class="w-8 h-8 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="a-del" data-id="${wid}" data-st="${escapeHTML(d)}" title="حذف" class="w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></div></div>`;
-                }).join('');
-                return `<div class="att-card${mgrAttShow(r.text, flags) ? '' : ' hidden'}" data-att-row data-att-text="${escapeHTML(r.text)}" data-att-flags="${flags}" data-t="${[c.p, c.t, c.l, c.a, c.tMin, c.lMin, c.oMin].join(',')}">`
-                    + `<div class="flex items-start justify-between gap-3"><div class="min-w-0"><button type="button" onclick="mgrAttToggle(this)" data-att-id="${wid}" aria-expanded="${open}" class="inline-flex items-center text-right font-bold text-slate-800 dark:text-slate-100 text-sm"><i data-att-chev class="fa-solid ${open ? 'fa-chevron-down' : 'fa-chevron-left'} text-[9px] ml-1"></i>${escapeHTML(w ? w.name : 'پرسنل حذف‌شده')}${w && !w.active ? ' <span class="text-[10px] font-normal text-slate-400">(غیرفعال)</span>' : ''}</button><div class="mt-1 text-[11px] text-slate-500 dark:text-slate-400"><span>#${f(idx + 1)}</span>${r.sc ? ' <span class="opacity-40">•</span> ' + escapeHTML(r.sc.name) : ''} <span class="opacity-40">•</span> ${r.ds.length ? f(r.ds.length) + ' روز ثبت‌شده از ' + f(mLen) : 'بدون ثبت در این ماه'}</div></div>`
-                    + `<div class="att-rate" style="--c:${rateClr}"><b>${r.rate == null ? '—' : f(r.rate) + '٪'}</b><span>حضور</span></div></div>`
-                    + `<div class="att-bar"><i style="width:${r.rate == null ? 0 : r.rate}%;background:${rateClr}"></i></div>`
-                    + `<div class="att-chips">${chip('p', c.p)}${chip('t', c.t, c.tMin)}${chip('l', c.l, c.lMin)}${chip('a', c.a)}${c.oMin ? `<span class="att-chip" style="--c:#6366f1"><i></i>اضافه‌کاری <b>${dur(c.oMin)}</b></span>` : ''}</div>`
-                    + `<div class="att-strip" title="روی هر روز بزنید تا همان روز در فرم بالا باز شود">${strip}</div>`
-                    + `<div data-att-detail class="att-logs${open ? '' : ' hidden'}">${log || '<p class="text-[11px] text-slate-400 py-2">ثبتی در این ماه وجود ندارد.</p>'}</div></div>`;
-            }).join('');
-            const tile = (k, v, c) => `<div class="att-tile"><b class="${c || ''}" data-att-t="${k}">${v}</b><span>${{ p: 'حاضر', t: 'تاخیر', l: 'مرخصی', a: 'غیبت', oMin: 'اضافه‌کاری' }[k]}</span></div>`;
-            const summary = `<div class="att-tiles att-tiles-m">${tile('p', f(T.p), ATT_TXT.p)}${tile('t', f(T.t), ATT_TXT.t)}${tile('l', f(T.l), ATT_TXT.l)}${tile('a', f(T.a), ATT_TXT.a)}${tile('oMin', T.oMin ? formatMinutesDuration(T.oMin) : '—', 'kf-ot-txt')}</div>`;
-            const cnt = k => rows.filter(r => mgrAttFlag(r, k)).length;
-            const flt = `<div class="att-flt no-print">${[['', 'همه'], ['late', 'تاخیردار'], ['abs', 'غایب‌دار'], ['ot', 'اضافه‌کار'], ['none', 'بدون ثبت']].map(([k, l]) => `<button type="button" onclick="mgrAttSetFlt('${k}')" class="att-f${mgrAttFlt === k ? ' on' : ''}">${l} (${f(cnt(k))})</button>`).join('')}</div>`;
-            const sel = 'no-print w-full appearance-none pr-9 pl-3 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 outline-none cursor-pointer';
-            const head = `<div class="p-3 border-b border-slate-300 dark:border-slate-600 flex flex-col gap-2 bg-slate-50/50 dark:bg-slate-900/50"><div class="flex items-center gap-3"><h3 class="font-bold text-slate-700 dark:text-slate-200 text-sm flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-calendar-check text-indigo-600 dark:text-indigo-400"></i> لیست حضور و غیاب</h3><span class="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-medium whitespace-nowrap border border-indigo-100 dark:border-indigo-900/40">${mgrMonthLabel()} • <span data-att-cnt>${f(vis.length)}</span> نفر</span></div>`
-                + `<div class="flex items-center gap-2"><div class="relative w-full"><span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400"><i class="fa-solid fa-arrow-down-wide-short text-xs"></i></span><select onchange="mgrAttSetSort(this.value)" title="ترتیب نمایش لیست" class="${sel}">${ATT_SORTS.map(([v, l]) => `<option value="${v}"${v === mgrAttSort ? ' selected' : ''}>${l}</option>`).join('')}</select></div>`
-                + `<div class="relative w-full"><span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span><input type="text" id="mgrAttSearch" value="${escapeHTML(mgrAttQuery)}" oninput="mgrAttFilter(this.value)" placeholder="جستجو در لیست..." class="w-full pr-10 pl-3.5 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 outline-none"></div></div></div>`;
-            const empty = !rows.length;
-            return `<div id="mgrAttCard" class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden bg-white dark:bg-slate-900">${head}`
-                + (empty ? mgrEmpty('هنوز حضور و غیابی برای این ماه ثبت نشده است.') : `${summary}${flt}<div id="mgrAttCards">${cards}</div><p id="mgrAttNoHit" class="${vis.length ? 'hidden ' : ''}p-8 text-center text-sm text-slate-400">موردی یافت نشد.</p><p class="px-4 py-2 text-[11px] text-slate-400 border-t border-slate-200 dark:border-slate-700">روی نام هر نفر بزنید تا ریز ثبت‌ها (با ویرایش و حذف) باز شود؛ با زدن روی هر روزِ نوار ماه، همان روز در فرم بالا باز می‌شود.</p>`)
-                + `</div>`;
-        }
-        function mgrAttRefresh() { const h = document.getElementById('mgrAttHost'); if (!h) return mgrRender(); h.innerHTML = mgrAttListHTML(selectedMonthFilter); }
-        function mgrAttSetSort(v) { if (!ATT_SORTS.some(x => x[0] === v)) return; mgrAttSort = v; mgrAttRefresh(); }
-        function mgrAttSetFlt(k) { mgrAttFlt = String(k || ''); mgrAttRefresh(); }
-        function mgrAttToggle(el) {
-            const card = el.closest('[data-att-row]'); if (!card) return;
-            const id = el.getAttribute('data-att-id'), open = !mgrAttOpen[id]; mgrAttOpen[id] = open;
-            card.querySelectorAll('[data-att-detail]').forEach(d => d.classList.toggle('hidden', !open));
-            card.querySelectorAll('[data-att-chev]').forEach(i => { i.className = 'fa-solid ' + (open ? 'fa-chevron-down' : 'fa-chevron-left') + ' text-[9px] ml-1'; });
-            el.setAttribute('aria-expanded', open ? 'true' : 'false');
-        }
-        // جستجوی زنده: کارت‌ها فیلتر می‌شوند و آمار بالای لیست فقط برای کارت‌های نمایان دوباره شمرده می‌شود
-        function mgrAttFilter(v) {
-            if (v !== undefined && v !== null) mgrAttQuery = String(v);
-            const host = document.getElementById('mgrAttCard'); if (!host) return;
-            const T = [0, 0, 0, 0, 0, 0, 0]; let n = 0, total = 0;
-            host.querySelectorAll('[data-att-row]').forEach(el => {
-                const hit = mgrAttShow(el.getAttribute('data-att-text') || '', el.getAttribute('data-att-flags') || ''); total++;
-                el.classList.toggle('hidden', !hit);
-                if (hit) { n++; (el.getAttribute('data-t') || '').split(',').forEach((x, i) => { T[i] += Number(x) || 0; }); }
-            });
-            const set = (k, v) => { const e = host.querySelector('[data-att-t="' + k + '"]'); if (e) e.textContent = v; };
-            set('p', formatNumber(T[0])); set('t', formatNumber(T[1])); set('l', formatNumber(T[2])); set('a', formatNumber(T[3])); set('oMin', T[6] ? formatMinutesDuration(T[6]) : '—');
-            host.querySelectorAll('[data-att-cnt]').forEach(e => { e.textContent = formatNumber(n); });
-            const none = document.getElementById('mgrAttNoHit'); if (none) none.classList.toggle('hidden', n > 0 || total === 0);
-        }
-        function mgrHtmlAttendance() {
-            const M = mgr(), A = mgrAtt(), mk = selectedMonthFilter, f = formatNumber;
-            if (!mgrAttDate) mgrAttDate = mgrDK(getCurrentJalaliInfo().fullDateStr);
-            const day = A[mgrAttDate] || {}, jdn = parseJalaliDateToJdn(mgrAttDate), wd = MGR_WEEKDAYS[((jdn % 7) + 7) % 7], fri = wd === 'جمعه';
-            const ws = M.workers.filter(w => w.active);
-            const btn = (w, k) => { const on = day[w.id] === k, onCls = { p: 'bg-emerald-500 border-emerald-500', t: 'bg-amber-500 border-amber-500', l: 'bg-sky-500 border-sky-500', a: 'bg-rose-500 border-rose-500' }[k]; return `<button type="button" data-mgr="a-set" data-id="${escapeHTML(w.id)}" data-st="${k}" aria-pressed="${on}" class="flex-1 py-1.5 rounded-lg border text-[11px] ${on ? onCls + ' text-white font-bold' : 'border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400'}">${MGR_ATT[k][0]}</button>`; };
-            const durRow = w => {
-                const k = day[w.id]; if (k !== 't' && k !== 'l') return '';
-                const mins = mgrAttMinGet(mgrAttDate, w.id), h = Math.floor(mins / 60), mm = mins % 60, inp = 'w-14 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100';
-                return `<div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400"><span>${k === 't' ? 'مدت تاخیر' : 'مدت مرخصی'}:</span>
-                    <input type="text" inputmode="numeric" maxlength="2" placeholder="ساعت" value="${h ? toPersianDigits(h) : ''}" data-mgr-change="a-minh" data-id="${escapeHTML(w.id)}" class="${inp}">
-                    <input type="text" inputmode="numeric" maxlength="2" placeholder="دقیقه" value="${mm ? toPersianDigits(mm) : ''}" data-mgr-change="a-minm" data-id="${escapeHTML(w.id)}" class="${inp}">
-                    ${k === 'l' && !mins ? '<span class="text-sky-600 dark:text-sky-400">(خالی = تمام روز)</span>' : mins ? `<span class="font-bold">${formatMinutesDuration(mins)}</span>` : ''}</div>`;
-            };
-            const otBtn = w => { const on = mgrOtMinGet(mgrAttDate, w.id) > 0 || !!mgrOtOpen[mgrAttDate + '|' + w.id]; return `<button type="button" data-mgr="a-ot" data-id="${escapeHTML(w.id)}" aria-pressed="${on}" style="flex:1.35 1 0" class="kf-ot-btn${on ? ' on' : ''} py-1.5 rounded-lg border text-[11px]">اضافه‌کاری</button>`; };
-            const otRow = w => {
-                const mins = mgrOtMinGet(mgrAttDate, w.id);
-                if (!(mins > 0 || mgrOtOpen[mgrAttDate + '|' + w.id])) return '';
-                const h = Math.floor(mins / 60), mm = mins % 60, inp = 'w-14 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100';
-                return `<div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400"><span>مدت اضافه‌کاری:</span>
-                    <input type="text" inputmode="numeric" maxlength="2" placeholder="ساعت" value="${h ? toPersianDigits(h) : ''}" data-mgr-change="a-oth" data-id="${escapeHTML(w.id)}" class="${inp}">
-                    <input type="text" inputmode="numeric" maxlength="2" placeholder="دقیقه" value="${mm ? toPersianDigits(mm) : ''}" data-mgr-change="a-otm" data-id="${escapeHTML(w.id)}" class="${inp}">
-                    ${mins ? `<span class="font-bold kf-ot-txt">${formatMinutesDuration(mins)}</span>` : ''}</div>`;
-            };
-            const otCnt = ws.filter(w => mgrOtMinGet(mgrAttDate, w.id) > 0).length;
-            const monthChips = w => {
-                const c = mgrAttCount(w.id, mk), parts = ['p', 't', 'l', 'a'].filter(k => c[k]).map(k => `<span class="att-chip" style="--c:${ATT_CLR[k]}"><i></i>${MGR_ATT[k][0]} <b>${f(c[k])}</b></span>`);
-                if (c.oMin) parts.push(`<span class="att-chip" style="--c:#6366f1"><i></i>اضافه‌کاری <b>${formatMinutesDuration(c.oMin)}</b></span>`);
-                return `<div class="att-chips"><span class="text-[10px] text-slate-400">این ماه:</span>${parts.join('') || '<span class="text-[10px] text-slate-400">بدون ثبت</span>'}</div>`;
-            };
-            const rows = ws.map(w => {
-                const k = day[w.id], ac = k ? ATT_CLR[k] : '#cbd5e1';
-                return `<div class="att-day" style="--ac:${ac}"><div class="flex items-center justify-between gap-2"><p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p><span class="att-st" style="--c:${ac}">${k ? MGR_ATT[k][0] : 'ثبت نشده'}</span></div>${monthChips(w)}<div class="flex gap-1.5">${['p', 't', 'l', 'a'].map(x => btn(w, x)).join('') + otBtn(w)}</div>${durRow(w)}${otRow(w)}</div>`;
-            }).join('');
-            const cnt = Object.keys(MGR_ATT).reduce((o, k) => (o[k] = ws.filter(w => day[w.id] === k).length, o), {});
-            const done = ws.filter(w => day[w.id]).length, pct = ws.length ? Math.round(done / ws.length * 100) : 0;
-            const tl = (k, v, c) => `<div class="att-tile"><b class="${c}">${f(v)}</b><span>${k}</span></div>`;
-            return `<div class="flex items-center gap-2">
-                    <button type="button" data-mgr="a-next" title="روز بعد" class="w-9 h-9 shrink-0 rounded-xl border border-slate-400 dark:border-slate-500 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-chevron-right text-xs"></i></button>
-                    <input id="mgrADate" maxlength="10" inputmode="numeric" value="${escapeHTML(toPersianDigits(mgrAttDate))}" data-mgr-change="a-date" class="${MI} text-center">
-                    <button type="button" data-mgr="a-prev" title="روز قبل" class="w-9 h-9 shrink-0 rounded-xl border border-slate-400 dark:border-slate-500 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-chevron-left text-xs"></i></button>
-                    <button type="button" data-mgr="a-today" class="tactile-btn shrink-0 px-3 h-9 rounded-xl border border-purple-500 text-purple-700 dark:text-purple-300 text-xs">امروز</button></div>
-                <p class="text-[12px] font-bold text-center ${fri ? 'text-rose-500' : 'text-slate-600 dark:text-slate-300'}">${wd}${fri ? ' (تعطیل)' : ''}</p>
-                <div class="att-tiles">${tl('حاضر', cnt.p, ATT_TXT.p)}${tl('تاخیر', cnt.t, ATT_TXT.t)}${tl('مرخصی', cnt.l, ATT_TXT.l)}${tl('غایب', cnt.a, ATT_TXT.a)}${tl('اضافه‌کار', otCnt, 'kf-ot-txt')}</div>
-                ${ws.length ? `<div><div class="att-bar"><i style="width:${pct}%;background:#6366f1"></i></div><p class="att-cap">${f(done)} نفر از ${f(ws.length)} نفر ثبت شده (${f(pct)}٪)</p></div>` : ''}
-                ${ws.length ? `<button type="button" data-mgr="a-all" class="tactile-btn w-full py-2 rounded-xl bg-emerald-600 text-white text-xs font-medium">همه حاضر (بدون وضعیت قبلی)</button>` : ''}
-                <div class="space-y-2">${rows || mgrEmpty('ابتدا پرسنل فعال را در تب «پرسنل» اضافه کنید.')}</div>
-                <div id="mgrAttHost">${mgrAttListHTML(mk)}</div>`;
-        }
 
-        /* ---------- بخش مالی پنل کارفرما ---------- */
-        const MGR_FIN_TYPES = { advance: ['مساعده', 'text-rose-600 dark:text-rose-400'], bonus: ['پاداش', 'text-emerald-600 dark:text-emerald-400'], deduction: ['کسری / جریمه', 'text-amber-600 dark:text-amber-400'], payment: ['پرداخت حقوق', 'text-indigo-600 dark:text-indigo-400'] };
-        function mgrFin() { const M = mgr(); if (!M.finance) M.finance = { txns: [], days: {} }; return M.finance; }
-        var mgrPieceCache = null;
-        function mgrPieceTotals(mk) {
-            if (mgrPieceCache && mgrPieceCache.mk === mk) return mgrPieceCache.map;
-            const map = new Map();
-            for (const r of allRecords) { if (r.monthKey === mk && r.workerId && typeof r.totalPrice === 'number') { const k = String(r.workerId); map.set(k, (map.get(k) || 0) + r.totalPrice); } }
-            return map;
+        /* ---------- حقوق و مالی (فیش حقوقی پرسنل) ---------- */
+        var mgrEditP = '';
+        const MGR_PF = [['base', 'حقوق پایه'], ['ot', 'اضافه‌کاری'], ['bonus', 'پاداش و تشویقی']], MGR_PD = [['insurance', 'حق بیمه'], ['tax', 'مالیات'], ['advance', 'مساعده / پیش‌پرداخت']];
+        function mgrPCalc(p) { const b = (p.base || 0) + (p.ot || 0) + (p.bonus || 0), d = (p.insurance || 0) + (p.tax || 0) + (p.advance || 0); return { b, d, net: b - d }; }
+        function mgrSlipHTML(p) {
+            const f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان'), c = mgrPCalc(p), w = mgrWorker(p.workerId), sc = w ? mgrSection(w.sectionId) : null;
+            const [y, m] = String(p.monthKey).split('-'), mon = `${PERSIAN_MONTHS[parseInt(m, 10) - 1] || ''} ${toPersianDigits(y)}`;
+            const no = `PAY-${y}-${String(m).padStart(2, '0')}-${escapeHTML(p.code || '000')}`;
+            const kv = (k, v, cl) => `<div class="mb-3"><p class="text-xs text-slate-400">${k}</p><p class="text-base font-bold ${cl || 'text-slate-800'}">${v}</p></div>`;
+            const rows = a => a.map(([k, t]) => `<div class="flex justify-between py-2.5 border-b border-slate-100 text-sm text-slate-700"><span>${t}</span><span>${f(p[k] || 0)}</span></div>`).join('');
+            const tot = (t, v) => `<div class="flex justify-between pt-3 mt-1 border-t-2 border-slate-200 font-bold text-slate-800"><span>${t}</span><span>${f(v)}</span></div>`;
+            return `<div class="bg-white text-slate-800 rounded-3xl overflow-hidden" dir="rtl">
+                <div class="flex justify-between items-start p-5 border-b border-dashed border-slate-200"><div><h3 class="text-lg font-extrabold text-blue-600">${escapeHTML(mgr().company || 'کارگاه')}</h3><p class="text-xs text-slate-400 mt-1">فیش حقوقی و دستمزد پرسنل</p></div>
+                    <div class="text-left"><p class="font-extrabold">${mon}</p><p class="text-xs text-slate-400 mt-1" dir="ltr">${no}</p></div></div>
+                <div class="p-5 bg-slate-50">${kv('نام و نام خانوادگی', escapeHTML(p.name))}${kv('کد پرسنلی', escapeHTML(p.code || '—'))}${kv('سمت / نقش', escapeHTML((w && w.role) || (sc && sc.name) || '—'))}${kv('وضعیت پرداخت', p.status === 'paid' ? 'پرداخت شده' : 'پرداخت نشده', p.status === 'paid' ? 'text-emerald-500' : 'text-amber-500')}</div>
+                <div class="p-5"><h4 class="font-extrabold mb-1">حقوق و مزایا</h4>${rows(MGR_PF)}${tot('جمع مزایا', c.b)}
+                    <h4 class="font-extrabold mt-6 mb-1">کسورات</h4>${rows(MGR_PD)}${tot('جمع کسورات', c.d)}</div>
+                <div class="p-6 text-center bg-blue-50"><p class="text-sm font-bold text-blue-600">خالص پرداختی (${cur})</p><p class="text-3xl font-extrabold mt-2">${f(c.net)}</p></div></div>`;
         }
-        function mgrYm(str) { const p = String(str || '').split('/').map(Number); return p.length === 3 && p[0] > 1200 ? p[0] * 12 + p[1] : 0; }
-        // مبلغ هر ساعت اضافه‌کاری و مرخصی (کسر): نرخ اختصاصی پرسنل، وگرنه نرخ پیش‌فرض
-        function mgrFinRate(w) {
-            const F = mgrFin(), r = (F.rates && F.rates[w.id]) || {}, d = F.def || {};
-            return { ot: Number(r.ot) || Number(d.ot) || 0, lv: Number(r.lv) || Number(d.lv) || 0 };
+        function slipClose() { const e = document.getElementById('slipOverlay'); if (e) e.remove(); document.body.classList.remove('slip-open'); }
+        function mgrSlipOpen(id) {
+            const p = mgr().payslips.find(x => x.id === id); if (!p) return; slipClose();
+            const el = document.createElement('div'); el.id = 'slipOverlay'; el.className = 'fixed inset-0 z-[90] overflow-y-auto bg-slate-900/60 p-3';
+            el.innerHTML = `<div class="max-w-md mx-auto"><div class="no-print flex gap-2 mb-2"><button type="button" onclick="window.print()" class="tactile-btn flex-1 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold"><i class="fa-solid fa-print ml-1"></i>چاپ فیش</button><button type="button" onclick="slipClose()" class="tactile-btn flex-1 py-2.5 rounded-xl bg-white text-slate-700 text-xs font-bold">بستن</button></div>${mgrSlipHTML(p)}</div>`;
+            document.body.appendChild(el); document.body.classList.add('slip-open');
         }
-        function mgrFinCalc(w, mk) {
-            const F = mgrFin(), sum = { advance: 0, bonus: 0, deduction: 0, payment: 0 };
-            for (const x of F.txns) if (x.workerId === w.id && x.monthKey === mk) sum[x.type] += x.amount;
-            const at = mgrAttCount(w.id, mk), rt = mgrFinRate(w), daysAuto = (at.p + at.t + at.l + at.a) > 0;
-            // مرخصی ساعتی (با مدت) وقتی نرخ مرخصی ثبت شده باشد، روز کامل کارکرد حساب می‌شود و فقط ساعت‌های مرخصی کسر می‌شود
-            const partialLeaveDays = (daysAuto && rt.lv > 0) ? at.lPart : 0;
-            const days = daysAuto ? at.p + at.t + partialLeaveDays : (F.days[w.id + '|' + mk] || 0);
-            const [my, mm] = mk.split('-').map(Number), cur = my * 12 + mm, st = mgrYm(w.startDate), en = mgrYm(w.endDate), outOfRange = (st && st > cur) || (en && en < cur);
-            let earn = 0;
-            if (w.wageType === 'daily') earn = (w.rate || 0) * days;
-            else if (w.wageType === 'monthly') earn = outOfRange ? 0 : (w.rate || 0);
-            else earn = mgrPieceTotals(mk).get(w.id) || 0;
-            let mLen = 30; try { mLen = jalaaliMonthLength(my, mm) || 30; } catch (e) { mLen = 30; }
-            const absentDeduct = (w.wageType === 'monthly' && daysAuto && !outOfRange && at.a > 0) ? Math.round((w.rate || 0) / mLen * at.a) : 0;
-            const leaveDeduct = rt.lv > 0 ? Math.round(at.lMin / 60 * rt.lv) : 0;
-            const otPay = rt.ot > 0 ? Math.round(at.oMin / 60 * rt.ot) : 0;
-            const bonus = sum.bonus, deduction = sum.deduction, advance = sum.advance, payment = sum.payment;
-            const addAll = bonus + otPay, subAll = deduction + absentDeduct + leaveDeduct, net = earn + addAll - subAll;
-            return { earn, days, daysAuto, bonus, deduction, advance, payment, otMin: at.oMin, otPay, otRate: rt.ot, leaveMin: at.lMin, leaveDeduct, leaveRate: rt.lv, absent: at.a, absentDeduct, addAll, subAll, net, remain: net - advance - payment };
-        }
-        /* ---- کادر کوچک اطلاعات مالی پرسنل با کلیک روی نام در لیست کارکردها ---- */
-        var wiState = { anchor: null, raf: 0, bound: false };
-        function wiClose() {
-            const p = document.getElementById('wiPop');
-            if (p) p.remove();
-            if (wiState.raf) { cancelAnimationFrame(wiState.raf); wiState.raf = 0; }
-            if (wiState.anchor) { try { wiState.anchor.setAttribute('aria-expanded', 'false'); } catch (e) {} }
-            wiState.anchor = null;
-        }
-        // بستن کادر با کلیک بیرون از آن، کلید Esc، تغییر اندازه‌ی صفحه، یا کلیک دوباره روی همان نام (فقط ضربدر لازم نیست)
-        if (!wiState.bound) {
-            wiState.bound = true;
-            document.addEventListener('click', function (e) {
-                if (!wiState.anchor) return;
-                const t = e.target;
-                if (t && t.closest && (t.closest('#wiPop') || t.closest('[data-action="worker-info"]'))) return;
-                wiClose();
-            });
-            document.addEventListener('keydown', function (e) { if ((e.key === 'Escape' || e.key === 'Esc') && wiState.anchor) wiClose(); });
-            window.addEventListener('resize', function () { if (wiState.anchor) wiClose(); });
-        }
-        function showWorkerInfoPop(recId, anchor) {
-            if (wiState.anchor === anchor) { wiClose(); return; }
-            wiClose();
-            const r = allRecords.find(x => Number(x.id) === recId), w = r && mgrOn() ? mgrWorker(r.workerId) : null;
-            if (!r || !w) return;
-            const f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان');
-            const mk = r.monthKey || selectedMonthFilter, c = mgrFinCalc(w, mk), at = mgrAttCount(w.id, mk);
-            const [my, mm] = String(mk).split('-'), monthLabel = `${PERSIAN_MONTHS[parseInt(mm, 10) - 1] || ''} ${toPersianDigits(my)}`;
-            const net = c.net, settled = c.advance + c.payment;
-            const pct = net > 0 ? Math.min(100, Math.round(settled / net * 100)) : (settled > 0 ? 100 : 0);
-            const tone = c.remain > 0 ? ['#10b981', '#06b6d4', 'rgba(16,185,129,.45)', 'text-emerald-600 dark:text-emerald-400', 'مانده‌ی قابل پرداخت']
-                : c.remain < 0 ? ['#f43f5e', '#f59e0b', 'rgba(244,63,94,.45)', 'text-rose-600 dark:text-rose-400', 'بدهکار به کارفرما']
-                : ['#6366f1', '#a855f7', 'rgba(99,102,241,.45)', 'text-slate-600 dark:text-slate-300', 'تسویه‌شده'];
-            const my2 = allRecords.filter(x => x.monthKey === mk && String(x.workerId || '') === w.id);
-            const qty = my2.reduce((a, x) => a + (Number(x.quantity) || 0), 0);
-            const sc = mgrSection(w.sectionId), wl = mgrWageLabel(w.wageType) || 'کارمزدی';
-            const sub = [sc ? escapeHTML(sc.name) : '', wl + (w.wageType && w.wageType !== 'piece' && w.rate ? ' • ' + f(w.rate) + ' ' + cur : '')].filter(Boolean).join(' • ');
-            const chip = (n, label, cls) => n > 0 ? `<span class="wi-chip ${cls}">${label} ${f(n)}</span>` : '';
-            const attHTML = [chip(at.p, 'حاضر', 'text-emerald-600 border-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 dark:border-emerald-800 dark:text-emerald-400'),
-                chip(at.t, 'تاخیر', 'text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-400'),
-                chip(at.l, 'مرخصی', 'text-sky-600 border-sky-300 bg-sky-50 dark:bg-sky-950/30 dark:border-sky-800 dark:text-sky-400'),
-                chip(at.a, 'غیبت', 'text-rose-600 border-rose-300 bg-rose-50 dark:bg-rose-950/30 dark:border-rose-800 dark:text-rose-400'),
-                chip(at.oDays, 'اضافه‌کاری', 'text-indigo-600 border-indigo-300 bg-indigo-50 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-400')].join('');
-            const cell = (t, v, i, col) => `<div class="wi-cell" data-i style="--i:${i}"><span class="text-slate-500 dark:text-slate-400">${t}</span><b class="${col || ''}">${f(v)}</b></div>`;
-            const el = document.createElement('div');
-            el.id = 'wiPop'; el.className = 'wi-pop no-print'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'اطلاعات مالی ' + w.name);
-            el.style.setProperty('--wi-c1', tone[0]); el.style.setProperty('--wi-c2', tone[1]); el.style.setProperty('--wi-sh', tone[2]);
-            el.innerHTML = `<div class="wi-in">
-                <div class="flex items-center gap-2.5" data-i style="--i:0">${mgrMiniAvatar(w, 42)}
-                    <div class="min-w-0 flex-1"><p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p><p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">${sub}</p></div>
-                    <button type="button" class="wi-close" aria-label="بستن" onclick="wiClose()"><i class="fa-solid fa-xmark text-xs"></i></button></div>
-                <p class="text-[10.5px] text-slate-400 mt-2" data-i style="--i:1"><i class="fa-regular fa-calendar ml-1"></i>دوره‌ی مالی: ${monthLabel}</p>
-                <div class="wi-main mt-2 flex items-center justify-between gap-2" data-i style="--i:2"><span class="text-[11px] text-slate-600 dark:text-slate-300">${tone[4]}</span><span class="text-base ${tone[3]}"><b id="wiRemain" data-v="${Math.abs(c.remain)}">${f(0)}</b> <span class="text-[10px] font-normal">${cur}</span></span></div>
-                <div class="grid grid-cols-2 gap-2 mt-2">${cell(w.wageType === 'daily' || w.wageType === 'monthly' ? 'حقوق' : 'کارکرد', c.earn, 3)}${cell('پاداش و اضافه‌کاری', c.addAll, 4, 'text-emerald-600 dark:text-emerald-400')}${cell('مساعده', c.advance, 5, 'text-rose-600 dark:text-rose-400')}${cell('کسری، غیبت و مرخصی', c.subAll, 6, 'text-amber-600 dark:text-amber-400')}</div>
-                <div class="mt-2" data-i style="--i:7"><div class="flex items-center justify-between text-[11px] mb-1"><span class="text-slate-500 dark:text-slate-400">پرداخت‌شده: <b class="text-slate-700 dark:text-slate-200">${f(c.payment)}</b></span><span class="font-bold ${tone[3]}">${toPersianDigits(pct)}٪</span></div><div class="wi-bar"><i style="--w:${pct}%"></i></div></div>
-                ${attHTML ? `<div class="flex flex-wrap gap-1.5 mt-2.5" data-i style="--i:8">${attHTML}</div>` : ''}
-                <p class="text-[10.5px] text-slate-400 mt-2.5 pt-2 border-t border-dashed border-slate-300 dark:border-slate-600" data-i style="--i:9"><i class="fa-solid fa-boxes-stacked ml-1"></i>${f(my2.length)} کارکرد در این دوره • ${f(qty)} عدد${w.wageType === 'daily' && c.days ? ' • ' + f(c.days) + ' روز کارکرد' : ''}</p>
-            </div>`;
-            document.body.appendChild(el);
-            const pw = el.offsetWidth, ph = el.offsetHeight, a = anchor.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight;
-            let left = Math.max(8, Math.min(a.left + a.width / 2 - pw / 2, vw - pw - 8)), top = a.bottom + 8, below = true;
-            if (top + ph > vh - 8) { top = a.top - ph - 8; below = false; }
-            if (top < 8) top = Math.max(8, (vh - ph) / 2);
-            el.style.left = (left + window.scrollX) + 'px'; el.style.top = (top + window.scrollY) + 'px';
-            el.style.transformOrigin = `${Math.round(a.left + a.width / 2 - left)}px ${below ? 'top' : 'bottom'}`;
-            anchor.setAttribute('aria-expanded', 'true'); wiState.anchor = anchor;
-            const num = document.getElementById('wiRemain'), target = Math.abs(c.remain);
-            if (num && target > 0 && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-                const t0 = performance.now(), dur = 750;
-                const step = now => { const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3); num.textContent = f(Math.round(target * e)); wiState.raf = k < 1 ? requestAnimationFrame(step) : 0; };
-                wiState.raf = requestAnimationFrame(step);
-            } else if (num) num.textContent = f(target);
-        }
-        /* ---------- لیست حقوق و مالی: هم‌قالب «لیست کارکردها» (جدول + کارت موبایل، جستجو، ترتیب، فیلدها، چاپ، تمام‌صفحه) ---------- */
-        const FIN_COLS = [['earn', 'حقوق / کارکرد'], ['ot', 'اضافه‌کاری'], ['bonus', 'پاداش'], ['leave', 'کسر مرخصی'], ['absent', 'کسر غیبت'], ['ded', 'کسری / جریمه'], ['adv', 'مساعده'], ['net', 'خالص'], ['pay', 'پرداخت‌شده'], ['remain', 'مانده'], ['status', 'وضعیت']];
-        const FIN_KEYS = ['earn', 'ot', 'bonus', 'leave', 'absent', 'ded', 'adv', 'net', 'pay', 'remain'];
-        const FIN_SORTS = [['default', 'ترتیب پرسنل'], ['name_asc', 'نام: الف تا ی'], ['name_desc', 'نام: ی تا الف'], ['remain_desc', 'مانده: بیشترین'], ['net_desc', 'خالص: بیشترین'], ['earn_desc', 'حقوق: بیشترین']];
-        const FIN_CLR = { ot: 'text-indigo-600 dark:text-indigo-400', bonus: 'text-emerald-600 dark:text-emerald-400', leave: 'text-amber-600 dark:text-amber-400', absent: 'text-amber-600 dark:text-amber-400', ded: 'text-amber-600 dark:text-amber-400', adv: 'text-rose-600 dark:text-rose-400' };
-        var mgrFinQuery = '', mgrFinFull = false, mgrFinOpen = {}, mgrFinSort = 'default', mgrFinCat = '', finColsHidden = [];
-        try {
-            const v = JSON.parse(localStorage.getItem('fin_cols_hidden') || '[]'); if (Array.isArray(v)) finColsHidden = v.map(String);
-            const s = localStorage.getItem('fin_sort'); if (FIN_SORTS.some(x => x[0] === s)) mgrFinSort = s;
-        } catch (e) { /* بی‌اهمیت */ }
-        function finSave() { try { localStorage.setItem('fin_cols_hidden', JSON.stringify(finColsHidden)); localStorage.setItem('fin_sort', mgrFinSort); } catch (e) { /* بی‌اهمیت */ } }
-        // مبلغ با علامت درست (مقدار منفی با «−» و بدون به‌هم‌ریختگی جهت متن)
-        function finMoney(n) { n = Math.round(Number(n) || 0); return (n < 0 ? '−' : '') + formatNumber(Math.abs(n)); }
-        function mgrFinClr(k, n) {
-            if (!n) return 'text-slate-400';
-            if (k === 'remain') return n > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400';
-            if (k === 'net') return n < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-800 dark:text-slate-100';
-            return FIN_CLR[k] || 'text-slate-700 dark:text-slate-200';
-        }
-        function mgrFinFmt(k, n) { n = Math.round(Number(n) || 0); return `<span class="${mgrFinClr(k, n)}">${n ? finMoney(n) : '—'}</span>`; }
-        function mgrFinVals(c) { return [c.earn, c.otPay, c.bonus, c.leaveDeduct, c.absentDeduct, c.deduction, c.advance, c.net, c.payment, c.remain].map(v => Math.round(Number(v) || 0)); }
-        function mgrFinTotals(rows) { const T = {}; FIN_KEYS.forEach(k => { T[k] = 0; }); rows.forEach(r => { mgrFinVals(r.c).forEach((v, i) => { T[FIN_KEYS[i]] += v; }); }); return T; }
-        function mgrFinStatus(c) {
-            // کلیدها همان کلیدهای وضعیت لیست کارکردها هستند تا رنگ و قالب نشان‌ها دقیقاً یکی باشد
-            if (c.remain > 0) return { label: 'قابل پرداخت', key: 'زودتر از موعد', cat: 'due' };
-            if (c.remain < 0) return { label: 'بدهکار', key: 'تاخیر', cat: 'debt' };
-            if (!c.earn && !c.addAll && !c.subAll && !c.payment && !c.advance) return { label: 'بدون محاسبه', key: 'در انتظار', cat: 'none' };
-            return { label: 'تسویه‌شده', key: 'به موقع', cat: 'done' };
-        }
-        function mgrFinHit(text) { const q = normalizeSearchText(mgrFinQuery); return !q || normalizeSearchText(text).includes(q); }
-        function mgrFinShow(text, cat) { return mgrFinHit(text) && (!mgrFinCat || cat === mgrFinCat); }
-        function mgrFinModel() {
-            const M = mgr(), F = mgrFin(), mk = selectedMonthFilter, f = formatNumber;
-            mgrPieceCache = { mk, map: mgrPieceTotals(mk) };
-            let rows = [];
-            try {
-                const piece = mgrPieceCache.map;
-                // پرسنل غیرفعال هم اگر در این ماه کارکرد، حضور یا تراکنش دارند در لیست می‌آیند (مثل لیست کارکردها)
-                rows = M.workers.filter(w => {
-                    if (w.active) return true;
-                    if ((piece.get(w.id) || 0) > 0 || F.txns.some(x => x.workerId === w.id && x.monthKey === mk)) return true;
-                    const at = mgrAttCount(w.id, mk); return (at.p + at.t + at.l + at.a + at.oMin) > 0;
-                }).map(w => {
-                    const c = mgrFinCalc(w, mk), sc = mgrSection(w.sectionId);
-                    const txns = F.txns.filter(x => x.monthKey === mk && x.workerId === w.id).slice().reverse();
-                    const wage = (mgrWageLabel(w.wageType) || 'کارمزدی') + (w.wageType && w.wageType !== 'piece' ? (w.rate ? ' • ' + f(w.rate) : ' • نرخ ثبت نشده') : '');
-                    const text = [w.name, sc ? sc.name : '', wage, w.active ? '' : 'غیرفعال'].concat(txns.map(x => ((MGR_FIN_TYPES[x.type] || [''])[0]) + ' ' + (x.note || '') + ' ' + (x.date || ''))).join(' ');
-                    return { w, c, sc, wage, txns, st: mgrFinStatus(c), text };
-                });
-            } finally { mgrPieceCache = null; }
-            const nm = (a, b) => String(a.w.name).localeCompare(String(b.w.name), 'fa');
-            const S = { name_asc: nm, name_desc: (a, b) => nm(b, a), remain_desc: (a, b) => b.c.remain - a.c.remain, earn_desc: (a, b) => b.c.earn - a.c.earn, net_desc: (a, b) => b.c.net - a.c.net }[mgrFinSort];
-            if (S) rows.sort(S);
-            const orphans = F.txns.filter(x => x.monthKey === mk && !M.workers.some(w => w.id === x.workerId)).slice().reverse();
-            return { rows, orphans, mk };
-        }
-        // فهرست تراکنش‌های یک نفر (با ویرایش/حذف) و دکمه‌ی ثبت تراکنش
-        function mgrFinTxHTML(w, txns, cur) {
-            const items = txns.map(x => {
-                const t = MGR_FIN_TYPES[x.type] || ['—', ''], id = escapeHTML(x.id);
-                const info = [x.date ? toPersianDigits(x.date) : '', x.note || ''].filter(Boolean).map(escapeHTML).join(' • ');
-                return `<div class="fin-tx-item flex items-center justify-between gap-2 py-1.5 border-b border-slate-200 dark:border-slate-700"><div class="min-w-0"><span class="font-bold ${t[1]}">${t[0]}</span> <b class="tabular-nums ${t[1]}">${finMoney(x.amount)}</b> <span class="text-[10px] text-slate-400">${cur}</span>${info ? `<span class="kf-sub">${info}</span>` : ''}</div><div class="flex gap-1 shrink-0 no-print"><button type="button" data-mgr="f-edit" data-id="${id}" title="ویرایش" class="fin-ic w-8 h-8 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="f-del" data-id="${id}" title="حذف" class="fin-ic w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></div></div>`;
-            }).join('');
-            const add = w ? `<button type="button" data-wid="${escapeHTML(w.id)}" onclick="mgrFinQuickAdd(this.dataset.wid)" class="no-print tactile-btn mt-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-indigo-500 text-indigo-700 dark:text-indigo-300 text-[11px]"><i class="fa-solid fa-plus"></i> ثبت تراکنش برای ${escapeHTML(w.name)}</button>` : '';
-            return `<div class="fin-tx-pane px-4 py-3 bg-slate-50/50 dark:bg-slate-800/40">${items || '<p class="text-[11px] text-slate-400">تراکنشی در این دوره ثبت نشده است.</p>'}${add}</div>`;
-        }
-        function mgrFinCardHTML(model) {
-            const { rows, orphans } = model || mgrFinModel(), cur = escapeHTML(appSettings.currency || 'تومان'), f = formatNumber;
-            const LBL = {}; FIN_COLS.forEach(c => { LBL[c[0]] = c[1]; });
-            const vis = k => finColsHidden.indexOf(k) < 0;
-            const hits = rows.filter(r => mgrFinShow(r.text, r.st.cat)), T = mgrFinTotals(hits);
-            const mini = 'kf-mini border border-slate-400 dark:border-slate-500 rounded-lg text-center bg-white dark:bg-slate-800 dark:text-slate-100';
-            const sub = s => s ? `<span class="kf-sub">${s}</span>` : '';
-            const warn = s => `<span class="kf-warn">${s}</span>`;
-            const badge = st => `<span class="text-xs px-2.5 py-0.5 rounded-full border font-medium whitespace-nowrap inline-flex items-center gap-2.5 ${getStatusBadgeClass(st.key)}"><span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background-color:${getStatusAccentColor(st.key)}"></span>${st.label}</span>`;
-            const pct = (net, paid) => net > 0 ? Math.max(0, Math.min(100, Math.round(paid / net * 100))) : 0;
-            const earnIn = (w, c) => w.wageType === 'daily' && c.daysAuto ? sub(toPersianDigits(c.days) + ' روز (از حضور و غیاب)')
-                : w.wageType === 'daily' ? `<label class="kf-inl">روز <input type="text" inputmode="numeric" maxlength="2" value="${c.days ? toPersianDigits(c.days) : ''}" data-mgr-change="f-days" data-id="${escapeHTML(w.id)}" class="${mini}"></label>`
-                : w.wageType === 'monthly' ? `<label class="kf-inl">ماهانه <input type="text" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="ثبت نشده" value="${w.rate ? escapeHTML(f(w.rate)) : ''}" data-mgr-change="w-rate" data-id="${escapeHTML(w.id)}" class="${mini} kf-wide"></label>` : '';
-            const chev = open => `<i data-fin-chev class="fa-solid ${open ? 'fa-chevron-down' : 'fa-chevron-left'} text-[9px] ml-1"></i>`;
-            const QA = [['advance', 'fa-hand-holding-dollar', 'مساعده'], ['bonus', 'fa-gift', 'پاداش'], ['deduction', 'fa-circle-minus', 'جریمه'], ['payment', 'fa-money-bill-wave', 'پرداخت']];
-            const cards = rows.map((r, i) => {
-                const { w, c, sc } = r, open = !!mgrFinOpen[w.id], vals = mgrFinVals(c), wid = escapeHTML(w.id), p = pct(c.net, c.payment + c.advance);
-                const barClr = c.remain < 0 ? '#e11d48' : (c.net > 0 && c.remain === 0 ? '#10b981' : '#6366f1');
-                const items = ['earn', 'ot', 'bonus', 'leave', 'absent', 'ded', 'adv', 'pay'].filter(k => vis(k) && (k === 'earn' || vals[FIN_KEYS.indexOf(k)] || (k === 'ot' && c.otMin) || (k === 'leave' && c.leaveMin))).map(k => {
-                    let ex = '';
-                    if (k === 'earn') ex = earnIn(w, c);
-                    else if (k === 'ot' && c.otMin) ex = sub(formatMinutesDuration(c.otMin)) + (!c.otRate ? warn('نرخ ثبت نشده') : '');
-                    else if (k === 'leave' && c.leaveMin) ex = sub(formatMinutesDuration(c.leaveMin)) + (!c.leaveRate ? warn('نرخ ثبت نشده') : '');
-                    else if (k === 'absent') ex = sub(toPersianDigits(c.absent) + ' روز');
-                    return `<div class="fin-kv"><span>${LBL[k]}</span><b class="tabular-nums">${mgrFinFmt(k, vals[FIN_KEYS.indexOf(k)])}</b>${ex}</div>`;
-                }).join('');
-                const chips = [c.days ? 'کارکرد: ' + toPersianDigits(c.days) + ' روز' : '', c.otMin ? 'اضافه‌کاری: ' + formatMinutesDuration(c.otMin) : '', c.absent ? 'غیبت: ' + toPersianDigits(c.absent) + ' روز' : '', c.leaveMin ? 'مرخصی: ' + formatMinutesDuration(c.leaveMin) : ''].filter(Boolean).map(t => `<span class="fin-chip">${t}</span>`).join('');
-                const hero = (vis('remain') || vis('net')) ? `<div class="fin-hero">${vis('remain') ? `<div><p class="fin-tl">${LBL.remain}</p><p class="fin-big tabular-nums">${mgrFinFmt('remain', c.remain)} <small>${cur}</small></p></div>` : '<div></div>'}${vis('net') ? `<div class="fin-left"><p class="fin-tl">${LBL.net}</p><p class="fin-mid tabular-nums">${mgrFinFmt('net', c.net)}</p></div>` : ''}</div>` : '';
-                const bar = (vis('net') || vis('remain')) ? `<div class="fin-bar" title="سهم پرداخت و مساعده از خالص"><i style="width:${p}%;background:${barClr}"></i></div><p class="fin-cap">${f(p)}٪ از خالص، پرداخت یا مساعده شده</p>` : '';
-                const act = `<div class="fin-acts no-print">${c.remain > 0 ? `<button type="button" data-mgr="f-settle" data-id="${wid}" title="تسویه‌ی کامل مانده" class="fin-qa fin-settle tactile-btn"><i class="fa-solid fa-circle-check"></i>تسویه</button>` : ''}`
-                    + QA.map(([t, ic, l]) => `<button type="button" data-wid="${wid}" data-type="${t}" onclick="mgrFinQuickAdd(this.dataset.wid,this.dataset.type)" title="ثبت ${l}" class="fin-qa tactile-btn"><i class="fa-solid ${ic}"></i>${l}</button>`).join('')
-                    + `<button type="button" data-fin-tgl onclick="mgrFinToggle(this)" aria-expanded="${open}" class="fin-qa fin-txb">${chev(open)}تراکنش‌ها (${f(r.txns.length)})</button></div>`;
-                return `<div class="rc-card fin-card${mgrFinShow(r.text, r.st.cat) ? '' : ' hidden'}" data-fin-row data-fin-wid="${wid}" data-fin-text="${escapeHTML(r.text)}" data-fin-cat="${r.st.cat}" data-t="${vals.join(',')}" style="box-shadow: inset 3px 0 0 ${getStatusAccentColor(r.st.key)};">`
-                    + `<div class="flex items-start justify-between gap-3"><div class="min-w-0"><button type="button" data-fin-tgl onclick="mgrFinToggle(this)" aria-expanded="${open}" class="inline-flex items-center text-right font-bold text-slate-800 dark:text-slate-100 text-sm">${chev(open)}${escapeHTML(w.name)}${w.active ? '' : ' <span class="text-[10px] font-normal text-slate-400">(غیرفعال)</span>'}</button><div class="mt-1 text-[11px] text-slate-500 dark:text-slate-400"><span>#${f(i + 1)}</span>${sc ? ' <span class="opacity-40">•</span> ' + escapeHTML(sc.name) : ''} <span class="opacity-40">•</span> ${escapeHTML(r.wage)}</div></div>${vis('status') ? `<div class="shrink-0">${badge(r.st)}</div>` : ''}</div>`
-                    + hero + bar
-                    + (chips ? `<div class="fin-chips">${chips}</div>` : '')
-                    + (items ? `<div class="fin-grid">${items}</div>` : '')
-                    + act
-                    + `<div data-fin-detail class="mt-2 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700${open ? '' : ' hidden'}">${mgrFinTxHTML(w, r.txns, cur)}</div></div>`;
-            }).join('');
-            const orphanCard = orphans.length ? `<div class="rc-card fin-card" data-fin-orphan style="box-shadow: inset 3px 0 0 #94a3b8;"><p class="font-semibold text-sm text-slate-800 dark:text-slate-100">پرسنل حذف‌شده ${sub(f(orphans.length) + ' تراکنش — در جمع کل نیامده')}</p><div class="mt-2 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">${mgrFinTxHTML(null, orphans, cur)}</div></div>` : '';
-            const sp = pct(T.net, T.pay + T.adv);
-            const tile = (k, c) => `<div class="fin-tile"><p class="fin-tl">${LBL[k]}</p><p class="fin-tv tabular-nums ${c || ''}" data-ft="${k}">${mgrFinFmt(k, T[k])}</p></div>`;
-            const summary = `<div class="fin-sum">${tile('net')}${tile('pay')}${tile('adv')}${tile('remain')}</div><div class="fin-sumbar"><div class="fin-bar"><i data-fin-sumbar style="width:${sp}%;background:#6366f1"></i></div><p class="fin-cap"><span data-fin-sumpct>${f(sp)}</span>٪ از مجموع خالص، پرداخت یا مساعده شده • <span data-fin-cnt>${f(hits.length)}</span> نفر</p></div>`;
-            const cnt = c => rows.filter(r => !c || r.st.cat === c).length;
-            const flt = `<div class="fin-flt no-print">${[['', 'همه'], ['due', 'قابل پرداخت'], ['debt', 'بدهکار'], ['done', 'تسویه‌شده']].map(([k, l]) => `<button type="button" onclick="mgrFinSetCat('${k}')" class="fin-f${mgrFinCat === k ? ' on' : ''}">${l} (${f(cnt(k))})</button>`).join('')}</div>`;
-            const empty = !rows.length && !orphans.length;
-            const cardsWrap = `<div id="mgrFinCards" class="max-h-[60vh] overflow-y-auto"${mgrFinFull ? ' style="max-height:calc(100vh - 10rem)"' : ''}>${cards}${orphanCard}</div>`;
-            const sel = 'no-print w-full appearance-none pr-9 pl-3 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all cursor-pointer';
-            const btn = 'no-print p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex items-center gap-1.5 whitespace-nowrap bg-white dark:bg-slate-800 field-box-bg';
-            const header = `<div class="p-4 border-b border-slate-300 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50/50 dark:bg-slate-900/50">`
-                + `<div class="flex items-center gap-3 w-full sm:w-auto"><h3 class="font-bold text-slate-700 dark:text-slate-200 text-sm flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-coins text-indigo-600 dark:text-indigo-400"></i> لیست حقوق و مالی</h3><span class="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-medium whitespace-nowrap border border-indigo-100 dark:border-indigo-900/40">${mgrMonthLabel()}</span></div>`
-                + `<div class="flex items-center gap-2 w-full sm:w-auto justify-end">`
-                + `<div class="relative w-full sm:w-40"><span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400"><i class="fa-solid fa-arrow-down-wide-short text-xs"></i></span><select onchange="mgrFinSetSort(this.value)" title="ترتیب نمایش لیست" class="${sel}">${FIN_SORTS.map(([v, l]) => `<option value="${v}"${v === mgrFinSort ? ' selected' : ''}>${l}</option>`).join('')}</select></div>`
-                + `<div class="relative w-full sm:w-64"><span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span><input type="text" id="mgrFinSearch" value="${escapeHTML(mgrFinQuery)}" oninput="mgrFinFilter(this.value)" placeholder="جستجو در لیست..." class="w-full pr-10 pl-3.5 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"></div>`
-                + `<button type="button" onclick="finColsToggle(this)" id="finColsBtn" title="انتخاب فیلدهای نمایشی" aria-label="انتخاب فیلدهای نمایشی" aria-haspopup="dialog" class="${btn}${finColsHidden.length ? ' ring-2 ring-indigo-300' : ''}"><i class="fa-solid fa-table-columns"></i><span class="hidden md:inline">فیلدها</span></button>`
-                + `<button type="button" onclick="mgrFinPrint()" class="${btn}" title="چاپ لیست حقوق و مالی"><i class="fa-solid fa-print"></i><span class="hidden md:inline">چاپ لیست</span></button>`
-                + `<button type="button" onclick="mgrFinToggleFull()" class="${btn}" title="تمام صفحه کردن لیست"><i id="mgrFinFullIcon" class="fa-solid ${mgrFinFull ? 'fa-compress' : 'fa-expand'}"></i><span class="hidden md:inline">تمام صفحه</span></button></div></div>`;
-            const full = mgrFinFull ? ' fixed inset-0 z-50 rounded-none overflow-y-auto m-0 p-4' : '';
-            return `<div id="mgrFinCard" class="bg-white dark:bg-slate-900 pro-card rounded-2xl shadow-sm border border-slate-300 dark:border-slate-600 overflow-hidden transition-all${full}">${header}`
-                + (empty ? mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.') : `${summary}${flt}${cardsWrap}<p id="mgrFinNoHit" class="${hits.length ? 'hidden ' : ''}p-8 text-center text-sm text-slate-400">موردی یافت نشد.</p><p class="px-4 py-2 text-[11px] text-slate-400 border-t border-slate-200 dark:border-slate-700">مبالغ به ${cur}. با دکمه‌های هر کارت، مساعده، پاداش، جریمه یا پرداخت ثبت کنید؛ «تراکنش‌ها» فهرست و ویرایش را باز می‌کند.</p>`)
-                + `</div>`;
-        }
-        function mgrFinRefresh() {
-            const host = document.getElementById('mgrFinHost'); if (!host) return mgrRender();
-            host.innerHTML = mgrFinCardHTML();
-            host.querySelectorAll('[data-thousands]').forEach(el => { if (el.value) el.value = formatNumber(parsePersianInt(el.value)); });
-            mgrA11y(host);
-        }
-        // جستجوی زنده و فیلتر وضعیت: کارت‌ها را فیلتر می‌کند و جمع‌ها و نوار پیشرفت را فقط برای کارت‌های نمایان دوباره می‌شمارد
-        function mgrFinFilter(v) {
-            if (v !== undefined && v !== null) mgrFinQuery = String(v);
-            const host = document.getElementById('mgrFinCard'); if (!host) return;
-            const T = FIN_KEYS.map(() => 0); let n = 0, total = 0;
-            host.querySelectorAll('[data-fin-row]').forEach(el => {
-                const hit = mgrFinShow(el.getAttribute('data-fin-text') || '', el.getAttribute('data-fin-cat') || '');
-                el.classList.toggle('hidden', !hit); total++;
-                if (hit) { n++; (el.getAttribute('data-t') || '').split(',').forEach((x, i) => { T[i] += Number(x) || 0; }); }
-            });
-            host.querySelectorAll('[data-ft]').forEach(el => { const k = el.getAttribute('data-ft'), i = FIN_KEYS.indexOf(k); if (i >= 0) el.innerHTML = mgrFinFmt(k, T[i]); });
-            host.querySelectorAll('[data-fin-cnt]').forEach(el => { el.textContent = formatNumber(n); });
-            const sp = T[7] > 0 ? Math.max(0, Math.min(100, Math.round((T[8] + T[6]) / T[7] * 100))) : 0;
-            const bar = host.querySelector('[data-fin-sumbar]'); if (bar) bar.style.width = sp + '%';
-            const pc = host.querySelector('[data-fin-sumpct]'); if (pc) pc.textContent = formatNumber(sp);
-            const none = document.getElementById('mgrFinNoHit'); if (none) none.classList.toggle('hidden', n > 0 || total === 0);
-        }
-        function mgrFinSetCat(k) { mgrFinCat = String(k || ''); mgrFinRefresh(); }
-        function mgrFinToggle(el) {
-            const row = el.closest('[data-fin-row]'); if (!row) return;
-            const id = row.getAttribute('data-fin-wid'), open = !mgrFinOpen[id]; mgrFinOpen[id] = open;
-            document.querySelectorAll('#mgrFinCard [data-fin-wid]').forEach(r => {
-                if (r.getAttribute('data-fin-wid') !== id) return;
-                r.querySelectorAll('[data-fin-detail]').forEach(d => d.classList.toggle('hidden', !open));
-                r.querySelectorAll('[data-fin-chev]').forEach(i => { i.className = 'fa-solid ' + (open ? 'fa-chevron-down' : 'fa-chevron-left') + ' text-[9px] ml-1'; });
-                r.querySelectorAll('[data-fin-tgl]').forEach(b => b.setAttribute('aria-expanded', open ? 'true' : 'false'));
-            });
-        }
-        function mgrFinSetSort(v) { if (!FIN_SORTS.some(x => x[0] === v)) return; mgrFinSort = v; finSave(); mgrFinRefresh(); }
-        function mgrFinToggleFull() {
-            mgrFinFull = !mgrFinFull;
-            const card = document.getElementById('mgrFinCard'); if (!card) { mgrFinFull = false; document.body.style.overflow = 'auto'; return; }
-            ['fixed', 'inset-0', 'z-50', 'rounded-none', 'overflow-y-auto', 'm-0', 'p-4'].forEach(c => card.classList.toggle(c, mgrFinFull));
-            card.querySelectorAll('#mgrFinCards').forEach(s => { s.style.maxHeight = mgrFinFull ? 'calc(100vh - 10rem)' : ''; });
-            const ic = document.getElementById('mgrFinFullIcon'); if (ic) ic.className = 'fa-solid ' + (mgrFinFull ? 'fa-compress' : 'fa-expand');
-            document.body.style.overflow = mgrFinFull ? 'hidden' : 'auto';
-        }
-        function mgrFinResetFull() { if (!mgrFinFull) return; mgrFinFull = false; document.body.style.overflow = 'auto'; }
-        document.addEventListener('keydown', function (e) { if ((e.key === 'Escape' || e.key === 'Esc') && mgrFinFull && !document.getElementById('finColsPop')) mgrFinToggleFull(); });
-        // ثبت تراکنش برای یک نفر: فرم بالای صفحه با همان نفر پر می‌شود
-        function mgrFinQuickAdd(wid, type) {
-            if (mgrFinFull) mgrFinToggleFull();
-            const s = document.getElementById('mgrFWorker'), a = document.getElementById('mgrFAmount'); if (!s) return;
-            const tp = document.getElementById('mgrFType'); if (tp && type && MGR_FIN_TYPES[type]) tp.value = type;
-            if (Array.prototype.some.call(s.options, o => o.value === wid)) s.value = wid;
-            s.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => { try { (a || s).focus({ preventScroll: true }); } catch (e) { /* بی‌اهمیت */ } }, 350);
-        }
-        /* ---- انتخاب فیلدهای نمایشی (مثل «فیلدها» در لیست کارکردها) ---- */
-        function finColsClose() { const p = document.getElementById('finColsPop'); if (p) p.remove(); const b = document.getElementById('finColsBtn'); if (b) b.setAttribute('aria-expanded', 'false'); }
-        function finColsSet(k, on) { finColsHidden = finColsHidden.filter(x => x !== k); if (!on) finColsHidden.push(k); finSave(); mgrFinRefresh(); }
-        function finColsReset() { finColsHidden = []; finSave(); mgrFinRefresh(); const p = document.getElementById('finColsPop'); if (p) p.querySelectorAll('input').forEach(i => { i.checked = true; }); }
-        function finColsToggle(btn) {
-            if (document.getElementById('finColsPop')) { finColsClose(); return; }
-            const el = document.createElement('div'); el.id = 'finColsPop'; el.className = 'no-print'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'فیلدهای نمایشی');
-            el.innerHTML = `<div class="rc-pop-head"><span><i class="fa-solid fa-table-columns ml-1"></i>فیلدهای نمایشی</span><button type="button" class="rc-pop-reset" onclick="finColsReset()">همه</button></div>`
-                + FIN_COLS.map(c => `<label><input type="checkbox" ${finColsHidden.indexOf(c[0]) < 0 ? 'checked' : ''} onchange="finColsSet('${c[0]}',this.checked)">${c[1]}</label>`).join('')
-                + `<p style="margin-top:6px;font-size:10px;line-height:1.7;color:#64748b">چاپ همیشه همه‌ی ستون‌ها را دارد.</p>`;
-            document.body.appendChild(el);
-            const r = btn.getBoundingClientRect(), pw = el.offsetWidth, ph = el.offsetHeight;
-            let left = Math.max(8, Math.min(r.left, window.innerWidth - pw - 8)), top = r.bottom + 8;
-            if (top + ph > window.innerHeight - 8) top = Math.max(8, r.top - ph - 8);
-            el.style.left = left + 'px'; el.style.top = top + 'px';
-            btn.setAttribute('aria-expanded', 'true');
-        }
-        document.addEventListener('click', function (e) {
-            if (!document.getElementById('finColsPop')) return;
-            const t = e.target;
-            if (t && t.closest && (t.closest('#finColsPop') || t.closest('#finColsBtn'))) return;
-            finColsClose();
-        });
-        window.addEventListener('resize', finColsClose);
-        /* ---- چاپ لیست حقوق و مالی (همه‌ی ستون‌ها، فقط موارد نمایان بعد از جستجو) ---- */
-        function mgrFinPrint() {
-            const model = mgrFinModel(), rows = model.rows.filter(r => mgrFinHit(r.text));
-            if (!rows.length && !model.orphans.length) { showFeedbackBanner('موردی برای چاپ در این لیست وجود ندارد.', 'warn'); return; }
-            const f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان'), shop = escapeHTML(appSettings.shopName || 'سامانه‌ی کارگاه هوشمند');
-            const owner = (typeof getOwnerInfoLineText === 'function') ? getOwnerInfoLineText() : '', T = mgrFinTotals(rows);
-            const td = 'border:1px solid #94a3b8;padding:3px 5px;text-align:right;color:#0f172a;';
-            const mny = (n, bold) => `<td style="${td}${bold ? 'font-weight:700;' : ''}white-space:nowrap">${Math.round(n) ? finMoney(n) : '—'}</td>`;
-            const body = rows.map((r, i) => {
-                const v = mgrFinVals(r.c), tx = r.txns.map(x => `${(MGR_FIN_TYPES[x.type] || ['—'])[0]} ${finMoney(x.amount)}${x.date ? ' (' + toPersianDigits(x.date) + ')' : ''}${x.note ? ' ' + x.note : ''}`).join(' • ');
-                return `<tr><td style="${td}">${f(i + 1)}</td><td style="${td}white-space:nowrap"><b>${escapeHTML(r.w.name)}</b>${r.sc ? ' — ' + escapeHTML(r.sc.name) : ''}<br><span style="font-size:8.5px;color:#475569">${escapeHTML(r.wage)}</span></td>${v.map((n, k) => mny(n, FIN_KEYS[k] === 'net' || FIN_KEYS[k] === 'remain')).join('')}<td style="${td}white-space:nowrap">${r.st.label}</td></tr>${tx ? `<tr><td style="${td}"></td><td colspan="${FIN_COLS.length + 1}" style="${td}font-size:8.5px;color:#475569">${escapeHTML(tx)}</td></tr>` : ''}`;
-            }).join('');
-            const foot = `<tr style="background:#f1f5f9"><td style="${td}"></td><td style="${td}font-weight:700">جمع کل</td>${FIN_KEYS.map(k => mny(T[k], true)).join('')}<td style="${td}"></td></tr>`;
-            const area = document.createElement('div'); area.id = 'finPrintArea'; area.setAttribute('dir', 'rtl');
-            area.innerHTML = `<div style="text-align:center;padding:8px 0;border-bottom:1px solid #cbd5e1;margin-bottom:8px"><h2 style="font-size:16px;font-weight:700;color:#0f172a;margin:0">${shop} - لیست حقوق و مالی</h2><p style="font-size:11px;color:#64748b;margin:4px 0 0">${owner ? escapeHTML(owner) + '  |  ' : ''}دوره: ${escapeHTML(mgrMonthLabel())}  |  تعداد پرسنل: ${f(rows.length)}  |  مبالغ به ${cur}  |  تاریخ چاپ: ${escapeHTML(formatDateDigits(currentJalali.fullDateStr))}</p></div>`
-                + `<table><thead><tr style="background:#e2e8f0"><th style="${td}">#</th><th style="${td}">پرسنل / بخش</th>${FIN_COLS.map(c => `<th style="${td}white-space:nowrap">${c[1]}</th>`).join('')}</tr></thead><tbody>${body}${foot}</tbody></table>`
-                + (model.orphans.length ? `<p style="font-size:9px;color:#64748b;margin-top:6px">تراکنش‌های پرسنل حذف‌شده در جمع کل نیامده‌اند.</p>` : '');
-            document.body.appendChild(area); document.body.dataset.printfin = '1';
-            const done = () => { window.removeEventListener('afterprint', done); delete document.body.dataset.printfin; area.remove(); };
-            window.addEventListener('afterprint', done); setTimeout(done, 90000);
-            printWithLightTheme();
-            if (!/Android|iPhone|iPad/i.test(navigator.userAgent)) done();
-        }
-        var mgrEditF = '';
         function mgrHtmlFinance() {
-            const F = mgrFin(), cur = escapeHTML(appSettings.currency || 'تومان'), f = formatNumber, model = mgrFinModel(), ws = model.rows.map(r => r.w);
-            const ef = F.txns.find(x => x.id === mgrEditF) || null;
-            const wOpts = ws.map(w => `<option value="${escapeHTML(w.id)}" ${ef && ef.workerId === w.id ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('');
-            const tOpts = Object.keys(MGR_FIN_TYPES).map(k => `<option value="${k}" ${ef && ef.type === k ? 'selected' : ''}>${MGR_FIN_TYPES[k][0]}</option>`).join('');
-            return `<div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
-                    <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">مبلغ ساعتی اضافه‌کاری و مرخصی (پیش‌فرض همه‌ی پرسنل)</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <label class="kf-rate-box">مبلغ هر ساعت اضافه‌کاری (${cur})<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="مثلاً ۸۰٬۰۰۰" value="${(F.def && F.def.ot) ? escapeHTML(f(F.def.ot)) : ''}" data-mgr-change="f-dot" class="${MI}"></label>
-                        <label class="kf-rate-box">مبلغ هر ساعت مرخصی — کسر از حقوق (${cur})<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="مثلاً ۵۰٬۰۰۰" value="${(F.def && F.def.lv) ? escapeHTML(f(F.def.lv)) : ''}" data-mgr-change="f-dlv" class="${MI}"></label>
-                    </div>
-                    <p class="text-[11px] text-slate-400">این مبلغ‌ها برای همه‌ی پرسنل اعمال می‌شود. اضافه‌کاری را در تب «حضور» ثبت کنید.</p>
-                </div>
+            const M = mgr(), mk = selectedMonthFilter, f = formatNumber, cur = escapeHTML(appSettings.currency || 'تومان');
+            const e = M.payslips.find(x => x.id === mgrEditP) || {}, ws = M.workers.filter(w => w.active || w.id === e.workerId);
+            const list = M.payslips.filter(p => p.monthKey === mk);
+            const inp = ([k, t]) => `<label class="block text-[11px] text-slate-500">${t} (${cur})<input id="mgrP_${k}" data-thousands="1" inputmode="numeric" maxlength="15" value="${e[k] ? escapeHTML(f(e[k])) : ''}" class="${MI} mt-1"></label>`;
+            const rows = list.map(p => { const c = mgrPCalc(p); return `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2.5 font-bold whitespace-nowrap">${escapeHTML(p.name)}</td><td class="p-2.5">${f(c.b)}</td><td class="p-2.5 text-rose-600">${f(c.d)}</td><td class="p-2.5 font-bold">${f(c.net)}</td>
+                <td class="p-2.5"><button type="button" data-mgr="p-status" data-id="${escapeHTML(p.id)}" class="px-2 py-1 rounded-full text-[11px] border ${p.status === 'paid' ? 'text-emerald-600 border-emerald-300' : 'text-amber-600 border-amber-300'}">${p.status === 'paid' ? 'پرداخت شده' : 'پرداخت نشده'}</button></td>
+                <td class="p-2.5 whitespace-nowrap"><button type="button" data-mgr="p-view" data-id="${escapeHTML(p.id)}" title="مشاهده و چاپ فیش" class="w-8 h-8 text-indigo-600"><i class="fa-solid fa-file-invoice"></i></button><button type="button" data-mgr="p-edit" data-id="${escapeHTML(p.id)}" title="ویرایش" class="w-8 h-8 text-amber-600"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="p-del" data-id="${escapeHTML(p.id)}" title="حذف" class="w-8 h-8 text-rose-500"><i class="fa-solid fa-trash text-xs"></i></button></td></tr>`; }).join('');
+            const sum = list.reduce((a, p) => a + mgrPCalc(p).net, 0);
+            return `<div class="space-y-3"><h2 class="text-base font-bold flex items-center gap-2"><i class="fa-solid fa-coins text-indigo-600"></i>حقوق و مالی — ${mgrMonthLabel()}</h2>
+                <input data-mgr-change="p-company" maxlength="80" placeholder="نام کارگاه (بالای فیش چاپ می‌شود)" value="${escapeHTML(M.company || '')}" class="${MI}">
                 <div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
-                    <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">${ef ? 'ویرایش تراکنش' : 'ثبت تراکنش'}</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <select id="mgrFWorker" class="${MI}"><option value="">— انتخاب پرسنل —</option>${wOpts}</select>
-                        <select id="mgrFType" class="${MI}">${tOpts}</select>
-                        <input id="mgrFAmount" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="مبلغ (${cur})" value="${ef ? escapeHTML(f(ef.amount)) : ''}" class="${MI}">
-                        <input id="mgrFDate" maxlength="10" inputmode="numeric" value="${escapeHTML(ef ? (ef.date || '') : getCurrentJalaliInfo().fullDateStr)}" class="${MI}">
-                    </div>
-                    <input id="mgrFNote" maxlength="200" placeholder="توضیحات (اختیاری)" value="${ef ? escapeHTML(ef.note || '') : ''}" class="${MI}">
-                    <div class="flex gap-2"><button type="button" data-mgr="f-add" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">${ef ? 'ذخیره‌ی ویرایش' : 'ثبت'}</button>${ef ? '<button type="button" data-mgr="f-cancel" class="px-4 py-2 border border-slate-400 rounded-xl text-xs text-slate-600 dark:text-slate-300">انصراف</button>' : ''}</div>
-                </div>
-                <div id="mgrFinHost">${mgrFinCardHTML(model)}</div>`;
+                    <h4 class="text-xs font-bold">${e.id ? 'ویرایش فیش حقوقی' : 'ثبت فیش حقوقی'}</h4>
+                    <select id="mgrPWorker" class="${MI}"><option value="">— انتخاب پرسنل —</option>${ws.map(w => `<option value="${escapeHTML(w.id)}" ${e.workerId === w.id ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('')}</select>
+                    <p class="text-[11px] font-bold text-emerald-600">حقوق و مزایا</p><div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${MGR_PF.map(inp).join('')}</div>
+                    <p class="text-[11px] font-bold text-rose-600">کسورات</p><div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${MGR_PD.map(inp).join('')}</div>
+                    <select id="mgrPStatus" class="${MI}"><option value="unpaid" ${e.status !== 'paid' ? 'selected' : ''}>پرداخت نشده</option><option value="paid" ${e.status === 'paid' ? 'selected' : ''}>پرداخت شده</option></select>
+                    <p class="text-[11px] text-slate-400">برای هر پرسنل در هر ماه یک فیش ثبت می‌شود؛ ثبت دوباره، همان فیش را به‌روز می‌کند.</p>
+                    <div class="flex gap-2"><button type="button" data-mgr="p-save" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">${e.id ? 'ذخیره' : 'ثبت فیش'}</button>${e.id ? '<button type="button" data-mgr="p-cancel" class="px-4 py-2 border border-slate-400 rounded-xl text-xs">انصراف</button>' : ''}</div></div>
+                ${list.length ? `<div class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-x-auto"><table class="w-full text-xs text-center"><thead class="bg-slate-100 dark:bg-slate-800"><tr>${['پرسنل', 'جمع مزایا', 'جمع کسورات', 'خالص', 'وضعیت', ''].map(h => `<th class="p-2.5">${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table><p class="p-2.5 text-xs font-bold border-t border-slate-300 dark:border-slate-600">جمع خالص پرداختی: ${f(sum)} ${cur}</p></div>` : mgrEmpty('هنوز فیشی برای این ماه ثبت نشده است.')}</div>`;
         }
 
         function mgrHtmlSections() {
@@ -12129,7 +11384,7 @@
             if (mgrEditW && !mgrWorker(mgrEditW)) mgrEditW = ''; // پرسنلِ در حال ویرایش در تب دیگر حذف شده باشد
             if (mgrEditS && !mgrSection(mgrEditS)) mgrEditS = '';
             const M = mgr(), val = i => (document.getElementById(i) || {}).value || '';
-            if (a === 'tab') { mgrTab = id; const pg = id === 'attendance' ? 'att' : id === 'finance' ? 'fin' : 'mgr'; if (appTab !== pg) return setAppTab(pg); return mgrRender(); }
+            if (a === 'tab') { mgrTab = id; return mgrRender(); }
             if (a === 'w-dl') return mgrDownloadWorker(id);
             if (a === 'w-dl-all') return mgrDownloadAll();
             if (a === 'w-save') {
@@ -12139,7 +11394,7 @@
                 const sd = mgrDK(val('mgrWStart')), ed = mgrDK(val('mgrWEnd'));
                 if ((val('mgrWStart').trim() && !sd) || (val('mgrWEnd').trim() && !ed)) return showFeedbackBanner('تاریخ شروع/پایان همکاری را به شکل ۱۴۰۵/۰۱/۱۵ وارد کنید.', 'warn');
                 if (sd && ed && sd > ed) return showFeedbackBanner('تاریخ پایان همکاری نباید قبل از شروع باشد.', 'warn');
-                const d = { name: name.slice(0, 100), phone: val('mgrWPhone').trim().slice(0, 40), sectionId: val('mgrWSection'), role: val('mgrWRole').trim().slice(0, 60), wageType: ['piece', 'daily', 'monthly'].includes(val('mgrWWage')) ? val('mgrWWage') : '', rate: parsePersianInt(val('mgrWRate')), startDate: mgrDK(val('mgrWStart')), endDate: mgrDK(val('mgrWEnd')), note: val('mgrWNote').trim().slice(0, 300),
+                const d = { name: name.slice(0, 100), phone: val('mgrWPhone').trim().slice(0, 40), sectionId: val('mgrWSection'), role: val('mgrWRole').trim().slice(0, 60), code: val('mgrWCode').trim().slice(0, 20), startDate: mgrDK(val('mgrWStart')), endDate: mgrDK(val('mgrWEnd')), note: val('mgrWNote').trim().slice(0, 300),
                     photo: mgrFormPhoto !== undefined ? mgrFormPhoto : ((mgrWorker(mgrEditW) || {}).photo || null) };
                 if (mgrEditW) {
                     const w = mgrWorker(mgrEditW); Object.assign(w, d);
@@ -12176,98 +11431,29 @@
                     mgrSaveReport(); applyManagerToUI(); mgrRender();
                 });
             }
-            else if (a === 'a-edit') { mgrAttDate = st; mgrRender(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-            else if (a === 'a-del') {
-                const w = mgrWorker(id);
-                return showCustomConfirm(`ثبت حضور و غیاب «${w ? w.name : 'حذف‌شده'}» در تاریخ ${st} حذف شود؟`, ok => {
-                    if (!ok) return;
-                    const A = mgrAtt(); if (A[st]) { delete A[st][id]; if (!Object.keys(A[st]).length) delete A[st]; }
-                    mgrAttMinSet(st, id, 0); mgrOtMinSet(st, id, 0); delete mgrOtOpen[st + '|' + id];
-                    mgrSaveReport('حذف شد.'); mgrRender();
-                });
+            else if (a === 'p-company') { M.company = String(st || '').trim().slice(0, 80); }
+            else if (a === 'p-save') {
+                const wid = val('mgrPWorker'), w = mgrWorker(wid); if (!w) return showFeedbackBanner('پرسنل را انتخاب کنید.', 'warn');
+                const d = {}; [...MGR_PF, ...MGR_PD].forEach(([k]) => { d[k] = Math.min(1e13, parsePersianInt(val('mgrP_' + k)) || 0); });
+                if (!d.base && !d.ot && !d.bonus) return showFeedbackBanner('حداقل یکی از مبلغ‌های حقوق و مزایا را وارد کنید.', 'warn');
+                d.status = val('mgrPStatus') === 'paid' ? 'paid' : 'unpaid';
+                const ex = M.payslips.find(x => x.id === mgrEditP) || M.payslips.find(x => x.workerId === wid && x.monthKey === selectedMonthFilter), b = { workerId: wid, name: w.name, code: w.code || '', ...d };
+                if (ex) Object.assign(ex, b); else M.payslips.push({ id: mgrId('p'), monthKey: selectedMonthFilter, ...b });
+                mgrEditP = ''; okMsg = 'فیش حقوقی ذخیره شد.';
             }
-            else if (a === 'a-set') {
-                const A = mgrAtt(), d = A[mgrAttDate] || (A[mgrAttDate] = {});
-                if (!mgrWorker(id) || !MGR_ATT[st]) return;
-                if (d[id] === st) delete d[id]; else d[id] = st;
-                if (d[id] !== 't' && d[id] !== 'l') mgrAttMinSet(mgrAttDate, id, 0);
-                if (!Object.keys(d).length) delete A[mgrAttDate];
-            }
-            else if (a === 'a-minh' || a === 'a-minm') {
-                const cur = mgrAttMinGet(mgrAttDate, id), v = parsePersianInt(st);
-                const n = a === 'a-minh' ? Math.min(v, 23) * 60 + cur % 60 : Math.floor(cur / 60) * 60 + Math.min(v, 59);
-                mgrAttMinSet(mgrAttDate, id, n);
-            }
-            else if (a === 'a-ot') {
-                if (!mgrWorker(id)) return;
-                const k = mgrAttDate + '|' + id;
-                if (mgrOtMinGet(mgrAttDate, id) > 0) { mgrOtMinSet(mgrAttDate, id, 0); delete mgrOtOpen[k]; }
-                else if (mgrOtOpen[k]) delete mgrOtOpen[k];
-                else mgrOtOpen[k] = true;
-            }
-            else if (a === 'a-oth' || a === 'a-otm') {
-                if (!mgrWorker(id)) return;
-                const cur = mgrOtMinGet(mgrAttDate, id), v = parsePersianInt(st) || 0;
-                const n = a === 'a-oth' ? Math.min(v, 23) * 60 + cur % 60 : Math.floor(cur / 60) * 60 + Math.min(v, 59);
-                mgrOtMinSet(mgrAttDate, id, n);
-                mgrOtOpen[mgrAttDate + '|' + id] = true;
-            }
-            else if (a === 'a-all') {
-                const A = mgrAtt(), d = A[mgrAttDate] || (A[mgrAttDate] = {});
-                M.workers.filter(w => w.active && !d[w.id]).forEach(w => { d[w.id] = 'p'; });
-                if (!Object.keys(d).length) delete A[mgrAttDate];
-            }
-            else if (a === 'a-prev' || a === 'a-next') { const j = parseJalaliDateToJdn(mgrAttDate); if (j) mgrAttDate = mgrJdnStr(j + (a === 'a-next' ? 1 : -1)); return mgrRender(); }
-            else if (a === 'a-today') { mgrAttDate = mgrDK(getCurrentJalaliInfo().fullDateStr); return mgrRender(); }
-            else if (a === 'a-date') {
-                const d = mgrDK(st);
-                if (!d) { showFeedbackBanner('تاریخ را به شکل ۱۴۰۵/۰۱/۱۵ وارد کنید.', 'warn'); return mgrRender(); }
-                mgrAttDate = d; return mgrRender();
-            }
-            else if (a === 'f-add') {
-                const F = mgrFin(), wid = val('mgrFWorker'), type = val('mgrFType'), amount = parsePersianInt(val('mgrFAmount')), ds = val('mgrFDate').trim(), date = mgrDK(ds);
-                if (!mgrWorker(wid)) return showFeedbackBanner('پرسنل را انتخاب کنید.', 'warn');
-                if (!MGR_FIN_TYPES[type]) return showFeedbackBanner('نوع تراکنش نامعتبر است.', 'warn');
-                if (amount <= 0) return showFeedbackBanner('مبلغ را وارد کنید.', 'warn');
-                if (ds && !date) return showFeedbackBanner('تاریخ را به شکل ۱۴۰۵/۰۱/۱۵ وارد کنید.', 'warn');
-                const ex = F.txns.find(x => x.id === mgrEditF);
-                if (ex) { Object.assign(ex, { workerId: wid, type, amount, date, note: val('mgrFNote').trim().slice(0, 200) }); mgrEditF = ''; showFeedbackBanner('تراکنش ویرایش شد.', 'success'); }
-                else { F.txns.push({ id: mgrId('f'), workerId: wid, type, amount, date, monthKey: selectedMonthFilter, note: val('mgrFNote').trim().slice(0, 200) }); showFeedbackBanner('تراکنش ثبت شد.', 'success'); }
-            }
-            else if (a === 'f-edit') { mgrEditF = id; mgrRender(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-            else if (a === 'f-cancel') { mgrEditF = ''; }
-            else if (a === 'f-del') { const F = mgrFin(); F.txns = F.txns.filter(x => x.id !== id); if (mgrEditF === id) mgrEditF = ''; }
-            else if (a === 'f-settle') {
-                const w = mgrWorker(id); if (!w) return;
-                const c = mgrFinCalc(w, selectedMonthFilter); if (c.remain <= 0) return;
-                mgrFin().txns.push({ id: mgrId('f'), workerId: w.id, type: 'payment', amount: c.remain, date: mgrDK(getCurrentJalaliInfo().fullDateStr), monthKey: selectedMonthFilter, note: 'تسویه‌ی مانده' });
-                showFeedbackBanner('مانده تسویه شد.', 'success');
-            }
-            else if (a === 'f-days') {
-                const n = Math.min(31, parsePersianInt(st)); mgrFin().days[id + '|' + selectedMonthFilter] = n;
-            }
-            else if (a === 'w-rate') {
-                const w = mgrWorker(id); if (!w || w.wageType !== 'monthly') return;
-                w.rate = Math.max(0, Math.min(1e13, parsePersianInt(st) || 0));
-                okMsg = 'حقوق ماهانه ثبت شد.';
-            }
-            else if (a === 'f-dot' || a === 'f-dlv') {
-                const F = mgrFin(); if (!F.def) F.def = {};
-                F.def[a === 'f-dot' ? 'ot' : 'lv'] = Math.max(0, Math.min(1e10, parsePersianInt(st) || 0));
-            }
-            else if (a === 'f-rot' || a === 'f-rlv') {
-                if (!mgrWorker(id)) return;
-                const F = mgrFin(); if (!F.rates) F.rates = {};
-                const r = F.rates[id] || (F.rates[id] = {});
-                r[a === 'f-rot' ? 'ot' : 'lv'] = Math.max(0, Math.min(1e10, parsePersianInt(st) || 0));
-                if (!r.ot && !r.lv) delete F.rates[id];
+            else if (a === 'p-edit') { mgrEditP = id; mgrRender(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+            else if (a === 'p-cancel') { mgrEditP = ''; mgrRender(); return; }
+            else if (a === 'p-view') return mgrSlipOpen(id);
+            else if (a === 'p-status') { const p = M.payslips.find(x => x.id === id); if (p) p.status = p.status === 'paid' ? 'unpaid' : 'paid'; }
+            else if (a === 'p-del') {
+                const p = M.payslips.find(x => x.id === id); if (!p) return;
+                return showCustomConfirm(`فیش حقوقی «${p.name}» حذف شود؟`, ok => { if (!ok) return; M.payslips = M.payslips.filter(x => x.id !== id); if (mgrEditP === id) mgrEditP = ''; mgrSaveReport('حذف شد.'); mgrRender(); });
             }
             else if (a === 'asg') {
                 const r = allRecords.find(x => String(x.id) === String(id)), w = mgrWorker(st); if (!r || !w) return;
                 r.workerId = w.id; r.workerName = w.name; r.updatedAt = Date.now(); recomputeAllLinks(); saveRecords();
             }
             else return;
-            if (a[0] === 'a' && a !== 'asg' || a[0] === 'f') { mgrSaveSoon(); mgrRender(); return; }
             mgrSaveReport(okMsg); applyManagerToUI(); mgrRender(); renderDashboard();
         }
         document.addEventListener('change', function (e) {
@@ -12285,7 +11471,6 @@
         /* ---- ذخیره‌ی فایل جداگانه برای هر پرسنل (پوشه‌ی «پرسنل» کنار فایل‌های ماه) ---- */
         const MGR_DIR = 'کارگران';
         var mgrWrittenSig = new Map(), mgrKnown = new Map(), mgrPending = [], mgrFolderOk = false;
-        var mgrAttOk = false, mgrFinOk = false, mgrAuxSig = new Map(), mgrAuxKnown = new Map();
         function mgrWorkerFileName(w) { return `کارگر_${String(w.name).replace(/[\\/:*?"<>|\s\u200c]+/g, '_').slice(0, 40)}_${w.id}.json`; }
         function mgrWorkerFileData(w) {
             const sc = mgrSection(w.sectionId);
@@ -12322,121 +11507,22 @@
                 return true;
             } catch (e) { console.error('خطا در ذخیره‌ی فایل پرسنل:', e); return false; }
         }
-        // در فایل تنظیمات پوشه، اطلاعات پرسنل، حضور و غیاب و حقوق و مالی تکرار نمی‌شود (فقط اگر فایل‌های جداگانه‌شان با موفقیت نوشته شده باشند)
+        // در فایل تنظیمات پوشه، اطلاعات پرسنل تکرار نمی‌شود (فقط اگر فایل‌های پرسنل با موفقیت نوشته شده باشند)
         function mgrSettingsForFolder() {
-            if (!appSettings.manager || !(mgrFolderOk || mgrAttOk || mgrFinOk)) return appSettings;
-            const m = { ...appSettings.manager };
-            if (mgrFolderOk) { m.workers = []; m.splitToWorkerFiles = true; }
-            if (mgrAttOk) { m.attendance = {}; m.attMin = {}; m.otMin = {}; }
-            if (mgrFinOk) m.finance = { txns: [], days: {}, rates: {}, def: { ot: 0, lv: 0 } };
-            return { ...appSettings, manager: m };
+            if (!mgrFolderOk || !appSettings.manager) return appSettings;
+            return { ...appSettings, manager: { ...appSettings.manager, workers: [], splitToWorkerFiles: true } };
         }
-        function mgrCollectWorkerFile(p) {
-            mgrPending.push(p);
-            if (p.fileName && !p.deleted && p.worker) mgrKnown.set(p.fileName, p.worker.id);
-            else if (p.fileName && p.kind === 'attendance') mgrAuxKnown.set(MGR_ATT_DIR + '/' + p.fileName, { dir: MGR_ATT_DIR, name: p.fileName, cat: 'att' });
-            else if (p.fileName && (p.kind === 'finance' || p.kind === 'finance-settings')) mgrAuxKnown.set(MGR_FIN_DIR + '/' + p.fileName, { dir: MGR_FIN_DIR, name: p.fileName, cat: 'fin' });
-        }
+        function mgrCollectWorkerFile(p) { mgrPending.push(p); if (p.fileName && !p.deleted && p.worker) mgrKnown.set(p.fileName, p.worker.id); }
         function mgrFinishLoad(settings) {
             const files = mgrPending; mgrPending = [];
             if (!files.length || !settings) return settings;
             const base = (settings.manager && typeof settings.manager === 'object') ? settings.manager : {};
             const workers = new Map((Array.isArray(base.workers) ? base.workers : []).filter(w => w && w.id).map(w => [w.id, w]));
-            const obj = v => (v && typeof v === 'object' && !Array.isArray(v)) ? v : {};
-            const att = { attendance: { ...obj(base.attendance) }, attMin: { ...obj(base.attMin) }, otMin: { ...obj(base.otMin) } };
-            const bf = obj(base.finance), txns = new Map((Array.isArray(bf.txns) ? bf.txns : []).filter(t => t && t.id).map(t => [t.id, t]));
-            let days = { ...obj(bf.days) }, rates = { ...obj(bf.rates) }, def = { ...obj(bf.def) }, hasAtt = false, hasFin = false;
             files.forEach(f => {
-                if (f.kind === 'attendance') { hasAtt = true; ['attendance', 'attMin', 'otMin'].forEach(k => { const src = obj(f[k]); Object.keys(src).forEach(d => { att[k][d] = { ...obj(src[d]) }; }); }); return; }
-                if (f.kind === 'finance') { hasFin = true; (Array.isArray(f.txns) ? f.txns : []).forEach(t => { if (t && t.id) txns.set(t.id, t); }); days = { ...days, ...obj(f.days) }; return; }
-                if (f.kind === 'finance-settings') { hasFin = true; rates = { ...rates, ...obj(f.rates) }; def = { ...def, ...obj(f.def) }; return; }
                 if (f.deleted) { workers.delete(f.workerId); return; }
                 if (f.worker && f.worker.id) workers.set(f.worker.id, f.worker);
             });
-            const mgrOut = { ...base, workers: [...workers.values()] };
-            if (hasAtt) Object.assign(mgrOut, att);
-            if (hasFin) mgrOut.finance = { ...bf, txns: [...txns.values()], days, rates, def };
-            return { ...settings, manager: mgrOut };
-        }
-
-        /* ---- حضور و غیاب و حقوق و مالی: هرکدام در پوشه‌ی مخصوص خودش (یک فایل برای هر ماه) ----
-           ذخیره‌سازی: «کارگاه_هوشمند_ذخیره_داده/کارفرما/حضور_و_غیاب» و «.../حقوق_و_مالی»
-           پشتیبان‌گیری: «<پوشه پشتیبان>/کارفرما/حضور_و_غیاب» و «.../حقوق_و_مالی» (کنار فایل کامل پشتیبان) */
-        const MGR_ATT_DIR = 'حضور_و_غیاب', MGR_FIN_DIR = 'حقوق_و_مالی', MGR_FINSET_FILE = 'تنظیمات_مالی.json';
-        function mgrMkNorm(k) { const p = String(k || '').replace('/', '-').split('-'); const y = Number(p[0]), m = Number(p[1]); return (p.length >= 2 && y > 1200 && m >= 1 && m <= 12) ? `${y}-${String(m).padStart(2, '0')}` : ''; }
-        function mgrAuxFiles() {
-            const M = mgr(), out = [], base = { app: 'sewing_statistics', version: 1 };
-            const att = new Map();
-            ['attendance', 'attMin', 'otMin'].forEach(k => {
-                const src = M[k] || {};
-                Object.keys(src).forEach(d => {
-                    const mk = mgrMkNorm(String(d).slice(0, 7)) || 'نامشخص';
-                    if (!att.has(mk)) att.set(mk, { attendance: {}, attMin: {}, otMin: {} });
-                    att.get(mk)[k][d] = src[d];
-                });
-            });
-            att.forEach((v, mk) => { const n = `حضور_و_غیاب_${mk}.json`; out.push({ cat: 'att', dir: MGR_ATT_DIR, name: n, data: { ...base, kind: 'attendance', fileName: n, monthKey: mk, ...v } }); });
-            const F = M.finance || {}, fin = new Map(), get = mk => { if (!fin.has(mk)) fin.set(mk, { txns: [], days: {} }); return fin.get(mk); };
-            (F.txns || []).forEach(t => { get(mgrMkNorm(t.monthKey) || 'نامشخص').txns.push(t); });
-            Object.keys(F.days || {}).forEach(k => { get(mgrMkNorm(String(k).split('|')[1]) || 'نامشخص').days[k] = F.days[k]; });
-            fin.forEach((v, mk) => { const n = `حقوق_و_مالی_${mk}.json`; out.push({ cat: 'fin', dir: MGR_FIN_DIR, name: n, data: { ...base, kind: 'finance', fileName: n, monthKey: mk, ...v } }); });
-            if ((F.rates && Object.keys(F.rates).length) || (F.def && (F.def.ot || F.def.lv))) out.push({ cat: 'fin', dir: MGR_FIN_DIR, name: MGR_FINSET_FILE, data: { ...base, kind: 'finance-settings', fileName: MGR_FINSET_FILE, rates: F.rates || {}, def: F.def || {} } });
-            return out;
-        }
-        // همگام‌سازی پوشه‌ی ذخیره‌سازی؛ خروجی: کدام دسته با موفقیت در فایل‌های جدا نوشته شد (تا از فایل تنظیمات حذف شود)
-        async function mgrSyncAuxFiles(FS) {
-            const res = { att: false, fin: false };
-            let desired; try { desired = mgrAuxFiles(); } catch (e) { return res; }
-            const dirs = {};
-            const dirOf = async (dir, create) => dirs[dir] || (dirs[dir] = await (await getModeDirHandle(true)).getDirectoryHandle(dir, { create }));
-            const put = async (dir, n, text) => {
-                if (FS) return FS.writeFile({ path: `${nativeModeBase()}/${dir}/${n}`, directory: 'DOCUMENTS', encoding: 'utf8', recursive: true, data: text });
-                const fh = await (await dirOf(dir, true)).getFileHandle(n, { create: true }); const wr = await fh.createWritable(); await wr.write(text); await wr.close();
-            };
-            const del = async (dir, n) => {
-                if (FS) return FS.deleteFile({ path: `${nativeModeBase()}/${dir}/${n}`, directory: 'DOCUMENTS' });
-                return (await dirOf(dir, false)).removeEntry(n);
-            };
-            for (const cat of ['att', 'fin']) {
-                try {
-                    const want = desired.filter(x => x.cat === cat), keys = new Set(want.map(x => x.dir + '/' + x.name));
-                    for (const x of want) {
-                        const key = x.dir + '/' + x.name, sig = JSON.stringify(x.data);
-                        mgrAuxKnown.set(key, { dir: x.dir, name: x.name, cat });
-                        if (mgrAuxSig.get(key) === sig) continue;
-                        await put(x.dir, x.name, JSON.stringify({ ...x.data, updatedAt: new Date().toISOString() }, null, 2));
-                        mgrAuxSig.set(key, sig);
-                    }
-                    // ماه‌هایی که دیگر داده ندارند: فایل حذف می‌شود (اگر حذف نشد، خالی بازنویسی می‌شود تا در بارگذاری بعدی زنده نشود)
-                    for (const [key, k] of [...mgrAuxKnown]) {
-                        if (k.cat !== cat || keys.has(key)) continue;
-                        try { await del(k.dir, k.name); }
-                        catch (e) { await put(k.dir, k.name, JSON.stringify({ app: 'sewing_statistics', version: 1, kind: cat === 'att' ? 'attendance' : (k.name === MGR_FINSET_FILE ? 'finance-settings' : 'finance'), fileName: k.name, updatedAt: new Date().toISOString() })); }
-                        mgrAuxKnown.delete(key); mgrAuxSig.delete(key);
-                    }
-                    res[cat] = true;
-                } catch (e) { console.error('خطا در ذخیره‌ی فایل‌های ' + (cat === 'att' ? 'حضور و غیاب' : 'حقوق و مالی') + ':', e); }
-            }
-            return res;
-        }
-        // پشتیبان‌گیری: همان فایل‌های ماهانه کنار فایل کامل پشتیبان نوشته می‌شود (modeDir = پوشه‌ی حالت داخل پوشه پشتیبان؛ برای اپ نصب‌شده خالی)
-        async function mgrBackupAuxFiles(modeDir) {
-            try {
-                if (!mgrOn()) return;
-                const files = mgrAuxFiles(); if (!files.length) return;
-                const stamp = new Date().toISOString();
-                if (modeDir) {
-                    const dirs = {};
-                    for (const x of files) {
-                        const d = dirs[x.dir] || (dirs[x.dir] = await modeDir.getDirectoryHandle(x.dir, { create: true }));
-                        const fh = await d.getFileHandle(x.name, { create: true }), wr = await fh.createWritable();
-                        await wr.write(JSON.stringify({ ...x.data, updatedAt: stamp }, null, 2)); await wr.close();
-                    }
-                } else {
-                    const FS = getNativePlugin('Filesystem'); if (!FS) return;
-                    for (const x of files) await FS.writeFile({ path: `کارگاه_هوشمند_پشتیبان/${currentModeFolderName()}/${x.dir}/${x.name}`, data: JSON.stringify({ ...x.data, updatedAt: stamp }, null, 2), directory: 'DOCUMENTS', encoding: 'utf8', recursive: true });
-                }
-            } catch (e) { console.warn('ذخیره‌ی فایل‌های حضور و غیاب و حقوق و مالی در پوشه پشتیبان ناموفق بود:', e); }
+            return { ...settings, manager: { ...base, workers: [...workers.values()] } };
         }
         function mgrDownloadBlob(name, obj) {
             const a = document.createElement('a');
@@ -12527,9 +11613,7 @@
                     ? `<button type="button" data-action="photo" data-id="${Number(r.id)}" class="block w-10 h-10 rounded-xl overflow-hidden ring-2 ring-white dark:ring-slate-900 border border-slate-400 dark:border-slate-500 shadow-sm hover:scale-105 hover:opacity-90 transition-all" title="مشاهده عکس" aria-label="مشاهده عکس"><img src="${getThumbSrc(r)}" data-thumb-id="${Number(r.id)}" decoding="async" class="w-full h-full object-cover" alt="عکس رکورد"></button>`
                     : `<span class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-300 dark:text-slate-600"><i class="fa-solid fa-image text-xs"></i></span>`;
                 const workerHTML = mgrRecWorker(r)
-                    ? (mgrWorker(r.workerId)
-                        ? `<button type="button" data-action="worker-info" data-id="${Number(r.id)}" aria-haspopup="dialog" aria-expanded="false" title="نمایش اطلاعات مالی" class="wi-name"><i class="fa-solid fa-user-gear text-[10px]"></i>${escapeHTML(mgrRecWorker(r))}</button>`
-                        : `<i class="fa-solid fa-user-gear text-indigo-400 text-[10px] ml-1"></i>${escapeHTML(mgrRecWorker(r))}`)
+                    ? `<i class="fa-solid fa-user-gear text-indigo-400 text-[10px] ml-1"></i>${escapeHTML(mgrRecWorker(r))}`
                     : '<span class="text-slate-300 dark:text-slate-600">-</span>';
                 const workerCell = mgrOn()
                     ? `<td class="c-worker p-2.5 whitespace-nowrap text-slate-700 dark:text-slate-200">${workerHTML}<div class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHTML(mgrRecSection(r) || '')}</div></td>`
