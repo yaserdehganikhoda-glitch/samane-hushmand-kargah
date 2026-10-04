@@ -947,6 +947,53 @@
         .kf-ot-txt { color: #4f46e5; } .dark .kf-ot-txt { color: #a5b4fc; }
         .kf-rate-box { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: #64748b; }
     </style>
+    <style id="attListCss">
+        /* ===== حضور و غیاب: کارتی ===== */
+        #managerModal .att-tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: .4rem; }
+        #managerModal .att-tiles-m { padding: .75rem .75rem 0; }
+        @media (max-width: 420px) { #managerModal .att-tiles { grid-template-columns: repeat(3, 1fr); } }
+        #managerModal .att-tile { padding: .5em .3em; border-radius: .85rem; border: 1px solid #e2e8f0; background: #f8fafc; text-align: center; min-width: 0; }
+        .dark #managerModal .att-tile { background: #1e293b; border-color: #334155; }
+        #managerModal .att-tile b { display: block; font-size: 1.2rem; font-weight: 800; line-height: 1.3; }
+        #managerModal .att-tile span { font-size: .7rem; color: #64748b; }
+        .dark #managerModal .att-tile span { color: #94a3b8; }
+        #managerModal .att-bar { height: .42rem; border-radius: 99px; background: #e2e8f0; overflow: hidden; margin-top: .5rem; }
+        .dark #managerModal .att-bar { background: #334155; }
+        #managerModal .att-bar i { display: block; height: 100%; border-radius: 99px; transition: width .4s; }
+        #managerModal .att-cap { font-size: .7rem; color: #94a3b8; margin-top: .25rem; text-align: center; }
+        #managerModal .att-day { border: 1px solid #cbd5e1; border-radius: 1rem; padding: .7rem .8rem; display: flex; flex-direction: column; gap: .5rem; background: #fff; box-shadow: inset 3px 0 0 var(--ac, #cbd5e1); }
+        .dark #managerModal .att-day { border-color: #475569; background: #0f172a; }
+        #managerModal .att-st { font-size: .7rem; padding: .15em .75em; border-radius: 99px; border: 1px solid var(--c); color: var(--c); white-space: nowrap; font-weight: 700; }
+        #managerModal .att-chips { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; margin-top: .55rem; }
+        #managerModal .att-day .att-chips { margin-top: 0; }
+        #managerModal .att-chip { display: inline-flex; align-items: center; gap: .3em; font-size: .72rem; padding: .12em .65em; border-radius: 99px; background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+        .dark #managerModal .att-chip { background: #1e293b; color: #cbd5e1; border-color: #334155; }
+        #managerModal .att-chip i { width: .45rem; height: .45rem; border-radius: 50%; background: var(--c); display: inline-block; }
+        #managerModal .att-chip small { opacity: .75; }
+        #managerModal .att-card { border: 1px solid #cbd5e1; border-radius: 1rem; padding: .85rem .9rem; background: #fff; }
+        .dark #managerModal .att-card { border-color: #475569; background: #0f172a; }
+        #managerModal #mgrAttCards { display: grid; grid-template-columns: 1fr; gap: .75rem; padding: .75rem; align-content: start; font-size: calc(12px * var(--rt, 1)); }
+        @media (min-width: 900px) { #managerModal #mgrAttCards { grid-template-columns: 1fr 1fr; } }
+        #managerModal #mgrAttCards > .hidden { display: none !important; }
+        #managerModal .att-rate { text-align: center; min-width: 3.4rem; padding: .3em .5em; border-radius: .8rem; border: 1px solid var(--c); color: var(--c); }
+        #managerModal .att-rate b { display: block; font-size: 1.05rem; font-weight: 800; line-height: 1.3; }
+        #managerModal .att-rate span { font-size: .65rem; opacity: .85; }
+        #managerModal .att-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(1.5rem, 1fr)); gap: .25rem; margin-top: .65rem; }
+        #managerModal .att-dot { height: 1.5rem; border-radius: .45rem; font-size: .62rem; line-height: 1; background: var(--c); color: #fff; font-weight: 700; border: 0; padding: 0; }
+        #managerModal .att-dot.none { background: #f1f5f9; color: #94a3b8; border: 1px dashed #cbd5e1; font-weight: 400; }
+        .dark #managerModal .att-dot.none { background: #1e293b; border-color: #475569; color: #64748b; }
+        #managerModal .att-dot.fri { opacity: .55; }
+        #managerModal .att-dot.ot { box-shadow: 0 0 0 2px #6366f1; }
+        #managerModal .att-logs { margin-top: .6rem; border-top: 1px solid #e2e8f0; padding-top: .3rem; }
+        .dark #managerModal .att-logs { border-top-color: #334155; }
+        #managerModal .att-log { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .4rem 0; border-bottom: 1px solid #e2e8f0; font-size: .8rem; }
+        .dark #managerModal .att-log { border-bottom-color: #334155; }
+        #managerModal .att-log:last-child { border-bottom: 0; }
+        #managerModal .att-flt { display: flex; gap: .4rem; overflow-x: auto; padding: .6rem .75rem 0; }
+        #managerModal .att-f { white-space: nowrap; font-size: .75rem; padding: .3em .85em; border-radius: 99px; border: 1px solid #cbd5e1; background: #fff; color: #475569; }
+        .dark #managerModal .att-f { background: #1e293b; border-color: #475569; color: #cbd5e1; }
+        #managerModal .att-f.on { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+    </style>
     <style id="finListCss">
         /* ===== لیست حقوق و مالی: فقط کارتی ===== */
         #mgrFinCards { font-size: calc(12px * var(--rt, 1)); display: grid; grid-template-columns: 1fr; gap: .75rem; padding: .75rem; align-content: start; }
@@ -5406,6 +5453,7 @@
                         const monthFolder = filename.replace(/\.json$/i, '');
                         const path = `کارگاه_هوشمند_پشتیبان/${currentModeFolderName()}/${monthFolder}/${filename}`;
                         await FS.writeFile({ path, data: jsonString, directory: 'DOCUMENTS', encoding: 'utf8', recursive: true });
+                        await mgrBackupAuxFiles(null);
                         updateBackupFolderStatusUI();
                         if (onSuccess) onSuccess('native-documents');
                         return true;
@@ -5432,6 +5480,7 @@
                         const writable = await fileHandle.createWritable();
                         await writable.write(jsonString);
                         await writable.close();
+                        await mgrBackupAuxFiles(modeBackupDir);
                         // مهاجرت: اگر از قبل فایل همین ماه مستقیماً در ریشه‌ی پوشه پشتیبان بوده (ساختار قبل از این
                         // به‌روزرسانی)، بعد از نوشتن موفق داخل زیرپوشه حذف می‌شود تا فقط یک نسخه باقی بماند.
                         try { await backupDirHandle.removeEntry(filename); } catch (e) { /* از قبل وجود نداشت؛ بی‌اهمیت */ }
@@ -5709,7 +5758,7 @@
 
         function resetFolderWriteCache() {
             folderWrittenSig.clear();
-            mgrWrittenSig.clear(); mgrKnown.clear(); mgrPending = []; mgrFolderOk = false;
+            mgrWrittenSig.clear(); mgrKnown.clear(); mgrPending = []; mgrFolderOk = false; mgrAuxSig.clear(); mgrAuxKnown.clear(); mgrAttOk = false; mgrFinOk = false;
             folderSettingsSig = null;
             folderStaleScanDone = false;
             folderModeName = null;
@@ -5771,6 +5820,7 @@
                 }
 
                 mgrFolderOk = mgrOn() ? await mgrSyncWorkerFiles(FS) : false; // فایل‌های پرسنل فقط در پوشه‌ی «کارفرما»
+                { const aux = mgrOn() ? await mgrSyncAuxFiles(FS) : { att: false, fin: false }; mgrAttOk = aux.att; mgrFinOk = aux.fin; } // حضور و غیاب و حقوق و مالی: هرکدام در پوشه‌ی مخصوص خودش
                 const settingsPayload = { notes: notesSnapshot, settings: mgrSettingsForFolder(), installSalt: getOrCreateInstallSalt(), tombstones: tombstones };
                 const settingsSig = JSON.stringify(settingsPayload);
                 if (settingsSig !== folderSettingsSig) {
@@ -5799,7 +5849,7 @@
             function absorbParsedFile(parsed) {
                 if (!parsed || parsed.app !== 'sewing_statistics') return;
                 result.hasAnyFile = true;
-                if (parsed.kind === 'worker') { mgrCollectWorkerFile(parsed); return; }
+                if (parsed.kind === 'worker' || parsed.kind === 'attendance' || parsed.kind === 'finance' || parsed.kind === 'finance-settings') { mgrCollectWorkerFile(parsed); return; }
                 if (Array.isArray(parsed.records)) parsed.records.forEach(rr => { const clean = sanitizeRecord(rr); if (clean) result.records.push(clean); });
                 if (parsed.notes || parsed.settings) {
                     result.notes = parsed.notes || result.notes;
@@ -5946,6 +5996,7 @@
                 }
 
                 mgrFolderOk = mgrOn() ? await mgrSyncWorkerFiles(null) : false; // فایل‌های پرسنل فقط در پوشه‌ی «کارفرما»
+                { const aux = mgrOn() ? await mgrSyncAuxFiles(null) : { att: false, fin: false }; mgrAttOk = aux.att; mgrFinOk = aux.fin; }
                 const settingsPayload = {
                     notes: notesSnapshot,
                     settings: mgrSettingsForFolder(),
@@ -5986,7 +6037,7 @@
             function absorbParsedFile(parsed) {
                 if (!parsed || parsed.app !== 'sewing_statistics') return;
                 hasAnyFile = true;
-                if (parsed.kind === 'worker') { mgrCollectWorkerFile(parsed); return; }
+                if (parsed.kind === 'worker' || parsed.kind === 'attendance' || parsed.kind === 'finance' || parsed.kind === 'finance-settings') { mgrCollectWorkerFile(parsed); return; }
                 if (Array.isArray(parsed.records)) {
                     parsed.records.forEach(rr => { const clean = sanitizeRecord(rr); if (clean) collectedRecords.push(clean); });
                 }
@@ -11551,16 +11602,96 @@
             });
             return out.sort((a, b) => a.d < b.d ? 1 : a.d > b.d ? -1 : 0);
         }
+        /* ---- لیست ماهانه‌ی حضور و غیاب: کارت برای هر پرسنل (نوار ماه، آمار، فیلتر، ترتیب، ریز ثبت‌ها) ---- */
+        var mgrAttQuery = '', mgrAttFlt = '', mgrAttSort = 'default', mgrAttOpen = {};
+        const ATT_CLR = { p: '#10b981', t: '#f59e0b', l: '#0ea5e9', a: '#f43f5e' };
+        const ATT_TXT = { p: 'text-emerald-600 dark:text-emerald-400', t: 'text-amber-600 dark:text-amber-400', l: 'text-sky-600 dark:text-sky-400', a: 'text-rose-600 dark:text-rose-400' };
+        const ATT_SORTS = [['default', 'ترتیب پرسنل'], ['name_asc', 'نام: الف تا ی'], ['abs_desc', 'غیبت: بیشترین'], ['late_desc', 'تاخیر: بیشترین'], ['ot_desc', 'اضافه‌کاری: بیشترین'], ['rate_asc', 'حضور: کمترین']];
+        function mgrAttWeekday(d) { const j = parseJalaliDateToJdn(d); return j ? MGR_WEEKDAYS[((j % 7) + 7) % 7] : ''; }
+        function mgrAttModel(mk) {
+            const [y, m] = mk.split('-').map(Number); let mLen = 30; try { mLen = jalaaliMonthLength(y, m) || 30; } catch (e) { mLen = 30; }
+            const ids = new Map();
+            mgrAttEntries(mk).forEach(({ d, id }) => { if (!ids.has(id)) ids.set(id, []); ids.get(id).push(d); });
+            const order = new Map(mgr().workers.map((w, i) => [w.id, i]));
+            mgr().workers.forEach(w => { if (w.active && !ids.has(w.id)) ids.set(w.id, []); });
+            const rows = [...ids].map(([id, ds]) => {
+                const w = mgrWorker(id), sc = w ? mgrSection(w.sectionId) : null, c = mgrAttCount(id, mk), rec = c.p + c.t + c.l + c.a;
+                return { id, w, sc, c, ds, rec, rate: rec ? Math.round((c.p + c.t) / rec * 100) : null, ord: order.has(id) ? order.get(id) : 1e6, text: (w ? w.name : 'حذف‌شده') + ' ' + (sc ? sc.name : '') };
+            });
+            const nm = (a, b) => String(a.w ? a.w.name : '').localeCompare(String(b.w ? b.w.name : ''), 'fa');
+            const S = { default: (a, b) => a.ord - b.ord, name_asc: nm, abs_desc: (a, b) => b.c.a - a.c.a, late_desc: (a, b) => (b.c.t - a.c.t) || (b.c.tMin - a.c.tMin), ot_desc: (a, b) => b.c.oMin - a.c.oMin, rate_asc: (a, b) => (a.rate == null ? 101 : a.rate) - (b.rate == null ? 101 : b.rate) }[mgrAttSort] || ((a, b) => a.ord - b.ord);
+            rows.sort(S);
+            return { rows, mLen, y, m };
+        }
+        function mgrAttFlag(r, f) { return !f || (f === 'late' && r.c.t > 0) || (f === 'abs' && r.c.a > 0) || (f === 'ot' && r.c.oMin > 0) || (f === 'none' && !r.ds.length); }
+        function mgrAttShow(text, flags) { const q = normalizeSearchText(mgrAttQuery); return (!q || normalizeSearchText(text).includes(q)) && (!mgrAttFlt || String(flags).split(',').includes(mgrAttFlt)); }
+        function mgrAttTot(rows) { const T = { p: 0, t: 0, l: 0, a: 0, tMin: 0, lMin: 0, oMin: 0 }; rows.forEach(r => { Object.keys(T).forEach(k => { T[k] += r.c[k] || 0; }); }); return T; }
         function mgrAttListHTML(mk) {
-            const clr = { p: 'text-emerald-600', t: 'text-amber-600', l: 'text-sky-600', a: 'text-rose-600' };
-            const rows = mgrAttEntries(mk).map(({ d, id }) => {
-                const w = mgrWorker(id), k = (mgrAtt()[d] || {})[id], mins = mgrAttMinGet(d, id), ot = mgrOtMinGet(d, id);
-                return `<tr class="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50"><td class="p-2.5 tabular-nums">${escapeHTML(toPersianDigits(d))}</td><td class="p-2.5 font-semibold">${escapeHTML(w ? w.name : 'حذف‌شده')}</td><td class="p-2.5 font-bold ${k ? clr[k] : 'text-slate-400'}">${k ? MGR_ATT[k][0] : '—'}</td><td class="p-2.5">${mins ? formatMinutesDuration(mins) : '—'}</td><td class="p-2.5 kf-ot-txt">${ot ? formatMinutesDuration(ot) : '—'}</td>${mgrActBtns('a-edit', 'a-del', id, d)}</tr>`;
+            const A = mgrAtt(), f = formatNumber, { rows, mLen, y, m } = mgrAttModel(mk);
+            const flagsOf = r => ['late', 'abs', 'ot', 'none'].filter(k => mgrAttFlag(r, k)).join(',');
+            const vis = rows.filter(r => mgrAttShow(r.text, flagsOf(r))), T = mgrAttTot(vis);
+            const dur = n => n ? formatMinutesDuration(n) : '';
+            const chip = (k, n, mins) => `<span class="att-chip" style="--c:${ATT_CLR[k]}"><i></i>${MGR_ATT[k][0]} <b>${f(n)}</b>${mins ? ` <small>${dur(mins)}</small>` : ''}</span>`;
+            const cards = rows.map((r, idx) => {
+                const { c, w } = r, wid = escapeHTML(r.id), open = !!mgrAttOpen[r.id], flags = flagsOf(r);
+                const rateClr = r.rate == null ? '#94a3b8' : r.rate >= 90 ? '#10b981' : r.rate >= 75 ? '#f59e0b' : '#f43f5e';
+                const strip = Array.from({ length: mLen }, (_, i) => {
+                    const dd = `${y}/${String(m).padStart(2, '0')}/${String(i + 1).padStart(2, '0')}`, k = (A[dd] || {})[r.id], ot = mgrOtMinGet(dd, r.id), fri = mgrAttWeekday(dd) === 'جمعه';
+                    const tip = `${toPersianDigits(dd)} ${mgrAttWeekday(dd)}${fri ? ' (تعطیل)' : ''} — ${k ? MGR_ATT[k][0] : 'ثبت نشده'}${(k === 't' || k === 'l') && mgrAttMinGet(dd, r.id) ? ' ' + formatMinutesDuration(mgrAttMinGet(dd, r.id)) : ''}${ot ? ' • اضافه‌کاری ' + formatMinutesDuration(ot) : ''}`;
+                    return `<button type="button" data-mgr="a-edit" data-id="${wid}" data-st="${dd}" title="${escapeHTML(tip)}" class="att-dot${k ? '' : ' none'}${fri ? ' fri' : ''}${ot ? ' ot' : ''}" style="${k ? '--c:' + ATT_CLR[k] : ''}">${f(i + 1)}</button>`;
+                }).join('');
+                const log = r.ds.map(d => {
+                    const k = A[d] && A[d][r.id], mins = mgrAttMinGet(d, r.id), ot = mgrOtMinGet(d, r.id);
+                    return `<div class="att-log"><div class="min-w-0"><span class="tabular-nums font-semibold">${escapeHTML(toPersianDigits(d))}</span> <span class="text-[10px] text-slate-400">${mgrAttWeekday(d)}</span><div class="mt-0.5 text-[11px]"><b class="${k ? ATT_TXT[k] : 'text-slate-400'}">${k ? MGR_ATT[k][0] : 'بدون وضعیت'}</b>${mins ? ` • ${formatMinutesDuration(mins)}` : ''}${ot ? ` • <span class="kf-ot-txt">اضافه‌کاری ${formatMinutesDuration(ot)}</span>` : ''}</div></div><div class="flex gap-1 shrink-0 no-print"><button type="button" data-mgr="a-edit" data-id="${wid}" data-st="${escapeHTML(d)}" title="ویرایش" class="w-8 h-8 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="a-del" data-id="${wid}" data-st="${escapeHTML(d)}" title="حذف" class="w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></div></div>`;
+                }).join('');
+                return `<div class="att-card${mgrAttShow(r.text, flags) ? '' : ' hidden'}" data-att-row data-att-text="${escapeHTML(r.text)}" data-att-flags="${flags}" data-t="${[c.p, c.t, c.l, c.a, c.tMin, c.lMin, c.oMin].join(',')}">`
+                    + `<div class="flex items-start justify-between gap-3"><div class="min-w-0"><button type="button" onclick="mgrAttToggle(this)" data-att-id="${wid}" aria-expanded="${open}" class="inline-flex items-center text-right font-bold text-slate-800 dark:text-slate-100 text-sm"><i data-att-chev class="fa-solid ${open ? 'fa-chevron-down' : 'fa-chevron-left'} text-[9px] ml-1"></i>${escapeHTML(w ? w.name : 'پرسنل حذف‌شده')}${w && !w.active ? ' <span class="text-[10px] font-normal text-slate-400">(غیرفعال)</span>' : ''}</button><div class="mt-1 text-[11px] text-slate-500 dark:text-slate-400"><span>#${f(idx + 1)}</span>${r.sc ? ' <span class="opacity-40">•</span> ' + escapeHTML(r.sc.name) : ''} <span class="opacity-40">•</span> ${r.ds.length ? f(r.ds.length) + ' روز ثبت‌شده از ' + f(mLen) : 'بدون ثبت در این ماه'}</div></div>`
+                    + `<div class="att-rate" style="--c:${rateClr}"><b>${r.rate == null ? '—' : f(r.rate) + '٪'}</b><span>حضور</span></div></div>`
+                    + `<div class="att-bar"><i style="width:${r.rate == null ? 0 : r.rate}%;background:${rateClr}"></i></div>`
+                    + `<div class="att-chips">${chip('p', c.p)}${chip('t', c.t, c.tMin)}${chip('l', c.l, c.lMin)}${chip('a', c.a)}${c.oMin ? `<span class="att-chip" style="--c:#6366f1"><i></i>اضافه‌کاری <b>${dur(c.oMin)}</b></span>` : ''}</div>`
+                    + `<div class="att-strip" title="روی هر روز بزنید تا همان روز در فرم بالا باز شود">${strip}</div>`
+                    + `<div data-att-detail class="att-logs${open ? '' : ' hidden'}">${log || '<p class="text-[11px] text-slate-400 py-2">ثبتی در این ماه وجود ندارد.</p>'}</div></div>`;
             }).join('');
-            return mgrListCard('fa-calendar-check', 'لیست حضور و غیاب — ' + mgrMonthLabel(), ['تاریخ', 'پرسنل', 'وضعیت', 'مدت تاخیر / مرخصی', 'اضافه‌کاری'], rows, 'هنوز حضور و غیابی برای این ماه ثبت نشده است.', 'mgrAttRows');
+            const tile = (k, v, c) => `<div class="att-tile"><b class="${c || ''}" data-att-t="${k}">${v}</b><span>${{ p: 'حاضر', t: 'تاخیر', l: 'مرخصی', a: 'غیبت', oMin: 'اضافه‌کاری' }[k]}</span></div>`;
+            const summary = `<div class="att-tiles att-tiles-m">${tile('p', f(T.p), ATT_TXT.p)}${tile('t', f(T.t), ATT_TXT.t)}${tile('l', f(T.l), ATT_TXT.l)}${tile('a', f(T.a), ATT_TXT.a)}${tile('oMin', T.oMin ? formatMinutesDuration(T.oMin) : '—', 'kf-ot-txt')}</div>`;
+            const cnt = k => rows.filter(r => mgrAttFlag(r, k)).length;
+            const flt = `<div class="att-flt no-print">${[['', 'همه'], ['late', 'تاخیردار'], ['abs', 'غایب‌دار'], ['ot', 'اضافه‌کار'], ['none', 'بدون ثبت']].map(([k, l]) => `<button type="button" onclick="mgrAttSetFlt('${k}')" class="att-f${mgrAttFlt === k ? ' on' : ''}">${l} (${f(cnt(k))})</button>`).join('')}</div>`;
+            const sel = 'no-print w-full appearance-none pr-9 pl-3 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 outline-none cursor-pointer';
+            const head = `<div class="p-3 border-b border-slate-300 dark:border-slate-600 flex flex-col gap-2 bg-slate-50/50 dark:bg-slate-900/50"><div class="flex items-center gap-3"><h3 class="font-bold text-slate-700 dark:text-slate-200 text-sm flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-calendar-check text-indigo-600 dark:text-indigo-400"></i> لیست حضور و غیاب</h3><span class="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-medium whitespace-nowrap border border-indigo-100 dark:border-indigo-900/40">${mgrMonthLabel()} • <span data-att-cnt>${f(vis.length)}</span> نفر</span></div>`
+                + `<div class="flex items-center gap-2"><div class="relative w-full"><span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400"><i class="fa-solid fa-arrow-down-wide-short text-xs"></i></span><select onchange="mgrAttSetSort(this.value)" title="ترتیب نمایش لیست" class="${sel}">${ATT_SORTS.map(([v, l]) => `<option value="${v}"${v === mgrAttSort ? ' selected' : ''}>${l}</option>`).join('')}</select></div>`
+                + `<div class="relative w-full"><span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span><input type="text" id="mgrAttSearch" value="${escapeHTML(mgrAttQuery)}" oninput="mgrAttFilter(this.value)" placeholder="جستجو در لیست..." class="w-full pr-10 pl-3.5 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 outline-none"></div></div></div>`;
+            const empty = !rows.length;
+            return `<div id="mgrAttCard" class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden bg-white dark:bg-slate-900">${head}`
+                + (empty ? mgrEmpty('هنوز حضور و غیابی برای این ماه ثبت نشده است.') : `${summary}${flt}<div id="mgrAttCards">${cards}</div><p id="mgrAttNoHit" class="${vis.length ? 'hidden ' : ''}p-8 text-center text-sm text-slate-400">موردی یافت نشد.</p><p class="px-4 py-2 text-[11px] text-slate-400 border-t border-slate-200 dark:border-slate-700">روی نام هر نفر بزنید تا ریز ثبت‌ها (با ویرایش و حذف) باز شود؛ با زدن روی هر روزِ نوار ماه، همان روز در فرم بالا باز می‌شود.</p>`)
+                + `</div>`;
+        }
+        function mgrAttRefresh() { const h = document.getElementById('mgrAttHost'); if (!h) return mgrRender(); h.innerHTML = mgrAttListHTML(selectedMonthFilter); }
+        function mgrAttSetSort(v) { if (!ATT_SORTS.some(x => x[0] === v)) return; mgrAttSort = v; mgrAttRefresh(); }
+        function mgrAttSetFlt(k) { mgrAttFlt = String(k || ''); mgrAttRefresh(); }
+        function mgrAttToggle(el) {
+            const card = el.closest('[data-att-row]'); if (!card) return;
+            const id = el.getAttribute('data-att-id'), open = !mgrAttOpen[id]; mgrAttOpen[id] = open;
+            card.querySelectorAll('[data-att-detail]').forEach(d => d.classList.toggle('hidden', !open));
+            card.querySelectorAll('[data-att-chev]').forEach(i => { i.className = 'fa-solid ' + (open ? 'fa-chevron-down' : 'fa-chevron-left') + ' text-[9px] ml-1'; });
+            el.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+        // جستجوی زنده: کارت‌ها فیلتر می‌شوند و آمار بالای لیست فقط برای کارت‌های نمایان دوباره شمرده می‌شود
+        function mgrAttFilter(v) {
+            if (v !== undefined && v !== null) mgrAttQuery = String(v);
+            const host = document.getElementById('mgrAttCard'); if (!host) return;
+            const T = [0, 0, 0, 0, 0, 0, 0]; let n = 0, total = 0;
+            host.querySelectorAll('[data-att-row]').forEach(el => {
+                const hit = mgrAttShow(el.getAttribute('data-att-text') || '', el.getAttribute('data-att-flags') || ''); total++;
+                el.classList.toggle('hidden', !hit);
+                if (hit) { n++; (el.getAttribute('data-t') || '').split(',').forEach((x, i) => { T[i] += Number(x) || 0; }); }
+            });
+            const set = (k, v) => { const e = host.querySelector('[data-att-t="' + k + '"]'); if (e) e.textContent = v; };
+            set('p', formatNumber(T[0])); set('t', formatNumber(T[1])); set('l', formatNumber(T[2])); set('a', formatNumber(T[3])); set('oMin', T[6] ? formatMinutesDuration(T[6]) : '—');
+            host.querySelectorAll('[data-att-cnt]').forEach(e => { e.textContent = formatNumber(n); });
+            const none = document.getElementById('mgrAttNoHit'); if (none) none.classList.toggle('hidden', n > 0 || total === 0);
         }
         function mgrHtmlAttendance() {
-            const M = mgr(), A = mgrAtt(), mk = selectedMonthFilter;
+            const M = mgr(), A = mgrAtt(), mk = selectedMonthFilter, f = formatNumber;
             if (!mgrAttDate) mgrAttDate = mgrDK(getCurrentJalaliInfo().fullDateStr);
             const day = A[mgrAttDate] || {}, jdn = parseJalaliDateToJdn(mgrAttDate), wd = MGR_WEEKDAYS[((jdn % 7) + 7) % 7], fri = wd === 'جمعه';
             const ws = M.workers.filter(w => w.active);
@@ -11584,18 +11715,29 @@
                     ${mins ? `<span class="font-bold kf-ot-txt">${formatMinutesDuration(mins)}</span>` : ''}</div>`;
             };
             const otCnt = ws.filter(w => mgrOtMinGet(mgrAttDate, w.id) > 0).length;
-            const rows = ws.map(w => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-2.5 space-y-2"><div class="flex items-center gap-2">${mgrMiniAvatar(w, 30)}<p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p></div><div class="flex gap-1.5">${['p', 't', 'l', 'a'].map(k => btn(w, k)).join('') + otBtn(w)}</div>${durRow(w)}${otRow(w)}</div>`).join('');
+            const monthChips = w => {
+                const c = mgrAttCount(w.id, mk), parts = ['p', 't', 'l', 'a'].filter(k => c[k]).map(k => `<span class="att-chip" style="--c:${ATT_CLR[k]}"><i></i>${MGR_ATT[k][0]} <b>${f(c[k])}</b></span>`);
+                if (c.oMin) parts.push(`<span class="att-chip" style="--c:#6366f1"><i></i>اضافه‌کاری <b>${formatMinutesDuration(c.oMin)}</b></span>`);
+                return `<div class="att-chips"><span class="text-[10px] text-slate-400">این ماه:</span>${parts.join('') || '<span class="text-[10px] text-slate-400">بدون ثبت</span>'}</div>`;
+            };
+            const rows = ws.map(w => {
+                const k = day[w.id], ac = k ? ATT_CLR[k] : '#cbd5e1';
+                return `<div class="att-day" style="--ac:${ac}"><div class="flex items-center justify-between gap-2"><p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p><span class="att-st" style="--c:${ac}">${k ? MGR_ATT[k][0] : 'ثبت نشده'}</span></div>${monthChips(w)}<div class="flex gap-1.5">${['p', 't', 'l', 'a'].map(x => btn(w, x)).join('') + otBtn(w)}</div>${durRow(w)}${otRow(w)}</div>`;
+            }).join('');
             const cnt = Object.keys(MGR_ATT).reduce((o, k) => (o[k] = ws.filter(w => day[w.id] === k).length, o), {});
-            const sumRows = ws.map(w => { const c = mgrAttCount(w.id, mk); return `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2 text-right">${escapeHTML(w.name)}</td><td class="p-2 text-emerald-600">${toPersianDigits(c.p)}</td><td class="p-2 text-amber-600">${toPersianDigits(c.t)}${c.tMin ? `<span class="block text-[10px] opacity-80">${formatMinutesDuration(c.tMin)}</span>` : ''}</td><td class="p-2 text-sky-600">${toPersianDigits(c.l)}${c.lMin ? `<span class="block text-[10px] opacity-80">${formatMinutesDuration(c.lMin)}</span>` : ''}</td><td class="p-2 text-rose-600">${toPersianDigits(c.a)}</td><td class="p-2 kf-ot-txt">${c.oMin ? formatMinutesDuration(c.oMin) : '—'}</td></tr>`; }).join('');
+            const done = ws.filter(w => day[w.id]).length, pct = ws.length ? Math.round(done / ws.length * 100) : 0;
+            const tl = (k, v, c) => `<div class="att-tile"><b class="${c}">${f(v)}</b><span>${k}</span></div>`;
             return `<div class="flex items-center gap-2">
                     <button type="button" data-mgr="a-next" title="روز بعد" class="w-9 h-9 shrink-0 rounded-xl border border-slate-400 dark:border-slate-500 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-chevron-right text-xs"></i></button>
                     <input id="mgrADate" maxlength="10" inputmode="numeric" value="${escapeHTML(toPersianDigits(mgrAttDate))}" data-mgr-change="a-date" class="${MI} text-center">
                     <button type="button" data-mgr="a-prev" title="روز قبل" class="w-9 h-9 shrink-0 rounded-xl border border-slate-400 dark:border-slate-500 text-slate-600 dark:text-slate-300"><i class="fa-solid fa-chevron-left text-xs"></i></button>
                     <button type="button" data-mgr="a-today" class="tactile-btn shrink-0 px-3 h-9 rounded-xl border border-purple-500 text-purple-700 dark:text-purple-300 text-xs">امروز</button></div>
-                <p class="text-[11px] text-center ${fri ? 'text-rose-500' : 'text-slate-500 dark:text-slate-400'}">${wd}${fri ? ' (تعطیل)' : ''} • حاضر ${toPersianDigits(cnt.p)} • تاخیر ${toPersianDigits(cnt.t)} • مرخصی ${toPersianDigits(cnt.l)} • غایب ${toPersianDigits(cnt.a)} • اضافه‌کاری ${toPersianDigits(otCnt)}</p>
+                <p class="text-[12px] font-bold text-center ${fri ? 'text-rose-500' : 'text-slate-600 dark:text-slate-300'}">${wd}${fri ? ' (تعطیل)' : ''}</p>
+                <div class="att-tiles">${tl('حاضر', cnt.p, ATT_TXT.p)}${tl('تاخیر', cnt.t, ATT_TXT.t)}${tl('مرخصی', cnt.l, ATT_TXT.l)}${tl('غایب', cnt.a, ATT_TXT.a)}${tl('اضافه‌کار', otCnt, 'kf-ot-txt')}</div>
+                ${ws.length ? `<div><div class="att-bar"><i style="width:${pct}%;background:#6366f1"></i></div><p class="att-cap">${f(done)} نفر از ${f(ws.length)} نفر ثبت شده (${f(pct)}٪)</p></div>` : ''}
                 ${ws.length ? `<button type="button" data-mgr="a-all" class="tactile-btn w-full py-2 rounded-xl bg-emerald-600 text-white text-xs font-medium">همه حاضر (بدون وضعیت قبلی)</button>` : ''}
                 <div class="space-y-2">${rows || mgrEmpty('ابتدا پرسنل فعال را در تب «پرسنل» اضافه کنید.')}</div>
-                ${mgrAttListHTML(mk)}`;
+                <div id="mgrAttHost">${mgrAttListHTML(mk)}</div>`;
         }
 
         /* ---------- بخش مالی پنل کارفرما ---------- */
@@ -12143,6 +12285,7 @@
         /* ---- ذخیره‌ی فایل جداگانه برای هر پرسنل (پوشه‌ی «پرسنل» کنار فایل‌های ماه) ---- */
         const MGR_DIR = 'کارگران';
         var mgrWrittenSig = new Map(), mgrKnown = new Map(), mgrPending = [], mgrFolderOk = false;
+        var mgrAttOk = false, mgrFinOk = false, mgrAuxSig = new Map(), mgrAuxKnown = new Map();
         function mgrWorkerFileName(w) { return `کارگر_${String(w.name).replace(/[\\/:*?"<>|\s\u200c]+/g, '_').slice(0, 40)}_${w.id}.json`; }
         function mgrWorkerFileData(w) {
             const sc = mgrSection(w.sectionId);
@@ -12179,22 +12322,121 @@
                 return true;
             } catch (e) { console.error('خطا در ذخیره‌ی فایل پرسنل:', e); return false; }
         }
-        // در فایل تنظیمات پوشه، اطلاعات پرسنل تکرار نمی‌شود (فقط اگر فایل‌های پرسنل با موفقیت نوشته شده باشند)
+        // در فایل تنظیمات پوشه، اطلاعات پرسنل، حضور و غیاب و حقوق و مالی تکرار نمی‌شود (فقط اگر فایل‌های جداگانه‌شان با موفقیت نوشته شده باشند)
         function mgrSettingsForFolder() {
-            if (!mgrFolderOk || !appSettings.manager) return appSettings;
-            return { ...appSettings, manager: { ...appSettings.manager, workers: [], splitToWorkerFiles: true } };
+            if (!appSettings.manager || !(mgrFolderOk || mgrAttOk || mgrFinOk)) return appSettings;
+            const m = { ...appSettings.manager };
+            if (mgrFolderOk) { m.workers = []; m.splitToWorkerFiles = true; }
+            if (mgrAttOk) { m.attendance = {}; m.attMin = {}; m.otMin = {}; }
+            if (mgrFinOk) m.finance = { txns: [], days: {}, rates: {}, def: { ot: 0, lv: 0 } };
+            return { ...appSettings, manager: m };
         }
-        function mgrCollectWorkerFile(p) { mgrPending.push(p); if (p.fileName && !p.deleted && p.worker) mgrKnown.set(p.fileName, p.worker.id); }
+        function mgrCollectWorkerFile(p) {
+            mgrPending.push(p);
+            if (p.fileName && !p.deleted && p.worker) mgrKnown.set(p.fileName, p.worker.id);
+            else if (p.fileName && p.kind === 'attendance') mgrAuxKnown.set(MGR_ATT_DIR + '/' + p.fileName, { dir: MGR_ATT_DIR, name: p.fileName, cat: 'att' });
+            else if (p.fileName && (p.kind === 'finance' || p.kind === 'finance-settings')) mgrAuxKnown.set(MGR_FIN_DIR + '/' + p.fileName, { dir: MGR_FIN_DIR, name: p.fileName, cat: 'fin' });
+        }
         function mgrFinishLoad(settings) {
             const files = mgrPending; mgrPending = [];
             if (!files.length || !settings) return settings;
             const base = (settings.manager && typeof settings.manager === 'object') ? settings.manager : {};
             const workers = new Map((Array.isArray(base.workers) ? base.workers : []).filter(w => w && w.id).map(w => [w.id, w]));
+            const obj = v => (v && typeof v === 'object' && !Array.isArray(v)) ? v : {};
+            const att = { attendance: { ...obj(base.attendance) }, attMin: { ...obj(base.attMin) }, otMin: { ...obj(base.otMin) } };
+            const bf = obj(base.finance), txns = new Map((Array.isArray(bf.txns) ? bf.txns : []).filter(t => t && t.id).map(t => [t.id, t]));
+            let days = { ...obj(bf.days) }, rates = { ...obj(bf.rates) }, def = { ...obj(bf.def) }, hasAtt = false, hasFin = false;
             files.forEach(f => {
+                if (f.kind === 'attendance') { hasAtt = true; ['attendance', 'attMin', 'otMin'].forEach(k => { const src = obj(f[k]); Object.keys(src).forEach(d => { att[k][d] = { ...obj(src[d]) }; }); }); return; }
+                if (f.kind === 'finance') { hasFin = true; (Array.isArray(f.txns) ? f.txns : []).forEach(t => { if (t && t.id) txns.set(t.id, t); }); days = { ...days, ...obj(f.days) }; return; }
+                if (f.kind === 'finance-settings') { hasFin = true; rates = { ...rates, ...obj(f.rates) }; def = { ...def, ...obj(f.def) }; return; }
                 if (f.deleted) { workers.delete(f.workerId); return; }
                 if (f.worker && f.worker.id) workers.set(f.worker.id, f.worker);
             });
-            return { ...settings, manager: { ...base, workers: [...workers.values()] } };
+            const mgrOut = { ...base, workers: [...workers.values()] };
+            if (hasAtt) Object.assign(mgrOut, att);
+            if (hasFin) mgrOut.finance = { ...bf, txns: [...txns.values()], days, rates, def };
+            return { ...settings, manager: mgrOut };
+        }
+
+        /* ---- حضور و غیاب و حقوق و مالی: هرکدام در پوشه‌ی مخصوص خودش (یک فایل برای هر ماه) ----
+           ذخیره‌سازی: «کارگاه_هوشمند_ذخیره_داده/کارفرما/حضور_و_غیاب» و «.../حقوق_و_مالی»
+           پشتیبان‌گیری: «<پوشه پشتیبان>/کارفرما/حضور_و_غیاب» و «.../حقوق_و_مالی» (کنار فایل کامل پشتیبان) */
+        const MGR_ATT_DIR = 'حضور_و_غیاب', MGR_FIN_DIR = 'حقوق_و_مالی', MGR_FINSET_FILE = 'تنظیمات_مالی.json';
+        function mgrMkNorm(k) { const p = String(k || '').replace('/', '-').split('-'); const y = Number(p[0]), m = Number(p[1]); return (p.length >= 2 && y > 1200 && m >= 1 && m <= 12) ? `${y}-${String(m).padStart(2, '0')}` : ''; }
+        function mgrAuxFiles() {
+            const M = mgr(), out = [], base = { app: 'sewing_statistics', version: 1 };
+            const att = new Map();
+            ['attendance', 'attMin', 'otMin'].forEach(k => {
+                const src = M[k] || {};
+                Object.keys(src).forEach(d => {
+                    const mk = mgrMkNorm(String(d).slice(0, 7)) || 'نامشخص';
+                    if (!att.has(mk)) att.set(mk, { attendance: {}, attMin: {}, otMin: {} });
+                    att.get(mk)[k][d] = src[d];
+                });
+            });
+            att.forEach((v, mk) => { const n = `حضور_و_غیاب_${mk}.json`; out.push({ cat: 'att', dir: MGR_ATT_DIR, name: n, data: { ...base, kind: 'attendance', fileName: n, monthKey: mk, ...v } }); });
+            const F = M.finance || {}, fin = new Map(), get = mk => { if (!fin.has(mk)) fin.set(mk, { txns: [], days: {} }); return fin.get(mk); };
+            (F.txns || []).forEach(t => { get(mgrMkNorm(t.monthKey) || 'نامشخص').txns.push(t); });
+            Object.keys(F.days || {}).forEach(k => { get(mgrMkNorm(String(k).split('|')[1]) || 'نامشخص').days[k] = F.days[k]; });
+            fin.forEach((v, mk) => { const n = `حقوق_و_مالی_${mk}.json`; out.push({ cat: 'fin', dir: MGR_FIN_DIR, name: n, data: { ...base, kind: 'finance', fileName: n, monthKey: mk, ...v } }); });
+            if ((F.rates && Object.keys(F.rates).length) || (F.def && (F.def.ot || F.def.lv))) out.push({ cat: 'fin', dir: MGR_FIN_DIR, name: MGR_FINSET_FILE, data: { ...base, kind: 'finance-settings', fileName: MGR_FINSET_FILE, rates: F.rates || {}, def: F.def || {} } });
+            return out;
+        }
+        // همگام‌سازی پوشه‌ی ذخیره‌سازی؛ خروجی: کدام دسته با موفقیت در فایل‌های جدا نوشته شد (تا از فایل تنظیمات حذف شود)
+        async function mgrSyncAuxFiles(FS) {
+            const res = { att: false, fin: false };
+            let desired; try { desired = mgrAuxFiles(); } catch (e) { return res; }
+            const dirs = {};
+            const dirOf = async (dir, create) => dirs[dir] || (dirs[dir] = await (await getModeDirHandle(true)).getDirectoryHandle(dir, { create }));
+            const put = async (dir, n, text) => {
+                if (FS) return FS.writeFile({ path: `${nativeModeBase()}/${dir}/${n}`, directory: 'DOCUMENTS', encoding: 'utf8', recursive: true, data: text });
+                const fh = await (await dirOf(dir, true)).getFileHandle(n, { create: true }); const wr = await fh.createWritable(); await wr.write(text); await wr.close();
+            };
+            const del = async (dir, n) => {
+                if (FS) return FS.deleteFile({ path: `${nativeModeBase()}/${dir}/${n}`, directory: 'DOCUMENTS' });
+                return (await dirOf(dir, false)).removeEntry(n);
+            };
+            for (const cat of ['att', 'fin']) {
+                try {
+                    const want = desired.filter(x => x.cat === cat), keys = new Set(want.map(x => x.dir + '/' + x.name));
+                    for (const x of want) {
+                        const key = x.dir + '/' + x.name, sig = JSON.stringify(x.data);
+                        mgrAuxKnown.set(key, { dir: x.dir, name: x.name, cat });
+                        if (mgrAuxSig.get(key) === sig) continue;
+                        await put(x.dir, x.name, JSON.stringify({ ...x.data, updatedAt: new Date().toISOString() }, null, 2));
+                        mgrAuxSig.set(key, sig);
+                    }
+                    // ماه‌هایی که دیگر داده ندارند: فایل حذف می‌شود (اگر حذف نشد، خالی بازنویسی می‌شود تا در بارگذاری بعدی زنده نشود)
+                    for (const [key, k] of [...mgrAuxKnown]) {
+                        if (k.cat !== cat || keys.has(key)) continue;
+                        try { await del(k.dir, k.name); }
+                        catch (e) { await put(k.dir, k.name, JSON.stringify({ app: 'sewing_statistics', version: 1, kind: cat === 'att' ? 'attendance' : (k.name === MGR_FINSET_FILE ? 'finance-settings' : 'finance'), fileName: k.name, updatedAt: new Date().toISOString() })); }
+                        mgrAuxKnown.delete(key); mgrAuxSig.delete(key);
+                    }
+                    res[cat] = true;
+                } catch (e) { console.error('خطا در ذخیره‌ی فایل‌های ' + (cat === 'att' ? 'حضور و غیاب' : 'حقوق و مالی') + ':', e); }
+            }
+            return res;
+        }
+        // پشتیبان‌گیری: همان فایل‌های ماهانه کنار فایل کامل پشتیبان نوشته می‌شود (modeDir = پوشه‌ی حالت داخل پوشه پشتیبان؛ برای اپ نصب‌شده خالی)
+        async function mgrBackupAuxFiles(modeDir) {
+            try {
+                if (!mgrOn()) return;
+                const files = mgrAuxFiles(); if (!files.length) return;
+                const stamp = new Date().toISOString();
+                if (modeDir) {
+                    const dirs = {};
+                    for (const x of files) {
+                        const d = dirs[x.dir] || (dirs[x.dir] = await modeDir.getDirectoryHandle(x.dir, { create: true }));
+                        const fh = await d.getFileHandle(x.name, { create: true }), wr = await fh.createWritable();
+                        await wr.write(JSON.stringify({ ...x.data, updatedAt: stamp }, null, 2)); await wr.close();
+                    }
+                } else {
+                    const FS = getNativePlugin('Filesystem'); if (!FS) return;
+                    for (const x of files) await FS.writeFile({ path: `کارگاه_هوشمند_پشتیبان/${currentModeFolderName()}/${x.dir}/${x.name}`, data: JSON.stringify({ ...x.data, updatedAt: stamp }, null, 2), directory: 'DOCUMENTS', encoding: 'utf8', recursive: true });
+                }
+            } catch (e) { console.warn('ذخیره‌ی فایل‌های حضور و غیاب و حقوق و مالی در پوشه پشتیبان ناموفق بود:', e); }
         }
         function mgrDownloadBlob(name, obj) {
             const a = document.createElement('a');
