@@ -965,11 +965,7 @@
         #mgrFinCard[data-view="table"] #mgrFinTableWrap { display: block !important; }
         #mgrFinCard[data-view="card"] #mgrFinTableWrap { display: none !important; }
         #mgrFinCard[data-view="card"] #mgrFinCards { display: block !important; }
-        /* ستون پرسنل هنگام اسکرول افقی ثابت می‌ماند */
-        #mgrFinCard .fin-c1 { position: sticky; right: 0; z-index: 1; background: #fff; text-align: right; }
-        .dark #mgrFinCard .fin-c1 { background: #0f172a; }
-        #mgrFinCard thead th.fin-c1 { z-index: 12; background-color: #f1f5f9; }
-        .dark #mgrFinCard thead th.fin-c1 { background-color: #1e293b; }
+        #mgrFinCard .fin-c1 { text-align: right; }
         #mgrFinCard tbody.fin-grp > tr:first-child > td { border-top: 1px solid #cbd5e1; }
         .dark #mgrFinCard tbody.fin-grp > tr:first-child > td { border-top-color: #475569; }
         #mgrFinCard tfoot td { position: sticky; bottom: 0; z-index: 2; font-weight: 700; background: #f8fafc; border-top: 2px solid #94a3b8; }
@@ -978,9 +974,6 @@
         .dark #mgrFinCard tfoot td.fin-c1 { background: #1e293b; }
         #mgrFinCard .fin-p0 { padding: 0 !important; }
         #mgrFinCard .fin-tx-item:last-child { border-bottom: 0; }
-        #mgrFinCard .fin-search { position: relative; order: -1; width: 100%; }
-        #mgrFinCard .fin-sort { position: relative; flex: 1 1 7rem; min-width: 7rem; }
-        @media (min-width: 640px) { #mgrFinCard .fin-search { order: 0; width: 16rem; } #mgrFinCard .fin-sort { flex: none; width: 10rem; } }
         #mgrFinCard .kf-sub { display: block; font-size: .82em; font-weight: 400; color: #64748b; }
         .dark #mgrFinCard .kf-sub { color: #94a3b8; }
         #mgrFinCard .kf-warn { display: block; font-size: .82em; font-weight: 400; color: #d97706; }
@@ -11823,9 +11816,9 @@
             const effTable = mgrFinEffView() === 'table';
             const header = `<div class="p-4 border-b border-slate-300 dark:border-slate-600 flex flex-col sm:flex-row justify-between items-center gap-3 bg-slate-50/50 dark:bg-slate-900/50">`
                 + `<div class="flex items-center gap-3 w-full sm:w-auto"><h3 class="font-bold text-slate-700 dark:text-slate-200 text-sm flex items-center gap-2 whitespace-nowrap"><i class="fa-solid fa-coins text-indigo-600 dark:text-indigo-400"></i> لیست حقوق و مالی</h3><span class="text-xs bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full font-medium whitespace-nowrap border border-indigo-100 dark:border-indigo-900/40">${mgrMonthLabel()} • <span data-fin-cnt>${f(hits.length)}</span> نفر</span></div>`
-                + `<div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">`
-                + `<div class="fin-search"><span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span><input type="text" id="mgrFinSearch" value="${escapeHTML(mgrFinQuery)}" oninput="mgrFinFilter(this.value)" placeholder="جستجو در لیست..." class="w-full pr-10 pl-3.5 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"></div>`
-                + `<div class="fin-sort"><span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400"><i class="fa-solid fa-arrow-down-wide-short text-xs"></i></span><select onchange="mgrFinSetSort(this.value)" title="ترتیب نمایش لیست" class="${sel}">${FIN_SORTS.map(([v, l]) => `<option value="${v}"${v === mgrFinSort ? ' selected' : ''}>${l}</option>`).join('')}</select></div>`
+                + `<div class="flex items-center gap-2 w-full sm:w-auto justify-end">`
+                + `<div class="relative w-full sm:w-40"><span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400"><i class="fa-solid fa-arrow-down-wide-short text-xs"></i></span><select onchange="mgrFinSetSort(this.value)" title="ترتیب نمایش لیست" class="${sel}">${FIN_SORTS.map(([v, l]) => `<option value="${v}"${v === mgrFinSort ? ' selected' : ''}>${l}</option>`).join('')}</select></div>`
+                + `<div class="relative w-full sm:w-64"><span class="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400"><i class="fa-solid fa-magnifying-glass text-xs"></i></span><input type="text" id="mgrFinSearch" value="${escapeHTML(mgrFinQuery)}" oninput="mgrFinFilter(this.value)" placeholder="جستجو در لیست..." class="w-full pr-10 pl-3.5 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-xs bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all"></div>`
                 + `<button type="button" onclick="mgrFinToggleView()" class="${btn}" title="تغییر نمای نمایش (جدولی/کارتی)"><i class="fa-solid ${effTable ? 'fa-table-cells-large' : 'fa-table'}"></i><span class="hidden md:inline">${effTable ? 'نمای کارتی' : 'نمای جدولی'}</span></button>`
                 + `<button type="button" onclick="finColsToggle(this)" id="finColsBtn" title="انتخاب فیلدهای نمایشی" aria-label="انتخاب فیلدهای نمایشی" aria-haspopup="dialog" class="${btn}${finColsHidden.length ? ' ring-2 ring-indigo-300' : ''}"><i class="fa-solid fa-table-columns"></i><span class="hidden md:inline">فیلدها</span></button>`
                 + `<button type="button" onclick="mgrFinPrint()" class="${btn}" title="چاپ لیست حقوق و مالی"><i class="fa-solid fa-print"></i><span class="hidden md:inline">چاپ لیست</span></button>`
