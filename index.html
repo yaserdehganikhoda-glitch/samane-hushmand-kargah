@@ -359,20 +359,21 @@
             .kf-lst .kf-fin th, .kf-lst .kf-fin td { white-space: nowrap; }
             .kf-lst .kf-fin tbody td, .kf-lst .kf-fin tfoot td { border-bottom: 1px solid #e2e8f0; }
             .dark .kf-lst .kf-fin tbody td, .dark .kf-lst .kf-fin tfoot td { border-bottom-color: #334155; }
-            .kf-lst .kf-fin tbody.kf-grp { border-top: 2px solid #94a3b8; }
+            .kf-lst .kf-fin tbody.kf-grp { border-top: 1px solid #cbd5e1; }
             .dark .kf-lst .kf-fin tbody.kf-grp { border-top-color: #475569; }
             .kf-lst .kf-fin .kf-c1 { position: sticky; right: 0; z-index: 1; text-align: right; background: #fff; }
             .dark .kf-lst .kf-fin .kf-c1 { background: #0f172a; }
-            .kf-lst .kf-fin thead th.kf-c1 { z-index: 2; background-color: #f1f5f9; }
+            .kf-lst .kf-fin thead th.kf-c1 { z-index: 12; background-color: #f1f5f9; }
             .dark .kf-lst .kf-fin thead th.kf-c1 { background-color: #1e293b; }
             .kf-lst .kf-fin .kf-txr td { background: #f8fafc; font-size: .95em; }
             .kf-lst .kf-fin .kf-txr td.kf-c1 { background: #f8fafc; padding-right: 1.6em; }
             .dark .kf-lst .kf-fin .kf-txr td, .dark .kf-lst .kf-fin .kf-txr td.kf-c1 { background: #162033; }
-            .kf-lst .kf-fin .kf-setr td { padding-top: .4em; padding-bottom: .5em; background: rgba(99, 102, 241, .05); }
-            .kf-lst .kf-fin .kf-set { position: sticky; right: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .5em 1em; width: 30em; max-width: 86vw; text-align: right; white-space: normal; font-size: .95em; }
-            .kf-lst .kf-fin .kf-set .kf-rate-box { width: 11em; font-size: .95em; }
-            .kf-lst .kf-fin tfoot td { font-weight: 700; background: #f8fafc; }
+                                                .kf-lst .kf-fin tfoot td { font-weight: 700; background: #f8fafc; }
             .dark .kf-lst .kf-fin tfoot td { background: #1e293b; }
+            .kf-lst .kf-fin .kf-inl { display: flex; align-items: center; justify-content: center; gap: .3em; margin-top: .25em; font-size: .85em; font-weight: 400; color: #64748b; }
+            .kf-lst .kf-fin .kf-mini { width: 3.6em; padding: .15em .3em; font-size: 1em; }
+            .kf-lst .kf-fin .kf-mini.kf-wide { width: 8em; }
+            .kf-lst .kf-fin .kf-warn { display: block; font-size: .82em; font-weight: 400; color: #d97706; }
             .kf-lst .kf-fin .kf-sub { display: block; font-size: .82em; font-weight: 400; color: #64748b; }
             .kf-lst .kf-fin td button.kf-settle { width: auto; height: auto; font-size: .92em; padding: .35em .85em; }
             #mgrWorkerLists table { font-size: calc(11.5px * var(--rt)); }
@@ -11665,7 +11666,6 @@
             mgrPieceCache = { mk, map: mgrPieceTotals(mk) };
             const rows = ws.map(w => ({ w, c: mgrFinCalc(w, mk) }));
             mgrPieceCache = null;
-            const tot = rows.reduce((a, r) => ({ earn: a.earn + r.c.net, adv: a.adv + r.c.advance, pay: a.pay + r.c.payment, remain: a.remain + r.c.remain }), { earn: 0, adv: 0, pay: 0, remain: 0 });
             const ef = F.txns.find(x => x.id === mgrEditF) || null;
             const wOpts = ws.map(w => `<option value="${escapeHTML(w.id)}" ${ef && ef.workerId === w.id ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('');
             const tOpts = Object.keys(MGR_FIN_TYPES).map(k => `<option value="${k}" ${ef && ef.type === k ? 'selected' : ''}>${MGR_FIN_TYPES[k][0]}</option>`).join('');
@@ -11689,40 +11689,35 @@
                 const wage = (mgrWageLabel(w.wageType) || 'کارمزدی') + (w.wageType && w.wageType !== 'piece' ? (w.rate ? ' • ' + f(w.rate) : ' • نرخ ثبت نشده') : '');
                 const remCls = c.remain > 0 ? 'text-emerald-600 dark:text-emerald-400' : c.remain < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-400';
                 const wid = escapeHTML(w.id);
+                const mini = 'kf-mini border border-slate-400 dark:border-slate-500 rounded-lg text-center bg-white dark:bg-slate-800 dark:text-slate-100';
+                const earnIn = w.wageType === 'daily' && c.daysAuto ? sub(toPersianDigits(c.days) + ' روز (از حضور و غیاب)')
+                    : w.wageType === 'daily' ? `<label class="kf-inl">روز <input type="text" inputmode="numeric" maxlength="2" value="${c.days ? toPersianDigits(c.days) : ''}" data-mgr-change="f-days" data-id="${wid}" class="${mini}"></label>`
+                    : w.wageType === 'monthly' ? `<label class="kf-inl">ماهانه <input type="text" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="ثبت نشده" value="${w.rate ? escapeHTML(f(w.rate)) : ''}" data-mgr-change="w-rate" data-id="${wid}" class="${mini} kf-wide"></label>` : '';
+                const warn = txt => `<span class="kf-warn">${txt}</span>`;
                 const main = `<tr class="kf-mainr"><td class="kf-c1"><div class="flex items-center gap-2">${mgrMiniAvatar(w, 28)}<div><b>${escapeHTML(w.name)}</b>${sub([sc ? escapeHTML(sc.name) : '', wage].filter(Boolean).join(' • '))}</div></div></td>`
-                    + money(c.earn)
-                    + `<td class="${c.otPay ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400'}">${c.otPay ? f(c.otPay) : '—'}${c.otMin ? sub(formatMinutesDuration(c.otMin)) : ''}</td>`
+                    + `<td class="${c.earn ? '' : 'text-slate-400'}">${c.earn ? f(c.earn) : '—'}${earnIn}</td>`
+                    + `<td class="${c.otPay ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400'}">${c.otPay ? f(c.otPay) : '—'}${c.otMin ? sub(formatMinutesDuration(c.otMin)) : ''}${c.otMin && !c.otRate ? warn('نرخ ثبت نشده') : ''}</td>`
                     + money(c.bonus, 'text-emerald-600 dark:text-emerald-400')
-                    + `<td class="${c.leaveDeduct ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}">${c.leaveDeduct ? f(c.leaveDeduct) : '—'}${c.leaveMin ? sub(formatMinutesDuration(c.leaveMin)) : ''}</td>`
+                    + `<td class="${c.leaveDeduct ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}">${c.leaveDeduct ? f(c.leaveDeduct) : '—'}${c.leaveMin ? sub(formatMinutesDuration(c.leaveMin)) : ''}${c.leaveMin && !c.leaveRate ? warn('نرخ ثبت نشده') : ''}</td>`
                     + `<td class="${c.absentDeduct ? 'text-amber-600 dark:text-amber-400' : 'text-slate-400'}">${c.absentDeduct ? f(c.absentDeduct) : '—'}${c.absentDeduct ? sub(toPersianDigits(c.absent) + ' روز') : ''}</td>`
                     + money(c.deduction, 'text-amber-600 dark:text-amber-400') + money(c.advance, 'text-rose-600 dark:text-rose-400')
                     + `<td><b>${f(c.net)}</b></td>` + money(c.payment)
                     + `<td class="${remCls}"><b>${c.remain < 0 ? '−' : ''}${f(Math.abs(c.remain))}</b></td>`
                     + `<td class="no-print">${c.remain > 0 ? `<button type="button" data-mgr="f-settle" data-id="${wid}" class="kf-settle tactile-btn rounded-lg bg-indigo-600 text-white">تسویه</button>` : ''}</td></tr>`;
-                const daysOrRate = w.wageType === 'daily' && c.daysAuto ? `<span class="text-slate-500">روز کارکرد: <b>${toPersianDigits(c.days)}</b> (از حضور و غیاب)</span>`
-                    : w.wageType === 'daily' ? `<label class="flex items-center gap-1 text-slate-500">روز کارکرد <input type="text" inputmode="numeric" maxlength="2" value="${c.days ? toPersianDigits(c.days) : ''}" data-mgr-change="f-days" data-id="${wid}" class="w-14 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100"></label>`
-                    : w.wageType === 'monthly' ? `<label class="flex items-center gap-1.5 text-slate-500">حقوق ماهانه (${cur}) <input type="text" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="ثبت نشده" value="${w.rate ? escapeHTML(f(w.rate)) : ''}" data-mgr-change="w-rate" data-id="${wid}" class="w-32 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100"></label>` : '';
-                const rotIn = `<label class="kf-rate-box">مبلغ هر ساعت اضافه‌کاری<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="${(F.def && F.def.ot) ? f(F.def.ot) : 'ثبت نشده'}" value="${(F.rates && F.rates[w.id] && F.rates[w.id].ot) ? escapeHTML(f(F.rates[w.id].ot)) : ''}" data-mgr-change="f-rot" data-id="${wid}" class="${MI}"></label>`;
-                const rlvIn = `<label class="kf-rate-box">مبلغ هر ساعت مرخصی (کسر)<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="${(F.def && F.def.lv) ? f(F.def.lv) : 'ثبت نشده'}" value="${(F.rates && F.rates[w.id] && F.rates[w.id].lv) ? escapeHTML(f(F.rates[w.id].lv)) : ''}" data-mgr-change="f-rlv" data-id="${wid}" class="${MI}"></label>`;
-                const warn = (c.otMin && !c.otRate ? '<p class="w-full text-amber-600 dark:text-amber-400">اضافه‌کاری ثبت شده ولی مبلغ هر ساعت آن تعیین نشده است.</p>' : '')
-                    + (c.leaveMin && !c.leaveRate ? '<p class="w-full text-amber-600 dark:text-amber-400">مرخصی ساعتی ثبت شده ولی مبلغ هر ساعت مرخصی تعیین نشده است.</p>' : '');
-                const set = `<tr class="kf-setr no-print"><td colspan="${NC}"><div class="kf-set">${daysOrRate}${rotIn}${rlvIn}${warn}</div></td></tr>`;
-                return `<tbody class="kf-grp">${main}${set}${txFor(w.id).map(txRow).join('')}</tbody>`;
+                return `<tbody class="kf-grp">${main}${txFor(w.id).map(txRow).join('')}</tbody>`;
             }).join('');
             const orphanGroup = orphanTx.length ? `<tbody class="kf-grp"><tr class="kf-mainr"><td class="kf-c1"><b>پرسنل حذف‌شده</b></td><td colspan="${NC - 1}"></td></tr>${orphanTx.map(txRow).join('')}</tbody>` : '';
-            const thc = 'p-2.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 shadow-sm';
+            const thc = 'sticky top-0 z-10 p-2.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 shadow-sm';
             const heads = ['پرسنل', 'حقوق / کارکرد', 'اضافه‌کاری', 'پاداش', 'کسر مرخصی', 'کسر غیبت', 'کسری / جریمه', 'مساعده', 'خالص', 'پرداخت‌شده', 'مانده'];
             const foot = `<tfoot><tr><td class="kf-c1">جمع کل</td><td>${f(T.earn)}</td><td>${f(T.ot)}</td><td>${f(T.bonus)}</td><td>${f(T.leave)}</td><td>${f(T.absent)}</td><td>${f(T.ded)}</td><td>${f(T.adv)}</td><td>${f(T.net)}</td><td>${f(T.pay)}</td><td>${T.remain < 0 ? '−' : ''}${f(Math.abs(T.remain))}</td><td class="no-print"></td></tr></tfoot>`;
-            const finTable = (groups || orphanGroup) ? `<div class="overflow-x-auto"><table id="mgrFinList" class="kf-fin w-full"><thead class="text-slate-600 dark:text-slate-300"><tr>${heads.map((h, i) => `<th class="${thc}${i === 0 ? ' kf-c1' : ''}">${h}</th>`).join('')}<th class="${thc} no-print">عملیات</th></tr></thead>${groups}${orphanGroup}${foot}</table></div><p class="px-4 py-2 text-[11px] text-slate-400">مبالغ به ${cur}. تراکنش‌ها زیر هر نفر آمده‌اند و مبلغ هر کدام در ستون مربوط به نوعش (پاداش، کسری، مساعده، پرداخت‌شده) نوشته شده است.</p>` : mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.');
-            return `<div class="grid grid-cols-2 gap-2">${mgrStat('مجموع حقوق و کارکرد', f(tot.earn) + ' ' + cur, 'text-indigo-600 dark:text-indigo-400')}${mgrStat('مساعده‌ها', f(tot.adv) + ' ' + cur, 'text-rose-600 dark:text-rose-400')}${mgrStat('پرداخت‌شده', f(tot.pay) + ' ' + cur, 'text-slate-700 dark:text-slate-200')}${mgrStat('مانده‌ی قابل پرداخت', f(tot.remain) + ' ' + cur, 'text-emerald-600 dark:text-emerald-400')}</div>
-                <p class="text-[11px] text-slate-400 text-center">دوره‌ی مالی: ${mgrMonthLabel()}</p>
-                <div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
+            const finTable = (groups || orphanGroup) ? `<div class="overflow-x-auto max-h-[60vh]"><table id="mgrFinList" class="kf-fin w-full"><thead class="text-slate-600 dark:text-slate-300"><tr>${heads.map((h, i) => `<th class="${thc}${i === 0 ? ' kf-c1' : ''}">${h}</th>`).join('')}<th class="${thc} no-print">عملیات</th></tr></thead>${groups}${orphanGroup}${foot}</table></div><p class="px-4 py-2 text-[11px] text-slate-400">مبالغ به ${cur}. تراکنش‌ها زیر هر نفر آمده‌اند و مبلغ هر کدام در ستون مربوط به نوعش (پاداش، کسری، مساعده، پرداخت‌شده) نوشته شده است.</p>` : mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.');
+            return `<div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
                     <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">مبلغ ساعتی اضافه‌کاری و مرخصی (پیش‌فرض همه‌ی پرسنل)</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <label class="kf-rate-box">مبلغ هر ساعت اضافه‌کاری (${cur})<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="مثلاً ۸۰٬۰۰۰" value="${(F.def && F.def.ot) ? escapeHTML(f(F.def.ot)) : ''}" data-mgr-change="f-dot" class="${MI}"></label>
                         <label class="kf-rate-box">مبلغ هر ساعت مرخصی — کسر از حقوق (${cur})<input type="text" data-thousands="1" inputmode="numeric" maxlength="12" placeholder="مثلاً ۵۰٬۰۰۰" value="${(F.def && F.def.lv) ? escapeHTML(f(F.def.lv)) : ''}" data-mgr-change="f-dlv" class="${MI}"></label>
                     </div>
-                    <p class="text-[11px] text-slate-400">برای هر نفر می‌توانید در ردیف تنظیمات خودش مبلغ جداگانه بگذارید؛ در غیر این صورت همین مبلغ اعمال می‌شود. اضافه‌کاری را در تب «حضور» ثبت کنید.</p>
+                    <p class="text-[11px] text-slate-400">این مبلغ‌ها برای همه‌ی پرسنل اعمال می‌شود. اضافه‌کاری را در تب «حضور» ثبت کنید.</p>
                 </div>
                 <div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
                     <h4 class="text-xs font-bold text-slate-700 dark:text-slate-200">${ef ? 'ویرایش تراکنش' : 'ثبت تراکنش'}</h4>
