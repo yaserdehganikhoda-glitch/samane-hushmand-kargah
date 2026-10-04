@@ -349,6 +349,18 @@
             #recordsCardView .rc-card button[data-action="edit"], #recordsCardView .rc-card button[data-action="delete"] { width: 1.9rem; height: 1.9rem; font-size: calc(12px * var(--rt)); }
             #recordsCardView .rc-card .py-1.rounded-full { padding-top: .15rem; padding-bottom: .15rem; }
             /* جدول‌های گروه‌بندی‌شده‌ی پرسنل (حالت کارفرما) */
+            /* لیست‌های حضور و غیاب و حقوق و مالی: هم‌اندازه‌ی لیست کارکردها (فونت 12px × --rt و فاصله‌ها با em) */
+            .kf-lst table { font-size: calc(12px * var(--rt)); line-height: 1.5; }
+            .kf-lst thead th { font-size: .92em; font-weight: 700; line-height: 1.4; padding: .6em .85em; }
+            .kf-lst tbody td { padding: .5em .85em; line-height: 1.5; }
+            .kf-lst td button { width: 2.3em; height: 2.3em; font-size: 1em; }
+            .kf-lst .kf-fin-card { font-size: calc(12px * var(--rt)); line-height: 1.5; padding: .9em 1em; }
+            .kf-lst .kf-fin-card .text-sm { font-size: calc(13px * var(--rt)); line-height: 1.45; }
+            .kf-lst .kf-fin-card .text-xs { font-size: .92em; }
+            .kf-lst .kf-fin-card .text-\[11px\] { font-size: .92em; }
+            .kf-lst .kf-fin-card .kf-rate-box { font-size: .92em; gap: .25em; }
+            .kf-lst .kf-fin-card .kf-tx-wrap { border-radius: .7em; }
+            .kf-lst #mgrFinList { padding: .75em; }
             #mgrWorkerLists table { font-size: calc(11.5px * var(--rt)); }
             #mgrWorkerLists th, #mgrWorkerLists td { padding: .5em .75em; }
         }
@@ -939,35 +951,7 @@
         .dark .kf-ot-btn { border-color: #4338ca; color: #a5b4fc; }
         .kf-ot-btn.on { background: #4f46e5; border-color: #4f46e5; color: #fff; font-weight: 700; }
         .kf-ot-txt { color: #4f46e5; } .dark .kf-ot-txt { color: #a5b4fc; }
-        /* لیست حقوق و مالی زیر لیست کارکردها */
-        .kf-pay-btn { color: #047857; } .dark .kf-pay-btn { color: #6ee7b7; }
-        .kf-pay-btn.on { background: #d1fae5 !important; } .dark .kf-pay-btn.on { background: rgba(6, 78, 59, .45) !important; }
-        .kf-pay-wrap { overflow-x: auto; border-radius: 12px; }
-        .kf-pay { width: 100%; border-collapse: collapse; font-size: 11px; text-align: center; }
-        .kf-pay th, .kf-pay td { padding: 6px 6px; border: 1px solid #cbd5e1; white-space: nowrap; }
-        .dark .kf-pay th, .dark .kf-pay td { border-color: #475569; }
-        .kf-pay thead th { background: #f1f5f9; color: #334155; font-weight: 700; }
-        .dark .kf-pay thead th { background: #1e293b; color: #e2e8f0; }
-        .kf-pay tbody td, .kf-pay tfoot td { background: #fff; color: #1e293b; }
-        .dark .kf-pay tbody td, .dark .kf-pay tfoot td { background: #0f172a; color: #e2e8f0; }
-        .kf-pay tfoot td { background: #f8fafc; font-weight: 700; } .dark .kf-pay tfoot td { background: #1e293b; }
-        .kf-pay th:first-child, .kf-pay td:first-child { position: sticky; right: 0; text-align: right; z-index: 1; }
-        .kf-pay .kf-sub { display: block; font-size: 9.5px; color: #64748b; font-weight: 400; }
-        .kf-pay .kf-pos { color: #047857; } .kf-pay .kf-neg { color: #be123c; } .kf-pay .kf-amb { color: #b45309; } .kf-pay .kf-ind { color: #4f46e5; } .kf-pay .kf-mut { color: #94a3b8; }
-        .dark .kf-pay .kf-pos { color: #34d399; } .dark .kf-pay .kf-neg { color: #fb7185; } .dark .kf-pay .kf-amb { color: #fbbf24; } .dark .kf-pay .kf-ind { color: #a5b4fc; }
-        .kf-pay-head { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
-        .kf-pay-note { font-size: 10px; color: #94a3b8; margin-top: 4px; }
         .kf-rate-box { display: flex; flex-direction: column; gap: 3px; font-size: 11px; color: #64748b; }
-        @media print {
-            #recordsPayrollPrint { margin-top: 14px; padding: 0 8px; color: #0f172a; }
-            #recordsPayrollPrint .kf-pay { font-size: 9px; }
-            #recordsPayrollPrint .kf-pay th, #recordsPayrollPrint .kf-pay td { padding: 4px 3px; border-color: #94a3b8; background: #fff !important; color: #0f172a !important; }
-            #recordsPayrollPrint .kf-pay thead th { background: #e2e8f0 !important; }
-            #recordsPayrollPrint .kf-pay th:first-child, #recordsPayrollPrint .kf-pay td:first-child { position: static; white-space: normal; }
-            #recordsPayrollPrint .kf-pay-wrap { overflow: visible; }
-            #recordsPayrollPrint { page-break-inside: auto; }
-            #recordsPayrollPrint tr { page-break-inside: avoid; }
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen pb-28 font-normal-size" id="appBody">
@@ -1843,9 +1827,6 @@
                 <button type="button" onclick="toggleDuplicateCodesVisibility()" id="duplicateCodesToggleBtn" class="tactile-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 field-box-bg text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-colors border border-slate-400 dark:border-slate-500">
                     <i class="fa-solid fa-copy"></i> <span>کدهای تکراری</span>
                 </button>
-                <button type="button" onclick="toggleRecordsPayroll()" id="payrollToggleBtn" class="hidden tactile-btn kf-pay-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium bg-white dark:bg-slate-800 field-box-bg transition-colors border border-slate-400 dark:border-slate-500">
-                    <i class="fa-solid fa-sack-dollar"></i> <span>حقوق و مالی پرسنل</span>
-                </button>
             </div>
 
             <div id="delaySummaryBody" class="hidden no-print p-4 border-t border-slate-300 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-900/50">
@@ -1857,12 +1838,6 @@
                     <p id="workdayBasisNote" class="text-[10px] text-slate-400 dark:text-slate-500 mt-1">بر مبنای ۸ ساعت و ۱۵ دقیقه کاری در هر روز</p>
                 </div>
             </div>
-
-            <div id="recordsPayrollBody" class="hidden no-print p-4 border-t border-slate-300 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-900/50">
-                <div id="recordsPayrollInner"></div>
-            </div>
-
-            <div id="recordsPayrollPrint" class="print-only"></div>
 
             <div id="duplicateCodesBody" class="hidden no-print p-4 border-t border-slate-300 dark:border-slate-600 bg-slate-50/50 dark:bg-slate-900/50">
                 <div class="bg-white dark:bg-slate-800 field-box-bg rounded-xl p-4 border border-slate-300 dark:border-slate-600">
@@ -6832,7 +6807,6 @@
             document.getElementById('printRecordsSubtitle').innerText =
                 `${ownerLine ? ownerLine + '  |  ' : ''}دوره: ${periodLabel}  |  تعداد رکورد: ${formatNumber(records.length)}  |  مجموع مبلغ: ${formatNumber(totalAmountSum)} ${currency}${unknownPriceCount > 0 ? '  |  ' + formatNumber(unknownPriceCount) + ' رکورد با قیمت نامعلوم' : ''}  |  تاریخ چاپ: ${formatDateDigits(currentJalali.fullDateStr)}`;
 
-            try { renderRecordsPayrollPrint(); } catch (e) { /* بی‌اهمیت */ }
             printWithLightTheme();
         }
 
@@ -7567,80 +7541,6 @@
             if (btn) { btn.classList.toggle('bg-amber-100', isOpen); btn.classList.toggle('dark:bg-amber-950/40', isOpen); }
         }
 
-
-        /* ==================== لیست حقوق و مالی پرسنل (زیر لیست کارکردها؛ با چاپ لیست کارکردها هم چاپ می‌شود) ==================== */
-        function mgrPayrollHTML() {
-            const M = mgr(), F = mgrFin(), mk = selectedMonthFilter, cur = escapeHTML(appSettings.currency || 'تومان'), f = formatNumber;
-            const piece = mgrPieceTotals(mk);
-            mgrPieceCache = { mk, map: piece };
-            let rows;
-            try {
-                const ws = M.workers.filter(w => w.active || F.txns.some(x => x.workerId === w.id && x.monthKey === mk) || (piece.get(w.id) || 0) > 0);
-                rows = ws.map(w => ({ w, c: mgrFinCalc(w, mk), at: mgrAttCount(w.id, mk) }));
-            } finally { mgrPieceCache = null; }
-            if (!rows.length) return '';
-            const T = { earn: 0, ot: 0, bonus: 0, leave: 0, absent: 0, ded: 0, adv: 0, net: 0, pay: 0, remain: 0 };
-            const money = (n, cls) => `<td class="${n ? (cls || '') : 'kf-mut'}">${n ? f(n) : '—'}</td>`;
-            const body = rows.map(({ w, c, at }) => {
-                T.earn += c.earn; T.ot += c.otPay; T.bonus += c.bonus; T.leave += c.leaveDeduct; T.absent += c.absentDeduct; T.ded += c.deduction; T.adv += c.advance; T.net += c.net; T.pay += c.payment; T.remain += c.remain;
-                const sc = mgrSection(w.sectionId);
-                const wage = (mgrWageLabel(w.wageType) || 'کارمزدی') + (w.wageType && w.wageType !== 'piece' && w.rate ? ' • ' + f(w.rate) : '');
-                const attTxt = [at.p ? 'حاضر ' + f(at.p) : '', at.t ? 'تاخیر ' + f(at.t) : '', at.l ? 'مرخصی ' + f(at.l) : '', at.a ? 'غیبت ' + f(at.a) : ''].filter(Boolean).join(' • ') || '—';
-                const remCls = c.remain > 0 ? 'kf-pos' : c.remain < 0 ? 'kf-neg' : 'kf-mut';
-                return `<tr><td><b>${escapeHTML(w.name)}</b><span class="kf-sub">${[sc ? escapeHTML(sc.name) : '', wage].filter(Boolean).join(' • ')}</span></td>`
-                    + `<td>${attTxt}${w.wageType === 'daily' && c.days ? `<span class="kf-sub">${f(c.days)} روز کارکرد</span>` : ''}</td>`
-                    + money(c.earn)
-                    + `<td class="${c.otPay ? 'kf-ind' : 'kf-mut'}">${c.otPay ? f(c.otPay) : '—'}${c.otMin ? `<span class="kf-sub">${formatMinutesDuration(c.otMin)}</span>` : ''}</td>`
-                    + money(c.bonus, 'kf-pos')
-                    + `<td class="${c.leaveDeduct ? 'kf-amb' : 'kf-mut'}">${c.leaveDeduct ? f(c.leaveDeduct) : '—'}${c.leaveMin ? `<span class="kf-sub">${formatMinutesDuration(c.leaveMin)}</span>` : ''}</td>`
-                    + money(c.absentDeduct, 'kf-amb') + money(c.deduction, 'kf-amb') + money(c.advance, 'kf-neg')
-                    + `<td><b>${f(c.net)}</b></td>` + money(c.payment)
-                    + `<td class="${remCls}"><b>${c.remain < 0 ? '−' : ''}${f(Math.abs(c.remain))}</b></td><td class="no-print" style="white-space:nowrap"><button type="button" onclick="mgrPayEdit('${escapeHTML(w.id)}')" title="ویرایش" class="w-8 h-8 rounded-full text-amber-600"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" onclick="mgrPayDel('${escapeHTML(w.id)}')" title="حذف" class="w-8 h-8 rounded-full text-rose-500"><i class="fa-solid fa-trash text-xs"></i></button></td></tr>`;
-            }).join('');
-            const tot = `<tr><td>جمع کل</td><td>—</td><td>${f(T.earn)}</td><td>${f(T.ot)}</td><td>${f(T.bonus)}</td><td>${f(T.leave)}</td><td>${f(T.absent)}</td><td>${f(T.ded)}</td><td>${f(T.adv)}</td><td>${f(T.net)}</td><td>${f(T.pay)}</td><td>${T.remain < 0 ? '−' : ''}${f(Math.abs(T.remain))}</td><td class="no-print"></td></tr>`;
-            const head = ['پرسنل', 'حضور و غیاب', 'حقوق / کارکرد', 'اضافه‌کاری', 'پاداش', 'کسر مرخصی', 'کسر غیبت', 'کسری / جریمه', 'مساعده', 'خالص', 'پرداخت‌شده', 'مانده'].map(t => `<th>${t}</th>`).join('') + '<th class="no-print">عملیات</th>';
-            const noRate = rows.some(({ c }) => (c.otMin && !c.otRate) || (c.leaveMin && !c.leaveRate));
-            return `<div class="kf-pay-head"><i class="fa-solid fa-sack-dollar ml-1"></i> لیست حقوق و مالی پرسنل — ${mgrMonthLabel()} <span style="font-weight:400;font-size:10px">(مبالغ به ${cur})</span></div>`
-                + `<div class="kf-pay-wrap"><table class="kf-pay"><thead><tr>${head}</tr></thead><tbody>${body}</tbody><tfoot>${tot}</tfoot></table></div>`
-                + `<p class="kf-pay-note">محاسبه بر اساس حضور و غیاب، مرخصی و اضافه‌کاری ثبت‌شده در پنل کارفرما، به‌همراه پاداش، کسری، مساعده و پرداخت‌ها.${noRate ? ' برای بعضی پرسنل اضافه‌کاری یا مرخصی ساعتی ثبت شده ولی مبلغ هر ساعت آن در بخش مالی تعیین نشده است.' : ''}</p>`;
-        }
-        function mgrPayEdit(id) { setAppTab('fin'); setTimeout(() => { const s = document.getElementById('mgrFWorker'); if (s) s.value = id; }, 60); }
-        function mgrPayDel(id) {
-            const w = mgrWorker(id); if (!w) return;
-            showCustomConfirm(`همه‌ی تراکنش‌های مالی «${w.name}» در ${mgrMonthLabel()} (پاداش، کسری، مساعده، پرداخت) حذف شود؟`, ok => {
-                if (!ok) return;
-                const F = mgrFin(), mk = selectedMonthFilter; F.txns = F.txns.filter(x => !(x.workerId === id && x.monthKey === mk));
-                mgrSaveReport('حذف شد.'); mgrRender();
-            });
-        }
-        function mgrPayrollAvailable() {
-            try { return (typeof mgrOn === 'function') && mgrOn() && !!(mgr() && mgr().workers && mgr().workers.length); } catch (e) { return false; }
-        }
-        function renderRecordsPayroll() {
-            const body = document.getElementById('recordsPayrollBody'), inner = document.getElementById('recordsPayrollInner'), btn = document.getElementById('payrollToggleBtn');
-            if (!body || !inner || !btn) return;
-            if (!mgrPayrollAvailable()) { btn.classList.add('hidden'); body.classList.add('hidden'); inner.innerHTML = ''; const pr = document.getElementById('recordsPayrollPrint'); if (pr) pr.innerHTML = ''; return; }
-            btn.classList.remove('hidden');
-            let open = false; try { open = localStorage.getItem('kf_payroll_open') === '1'; } catch (e) { /* بی‌اهمیت */ }
-            body.classList.toggle('hidden', !open); btn.classList.toggle('on', open);
-            if (open) inner.innerHTML = mgrPayrollHTML() || '<p class="text-xs text-slate-400 text-center py-2">برای این دوره پرسنلی برای نمایش وجود ندارد.</p>';
-        }
-        function renderRecordsPayrollPrint() {
-            const pr = document.getElementById('recordsPayrollPrint');
-            if (!pr) return;
-            pr.innerHTML = mgrPayrollAvailable() ? mgrPayrollHTML() : '';
-        }
-        function toggleRecordsPayroll() {
-            const body = document.getElementById('recordsPayrollBody'), btn = document.getElementById('payrollToggleBtn');
-            if (!body) return;
-            const open = body.classList.contains('hidden');
-            try { localStorage.setItem('kf_payroll_open', open ? '1' : '0'); } catch (e) { /* بی‌اهمیت */ }
-            renderRecordsPayroll();
-            if (btn) btn.classList.toggle('on', open);
-            if (open) body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        window.addEventListener('beforeprint', () => { try { renderRecordsPayrollPrint(); } catch (e) { /* بی‌اهمیت */ } });
-        /* ==================== پایان لیست حقوق و مالی پرسنل ==================== */
 
         // نمایش/پنهان‌سازی «کدهای تکراری» با دکمه‌ی زیر لیست کارکردها
         function toggleDuplicateCodesVisibility() {
@@ -10455,7 +10355,6 @@
         }
 
         function renderRecordsSummaryFooter(records) {
-            try { renderRecordsPayroll(); } catch (e) { console.warn('لیست حقوق:', e); }
             const bar = document.getElementById('recordsSummaryButtonsBar');
             const delayText = document.getElementById('totalDelaySummaryText');
             const dupText = document.getElementById('duplicateCodesSummaryText');
@@ -11444,7 +11343,6 @@
             tabs.querySelectorAll('[data-k]').forEach(b => { b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', b.dataset.k === mgrTab ? 'true' : 'false'); });
             mgrA11y(document.getElementById('managerModal'));
             document.querySelectorAll('#mgrBody [data-thousands]').forEach(el => { if (el.value) el.value = formatNumber(parsePersianInt(el.value)); });
-            try { renderRecordsPayroll(); } catch (e) { /* بی‌اهمیت */ }
         }
         const mgrStat = (t, v, c) => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 text-center"><p class="text-[11px] text-slate-500 dark:text-slate-400">${t}</p><p class="text-lg font-bold ${c || 'text-slate-800 dark:text-slate-100'} mt-1">${v}</p></div>`;
         const mgrEmpty = t => `<p class="text-[11px] text-slate-400 text-center py-4">${t}</p>`;
@@ -11569,9 +11467,10 @@
         }
         function mgrListCard(icon, title, heads, rows, empty, key) {
             const th = 'sticky top-0 z-10 p-2.5 bg-slate-100 dark:bg-slate-800 border-b-2 border-slate-400 dark:border-slate-500 shadow-sm';
-            return `<div class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden"><div class="px-4 py-3 border-b border-slate-300 dark:border-slate-600 flex flex-wrap items-center justify-between gap-2"><h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid ${icon} text-indigo-600 dark:text-indigo-400"></i> ${title}</h3><input placeholder="جستجو…" oninput="mgrFilterRows(this.value,'${key}')" class="${MI} !w-auto !py-1.5 !text-xs"></div>${rows ? `<div class="overflow-x-auto"><table class="w-full text-right text-sm"><thead class="text-slate-600 dark:text-slate-300 text-xs"><tr>${heads.map(h => `<th class="${th}">${h}</th>`).join('')}<th class="${th} no-print">عملیات</th></tr></thead><tbody id="${key}">${rows}</tbody></table></div>` : mgrEmpty(empty)}</div>`;
+            return `<div class="kf-lst rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden"><div class="px-4 py-3 border-b border-slate-300 dark:border-slate-600 flex flex-wrap items-center justify-between gap-2"><h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid ${icon} text-indigo-600 dark:text-indigo-400"></i> ${title}</h3><input placeholder="جستجو…" oninput="mgrFilterRows(this.value,'${key}')" class="${MI} !w-auto !py-1.5 !text-xs"></div>${rows ? `<div class="overflow-x-auto"><table class="w-full text-right text-sm"><thead class="text-slate-600 dark:text-slate-300 text-xs"><tr>${heads.map(h => `<th class="${th}">${h}</th>`).join('')}<th class="${th} no-print">عملیات</th></tr></thead><tbody id="${key}">${rows}</tbody></table></div>` : mgrEmpty(empty)}</div>`;
         }
         function mgrFilterRows(v, id) { const q = normalizeSearchText(v); document.querySelectorAll('#' + id + ' > tr').forEach(r => r.classList.toggle('hidden', !!q && !normalizeSearchText(r.textContent).includes(q))); }
+        function mgrFilterCards(v, id) { const q = normalizeSearchText(v); document.querySelectorAll('#' + id + ' > div').forEach(r => r.classList.toggle('hidden', !!q && !normalizeSearchText(r.textContent).includes(q))); }
         function mgrActBtns(ed, del, id, st) {
             const s = st !== undefined ? ` data-st="${escapeHTML(st)}"` : '';
             return `<td class="p-2.5 no-print whitespace-nowrap"><button type="button" data-mgr="${ed}" data-id="${escapeHTML(id)}"${s} title="ویرایش" class="w-8 h-8 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40"><i class="fa-solid fa-pen text-xs"></i></button><button type="button" data-mgr="${del}" data-id="${escapeHTML(id)}"${s} title="حذف" class="w-8 h-8 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"><i class="fa-solid fa-trash text-xs"></i></button></td>`;
@@ -11756,7 +11655,7 @@
             const ef = F.txns.find(x => x.id === mgrEditF) || null;
             const wOpts = ws.map(w => `<option value="${escapeHTML(w.id)}" ${ef && ef.workerId === w.id ? 'selected' : ''}>${escapeHTML(w.name)}</option>`).join('');
             const tOpts = Object.keys(MGR_FIN_TYPES).map(k => `<option value="${k}" ${ef && ef.type === k ? 'selected' : ''}>${MGR_FIN_TYPES[k][0]}</option>`).join('');
-            const cards = rows.map(({ w, c }) => `<div class="rounded-xl border border-slate-300 dark:border-slate-600 p-3 space-y-2">
+            const cards = rows.map(({ w, c }) => `<div class="kf-fin-card rounded-xl border border-slate-300 dark:border-slate-600 p-3 space-y-2">
                 <div class="flex items-center justify-between gap-2"><div class="flex items-center gap-2 min-w-0">${mgrMiniAvatar(w, 34)}<div class="min-w-0"><p class="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">${escapeHTML(w.name)}</p><p class="text-[11px] text-slate-500 dark:text-slate-400">${mgrWageLabel(w.wageType) || 'کارمزدی (از کارکردها)'}${w.wageType && w.wageType !== 'piece' ? (w.rate ? ' • ' + f(w.rate) + ' ' + cur : ' • نرخ ثبت نشده') : ''}</p></div></div>
                 ${w.wageType === 'daily' && c.daysAuto ? `<span class="text-[11px] text-slate-500 shrink-0">روز کارکرد: <b>${toPersianDigits(c.days)}</b> (از حضور و غیاب)</span>` : w.wageType === 'daily' ? `<label class="flex items-center gap-1 text-[11px] text-slate-500 shrink-0">روز کارکرد <input type="text" inputmode="numeric" maxlength="2" value="${c.days ? toPersianDigits(c.days) : ''}" data-mgr-change="f-days" data-id="${escapeHTML(w.id)}" class="w-14 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100"></label>` : w.wageType === 'monthly' ? `<label class="flex items-center gap-1.5 text-[11px] text-slate-500 shrink-0">حقوق ماهانه (${cur}) <input type="text" data-thousands="1" inputmode="numeric" maxlength="15" placeholder="ثبت نشده" value="${w.rate ? escapeHTML(f(w.rate)) : ''}" data-mgr-change="w-rate" data-id="${escapeHTML(w.id)}" class="w-32 p-1.5 border border-slate-400 dark:border-slate-500 rounded-lg text-center text-xs bg-white dark:bg-slate-800 dark:text-slate-100"></label>` : ''}</div>
                 <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] text-slate-600 dark:text-slate-300">
@@ -11770,11 +11669,16 @@
                 ${c.otMin && !c.otRate ? '<p class="text-[11px] text-amber-600 dark:text-amber-400">اضافه‌کاری ثبت شده ولی مبلغ هر ساعت آن تعیین نشده است.</p>' : ''}
                 ${c.leaveMin && !c.leaveRate ? '<p class="text-[11px] text-amber-600 dark:text-amber-400">مرخصی ساعتی ثبت شده ولی مبلغ هر ساعت مرخصی تعیین نشده است.</p>' : ''}
                 <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-200 dark:border-slate-700"><span class="text-xs font-bold ${c.remain > 0 ? 'text-emerald-600 dark:text-emerald-400' : c.remain < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'}">مانده: ${f(Math.abs(c.remain))} ${cur}${c.remain < 0 ? ' (بدهکار)' : ''}</span>
-                ${c.remain > 0 ? `<button type="button" data-mgr="f-settle" data-id="${escapeHTML(w.id)}" class="tactile-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-[11px]">تسویه‌ی مانده</button>` : ''}</div></div>`).join('');
-            const tx = F.txns.filter(x => x.monthKey === mk).slice().reverse().map(x => {
-                const w = mgrWorker(x.workerId), t = MGR_FIN_TYPES[x.type];
-                return `<tr class="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50"><td class="p-2.5 tabular-nums">${escapeHTML(toPersianDigits(x.date || '—'))}</td><td class="p-2.5 font-semibold">${escapeHTML(w ? w.name : 'حذف‌شده')}</td><td class="p-2.5 font-bold ${t[1]}">${t[0]}</td><td class="p-2.5 tabular-nums">${f(x.amount)} ${cur}</td><td class="p-2.5">${escapeHTML(x.note || '—')}</td>${mgrActBtns('f-edit', 'f-del', x.id)}</tr>`;
-            }).join('');
+                ${c.remain > 0 ? `<button type="button" data-mgr="f-settle" data-id="${escapeHTML(w.id)}" class="tactile-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-[11px]">تسویه‌ی مانده</button>` : ''}</div>
+                ${txBlock(txFor(w.id))}</div>`).join('');
+            const txTable = list => list.length ? `<div class="kf-tx-wrap overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700"><table class="w-full text-right text-xs"><thead class="text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800"><tr>${['تاریخ', 'نوع', 'مبلغ', 'توضیحات'].map(h => `<th class="p-2">${h}</th>`).join('')}<th class="p-2 no-print">عملیات</th></tr></thead><tbody>${list.map(x => {
+                const t = MGR_FIN_TYPES[x.type] || ['—', ''];
+                return `<tr class="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50"><td class="p-2 tabular-nums">${escapeHTML(toPersianDigits(x.date || '—'))}</td><td class="p-2 font-bold ${t[1]}">${t[0]}</td><td class="p-2 tabular-nums">${f(x.amount)} ${cur}</td><td class="p-2">${escapeHTML(x.note || '—')}</td>${mgrActBtns('f-edit', 'f-del', x.id)}</tr>`;
+            }).join('')}</tbody></table></div>` : '<p class="text-[11px] text-slate-400">تراکنشی برای این ماه ثبت نشده است.</p>';
+            const txBlock = list => `<div class="space-y-1.5 pt-2 border-t border-slate-200 dark:border-slate-700"><h5 class="text-[11px] font-bold text-slate-600 dark:text-slate-300">تراکنش‌های ${mgrMonthLabel()}</h5>${txTable(list)}</div>`;
+            const txFor = id => F.txns.filter(x => x.monthKey === mk && x.workerId === id).slice().reverse();
+            const orphanTx = F.txns.filter(x => x.monthKey === mk && !ws.some(w => w.id === x.workerId)).slice().reverse();
+            const orphanCard = orphanTx.length ? `<div class="kf-fin-card rounded-xl border border-slate-300 dark:border-slate-600 p-3 space-y-2"><p class="text-sm font-bold text-slate-800 dark:text-slate-100">پرسنل حذف‌شده</p>${txBlock(orphanTx)}</div>` : '';
             return `<div class="grid grid-cols-2 gap-2">${mgrStat('مجموع حقوق و کارکرد', f(tot.earn) + ' ' + cur, 'text-indigo-600 dark:text-indigo-400')}${mgrStat('مساعده‌ها', f(tot.adv) + ' ' + cur, 'text-rose-600 dark:text-rose-400')}${mgrStat('پرداخت‌شده', f(tot.pay) + ' ' + cur, 'text-slate-700 dark:text-slate-200')}${mgrStat('مانده‌ی قابل پرداخت', f(tot.remain) + ' ' + cur, 'text-emerald-600 dark:text-emerald-400')}</div>
                 <p class="text-[11px] text-slate-400 text-center">دوره‌ی مالی: ${mgrMonthLabel()}</p>
                 <div class="space-y-2 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-3 border border-slate-300 dark:border-slate-600">
@@ -11796,8 +11700,7 @@
                     <input id="mgrFNote" maxlength="200" placeholder="توضیحات (اختیاری)" value="${ef ? escapeHTML(ef.note || '') : ''}" class="${MI}">
                     <div class="flex gap-2"><button type="button" data-mgr="f-add" class="tactile-btn px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-medium">${ef ? 'ذخیره‌ی ویرایش' : 'ثبت'}</button>${ef ? '<button type="button" data-mgr="f-cancel" class="px-4 py-2 border border-slate-400 rounded-xl text-xs text-slate-600 dark:text-slate-300">انصراف</button>' : ''}</div>
                 </div>
-                <div class="space-y-2">${cards || mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.')}</div>
-                ${mgrListCard('fa-coins', 'لیست حقوق و مالی — ' + mgrMonthLabel(), ['تاریخ', 'پرسنل', 'نوع', 'مبلغ', 'توضیحات'], tx, 'هنوز تراکنشی برای این ماه ثبت نشده است.', 'mgrFinRows')}`;
+                <div class="kf-lst rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden"><div class="px-4 py-3 border-b border-slate-300 dark:border-slate-600 flex flex-wrap items-center justify-between gap-2"><h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid fa-coins text-indigo-600 dark:text-indigo-400"></i> لیست حقوق و مالی — ${mgrMonthLabel()}</h3><input placeholder="جستجو…" oninput="mgrFilterCards(this.value,'mgrFinList')" class="${MI} !w-auto !py-1.5 !text-xs"></div><div id="mgrFinList" class="space-y-2 p-3">${cards || mgrEmpty('ابتدا پرسنل را در تب «پرسنل» اضافه کنید.')}${orphanCard}</div></div>`;
         }
 
         function mgrHtmlSections() {
