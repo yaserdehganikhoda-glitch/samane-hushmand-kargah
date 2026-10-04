@@ -449,6 +449,10 @@
         #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on .nav-ico { background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 12px 26px -6px rgba(124,58,237,.7), 0 0 0 5px rgba(255,255,255,.92); transform: translateY(-2px) scale(1.06); }
         .dark #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on .nav-ico { box-shadow: 0 12px 26px -6px rgba(139,92,246,.65), 0 0 0 5px rgba(2,6,23,.92); }
         #bottomNavBar .bottom-nav-item[data-nav="add"].nav-on i { transform: rotate(90deg) scale(1.05); }
+        body:not([data-mode="employer"]) #bottomNavBar [data-mgr-only] { display: none !important; }
+        body[data-mode="employer"] #bottomNavBar .bottom-nav-item { font-size: 9.5px; white-space: nowrap; min-width: 0; }
+        body[data-mode="employer"] #bottomNavBar .bottom-nav-item:not([data-nav="add"]) .nav-ico { width: 34px; }
+        body[data-mode="employer"] #bottomNavBar .bottom-nav-item:not([data-nav="add"]) i { font-size: 15px; }
         @media (prefers-reduced-motion: reduce) { #bottomNavBar *, #bottomNavBar { transition: none !important; } }
         /* دکمه‌ی پنل کارفرما در تب خانه */
         #homeMgrBtn { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-bottom: 12px; padding: 12px 16px; border: 0; border-radius: 16px; color: #fff; font-size: 14px; font-weight: 700; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 8px 20px -8px rgba(79,70,229,.6); transition: transform .15s, box-shadow .2s; }
@@ -1024,7 +1028,9 @@
         <div class="max-w-5xl mx-auto px-2 flex items-stretch justify-around pt-1.5" role="tablist" aria-label="تب‌های اصلی" style="padding-bottom: calc(0.4rem + env(safe-area-inset-bottom));">
             <button type="button" role="tab" data-nav="home" onclick="setAppTab('home')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-house"></i></span><span>خانه</span></button>
             <button type="button" role="tab" data-nav="list" onclick="setAppTab('list')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-table-list"></i></span><span>رکوردها</span></button>
+            <button type="button" role="tab" data-nav="att" data-mgr-only="1" onclick="setAppTab('att')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-calendar-check"></i></span><span>حضور و غیاب</span></button>
             <button type="button" role="tab" data-nav="add" onclick="setAppTab('add')" class="bottom-nav-item" aria-label="ثبت کارکرد جدید"><span class="nav-ico"><i class="fa-solid fa-plus"></i></span><span>ثبت</span></button>
+            <button type="button" role="tab" data-nav="fin" data-mgr-only="1" onclick="setAppTab('fin')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-coins"></i></span><span>حقوق و مالی</span></button>
             <button type="button" role="tab" data-nav="notes" onclick="setAppTab('notes')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-note-sticky"></i></span><span>یادداشت‌ها</span></button>
             <button type="button" role="tab" data-nav="progress" onclick="setAppTab('progress')" class="bottom-nav-item"><span class="nav-ico"><i class="fa-solid fa-stopwatch"></i></span><span>پیشرفت کار</span></button>
         </div>
@@ -11059,7 +11065,7 @@
         /* ==================== قابلیت کارفرما (مدیر کارگاه): بخش‌ها، پرسنل و ارجاع کار ==================== */
         var mgrTab = 'workers', mgrEditW = '', mgrEditS = '', mgrLastTab = '';
         var mgrFormPhoto; // undefined = بدون تغییر نسبت به عکس ذخیره‌شده؛ null = حذف؛ رشته = عکس جدید
-        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها'], ['attendance', 'fa-calendar-check', 'حضور و غیاب'], ['finance', 'fa-coins', 'مالی']];
+        const MGR_TABS = [['workers', 'fa-users', 'پرسنل'], ['sections', 'fa-sitemap', 'بخش‌ها']];
         const MI = 'w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all';
         var mgrVer = 0;
         function mgrId(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
@@ -11429,6 +11435,7 @@
 
         function mgrRender() {
             document.getElementById('mgrHeaderSub').innerText = `دوره‌ی گزارش: ${mgrMonthLabel()}`;
+            { const sep = (appTab === 'att' || appTab === 'fin'); document.getElementById('mgrTabs').classList.toggle('hidden', sep); const hd = document.getElementById('mgrHeaderSub').parentElement; if (hd) hd.classList.toggle('hidden', sep); }
             document.getElementById('mgrTabs').innerHTML = MGR_TABS.map(([k, ic, t]) => `<button type="button" data-mgr="tab" data-k="${k}" class="shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold ${k === mgrTab ? 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-b-2 border-purple-600' : 'text-slate-400 dark:text-slate-500'}"><i class="fa-solid ${ic}"></i> ${t}</button>`).join('');
             const fn = { workers: mgrHtmlWorkers, sections: mgrHtmlSections, finance: mgrHtmlFinance, attendance: mgrHtmlAttendance }[mgrTab];
             const bodyEl = document.getElementById('mgrBody'), keepTop = (mgrLastTab === mgrTab) ? bodyEl.scrollTop : 0;
@@ -12586,4 +12593,41 @@
     if(typeof closeToolsDropdown==='function')closeToolsDropdown();
     const P=plugin();
     if(!P){ showFeedbackBanner('ویجت فقط در نسخه‌ی نصبی (APK) کار می‌کند: روی صفحه اصلی گوشی نگه دارید ← ویجت‌ها ← این برنامه.','warn'); return; }
-    pushWidgetD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    pushWidgetData();
+    try{ const r=await P.pin(); showFeedbackBanner(r&&r.supported===false?'گوشی افزودن مستقیم را پشتیبانی نمی‌کند: روی صفحه اصلی نگه دارید ← ویجت‌ها ← این برنامه.':'درخواست افزودن ویجت به صفحه اصلی ارسال شد.','success'); }
+    catch(e){ showFeedbackBanner('افزودن مستقیم ممکن نشد؛ از منوی ویجت‌های گوشی اضافه کنید.','warn'); }
+  };
+  /* «کار تمام شد» روی ویجت: ثبت واقعی پایان کار با زمانِ لحظه‌ی لمس */
+  const jDateAt=d=>{ const j=gregorianToJalaali(d.getFullYear(),d.getMonth()+1,d.getDate()); return toPersianDigits(j.jy)+'/'+toPersianDigits(j.jm)+'/'+toPersianDigits(j.jd); };
+  const finishFromWidget=(id,ts)=>{
+    const rec=allRecords.find(r=>Number(r.id)===Number(id));
+    if(!rec){ showFeedbackBanner('کاری که از ویجت زدید دیگر وجود ندارد.','warn'); return; }
+    if(rec.finishedDate){ showFeedbackBanner('کار کد '+(rec.itemCode||'-')+' قبلاً تمام شده بود.','warn'); return; }
+    const d=new Date(Number(ts)||Date.now()), dateStr=jDateAt(d), hhmm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+    showCustomConfirm('پایان کار کد '+(rec.itemCode||'-')+' در ساعت '+formatDateDigits(hhmm)+' ('+formatDateDigits(dateStr)+') ثبت شود؟',(ok)=>{
+      if(!ok){ pushWidgetData(); return; }
+      rec.finishedDate=dateStr; rec.finishedTime=hhmm; rec.updatedAt=Date.now();
+      evaluateDeliveryAgainst(rec,rec.finishedDate,rec.finishedTime);
+      saveRecords(); renderDashboard(); if (typeof mgrPageW !== 'undefined' && mgrPageW) mgrCloseWorkerPage(); checkDeliveryProgressNotifications();
+      addLog('پایان کار کد '+(rec.itemCode||'-')+' از ویجت ثبت شد ('+rec.status+').','success');
+      showFeedbackBanner('کار کد '+(rec.itemCode||'-')+' تمام شد — وضعیت: '+rec.status+(rec.durationTime?' ('+rec.durationTime+')':''),'success');
+      pushWidgetData();
+    });
+  };
+  let pendBusy=false;
+  const applyPending=async()=>{ const P=plugin(); if(!P||!P.takePending||pendBusy) return; pendBusy=true;
+    try{ const r=await P.takePending(), seen={}; ((r&&r.items)||[]).forEach(it=>{ if(!seen[it.id]){ seen[it.id]=1; finishFromWidget(it.id,it.ts); } }); }catch(e){}
+    pendBusy=false; };
+  setTimeout(applyPending,2500);
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden) setTimeout(applyPending,400); });
+  try{ const P=plugin(); if(P&&P.addListener) P.addListener('widgetFinish',()=>setTimeout(applyPending,300)); }catch(e){}
+  /* بعد از هر ذخیره‌ی رکورد، ویجت هم فوراً به‌روز شود */
+  if(typeof window.saveRecords==='function'&&!window.saveRecords.__kw){ const o=window.saveRecords, w=function(){ const r=o.apply(this,arguments); clearTimeout(w._t); w._t=setTimeout(pushWidgetData,500); return r; }; w.__kw=1; window.saveRecords=w; }
+  setTimeout(pushWidgetData,4000); setInterval(pushWidgetData,30000);
+  document.addEventListener('visibilitychange',()=>{ if(document.hidden)pushWidgetData(); }); window.addEventListener('pagehide',pushWidgetData);
+})();
+</script>
+<script src="ai-assistant.js" onerror="try{var e=document.getElementById('aiSub');if(e)e.textContent='فایل ai-assistant.js بارگذاری نشد';}catch(x){}"></script>
+
+</body>
+</html>
