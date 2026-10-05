@@ -903,6 +903,22 @@
         .dark .pay-neg { color: #fb7185; }
         .pay-total { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; padding: 10px 12px; border-radius: 12px; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; font-weight: 800; font-size: 13px; }
         .pay-total.neg { background: linear-gradient(135deg, #be123c, #e11d48); }
+        /* کادر کوچک خلاصه‌ی مالی پرسنل */
+        .wfin-link { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; text-align: inherit; border-bottom: 1px dashed rgba(99, 102, 241, .55); transition: color .15s; }
+        .wfin-link:hover { color: #6366f1; }
+        .wfin { position: fixed; z-index: 95; display: none; width: min(320px, calc(100vw - 16px)); max-height: calc(100vh - 16px); overflow-y: auto; border-radius: 18px; background: #fff; border: 1px solid rgb(203 213 225); box-shadow: 0 18px 40px -12px rgba(30, 27, 75, .45), 0 0 0 1px rgba(99, 102, 241, .12); }
+        .dark .wfin { background: rgb(15 23 42); border-color: rgb(71 85 105); }
+        .wfin.wfin-in { animation: wfinIn .28s cubic-bezier(.2, .9, .3, 1.2); }
+        @keyframes wfinIn { from { opacity: 0; transform: translateY(8px) scale(.94); } to { opacity: 1; transform: none; } }
+        .wfin-head { position: relative; display: flex; align-items: center; gap: 10px; padding: 11px 12px; color: #fff; overflow: hidden; }
+        .wfin-head::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .22) 50%, transparent 65%); transform: translateX(-100%); animation: wfinShine 3.2s ease-in-out infinite; pointer-events: none; }
+        @keyframes wfinShine { 0%, 60% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .wfin-head b { display: block; font-size: 13px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .wfin-head small { display: block; font-size: 10.5px; opacity: .85; }
+        .wfin-x { position: relative; z-index: 1; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .22); color: #fff; cursor: pointer; font-size: 13px; transition: background .15s, transform .15s; }
+        .wfin-x:hover { background: rgba(255, 255, 255, .4); transform: rotate(90deg); }
+        .wfin-body { padding: 6px 12px 12px; }
+        @media (prefers-reduced-motion: reduce) { .wfin.wfin-in, .wfin-head::after { animation: none; } }
         .pay-hint { font-size: 11px; line-height: 1.9; color: rgb(100 116 139); }
         .dark .pay-hint { color: rgb(148 163 184); }
         .pay-ent { display: flex; align-items: center; gap: 10px; }
@@ -10902,7 +10918,7 @@
                 const qty = g.recs.reduce((a, r) => a + (Number(r.quantity) || 0), 0), tot = sumTotalPrice(g.recs), open = !mgrCollapsed[g.id];
                 const rows = g.recs.map((r, i) => `<tr class="border-t border-slate-200 dark:border-slate-700"><td class="p-2.5 text-slate-400">${f(i + 1)}</td><td class="p-2.5 font-mono text-[11px]">${escapeHTML(r.itemCode) || '-'}</td><td class="p-2.5 font-semibold">${escapeHTML(r.itemTitle)}</td><td class="p-2.5">${escapeHTML(r.itemColor) || '-'}</td><td class="p-2.5 tabular-nums">${f(r.quantity)}</td><td class="p-2.5 tabular-nums">${formatPriceValue(r.unitPrice)}</td><td class="p-2.5 tabular-nums font-bold ${r.totalPrice == null ? 'text-amber-600' : 'text-emerald-600'}">${formatPriceValue(r.totalPrice)}</td><td class="p-2.5"><span class="text-[11px] px-2 py-0.5 rounded-full border whitespace-nowrap ${getStatusBadgeClass(getDisplayStatus(r))}">${formatStatusWithDuration(getDisplayStatus(r), r.durationTime)}</span></td><td class="p-2.5 whitespace-nowrap text-slate-500">${escapeHTML(r.date)} ${escapeHTML(r.time)}</td><td class="p-2.5 no-print whitespace-nowrap"><button data-action="edit" data-id="${Number(r.id)}" class="w-7 h-7 rounded-full text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30" title="ویرایش"><i class="fa-solid fa-pen text-xs"></i></button><button data-action="delete" data-id="${Number(r.id)}" class="w-7 h-7 rounded-full text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30" title="حذف"><i class="fa-solid fa-trash text-xs"></i></button></td></tr>`).join('');
                 return `<div class="rounded-2xl border border-slate-300 dark:border-slate-600 overflow-hidden"><button type="button" onclick="mgrToggleGroupAt(${gi})" class="w-full flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-indigo-50/60 dark:bg-indigo-950/20 text-right">
-                    <span class="text-sm font-bold text-slate-800 dark:text-slate-100"><i class="fa-solid ${open ? 'fa-chevron-down' : 'fa-chevron-left'} text-[10px] ml-2"></i><i class="fa-solid fa-user-gear text-indigo-500 ml-1"></i>${escapeHTML(g.name)} <span class="text-[11px] font-normal text-slate-500">${[escapeHTML(g.sec)].filter(Boolean).join(' • ')}</span></span>
+                    <span class="text-sm font-bold text-slate-800 dark:text-slate-100"><i class="fa-solid ${open ? 'fa-chevron-down' : 'fa-chevron-left'} text-[10px] ml-2"></i><i class="fa-solid fa-user-gear text-indigo-500 ml-1"></i>${(g.id !== '__none' && g.id.indexOf('__del') !== 0) ? `<span data-wfin="${escapeHTML(g.id)}" role="button" tabindex="0" class="wfin-link" title="خلاصه‌ی مالی">${escapeHTML(g.name)}</span>` : escapeHTML(g.name)} <span class="text-[11px] font-normal text-slate-500">${[escapeHTML(g.sec)].filter(Boolean).join(' • ')}</span></span>
                     <span class="text-[11px] text-slate-600 dark:text-slate-300">${f(g.recs.length)} کارکرد • ${f(qty)} عدد • ${f(tot)} ${cur}</span></button>
                     ${open ? (g.recs.length ? `<div class="overflow-x-auto"><table class="w-full text-xs text-right"><thead><tr><th class="${th}">#</th><th class="${th}">کد</th><th class="${th}">عنوان کار</th><th class="${th}">مشخصات</th><th class="${th}">تعداد</th><th class="${th}">قیمت واحد</th><th class="${th}">مبلغ کل</th><th class="${th}">وضعیت</th><th class="${th}">تاریخ</th><th class="${th} no-print"></th></tr></thead><tbody>${rows}</tbody></table></div>` : mgrEmpty('کارکردی در این دوره ندارد.')) : ''}</div>`;
             }).join('');
@@ -10926,7 +10942,7 @@
             const sum = mgrEnsureEl('mgrListSummary', document.getElementById('emptyState'), 'after');
             const grp = mgrEnsureEl('mgrWorkerLists', document.getElementById('emptyState'), 'after');
             document.body.dataset.grouped = (on && mgrGrouped) ? '1' : '0';
-            if (!on) { mgrPageW = ''; delete document.body.dataset.wpage; [stats, bar, sum, grp].forEach(e => { if (e) e.innerHTML = ''; }); return; }
+            if (!on) { if (typeof wfinClose === 'function') wfinClose(); mgrPageW = ''; delete document.body.dataset.wpage; [stats, bar, sum, grp].forEach(e => { if (e) e.innerHTML = ''; }); return; }
             if (mgrPageW && !mgrWorker(mgrPageW)) { mgrPageW = ''; mgrListFilter = ''; delete document.body.dataset.wpage; }
             const wfw = document.getElementById('workerFieldWrap'); if (wfw) wfw.classList.toggle('hidden', !!mgrPageW);
             const M = mgr(), mk = selectedMonthFilter;
@@ -10934,6 +10950,7 @@
             const kl = document.getElementById('kpiPriceLabel'); if (kl) kl.innerText = `ارزش کل کارکرد کارگاه (${appSettings.currency || 'تومان'})`;
             stats.className = 'mb-6';
             mgrRenderWorkerCards(stats);
+            if (typeof wfinRefresh === 'function') wfinRefresh();
             const opts = '<option value="">همه‌ی کارکردها</option><option value="__none">بدون ارجاع</option>' + M.workers.map(w => `<option value="${escapeHTML(w.id)}">${escapeHTML(w.name)}${w.active ? '' : ' (غیرفعال)'}</option>`).join('');
             bar.className = 'no-print px-4 py-3 border-b border-slate-200 dark:border-slate-700 flex items-center gap-2 text-xs';
             bar.innerHTML = `<i class="fa-solid fa-user-gear text-indigo-500"></i><span class="text-slate-500 dark:text-slate-400">نمایش کارکرد:</span><select onchange="mgrSetListFilter(this.value)" class="${MI} !w-auto !py-1.5 !text-xs">${opts}</select>`;
@@ -10951,7 +10968,8 @@
                 cards[i].querySelectorAll('[data-mgr-x]').forEach(n => n.remove());
                 const d = document.createElement('div'); d.setAttribute('data-mgr-x', '1');
                 d.className = 'px-4 pb-2 -mt-1 text-[11px] text-indigo-600 dark:text-indigo-300';
-                d.innerHTML = `<i class="fa-solid fa-user-gear ml-1"></i>${escapeHTML(mgrRecWorker(r))}${mgrRecSection(r) ? ' • ' + escapeHTML(mgrRecSection(r)) : ''}`;
+                const wkO = mgrWorker(r.workerId);
+                d.innerHTML = `<i class="fa-solid fa-user-gear ml-1"></i>${wkO ? `<button type="button" data-wfin="${escapeHTML(wkO.id)}" data-mk="${escapeHTML(r.monthKey || '')}" class="wfin-link" aria-label="خلاصه‌ی مالی ${escapeHTML(wkO.name)}">${escapeHTML(wkO.name)}</button>` : escapeHTML(mgrRecWorker(r))}${mgrRecSection(r) ? ' • ' + escapeHTML(mgrRecSection(r)) : ''}`;
                 cards[i].appendChild(d);
             });
         }
@@ -11635,6 +11653,58 @@
             return head + rows.map(card).join('');
         }
 
+        /* ---- کادر کوچک خلاصه‌ی مالی پرسنل: با کلیک روی نام پرسنل در لیست کارکردها؛ فقط با دکمه‌ی ✕ بسته می‌شود ---- */
+        var wfinState = null;
+        function wfinHTML(w, mk) {
+            const r = mgrPayCalc(w, mk), sc = mgrSection(w.sectionId), g = mgrGrad(w);
+            const line = (k, sub, v, cls) => `<div class="pay-line"><span class="k">${k}${sub ? `<small>${sub}</small>` : ''}</span><span class="v ${cls || ''}">${v}</span></div>`;
+            let lines = (r.base > 0 ? line('حقوق پایه', 'مبلغ ثابت ماهانه', payMoney(r.base, true), 'pay-pos') : '')
+                + line('کارکرد ثبت‌شده', `${payDigits(r.recs)} رکورد • ${formatNumber(r.qty)} واحد${r.unknown ? ` • ${payDigits(r.unknown)} بدون قیمت` : ''}`, payMoney(r.work, true), payCls(r.work));
+            Object.keys(PAY_KINDS).forEach(k => {
+                const b = r.by[k], K = PAY_KINDS[k]; if (!b.n) return;
+                lines += line(`<i class="fa-solid ${K.ic} ml-1 opacity-70"></i>${K.t}`, `${K.hour ? payHours(b.hours) + ' • ' : ''}${payDigits(b.n)} مورد`, payMoney(b.amount, true), payCls(b.amount));
+            });
+            const sub = [sc ? escapeHTML(sc.name) : '', payMonthLabel(mk)].filter(Boolean).join(' • ');
+            return `<div class="wfin-head" style="background:linear-gradient(135deg,${g[0]},${g[1]})">${mgrMiniAvatar(w, 38)}<div class="min-w-0 flex-1"><b>${escapeHTML(w.name)}${w.active ? '' : ' (غیرفعال)'}</b><small>${sub}</small></div><button type="button" class="wfin-x" data-wfin-close title="بستن" aria-label="بستن"><i class="fa-solid fa-xmark"></i></button></div>`
+                + `<div class="wfin-body">${lines}<div class="pay-total ${r.total < 0 ? 'neg' : ''}"><span>قابل پرداخت</span><span>${payMoney(r.total)}</span></div></div>`;
+        }
+        function wfinOpen(wid, mk, anchor) {
+            const w = mgrWorker(wid); if (!w || !mgrOn()) return;
+            mk = mk || selectedMonthFilter;
+            let box = document.getElementById('wfinBox');
+            if (!box) { box = document.createElement('div'); box.id = 'wfinBox'; box.className = 'wfin no-print'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'خلاصه‌ی مالی پرسنل'); document.body.appendChild(box); }
+            box.innerHTML = wfinHTML(w, mk);
+            box.style.display = 'block';
+            box.classList.remove('wfin-in'); void box.offsetWidth; box.classList.add('wfin-in');
+            wfinState = { wid: w.id, mk };
+            const vw = window.innerWidth, vh = window.innerHeight, bw = box.offsetWidth, bh = box.offsetHeight;
+            let left, top;
+            if (vw < 640 || !anchor) { left = (vw - bw) / 2; top = Math.max(8, vh - bh - 14); }
+            else {
+                const rc = anchor.getBoundingClientRect();
+                left = Math.min(Math.max(8, rc.right - bw), vw - bw - 8);
+                top = rc.bottom + 6; if (top + bh > vh - 8) top = Math.max(8, rc.top - bh - 6);
+            }
+            box.style.left = left + 'px'; box.style.top = top + 'px'; box.style.right = 'auto';
+        }
+        function wfinClose() { const b = document.getElementById('wfinBox'); if (b) b.style.display = 'none'; wfinState = null; }
+        function wfinRefresh() {
+            const b = document.getElementById('wfinBox'); if (!wfinState || !b || b.style.display === 'none') return;
+            const w = mgrWorker(wfinState.wid); if (!w || !mgrOn()) return wfinClose();
+            b.innerHTML = wfinHTML(w, wfinState.mk);
+        }
+        document.addEventListener('click', function (e) {
+            const t = e.target.closest ? e.target.closest('[data-wfin],[data-wfin-close]') : null;
+            if (!t) return;
+            e.preventDefault(); e.stopPropagation();
+            if (t.hasAttribute('data-wfin-close')) return wfinClose();
+            wfinOpen(t.dataset.wfin, t.dataset.mk, t);
+        }, true);
+        document.addEventListener('keydown', function (e) {
+            const t = e.target;
+            if ((e.key === 'Enter' || e.key === ' ') && t && t.matches && t.matches('[data-wfin][role="button"]')) { e.preventDefault(); e.stopPropagation(); wfinOpen(t.dataset.wfin, t.dataset.mk, t); }
+        }, true);
+
         function mgrPayRateOptions(kind, selId) {
             const cur = appSettings.currency || 'تومان', rates = mgrPay().rates.filter(r => r.kind === kind);
             if (!rates.length) return '<option value="">— نرخی تعریف نشده —</option>';
@@ -11800,8 +11870,9 @@
                 const photoHTML = r.photo
                     ? `<button type="button" data-action="photo" data-id="${Number(r.id)}" class="block w-10 h-10 rounded-xl overflow-hidden ring-2 ring-white dark:ring-slate-900 border border-slate-400 dark:border-slate-500 shadow-sm hover:scale-105 hover:opacity-90 transition-all" title="مشاهده عکس" aria-label="مشاهده عکس"><img src="${getThumbSrc(r)}" data-thumb-id="${Number(r.id)}" decoding="async" class="w-full h-full object-cover" alt="عکس رکورد"></button>`
                     : `<span class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-300 dark:text-slate-600"><i class="fa-solid fa-image text-xs"></i></span>`;
+                const wkObj = mgrWorker(r.workerId);
                 const workerHTML = mgrRecWorker(r)
-                    ? `<i class="fa-solid fa-user-gear text-indigo-400 text-[10px] ml-1"></i>${escapeHTML(mgrRecWorker(r))}`
+                    ? `<i class="fa-solid fa-user-gear text-indigo-400 text-[10px] ml-1"></i>` + (wkObj ? `<button type="button" data-wfin="${escapeHTML(wkObj.id)}" data-mk="${escapeHTML(r.monthKey || '')}" class="wfin-link" title="خلاصه‌ی مالی" aria-label="خلاصه‌ی مالی ${escapeHTML(wkObj.name)}">${escapeHTML(wkObj.name)}</button>` : escapeHTML(mgrRecWorker(r)))
                     : '<span class="text-slate-300 dark:text-slate-600">-</span>';
                 const workerCell = mgrOn()
                     ? `<td class="c-worker p-2.5 whitespace-nowrap text-slate-700 dark:text-slate-200">${workerHTML}<div class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHTML(mgrRecSection(r) || '')}</div></td>`
