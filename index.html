@@ -36,6 +36,47 @@
         .tactile-btn:hover {
             box-shadow: 0 4px 14px rgba(79, 70, 229, 0.12);
         }
+        /* دکمه‌ی تغییر حالت پرسنل ⇄ کارفرما در هدر صفحه‌ی اصلی */
+        .mode-switch-btn {
+            display: inline-flex; align-items: center; gap: .55rem;
+            padding: .3rem .4rem .3rem .95rem;
+            font-family: inherit; color: #3b0764; cursor: pointer;
+            background: linear-gradient(180deg, #ffffff 0%, #f3e8ff 100%);
+            border: 2px solid #ffffff; border-radius: 9999px;
+            box-shadow: 0 4px 0 rgba(88, 28, 135, .65), 0 8px 18px rgba(0, 0, 0, .28);
+            transition: transform .12s ease, box-shadow .12s ease, filter .2s ease;
+        }
+        .mode-switch-btn:hover { filter: brightness(1.04); }
+        .mode-switch-btn:active {
+            transform: translateY(3px) !important;
+            box-shadow: 0 1px 0 rgba(88, 28, 135, .65), 0 3px 8px rgba(0, 0, 0, .25);
+        }
+        .mode-switch-btn:focus-visible { outline: 3px solid #fde68a; outline-offset: 2px; }
+        .mode-switch-btn .msb-ico {
+            width: 1.75rem; height: 1.75rem; flex-shrink: 0;
+            display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 9999px; color: #fff; font-size: 12px;
+            background: linear-gradient(135deg, #9333ea, #4f46e5);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35);
+        }
+        .mode-switch-btn .msb-txt { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }
+        .mode-switch-btn .msb-cur { font-size: 12.5px; font-weight: 800; }
+        .mode-switch-btn .msb-go { font-size: 10px; font-weight: 500; color: #7e22ce; }
+        /* اشتراک: دکمه‌ی ارتقا در تب اصلی، پنجره‌ی اشتراک و قفل پایان دوره‌ی رایگان */
+        #premiumHomeBtn { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-bottom: 12px; padding: 12px 16px; border: 0; border-radius: 16px; color: #fff; font-family: inherit; font-size: 14px; font-weight: 800; text-align: right; background: linear-gradient(135deg, #f59e0b, #ea580c); box-shadow: 0 8px 20px -8px rgba(234, 88, 12, .6); }
+        #premiumHomeBtn small { display: block; font-size: 10.5px; font-weight: 500; opacity: .92; margin-top: 2px; }
+        #premiumHomeBtn:active { transform: scale(.98); }
+        #premiumHomeBtn.is-active { background: linear-gradient(135deg, #059669, #0d9488); box-shadow: 0 8px 20px -8px rgba(5, 150, 105, .55); }
+        body:not([data-apptab="home"]) #premiumHomeBtn { display: none !important; }
+        .kar-sheet { position: fixed; inset: 0; z-index: 2147482000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, .6); }
+        .kar-sheet.open { display: flex; }
+        .kar-card { width: 100%; max-width: 380px; border-radius: 24px; padding: 22px 20px; text-align: center; color: #1e293b; background: #fff; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, .5); }
+        .kar-card h3 { font-size: 17px; font-weight: 800; margin: 10px 0 6px; }
+        .kar-card p { font-size: 12.5px; line-height: 1.9; color: #475569; }
+        .kar-ico { width: 60px; height: 60px; margin: 0 auto; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 26px; color: #fff; background: linear-gradient(135deg, #f59e0b, #ea580c); }
+        .kar-btn { display: block; width: 100%; margin-top: 10px; padding: 12px; border: 0; border-radius: 14px; font-family: inherit; font-size: 14px; font-weight: 800; color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+        .kar-btn.alt { color: #334155; font-weight: 600; font-size: 12.5px; background: #f1f5f9; }
+        #karLock { z-index: 2147483000; background: linear-gradient(160deg, #312e81, #4c1d95); }
         /* میکرو-اینترکشن سراسری: همه‌ی دکمه‌های برنامه هنگام لمس/کلیک کمی جمع می‌شوند */
         button:not(:disabled) {
             transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, background-color 0.2s ease, opacity 0.2s ease;
@@ -1381,6 +1422,7 @@
         </header>
 
         <button type="button" id="homeMgrBtn" class="hidden no-print" onclick="setAppTab('mgr')"><span class="flex items-center gap-2.5"><i class="fa-solid fa-user-tie"></i> پنل کارفرما</span><i class="fa-solid fa-chevron-left text-xs opacity-80"></i></button>
+        <button type="button" id="premiumHomeBtn" class="no-print" onclick="karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
 
         <!-- کادر نمایش لاگ‌ها -->
         <div id="logDropdownPanel" class="hidden bg-slate-900 text-slate-200 rounded-2xl p-4 mb-6 shadow-xl text-xs font-mono transition-all duration-300 border border-slate-800">
@@ -11092,7 +11134,7 @@
             document.body.dataset.mode = on ? 'employer' : 'worker';
             ['thSection'].forEach(id => { const el = document.getElementById(id); if (el) el.classList.toggle('hidden', !on); });
             const badge = mgrEnsureEl('mgrModeBadge', document.getElementById('mainAppSubtitle'), 'after');
-            if (badge) { badge.className = 'relative z-10 mt-1 flex flex-wrap items-center justify-center gap-1.5 basis-full'; badge.innerHTML = `<button type="button" onclick="mgrToggle(!mgrOn())" title="تغییر حالت" class="tactile-btn inline-flex items-center gap-1.5 text-[10px] bg-white hover:bg-slate-100 text-purple-700 font-bold rounded-full px-2 py-0.5"><i class="fa-solid fa-repeat"></i> ${on ? 'حالت کارفرما' : 'حالت پرسنل'} <span class="opacity-60 font-normal">• رفتن به ${on ? 'پرسنل' : 'کارفرما'}</span></button>`; }
+            if (badge) { badge.className = 'relative z-10 mt-2 flex flex-wrap items-center justify-center gap-1.5 basis-full'; badge.innerHTML = `<button type="button" onclick="mgrToggle(!mgrOn())" title="تغییر حالت" aria-label="تغییر حالت بین پرسنل و کارفرما" class="mode-switch-btn"><span class="msb-ico"><i class="fa-solid fa-repeat"></i></span><span class="msb-txt"><span class="msb-cur">${on ? 'حالت کارفرما' : 'حالت پرسنل'}</span><span class="msb-go">رفتن به ${on ? 'پرسنل' : 'کارفرما'}</span></span><i class="fa-solid fa-chevron-left text-[10px] opacity-60"></i></button>`; }
             const goal = document.getElementById('incomeGoalSection'); if (goal) goal.style.display = on ? 'none' : '';
             const stats = mgrEnsureEl('mgrMainStats', document.getElementById('activeProgressCard'));
             const bar = mgrEnsureEl('mgrFilterBar', document.getElementById('historyIncompleteBanner'));
@@ -12604,5 +12646,81 @@
 </script>
 <script src="ai-assistant.js" onerror="try{var e=document.getElementById('aiSub');if(e)e.textContent='فایل ai-assistant.js بارگذاری نشد';}catch(x){}"></script>
 
+
+<div id="karPremiumModal" class="kar-sheet no-print" dir="rtl" onclick="if(event.target===this)karClosePremium()">
+  <div class="kar-card">
+    <div class="kar-ico"><i class="fa-solid fa-crown"></i></div>
+    <h3 id="karPremTitle">نسخه‌ی ویژه</h3>
+    <p id="karPremText"></p>
+    <p id="karPriceLine" style="font-weight:700;color:#7c3aed">قیمت اشتراک به‌زودی اعلام می‌شود.</p>
+    <button type="button" class="kar-btn" onclick="karBuy()"><i class="fa-solid fa-cart-shopping ml-1"></i> خرید اشتراک</button>
+    <button type="button" class="kar-btn alt" onclick="karClosePremium()">بعداً</button>
+  </div>
+</div>
+<div id="karLock" class="kar-sheet no-print" dir="rtl">
+  <div class="kar-card">
+    <div class="kar-ico" style="background:linear-gradient(135deg,#6366f1,#7c3aed)"><i class="fa-solid fa-lock"></i></div>
+    <h3>دوره‌ی رایگان یک‌ماهه تمام شد</h3>
+    <p>برای ادامه‌ی استفاده از برنامه لازم است اشتراک تهیه کنید. اطلاعات شما سر جایش محفوظ است و بعد از خرید اشتراک همه‌چیز دقیقاً مثل قبل در دسترس است.</p>
+    <button type="button" class="kar-btn" onclick="karBuy()"><i class="fa-solid fa-cart-shopping ml-1"></i> خرید اشتراک</button>
+    <button type="button" class="kar-btn alt" onclick="karRecheck()"><i class="fa-solid fa-rotate ml-1"></i> اشتراک خریده‌ام؛ بررسی مجدد</button>
+    <button type="button" class="kar-btn alt" onclick="exportSmartBackup()"><i class="fa-solid fa-download ml-1"></i> دریافت نسخه‌ی پشتیبان از اطلاعات</button>
+  </div>
+</div>
+<script>
+/* اشتراک: ۳۰ روز رایگان، سپس قفل کامل تا خرید اشتراک.
+   اتصال به بازار: پلاگین بومی باید window.KarBilling را با سه تابع getStatus() ← {active, daysLeft}، purchase() و restore() فراهم کند. */
+(function () {
+  var DAY = 864e5, TRIAL_DAYS = 30, K_START = 'kar_trial_start', K_SEEN = 'kar_last_seen';
+  var cur = { state: 'trial', daysLeft: TRIAL_DAYS };
+  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) {} return null; }
+  function el(id) { return document.getElementById(id); }
+  function now() { var n = Date.now(), seen = +ls(K_SEEN) || 0; if (n < seen) n = seen; ls(K_SEEN, String(n)); return n; }
+  function localStatus() {
+    var n = now(), st = +ls(K_START);
+    if (!st) { st = n; ls(K_START, String(st)); }
+    var left = Math.ceil((st + TRIAL_DAYS * DAY - n) / DAY);
+    return left > 0 ? { state: 'trial', daysLeft: Math.min(left, TRIAL_DAYS) } : { state: 'expired', daysLeft: 0 };
+  }
+  async function getStatus() {
+    try { var B = window.KarBilling; if (B && B.getStatus) { var r = await B.getStatus(); if (r && r.active) return { state: 'active', daysLeft: r.daysLeft || 0 }; } } catch (e) {}
+    return localStatus();
+  }
+  function paint() {
+    var b = el('premiumHomeBtn'), lock = el('karLock');
+    if (b) {
+      b.classList.toggle('is-active', cur.state === 'active');
+      el('premiumHomeTitle').textContent = cur.state === 'active' ? 'اشتراک ویژه فعال است' : 'ارتقا به نسخه‌ی ویژه';
+      el('premiumHomeSub').textContent = cur.state === 'active' ? 'ممنون که از ما حمایت می‌کنید' : (cur.state === 'trial' ? cur.daysLeft + ' روز از دوره‌ی رایگان باقی مانده' : '');
+    }
+    var lockOn = cur.state === 'expired';
+    if (lock) lock.classList.toggle('open', lockOn);
+    document.documentElement.style.overflow = lockOn ? 'hidden' : '';
+    if (lockOn) { var m = el('karPremiumModal'); if (m) m.classList.remove('open'); }
+  }
+  async function refresh() { cur = await getStatus(); paint(); return cur; }
+  window.karPremiumRefresh = refresh;
+  window.karOpenPremium = function () {
+    el('karPremTitle').textContent = cur.state === 'active' ? 'اشتراک شما فعال است' : 'نسخه‌ی ویژه';
+    el('karPremText').textContent = cur.state === 'active' ? 'همه‌ی امکانات برنامه برای شما باز است.' : 'تا ' + cur.daysLeft + ' روز دیگر همه‌ی امکانات رایگان است. بعد از آن، برای ادامه‌ی کار با برنامه باید اشتراک تهیه کنید.';
+    el('karPremiumModal').classList.add('open');
+  };
+  window.karClosePremium = function () { el('karPremiumModal').classList.remove('open'); };
+  function say(m, t) { if (typeof showFeedbackBanner === 'function') showFeedbackBanner(m, t || 'warn'); else alert(m); }
+  window.karBuy = async function () {
+    var B = window.KarBilling;
+    if (!B || !B.purchase) { say('پرداخت پس از اتصال برنامه به کافه بازار فعال می‌شود.'); return; }
+    try { await B.purchase(); await refresh(); if (cur.state === 'active') { window.karClosePremium(); say('اشتراک شما فعال شد.', 'success'); } }
+    catch (e) { say('خرید کامل نشد. دوباره تلاش کنید.'); }
+  };
+  window.karRecheck = async function () {
+    try { var B = window.KarBilling; if (B && B.restore) await B.restore(); } catch (e) {}
+    await refresh();
+    if (cur.state === 'expired') say('اشتراک فعالی پیدا نشد.');
+  };
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) refresh(); });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', refresh); else refresh();
+})();
+</script>
 </body>
 </html>
