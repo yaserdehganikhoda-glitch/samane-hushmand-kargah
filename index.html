@@ -1081,7 +1081,7 @@
         <div id="appHeaderBrandBar" class="px-14 py-3.5 text-center relative rounded-t-2xl flex flex-wrap items-center justify-center gap-x-2.5">
 
             <!-- دکمه‌ی خروج از برنامه در گوشه بالا سمت راست -->
-            <div class="absolute top-2 right-2 z-25 no-print">
+            <div class="absolute top-2 right-2 z-20 no-print">
                 <button type="button" id="exitAppBtn" onclick="requestExitApp()" class="exit-btn" title="خروج از برنامه" aria-label="خروج از برنامه">
                     <i class="fa-solid fa-power-off"></i>
                     <span class="hidden sm:inline">خروج</span>
@@ -1089,7 +1089,7 @@
             </div>
 
             <!-- منوی ابزار و عملیات در گوشه بالا سمت چپ -->
-            <div class="absolute top-2 left-2 z-25">
+            <div class="absolute top-2 left-2 z-20">
                 <div class="relative inline-block text-right">
                     <button id="toolsMenuTrigger" onclick="toggleToolsDropdown(event)" class="exit-btn" title="منوی ابزار" aria-label="منوی ابزار">
                         <i class="fa-solid fa-bars-staggered"></i>
@@ -1172,7 +1172,7 @@
                         <div id="toolsTab-data" class="tools-tab-panel hidden">
                             <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 mb-1.5 px-0.5">پشتیبان‌گیری و بازیابی</p>
                             <div class="grid grid-cols-2 gap-1.5 mb-3">
-                                <button onclick="runIfPremium('پشتیبان‌گیری دستی هوشمند', exportSmartBackup); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                <button onclick="exportSmartBackup(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                                         <i class="fa-solid fa-download text-xs"></i>
                                     </span>
@@ -1181,7 +1181,7 @@
                                         <span class="block text-[9px] text-slate-400">فایل JSON</span>
                                     </span>
                                 </button>
-                                <button onclick="runIfPremium('ارسال پشتیبان به فضای ابری', shareBackupFileToCloud); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                <button onclick="shareBackupFileToCloud(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                                         <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
                                     </span>
@@ -1203,7 +1203,7 @@
 
                             <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 mb-1.5 px-0.5">خروجی و گزارش‌گیری</p>
                             <div class="grid grid-cols-2 gap-1.5 mb-3">
-                                <button onclick="runIfPremium('خروجی گزارش رسمی', exportToHtmlReport); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                <button onclick="exportToHtmlReport(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                                         <i class="fa-solid fa-file-arrow-down text-xs"></i>
                                     </span>
@@ -1212,7 +1212,7 @@
                                         <span class="block text-[9px] text-slate-400">چاپ گزارش</span>
                                     </span>
                                 </button>
-                                <button onclick="runIfPremium('خروجی CSV اکسل', exportRecordsToCSV); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                <button onclick="exportRecordsToCSV(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-lime-50 dark:bg-lime-950/40 text-lime-600 dark:text-lime-400 flex items-center justify-center">
                                         <i class="fa-solid fa-file-csv text-xs"></i>
                                     </span>
@@ -2998,78 +2998,6 @@
          پیش‌فرضِ داخلِ همین اسکریپت برمی‌گردد (نگاه کنید به تابعِ getMotivationPool). -->
     <script src="motivations-db.js"></script>
     <script>
-        /* ==================== نسخه ویژه (Premium) — قابلیت‌های قفل‌شده ====================
-         * این قابلیت‌ها فقط داخل اپ نصب‌شده از کافه بازار قفل هستند؛ در نسخه وب/PWA
-         * (چون امکان خرید در آنجا وجود ندارد) همیشه آزاد باقی می‌مانند تا کاربران قبلی مشکلی پیدا نکنند.
-         */
-        const TRIAL_DURATION_MS = 15 * 24 * 60 * 60 * 1000;
-        function getTrialStartTime() {
-            let t = parseInt(localStorage.getItem('sewing_trial_start_v1') || '', 10);
-            if (!t) {
-                t = Date.now();
-                try { localStorage.setItem('sewing_trial_start_v1', String(t)); } catch (e) { /* بی‌اهمیت */ }
-            }
-            return t;
-        }
-        function isTrialActive() {
-            return (Date.now() - getTrialStartTime()) < TRIAL_DURATION_MS;
-        }
-        function trialDaysLeft() {
-            return Math.max(1, Math.ceil((TRIAL_DURATION_MS - (Date.now() - getTrialStartTime())) / (24 * 60 * 60 * 1000)));
-        }
-
-        function isPremiumUnlocked() {
-            // نسخه ویژه غیرفعال شده: همه‌ی امکانات برای همه‌ی کاربران رایگان است.
-            return true;
-        }
-
-        function updatePremiumStatusUI() {
-            const textEl = document.getElementById('premiumStatusText');
-            const btnEl = document.getElementById('premiumUpgradeBtn');
-            if (!textEl || !btnEl) return;
-            const native = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
-            if (!native) {
-                textEl.innerText = 'نسخه ویژه فقط در اپ نصب‌شده از کافه بازار قابل خرید است.';
-                btnEl.classList.add('hidden');
-                return;
-            }
-            const purchased = !!(window.SewingPremium && window.SewingPremium.isUnlocked());
-            if (purchased) {
-                textEl.innerText = 'نسخه ویژه فعال است ✅';
-                btnEl.innerText = 'فعال شده';
-                btnEl.disabled = true;
-                btnEl.classList.add('opacity-50', 'cursor-default');
-            } else if (isTrialActive()) {
-                textEl.innerText = `${formatNumber(trialDaysLeft())} روز دیگر از دوره‌ی رایگان ۱۵ روزه باقی مانده است.`;
-                btnEl.innerText = 'فعال‌سازی';
-                btnEl.disabled = false;
-                btnEl.classList.remove('opacity-50', 'cursor-default');
-            } else {
-                textEl.innerText = 'خروجی گزارش رسمی، پشتیبان‌گیری دستی و بازگردانی از سطل بازیافت با نسخه ویژه باز می‌شود.';
-                btnEl.innerText = 'فعال‌سازی';
-                btnEl.disabled = false;
-                btnEl.classList.remove('opacity-50', 'cursor-default');
-            }
-        }
-
-        async function promptPremiumUpgrade(featureLabel) {
-            showCustomConfirm(`«${featureLabel}» جزو قابلیت‌های نسخه ویژه است. آیا می‌خواهید همین حالا نسخه ویژه را فعال کنید؟`, async (confirmed) => {
-                if (!confirmed || !window.SewingPremium) return;
-                const ok = await window.SewingPremium.purchase();
-                if (ok) {
-                    showFeedbackBanner('نسخه ویژه با موفقیت فعال شد. حالا دوباره تلاش کنید.', 'success');
-                    updatePremiumStatusUI();
-                }
-            });
-        }
-
-        function runIfPremium(featureLabel, action) {
-            if (isPremiumUnlocked()) { action(); return; }
-            promptPremiumUpgrade(featureLabel);
-        }
-        /* ==================== پایان نسخه ویژه ==================== */
-
-
         // اگر صفحه در اولین نصبِ Service Worker باز شده (کنترلر قبلی نبوده)، claim اولیه نباید reload اجباری ایجاد کند
         let newWorkerWaiting = null;
         const swHadControllerAtStart = !!(navigator.serviceWorker && navigator.serviceWorker.controller);
@@ -4247,7 +4175,6 @@
         }
 
         async function restoreFromTrash(kind, id) {
-            if (!isPremiumUnlocked()) { promptPremiumUpgrade('بازگردانی از سطل بازیافت'); return; }
             const storeName = kind === 'note' ? TRASH_NOTES_STORE : TRASH_RECORDS_STORE;
             try {
                 const db = await getDataDB();
@@ -11587,7 +11514,7 @@
             else if (a === 'w-toggle') { const w = mgrWorker(id); if (w) w.active = !w.active; }
             else if (a === 'w-del') {
                 const w = mgrWorker(id); if (!w) return;
-                return showCustomConfirm(`پرسنل «${w.name}» حذف شود؟ (برای حفظ سوابق، به‌جای حذف «غیرفعال» کنید). کارکردهای ارجاع‌شده فقط نامش را نگه می‌دارند.${(() => { const pn = mgrPay().entries.filter(e => e.workerId === id).length; return pn ? ` ${formatNumber(pn)} مورد مالی ثبت‌شده برای او (اضافه‌کاری، غیبت، پاداش و...) هم پاک می‌شود.` : ''; })()}`, ok => {
+                return showCustomConfirm(`پرسنل «${w.name}» حذف شود؟ (برای حفظ سوابق، به‌جای حذف «غیرفعال» کنید). کارکردهای ارجاع‌شده فقط نامش را نگه می‌دارند.${(() => { const pn = mgrPay().entries.filter(e => e.workerId === id).length, pb = mgrPay().bases.filter(b => b.workerId === id).length; return (pn || pb) ? ` ${pn ? formatNumber(pn) + ' مورد مالی ثبت‌شده (اضافه‌کاری، غیبت، پاداش و...)' : ''}${pn && pb ? ' و ' : ''}${pb ? 'سابقه‌ی حقوق پایه' : ''} برای او هم پاک می‌شود.` : ''; })()}`, ok => {
                     if (!ok) return;
                     let ch = false; allRecords.forEach(r => { if (r.workerId === id) { r.workerName = w.name; r.workerId = null; r.updatedAt = Date.now(); ch = true; } });
                     if (ch) saveRecords();
@@ -11642,7 +11569,7 @@
                     const rate = P.rates.find(r => r.id === val('mgrPRate') && r.kind === kind);
                     if (!rate) return showFeedbackBanner(`ابتدا از زبانه‌ی «نرخ‌های ساعتی» یک نرخ برای ${K.t} تعریف کنید.`, 'warn');
                     const h = payParseHours(val('mgrPHours'));
-                    if (!h) return showFeedbackBanner('مدت را به ساعت وارد کنید (مثلاً ۲:۳۰ یا ۲.۵).', 'warn');
+                    if (!h) return showFeedbackBanner('مدت نامعتبر است. به‌صورت ساعت:دقیقه (۲:۳۰) یا اعشاری با حداکثر دو رقم (۲.۵) و حداکثر ۷۴۴ ساعت وارد کنید.', 'warn');
                     e.rateTitle = rate.title; e.hourly = rate.hourly; e.hours = h; e.effect = rate.effect; e.amount = Math.round(h * rate.hourly);
                 } else {
                     e.amount = parsePersianInt(val('mgrPAmount'));
@@ -11840,6 +11767,7 @@
                 if (typeof r.totalPrice === 'number' && Number.isFinite(r.totalPrice)) work += r.totalPrice; else unknown++;
             });
             const by = {}; Object.keys(PAY_KINDS).forEach(k => { by[k] = { n: 0, hours: 0, amount: 0 }; });
+            work = Math.round(work); // مجموع کارکرد گرد می‌شود تا جمع ردیف‌ها همیشه با «قابل پرداخت» یکی باشد
             const base = payBaseFor(w.id, mk);
             let plus = work + base, minus = 0;
             P.entries.forEach(e => {
@@ -12534,7 +12462,6 @@
         })();
         bottomNavSyncState();
 
-        updatePremiumStatusUI();
         recomputeAppStreak();
         renderStreakBadge();
         checkDeliveryProgressNotifications();
@@ -12561,7 +12488,6 @@
         }, 5 * 60 * 1000);
     </script>
     <script src="native-notify.js"></script>
-    <script src="premium.js"></script>
 <script>
 /* انیمیشن‌ها + ویجت صفحه اصلی (اندروید) */
 (function(){
