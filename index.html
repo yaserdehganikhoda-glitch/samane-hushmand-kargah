@@ -874,7 +874,7 @@
         }
     </style>
 <style>html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}</style>
-<script>try{if(localStorage.getItem("sewing_no_anim")==="1")document.documentElement.classList.add("no-anim")}catch(e){}</script>
+<script>try{var v=localStorage.getItem("sewing_no_anim");if(v===null){var C=window.Capacitor;if(C&&((C.isNativePlatform&&C.isNativePlatform())||(C.getPlatform&&C.getPlatform()!=="web"))){v="1";localStorage.setItem("sewing_no_anim","1")}}if(v==="1")document.documentElement.classList.add("no-anim")}catch(e){}</script>
     <style id="payrollStyle">
         /* مالی و حقوق (زبانه‌ی پنل کارفرما) */
         .pay-sub { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
@@ -989,6 +989,26 @@
         .mgr-kv.kf-kv-wide { grid-column: 1 / -1; }
         .mgr-kv.kf-kv-wide > b { overflow: visible; text-overflow: clip; white-space: normal; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
     </style>
+<style id="helpGuideStyle">
+.help-sec{border:1px solid rgb(226 232 240);border-radius:14px;overflow:hidden;background:#fff}
+.dark .help-sec{border-color:rgb(51 65 85);background:rgb(15 23 42)}
+.help-sec>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13px;color:rgb(30 41 59);background:rgb(248 250 252)}
+.dark .help-sec>summary{color:rgb(241 245 249);background:rgba(30,41,59,.6)}
+.help-sec>summary::-webkit-details-marker{display:none}
+.help-sec>summary::after{content:'\f078';font-family:'Font Awesome 6 Free';font-weight:900;font-size:10px;margin-right:6px;transition:transform .2s;color:rgb(100 116 139)}
+.help-sec[open]>summary::after{transform:rotate(180deg)}
+.help-sec>summary b{flex:1;font-weight:800}
+.help-sec>summary em{font-style:normal;font-size:10.5px;padding:0 8px;border-radius:99px;background:rgba(99,102,241,.14);color:#4f46e5}
+.dark .help-sec>summary em{color:#a5b4fc}
+.help-ico{width:30px;height:30px;flex-shrink:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:#fff;background:linear-gradient(135deg,#6366f1,#8b5cf6)}
+.help-items{padding:4px 12px 10px}
+.help-it{padding:8px 0;border-top:1px dashed rgba(148,163,184,.45)}
+.help-it:first-child{border-top:0}
+.help-it h4{font-size:12.5px;font-weight:800;color:#4f46e5;margin:0 0 3px}
+.dark .help-it h4{color:#a5b4fc}
+.help-it p{font-size:12px;line-height:2;color:rgb(51 65 85);margin:0}
+.dark .help-it p{color:rgb(203 213 225)}
+</style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen pb-28 font-normal-size" id="appBody">
 
@@ -1105,6 +1125,15 @@
                                         <span class="block text-[9px] text-slate-400">خلاصه آمار</span>
                                     </span>
                                 </button>
+                            <button onclick="openHelpGuide()" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                <span class="w-9 h-9 shrink-0 rounded-full bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-book-open text-xs"></i>
+                                </span>
+                                <span class="min-w-0">
+                                    <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">راهنمای کامل</span>
+                                    <span class="block text-[9px] text-slate-400">همه‌ی بخش‌ها</span>
+                                </span>
+                            </button>
                                 <button onclick="openSettingsModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                                         <i class="fa-solid fa-gear text-xs"></i>
@@ -2055,6 +2084,22 @@
                 <button onclick="emptyTrashBin()" class="px-4 py-2 border border-rose-200 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 rounded-xl text-sm hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors">خالی کردن سطل بازیافت</button>
                 <button onclick="closeTrashBinModal()" class="px-4 py-2 border border-slate-400 dark:border-slate-500 rounded-xl text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">بستن</button>
             </div>
+        </div>
+    </div>
+
+    <!-- راهنمای کامل برنامه -->
+    <div id="helpModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print" onclick="if(event.target===this)closeHelpGuide()">
+        <div class="bg-white dark:bg-slate-900 pro-modal rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-300 dark:border-slate-600 flex flex-col" style="max-height:90vh" role="dialog" aria-label="راهنمای کامل برنامه">
+            <div class="flex items-center justify-between gap-2 p-4 pb-3 border-b border-slate-300 dark:border-slate-600">
+                <h2 class="text-base font-bold text-slate-800 dark:text-white flex items-center gap-2"><i class="fa-solid fa-book-open text-indigo-600 dark:text-indigo-400"></i> راهنمای کامل برنامه</h2>
+                <button type="button" onclick="closeHelpGuide()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-xl transition-colors" aria-label="بستن"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="p-3 pb-2 flex items-center gap-2">
+                <input id="helpSearch" type="search" oninput="helpRender(this.value)" placeholder="جستجو در راهنما… (مثلاً پشتیبان، حقوق، چاپ)" class="flex-1 min-w-0 p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                <button type="button" onclick="helpToggleAll(true)" class="shrink-0 px-2.5 py-2 text-[11px] border border-slate-400 dark:border-slate-500 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">باز کردن همه</button>
+                <button type="button" onclick="helpToggleAll(false)" class="shrink-0 px-2.5 py-2 text-[11px] border border-slate-400 dark:border-slate-500 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">بستن همه</button>
+            </div>
+            <div id="helpBody" class="p-3 pt-1 space-y-2 overflow-y-auto" style="overscroll-behavior:contain"></div>
         </div>
     </div>
 
@@ -4310,6 +4355,150 @@
             }).join('');
         }
         function closeTrashBinModal() { document.getElementById('trashBinModal').classList.add('hidden'); }
+        /* ==================== راهنمای کامل برنامه (منوی ابزار ← راهنمای کامل) ==================== */
+        const HELP_SECTIONS = [
+            { id: 'start', ic: 'fa-rocket', t: 'شروع سریع و ساختار برنامه', items: [
+                ['نوار پایین (تب‌ها)', 'برنامه پنج تب اصلی دارد: <b>خانه</b> (خلاصه‌ی ماه و میان‌برها)، <b>رکوردها</b> (لیست کارکردها)، <b>ثبت</b> (ثبت کارکرد جدید)، <b>یادداشت‌ها</b> و <b>پیشرفت کار</b> (وضعیت زنده‌ی کار جاری).'],
+                ['منوی ابزار', 'از دکمه‌ی ابزار بالای صفحه باز می‌شود و سه زبانه دارد: <b>اصلی</b> (گزارش‌ها، تنظیمات، جستجوی پیشرفته، قفل)، <b>داده‌ها</b> (پشتیبان، خروجی، سطل بازیافت، سلامت داده) و <b>دستگاه</b> (نصب، اعلان، ویجت، انیمیشن و ...).'],
+                ['دوره‌ی گزارش (ماه)', 'همه‌ی آمارها، لیست‌ها و محاسبات مالی مربوط به «ماه فعال» هستند. ماه فعال را از انتخابگر دوره در بالای صفحه تغییر دهید؛ ماه‌های قبل با داده‌های خودشان حفظ می‌شوند.'],
+                ['حالت پرسنل و حالت کارفرما', 'در حالت پرسنل، برنامه برای ثبت کار شخصی است. با فعال‌کردن قابلیت کارفرما می‌توانید با دکمه‌ی تغییر حالت زیر عنوان صفحه بین «حالت پرسنل» و «حالت کارفرما» جابه‌جا شوید (بخش «کارفرما» در همین راهنما).'],
+                ['مناسب همه‌ی مشاغل', 'در تنظیمات، «نوع کسب‌وکار / صنف» نام فیلدها و نمونه‌ها را با شغل شما هماهنگ می‌کند (تعمیرگاه، نجاری، ساختمان، آرایشگاه، آشپزخانه و ...).']
+            ] },
+            { id: 'home', ic: 'fa-house', t: 'تب خانه', items: [
+                ['کارت‌های آمار', 'خلاصه‌ی ماه فعال، از جمله «ارزش کل کارکرد» به واحد پول انتخابی (تومان یا ریال).'],
+                ['هدف درآمد', 'می‌توانید هدف <b>هفتگی</b>، <b>ماهانه</b> یا <b>بازه‌ی دلخواه</b> تعیین کنید (تنظیمات ← پروفایل/مشخصات) و نوار پیشرفت آن را در خانه ببینید. با رسیدن به هدف، تبریک نمایش داده می‌شود.'],
+                ['دستیار هوشمند', 'تحلیل <b>آفلاین</b> روی همان دستگاه؛ داده‌های شما به جایی ارسال نمی‌شود. با دکمه‌ی به‌روزرسانی روی کارت، تحلیل دوباره ساخته می‌شود.'],
+                ['ویجت پیشرفت کار جاری', 'کار در حال انجام، درصد پیشرفت و زمان باقی‌مانده تا موعد (یا میزان تاخیر) را نشان می‌دهد.'],
+                ['نوار متن انگیزشی', 'نوار بالای صفحه، همراه با شمارش تحویل‌های به‌موقع پشت‌سرهم. نمایش، انیمیشن، فونت و رنگ آن از تنظیمات ← ظاهری قابل تغییر است.'],
+                ['میان‌برها', 'دکمه‌های «ثبت کارکرد جدید» و «لیست کارکردها» و (در حالت کارفرما) «پنل کارفرما» در همین تب قرار دارند.']
+            ] },
+            { id: 'add', ic: 'fa-circle-plus', t: 'ثبت کارکرد جدید', items: [
+                ['فیلدهای اصلی', 'کد کار/قطعه، عنوان، رنگ/مشخصات (اختیاری)، تعداد دریافتی و قیمت واحد. مبلغ کل خودکار = تعداد × قیمت واحد. نام فیلدها با «نوع کسب‌وکار» و تنظیمات فرم قابل تغییر است.'],
+                ['قیمت نامعلوم', 'اگر قیمت هنوز مشخص نیست، «قیمت نامعلوم» را بزنید؛ رکورد ثبت می‌شود ولی در جمع مبلغ حساب نمی‌شود و بعداً با ویرایش کامل می‌شود.'],
+                ['پرسنل مسئول', 'در حالت کارفرما، کار را به یک پرسنل ارجاع می‌دهید؛ کارکرد در حساب همان پرسنل می‌آید.'],
+                ['وضعیت تحویل', 'سه وضعیت: <b>به موقع</b>، <b>تاخیر</b>، <b>زودتر از موعد</b>. در حالت «خودکار» وضعیت از روی مهلت و زمان پایان محاسبه می‌شود و در حالت «دستی» خودتان انتخاب می‌کنید (تنظیمات ← ساعات کاری و فرم).'],
+                ['تاریخ/ساعت و مدت', 'تاریخ و ساعت ثبت (با تقویم شمسی)، «مدت زمان تحویل کار» (ساعت و دقیقه)، تاریخ و ساعت پایان، و «مدت زمان تاخیر». گزینه‌ی «نامعلوم است» برای زمانی که دقیق نمی‌دانید.'],
+                ['آمار روزانه و عکس', 'آمار روزانه ثبت می‌شود و می‌توانید برای هر رکورد یک عکس/نمونه‌ی کار بگیرید یا انتخاب کنید؛ در لیست با کلیک روی تصویر بزرگ می‌شود.'],
+                ['ویرایش', 'از لیست رکوردها روی ویرایش بزنید؛ فرم همین‌جا پر می‌شود و با «انصراف از ویرایش» برمی‌گردید.']
+            ] },
+            { id: 'notes', ic: 'fa-note-sticky', t: 'یادداشت‌ها و یادآورها', items: [
+                ['انواع یادداشت', '<b>عادی</b>، <b>یادآوری</b> و <b>تعطیلی</b>؛ برای هر روز می‌توانید چند یادداشت جدا ثبت کنید (یادداشت جدید هرگز یادداشت قبلیِ همان تاریخ را جایگزین نمی‌کند).'],
+                ['یادآوری', 'ساعت یادآوری، زمان هشدار (همان لحظه تا ۱ روز قبل)، تکرار (بدون تکرار، هر روز، هفته یا ماه) و هشدار صوتی با دکمه‌ی «تست صدا».'],
+                ['مدیریت', 'هر یادداشت را می‌توانید انجام‌شده کنید، ویرایش کنید، پنهان/نمایش دهید یا حذف کنید (حذف‌شده‌ها در سطل بازیافت می‌مانند).'],
+                ['اعلان‌ها', 'برای هشدار حتی با بسته‌بودن برنامه، «فعال‌سازی اعلان‌های دستگاه» را از منوی ابزار ← دستگاه بزنید.']
+            ] },
+            { id: 'list', ic: 'fa-table', t: 'رکوردها (لیست کارکردها)', items: [
+                ['ستون‌ها و فیلدها', 'دکمه‌ی «فیلدها» نمایش/پنهان‌کردن ستون‌ها را تعیین می‌کند. ستون‌ها شامل عکس، کد، عنوان، رنگ، پرسنل و بخش، تعداد، آمار روزانه، قیمت واحد، مبلغ کل، مدت تحویل، پایان، شروع کد بعد، وضعیت و تاریخ‌اند.'],
+                ['نمای جدولی/کارتی', 'در گوشی نمای کارتی و در صفحه‌ی بزرگ نمای جدولی پیش‌فرض است؛ با دکمه‌ی «نمای کارتی» دستی عوض می‌شود. «تمام صفحه» لیست را بزرگ می‌کند.'],
+                ['جستجو', 'جستجوی سریع در لیست و «جستجوی پیشرفته» بر اساس کد، عنوان و مشخصات روی همه‌ی ماه‌ها.'],
+                ['پایان کار', 'برای کارهای باز، دکمه‌ی «پایان کار» زمان همین لحظه را به‌عنوان پایان ثبت می‌کند و با آیکون برگشت قابل لغو است. ستون «شروع کد بعد» زنجیره‌ی کارها را نشان می‌دهد.'],
+                ['جمع مدت زمان تاخیر', 'زیر لیست، مجموع تاخیرها بر مبنای ساعت کاری مفید روزانه (پیش‌فرض ۸ ساعت و ۱۵ دقیقه، قابل تغییر در تنظیمات) نمایش داده می‌شود.'],
+                ['کدهای تکراری', 'کدهایی که بیش از یک بار ثبت شده‌اند و فهرست کامل کارکردهای هر کد.'],
+                ['چاپ لیست', 'دکمه‌ی «چاپ لیست» لیست فعلی را با سربرگ (نام کارگاه، دوره، تعداد و مجموع مبلغ) چاپ می‌کند. چاپ همیشه با تم روشن انجام می‌شود.'],
+                ['ویرایش و حذف', 'هر ردیف دکمه‌ی ویرایش و حذف دارد؛ حذف‌شده‌ها ۳۰ روز در سطل بازیافت می‌مانند.']
+            ] },
+            { id: 'progress', ic: 'fa-stopwatch', t: 'پیشرفت کار', items: [
+                ['وضعیت زنده', 'کار جاری هر نفر (یا کار شخصی شما) با حلقه‌ی درصد، زمان باقی‌مانده تا موعد و هشدار تاخیر.'],
+                ['حالت کارفرما', 'ویجت هر پرسنل فعال نمایش داده می‌شود. با دکمه‌ی چرخ‌دنده می‌توانید فقط ویجت پرسنل انتخابی را نشان دهید و با «نمایش همه» برگردید.'],
+                ['ویجت روی گوشی', 'در نسخه‌ی نصبی (APK) می‌توانید ویجت صفحه‌ی اصلی گوشی را فعال کنید (منوی ابزار ← دستگاه).']
+            ] },
+            { id: 'search', ic: 'fa-magnifying-glass', t: 'جستجوی پیشرفته', items: [
+                ['دامنه', 'از منوی ابزار ← اصلی؛ جستجو روی کد، عنوان و مشخصات انجام می‌شود و می‌تواند همه‌ی ماه‌ها را شامل شود.'],
+                ['نتایج', 'نتیجه‌ها در همان لیست رکوردها با نوار هشدار «نتایج جستجوی پیشرفته» نمایش داده می‌شوند؛ با «بازگشت به نمای ماهانه» به حالت عادی برمی‌گردید. چاپ در این حالت شامل چند ماه است.']
+            ] },
+            { id: 'reports', ic: 'fa-chart-pie', t: 'گزارش‌ها و خروجی‌ها', items: [
+                ['گزارش کلی', 'خلاصه‌ی آمار ماه فعال؛ در حالت کارفرما داده‌های کارگاه و در حالت پرسنل داده‌های شخصی را نشان می‌دهد و قابل چاپ و تمام‌صفحه است.'],
+                ['گزارش امروز', 'خلاصه‌ی کار امروز برای ارسال در پیام‌رسان‌ها.'],
+                ['خروجی HTML', 'گزارش رسمی قابل چاپ (منوی ابزار ← داده‌ها).'],
+                ['خروجی CSV', 'جدول رکوردهای دوره‌ی جاری برای باز کردن در اکسل.']
+            ] },
+            { id: 'manager', ic: 'fa-user-tie', t: 'کارفرما: پرسنل، بخش‌ها و مالی', items: [
+                ['فعال‌سازی', 'تنظیمات ← کارفرما ← «فعال‌سازی قابلیت کارفرما». غیرفعال‌کردن هیچ داده‌ای را پاک نمی‌کند و فقط بخش‌های مربوط پنهان می‌شوند.'],
+                ['پنل کارفرما', 'از دکمه‌ی «پنل کارفرما» در تب خانه باز می‌شود و سه زبانه دارد: <b>پرسنل</b>، <b>بخش‌ها</b> و <b>مالی و حقوق</b>.'],
+                ['پرسنل', 'افزودن/ویرایش با نام، تلفن، نقش، بخش، تاریخ شروع و پایان، یادداشت و عکس. می‌توانید پرسنل را غیرفعال کنید (سوابق می‌ماند) یا حذف کنید. فایل جداگانه‌ی هر پرسنل دانلود و در صورت نیاز بازیابی می‌شود.'],
+                ['بخش‌ها', 'بخش‌های کارگاه (مثلاً برش، دوخت، انبار) را تعریف و پرسنل را به آن‌ها اختصاص دهید.'],
+                ['ارجاع کار', 'هنگام ثبت کارکرد، پرسنل مسئول را انتخاب کنید. در لیست رکوردها می‌توانید «نمایش کارکرد» را برای یک پرسنل یا «بدون ارجاع» فیلتر کنید.'],
+                ['مالی و حقوق', 'چهار زیرزبانه: <b>خلاصه‌ی حقوق</b> (کارت هر پرسنل و مجموع قابل پرداخت)، <b>ثبت موارد</b> (اضافه‌کاری، غیبت، مرخصی، پاداش، کسورات)، <b>نرخ‌های ساعتی</b> و <b>حقوق پایه</b> (از ماهی که تعیین می‌کنید به بعد معتبر است).'],
+                ['فرمول قابل پرداخت', 'حقوق پایه + کارکرد (جمع مبلغ رکوردهای ارجاع‌شده) + اضافه‌کاری + پاداش − غیبت − کسورات ± مرخصی. هر مورد نرخ لحظه‌ی ثبت را نگه می‌دارد و تغییر بعدی نرخ روی ثبت‌های قبل اثر نمی‌گذارد.']
+            ] },
+            { id: 'wfin', ic: 'fa-wallet', t: 'کادر خلاصه‌ی مالی پرسنل', items: [
+                ['باز کردن', 'در لیست رکوردها (حالت کارفرما) روی <b>نام پرسنل</b> بزنید تا کادر کوچک مالی همان ماه باز شود (در جدول، کارت موبایل و نمای گروه‌بندی‌شده).'],
+                ['محتوا', 'آمار (کارکرد، روز کاری، میانگین هر رکورد، سهم از کارکرد کارگاه)، ریز حقوق پایه/کارکرد/اضافه‌کاری و ...، مبلغ قابل پرداخت، و دو بخش بازشونده برای «ثبت‌های مالی ماه» و «کارکردهای ماه».'],
+                ['بستن', 'با دکمه‌ی ✕، کلید Esc یا زدن دوباره‌ی همان نام. کلیک بیرون کادر آن را نمی‌بندد.'],
+                ['چاپ', 'اگر کادر باز باشد، هنگام چاپ لیست، خلاصه‌ی کامل آن پرسنل (با همه‌ی ثبت‌ها و کارکردها) زیر لیست چاپ می‌شود.']
+            ] },
+            { id: 'settings', ic: 'fa-gear', t: 'تنظیمات (هفت زبانه)', items: [
+                ['پروفایل', 'نام، تلفن و آدرس، نام کارگاه، واحد پول، وضعیت پیش‌فرض ثبت، حاشیه‌ی «به‌موقع» (دقیقه)، هدف‌های درآمد و نوع کسب‌وکار.'],
+                ['ساعات کاری و فرم', 'شروع/پایان کار و استراحت‌ها، ساعت کاری مفید روزانه، منطق محاسبه‌ی وضعیت تحویل (خودکار/دستی)، نام فیلدهای فرم، و افزودن/حذف فیلدهای دلخواه.'],
+                ['کارفرما', 'روشن/خاموش‌کردن قابلیت کارفرما.'],
+                ['ظاهری', 'تم روشن/تاریک، فرمت اعداد (فارسی/انگلیسی)، فونت و اندازه، رنگ پس‌زمینه، کادرها و فیلدها، نوار متن انگیزشی، و جلوه‌های بصری کادرها، کادر سامانه و متن انگیزشی (هرکدام با رنگ و نوع جلوه‌ی مستقل).'],
+                ['امنیت', 'قفل ورود با رمز عبور و گزینه‌ی فراموشی/بازیابی رمز.'],
+                ['حافظه', 'مسیرهای ذخیره‌سازی (پوشه‌ی داده) و وضعیت حافظه‌ی سامانه.'],
+                ['درباره', 'امکانات کلیدی و راه‌های ارتباط با تیم سازنده.']
+            ] },
+            { id: 'security', ic: 'fa-lock', t: 'امنیت و قفل برنامه', items: [
+                ['رمز عبور', 'در تنظیمات ← امنیت رمز (حداقل ۴ رقم) را فعال و تکرار کنید. رمز به‌صورت هش‌شده ذخیره می‌شود و تا ورود موفق، اطلاعات نمایش داده نمی‌شود.'],
+                ['بازیابی رمز', 'یک سؤال و پاسخ امنیتی یا کد بازیابی تعیین کنید تا در صورت فراموشی رمز بتوانید وارد شوید. آن را جایی امن نگه دارید.'],
+                ['قفل سریع / خروج', 'منوی ابزار ← «قفل برنامه» برنامه را فوراً قفل می‌کند و از آن خارج می‌شوید؛ نسخه‌ی پشتیبان خودکار ذخیره می‌شود.']
+            ] },
+            { id: 'data', ic: 'fa-database', t: 'پشتیبان‌گیری و مدیریت داده', items: [
+                ['ذخیره‌ی خودکار', 'تغییرات به‌صورت خودکار در حافظه‌ی برنامه (و در صورت اتصال، در پوشه‌ی انتخابی) ذخیره می‌شود؛ برای هر ماه پوشه‌ی جدا ساخته می‌شود.'],
+                ['پشتیبان‌گیری', 'منوی ابزار ← داده‌ها: «پشتیبان‌گیری» فایل JSON می‌سازد، «ارسال به فضای ابری» آن را به گوگل‌درایو، آی‌کلود و ... می‌فرستد و «بارگذاری پشتیبان» فایل را وارد می‌کند.'],
+                ['پشتیبان چرخشی', 'اگر پوشه‌ای متصل کرده باشید، «پشتیبان چرخشی الان» نسخه‌ی تازه را می‌نویسد و نسخه‌های قدیمی را می‌چرخاند.'],
+                ['مدیریت پوشه‌ها', 'اتصال/قطع پوشه‌ی ذخیره در تنظیمات ← حافظه.'],
+                ['سطل بازیافت', 'رکورد و یادداشت حذف‌شده تا ۳۰ روز قابل بازگردانی است؛ پس از آن برای همیشه پاک می‌شود.'],
+                ['بررسی سلامت داده', 'ناهماهنگی‌ها و نواقص داده‌ها را پیدا و گزارش می‌کند.'],
+                ['توصیه', 'قبل از تغییر دستگاه یا پاکسازی مرورگر حتماً پشتیبان بگیرید.']
+            ] },
+            { id: 'device', ic: 'fa-mobile-screen-button', t: 'ابزارهای دستگاه', items: [
+                ['نصب برنامه', '«نصب برنامه» و راهنمای «نصب روی آیفون/آیپد» برنامه را روی صفحه‌ی اصلی می‌گذارد تا مثل یک اپ و آفلاین کار کند.'],
+                ['به‌روزرسانی و اشتراک', '«بررسی به‌روزرسانی» آخرین نسخه را می‌گیرد و «اشتراک‌گذاری برنامه» لینک را برای دیگران می‌فرستد.'],
+                ['اعلان‌ها', 'هشدار موعد تحویل و یادآورها حتی در پس‌زمینه.'],
+                ['روشن ماندن صفحه', 'برای کار پشت میز، صفحه خاموش نمی‌شود.'],
+                ['توقف انیمیشن‌ها', 'همه‌ی انیمیشن‌ها را متوقف می‌کند تا برنامه سبک‌تر و روان‌تر اجرا شود.'],
+                ['محافظت از داده‌ها', 'از پاک‌شدن خودکار داده‌ها توسط مرورگر جلوگیری می‌کند.'],
+                ['پاکسازی حافظه‌ی پنهان', 'مشکل نمایش را برطرف می‌کند؛ داده‌های شما می‌ماند.']
+            ] },
+            { id: 'apk', ic: 'fa-android', brand: true, t: 'نسخه‌ی نصبی (APK)', items: [
+                ['پیش‌فرض‌ها', 'در نصب اول APK، انیمیشن‌ها خاموش و جلوه‌های بصری غیرفعال است. هر زمان بخواهید از «توقف انیمیشن‌ها» و تنظیمات ← ظاهری روشن‌شان کنید.'],
+                ['امکانات ویژه', 'ویجت صفحه‌ی اصلی گوشی و اعلان‌های بومی با بسته‌بودن برنامه فقط در همین نسخه کار می‌کنند.'],
+                ['ذخیره‌ی داده', 'پوشه‌ی داده در APK به‌صورت خودکار مدیریت می‌شود و ساختار «یک پوشه برای هر ماه + فایل تنظیمات» حفظ می‌شود.']
+            ] },
+            { id: 'faq', ic: 'fa-circle-question', t: 'نکات و رفع اشکال', items: [
+                ['داده‌ای نمی‌بینم', 'ماه فعال را بررسی کنید؛ سپس فیلتر پرسنل در لیست و جستجوی پیشرفته‌ی فعال را بردارید.'],
+                ['مبلغ کل کمتر است', 'رکوردهای «قیمت نامعلوم» در جمع نمی‌آیند؛ قیمت را تکمیل کنید.'],
+                ['نام پرسنل کلیک‌شدنی نیست', 'فقط در حالت کارفرما و برای پرسنلی که حذف نشده‌اند فعال است.'],
+                ['برنامه کند یا نمایش مشکل دارد', 'انیمیشن‌ها و جلوه‌ها را خاموش کنید یا «پاکسازی حافظه‌ی پنهان» را بزنید.'],
+                ['بارگذاری پشتیبان خطا می‌دهد', 'فایل باید JSON معتبری باشد که از همین برنامه گرفته شده؛ فایل پرسنل را از «پنل کارفرما ← پرسنل» وارد کنید.']
+            ] }
+        ];
+        function helpRender(q) {
+            const body = document.getElementById('helpBody'); if (!body) return;
+            q = (typeof normalizeSearchText === 'function' ? normalizeSearchText(q || '') : String(q || '').trim().toLowerCase());
+            const strip = h => String(h).replace(/<[^>]+>/g, ' ');
+            const norm = t => (typeof normalizeSearchText === 'function' ? normalizeSearchText(t) : String(t).toLowerCase());
+            let shown = 0;
+            const html = HELP_SECTIONS.map(sec => {
+                const secHit = q && norm(sec.t).includes(q);
+                const items = sec.items.filter(it => !q || secHit || norm(it[0] + ' ' + strip(it[1])).includes(q));
+                if (!items.length) return ''; shown++;
+                return `<details class="help-sec" data-id="${sec.id}"${q ? ' open' : ''}><summary><span class="help-ico"><i class="${sec.brand ? 'fa-brands' : 'fa-solid'} ${sec.ic}"></i></span><b>${sec.t}</b><em>${(typeof formatNumber === 'function' ? formatNumber(items.length) : items.length)}</em></summary><div class="help-items">${items.map(it => `<div class="help-it"><h4>${it[0]}</h4><p>${it[1]}</p></div>`).join('')}</div></details>`;
+            }).join('');
+            body.innerHTML = html || '<p class="text-xs text-slate-400 text-center py-8">موردی پیدا نشد؛ عبارت دیگری را جستجو کنید.</p>';
+        }
+        function helpToggleAll(open) { document.querySelectorAll('#helpBody details.help-sec').forEach(d => { d.open = open; }); }
+        function openHelpGuide() {
+            if (typeof closeToolsDropdown === 'function') closeToolsDropdown();
+            const m = document.getElementById('helpModal'); if (!m) return;
+            const inp = document.getElementById('helpSearch'); if (inp) inp.value = '';
+            helpRender('');
+            m.classList.remove('hidden');
+            const b = document.getElementById('helpBody'); if (b) b.scrollTop = 0;
+        }
+        function closeHelpGuide() { const m = document.getElementById('helpModal'); if (m) m.classList.add('hidden'); }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { const m = document.getElementById('helpModal'); if (m && !m.classList.contains('hidden')) closeHelpGuide(); } });
+        /* ==================== پایان راهنمای کامل ==================== */
+
         /* ==================== پایان [بهبود ذخیره‌سازی ۳] سطل بازیافت ==================== */
 
         // حداقل تعداد ماهِ اخیر که در localStorage (برای بارگذاری فوری/آفلاین) نگه داشته می‌شود؛
@@ -4674,6 +4863,8 @@
                 lunch: { start: '13:45', end: '14:30' }, tea2: { start: '16:15', end: '16:30' }
             }
         };
+        // نسخه‌ی نصبی (APK/Capacitor): پیش‌فرض بدون انیمیشن و بدون جلوه‌های بصری (کاربر می‌تواند از تنظیمات روشن کند)
+        const IS_APK_BUILD = (() => { try { const C = window.Capacitor; return !!(C && ((C.isNativePlatform && C.isNativePlatform()) || (C.getPlatform && C.getPlatform() !== 'web'))); } catch (e) { return false; } })();
         const DEFAULT_APP_SETTINGS = {
             workdayMinutes: 495, shiftStart: '08:00', shiftEnd: '18:00', shiftBreaks: null, formLabels: {}, optionalFields: { itemColor: true }, businessType: 'general', customFields: [], hiddenFields: {},
             schemaVersion: 1,
@@ -4700,7 +4891,7 @@
             cardColor: 'default',
             fieldColor: 'default',
             motivationBadgeVisible: true,
-            motivationAnimation: 'default',
+            motivationAnimation: IS_APK_BUILD ? 'none' : 'default',
             motivationFontFamily: 'inherit',
             motivationFontSize: 'normal',
             motivationBgColor: 'default',
@@ -4713,7 +4904,7 @@
             ownerPhoto: null,
             cardFx: false,
             cardFxScheme: 'indigo',
-            cardFxMotion: true,
+            cardFxMotion: !IS_APK_BUILD,
             cardFxStyle: 'classic',
             headerFxStyle: 'classic',
             headerFx: false,
