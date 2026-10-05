@@ -906,18 +906,54 @@
         /* کادر کوچک خلاصه‌ی مالی پرسنل */
         .wfin-link { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; cursor: pointer; text-align: inherit; border-bottom: 1px dashed rgba(99, 102, 241, .55); transition: color .15s; }
         .wfin-link:hover { color: #6366f1; }
-        .wfin { position: fixed; z-index: 95; display: none; width: min(320px, calc(100vw - 16px)); max-height: calc(100vh - 16px); overflow-y: auto; border-radius: 18px; background: #fff; border: 1px solid rgb(203 213 225); box-shadow: 0 18px 40px -12px rgba(30, 27, 75, .45), 0 0 0 1px rgba(99, 102, 241, .12); }
+        .wfin { position: fixed; z-index: 95; display: none; width: min(340px, calc(100vw - 16px)); max-height: min(80vh, 600px); overflow-y: auto; overscroll-behavior: contain; border-radius: 18px; background: #fff; border: 1px solid rgb(203 213 225); box-shadow: 0 18px 40px -12px rgba(30, 27, 75, .45), 0 0 0 1px rgba(99, 102, 241, .12); }
         .dark .wfin { background: rgb(15 23 42); border-color: rgb(71 85 105); }
         .wfin.wfin-in { animation: wfinIn .28s cubic-bezier(.2, .9, .3, 1.2); }
         @keyframes wfinIn { from { opacity: 0; transform: translateY(8px) scale(.94); } to { opacity: 1; transform: none; } }
-        .wfin-head { position: relative; display: flex; align-items: center; gap: 10px; padding: 11px 12px; color: #fff; overflow: hidden; }
+        .wfin-head { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 11px 12px; color: #fff; overflow: hidden; }
         .wfin-head::after { content: ''; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .22) 50%, transparent 65%); transform: translateX(-100%); animation: wfinShine 3.2s ease-in-out infinite; pointer-events: none; }
         @keyframes wfinShine { 0%, 60% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
         .wfin-head b { display: block; font-size: 13px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .wfin-head small { display: block; font-size: 10.5px; opacity: .85; }
+        .wfin-head small { display: block; font-size: 10.5px; opacity: .88; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .wfin-x { position: relative; z-index: 1; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .22); color: #fff; cursor: pointer; font-size: 13px; transition: background .15s, transform .15s; }
-        .wfin-x:hover { background: rgba(255, 255, 255, .4); transform: rotate(90deg); }
-        .wfin-body { padding: 6px 12px 12px; }
+        .wfin-x:hover, .wfin-x:focus-visible { background: rgba(255, 255, 255, .42); transform: rotate(90deg); outline: none; }
+        .wfin-body { padding: 8px 12px 12px; }
+        .wfin-tiles { grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px; }
+        .wfin-tiles .pay-stat { padding: 7px 6px; }
+        .wfin-tiles .pay-stat b { font-size: 12px; }
+        .wfin-tiles .pay-stat small.wfin-s { font-size: 9.5px; margin: 1px 0 0; opacity: .85; }
+        .wfin-sec { margin-top: 8px; border: 1px solid rgb(226 232 240); border-radius: 12px; overflow: hidden; }
+        .dark .wfin-sec { border-color: rgb(51 65 85); }
+        .wfin-sec > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 6px; padding: 7px 10px; font-size: 11.5px; font-weight: 700; color: rgb(51 65 85); background: rgb(241 245 249); }
+        .dark .wfin-sec > summary { color: rgb(203 213 225); background: rgba(30, 41, 59, .7); }
+        .wfin-sec > summary::-webkit-details-marker { display: none; }
+        .wfin-sec > summary span { margin-right: auto; font-size: 10.5px; padding: 0 7px; border-radius: 99px; background: rgba(99, 102, 241, .15); color: #4f46e5; }
+        .dark .wfin-sec > summary span { color: #a5b4fc; }
+        .wfin-sec > summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 9px; transition: transform .2s; }
+        .wfin-sec[open] > summary::after { transform: rotate(180deg); }
+        .wfin-row { display: flex; align-items: center; gap: 8px; padding: 6px 10px; font-size: 11.5px; border-top: 1px dashed rgba(148, 163, 184, .4); }
+        .wfin-ico { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; }
+        .wfin-ico.pos { background: rgba(16, 185, 129, .15); color: #059669; }
+        .wfin-ico.neg { background: rgba(244, 63, 94, .15); color: #e11d48; }
+        .wfin-main { flex: 1; min-width: 0; }
+        .wfin-main b { display: block; font-weight: 700; color: rgb(30 41 59); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dark .wfin-main b { color: rgb(241 245 249); }
+        .wfin-main small { display: block; font-size: 10px; color: rgb(100 116 139); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .wfin-amt { font-weight: 800; white-space: nowrap; font-size: 11.5px; }
+        .wfin-more { padding: 5px 10px; border-top: 1px dashed rgba(148, 163, 184, .4); text-align: center; }
+        /* چاپ: خلاصه‌ی مالی پرسنلِ باز، زیر لیست کارکردها */
+        #wfinPrint:empty { display: none !important; }
+        .wfin-pr { padding: 10px 14px 14px; margin-top: 10px; border-top: 2px solid #64748b; color: #0f172a; background: #fff; direction: rtl; }
+        .wfin-pr h3 { font-size: 13px; font-weight: 800; margin: 0 0 3px; }
+        .wfin-pr .meta { font-size: 10.5px; color: #475569; margin: 0 0 8px; }
+        .wfin-pr h4 { font-size: 11.5px; font-weight: 800; margin: 10px 0 4px; }
+        .wfin-pr table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .wfin-pr th, .wfin-pr td { border: 1px solid #94a3b8; padding: 4px 7px; text-align: right; }
+        .wfin-pr th { background: #e2e8f0; font-weight: 700; }
+        .wfin-pr td.n { white-space: nowrap; font-weight: 700; }
+        .wfin-pr tr { page-break-inside: avoid; }
+        .wfin-pr tr.tot td { background: #e0e7ff; font-weight: 800; font-size: 12px; }
+        @media print { .wfin-pr, .wfin-pr * { visibility: visible !important; } .wfin-pr th, .wfin-pr tr.tot td { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
         @media (prefers-reduced-motion: reduce) { .wfin.wfin-in, .wfin-head::after { animation: none; } }
         .pay-hint { font-size: 11px; line-height: 1.9; color: rgb(100 116 139); }
         .dark .pay-hint { color: rgb(148 163 184); }
@@ -1845,6 +1881,8 @@
                     <div id="duplicateCodesSummaryText" class="text-sm text-slate-700 dark:text-slate-200 leading-relaxed max-h-96 overflow-y-auto pl-1">—</div>
                 </div>
             </div>
+            <!-- خلاصه‌ی مالی پرسنلِ باز (کادر کلیک روی نام)، فقط هنگام چاپ و زیر لیست کارکردها -->
+            <div id="wfinPrint" class="print-only"></div>
         </div>
         </div><!-- پایان mainTabPanel-list -->
 
@@ -6709,6 +6747,7 @@
             document.getElementById('printRecordsSubtitle').innerText =
                 `${ownerLine ? ownerLine + '  |  ' : ''}دوره: ${periodLabel}  |  تعداد رکورد: ${formatNumber(records.length)}  |  مجموع مبلغ: ${formatNumber(totalAmountSum)} ${currency}${unknownPriceCount > 0 ? '  |  ' + formatNumber(unknownPriceCount) + ' رکورد با قیمت نامعلوم' : ''}  |  تاریخ چاپ: ${formatDateDigits(currentJalali.fullDateStr)}`;
 
+            if (typeof wfinRefresh === 'function') wfinRefresh();
             printWithLightTheme();
         }
 
@@ -11653,30 +11692,88 @@
             return head + rows.map(card).join('');
         }
 
-        /* ---- کادر کوچک خلاصه‌ی مالی پرسنل: با کلیک روی نام پرسنل در لیست کارکردها؛ فقط با دکمه‌ی ✕ بسته می‌شود ---- */
-        var wfinState = null;
-        function wfinHTML(w, mk) {
-            const r = mgrPayCalc(w, mk), sc = mgrSection(w.sectionId), g = mgrGrad(w);
+        /* ---- کادر کوچک خلاصه‌ی مالی پرسنل: با کلیک روی نام پرسنل در لیست کارکردها.
+           بسته شدن: دکمه‌ی ✕، کلید Esc (وقتی فوکوس روی کادر است)، یا کلیک دوباره روی همان نام.
+           کلیک بیرون از کادر عمداً آن را نمی‌بندد تا با لمس اتفاقی در موبایل یا هنگام مرور لیست از بین نرود. ---- */
+        var wfinState = null, wfinAnchor = null, wfinSec = { ents: true, recs: true };
+        const WFIN_LIM = 6;
+        function wfinData(w, mk) {
+            const c = mgrPayCalc(w, mk);
+            const recs = allRecords.filter(r => r.monthKey === mk && String(r.workerId || '') === w.id).sort((a, b) => (Number(b.id) || 0) - (Number(a.id) || 0));
+            const days = new Set(recs.map(r => r.date).filter(Boolean)).size;
+            const done = recs.filter(r => r.finishedDate || r.nextCodeStartDate).length;
+            const known = c.recs - c.unknown, avg = known > 0 ? c.work / known : 0;
+            const shop = allRecords.reduce((a, r) => a + ((r.monthKey === mk && typeof r.totalPrice === 'number' && Number.isFinite(r.totalPrice)) ? r.totalPrice : 0), 0);
+            const share = shop > 0 ? Math.round(c.work / shop * 100) : null;
+            const ents = mgrPay().entries.filter(e => e.workerId === w.id && e.monthKey === mk && PAY_KINDS[e.kind]).sort((a, b) => (b.at || 0) - (a.at || 0));
+            return { c, recs, days, done, avg, share, ents };
+        }
+        function wfinLines(c) {
             const line = (k, sub, v, cls) => `<div class="pay-line"><span class="k">${k}${sub ? `<small>${sub}</small>` : ''}</span><span class="v ${cls || ''}">${v}</span></div>`;
-            let lines = (r.base > 0 ? line('حقوق پایه', 'مبلغ ثابت ماهانه', payMoney(r.base, true), 'pay-pos') : '')
-                + line('کارکرد ثبت‌شده', `${payDigits(r.recs)} رکورد • ${formatNumber(r.qty)} واحد${r.unknown ? ` • ${payDigits(r.unknown)} بدون قیمت` : ''}`, payMoney(r.work, true), payCls(r.work));
+            let out = (c.base > 0 ? line('حقوق پایه', 'مبلغ ثابت ماهانه', payMoney(c.base, true), 'pay-pos') : '')
+                + line('کارکرد ثبت‌شده', `${payDigits(c.recs)} رکورد • ${formatNumber(c.qty)} واحد${c.unknown ? ` • ${payDigits(c.unknown)} بدون قیمت` : ''}`, payMoney(c.work, true), payCls(c.work));
             Object.keys(PAY_KINDS).forEach(k => {
-                const b = r.by[k], K = PAY_KINDS[k]; if (!b.n) return;
-                lines += line(`<i class="fa-solid ${K.ic} ml-1 opacity-70"></i>${K.t}`, `${K.hour ? payHours(b.hours) + ' • ' : ''}${payDigits(b.n)} مورد`, payMoney(b.amount, true), payCls(b.amount));
+                const b = c.by[k], K = PAY_KINDS[k]; if (!b.n) return;
+                out += line(`<i class="fa-solid ${K.ic} ml-1 opacity-70"></i>${K.t}`, `${K.hour ? payHours(b.hours) + ' • ' : ''}${payDigits(b.n)} مورد`, payMoney(b.amount, true), payCls(b.amount));
             });
-            const sub = [sc ? escapeHTML(sc.name) : '', payMonthLabel(mk)].filter(Boolean).join(' • ');
-            return `<div class="wfin-head" style="background:linear-gradient(135deg,${g[0]},${g[1]})">${mgrMiniAvatar(w, 38)}<div class="min-w-0 flex-1"><b>${escapeHTML(w.name)}${w.active ? '' : ' (غیرفعال)'}</b><small>${sub}</small></div><button type="button" class="wfin-x" data-wfin-close title="بستن" aria-label="بستن"><i class="fa-solid fa-xmark"></i></button></div>`
-                + `<div class="wfin-body">${lines}<div class="pay-total ${r.total < 0 ? 'neg' : ''}"><span>قابل پرداخت</span><span>${payMoney(r.total)}</span></div></div>`;
+            return out;
+        }
+        function wfinEntDetail(e) { const K = PAY_KINDS[e.kind]; return [K.hour ? `${payHours(e.hours)} × ${formatNumber(e.hourly)}` : '', e.note ? escapeHTML(e.note) : ''].filter(Boolean).join(' • '); }
+        function wfinRecAmt(r) { return (typeof r.totalPrice === 'number' && Number.isFinite(r.totalPrice)) ? payMoney(r.totalPrice) : '—'; }
+        function wfinHTML(w, mk, d) {
+            const c = d.c, sc = mgrSection(w.sectionId), g = mgrGrad(w);
+            const sub = [sc ? escapeHTML(sc.name) : '', w.role ? escapeHTML(w.role) : '', payMonthLabel(mk)].filter(Boolean).join(' • ');
+            const tile = (t, v, s) => `<div class="pay-stat"><small>${t}</small><b>${v}</b>${s ? `<small class="wfin-s">${s}</small>` : ''}</div>`;
+            const tiles = `<div class="pay-stats wfin-tiles">${tile('کارکرد ثبت‌شده', payDigits(c.recs), d.done ? payDigits(d.done) + ' تکمیل‌شده' : '')}${tile('روز کاری', payDigits(d.days))}${tile('میانگین هر رکورد', d.avg ? payMoney(d.avg) : '—')}${tile('سهم از کارکرد کارگاه', d.share == null ? '—' : payDigits(d.share) + '٪')}</div>`;
+            const sec = (key, ic, title, n, body) => n ? `<details class="wfin-sec" data-k="${key}"${wfinSec[key] ? ' open' : ''}><summary><i class="fa-solid ${ic}"></i> ${title} <span>${payDigits(n)}</span></summary>${body}</details>` : '';
+            const entRows = d.ents.slice(0, WFIN_LIM).map(e => { const K = PAY_KINDS[e.kind], pos = e.effect !== 'minus'; return `<div class="wfin-row"><span class="wfin-ico ${pos ? 'pos' : 'neg'}"><i class="fa-solid ${K.ic}"></i></span><span class="wfin-main"><b>${K.t}${e.rateTitle ? ' — ' + escapeHTML(e.rateTitle) : ''}</b><small>${wfinEntDetail(e) || '&nbsp;'}</small></span><span class="wfin-amt ${pos ? 'pay-pos' : 'pay-neg'}">${payMoney((pos ? 1 : -1) * e.amount, true)}</span></div>`; }).join('')
+                + (d.ents.length > WFIN_LIM ? `<p class="pay-hint wfin-more">و ${payDigits(d.ents.length - WFIN_LIM)} مورد دیگر (در چاپ کامل می‌آید)</p>` : '');
+            const recRows = d.recs.slice(0, WFIN_LIM).map(r => `<div class="wfin-row"><span class="wfin-main"><b>${escapeHTML(r.itemCode) || '-'} — ${escapeHTML(r.itemTitle) || '-'}</b><small>${escapeHTML(r.date || '')} • ${formatNumber(r.quantity)} واحد</small></span><span class="wfin-amt">${wfinRecAmt(r)}</span></div>`).join('')
+                + (d.recs.length > WFIN_LIM ? `<p class="pay-hint wfin-more">و ${payDigits(d.recs.length - WFIN_LIM)} رکورد دیگر (در چاپ کامل می‌آید)</p>` : '');
+            return `<div class="wfin-head" style="background:linear-gradient(135deg,${g[0]},${g[1]})">${mgrMiniAvatar(w, 38)}<div class="min-w-0 flex-1"><b>${escapeHTML(w.name)}${w.active ? '' : ' (غیرفعال)'}</b><small>${sub}</small></div><button type="button" class="wfin-x" data-wfin-close title="بستن (Esc)" aria-label="بستن"><i class="fa-solid fa-xmark"></i></button></div>`
+                + `<div class="wfin-body">${tiles}${wfinLines(c)}<div class="pay-total ${c.total < 0 ? 'neg' : ''}"><span>قابل پرداخت</span><span>${payMoney(c.total)}</span></div>`
+                + sec('ents', 'fa-receipt', 'ثبت‌های مالی ماه', d.ents.length, entRows) + sec('recs', 'fa-list-check', 'کارکردهای ماه', d.recs.length, recRows) + `</div>`;
+        }
+        function wfinPrintHTML(w, mk, d) {
+            const c = d.c, sc = mgrSection(w.sectionId), cur = escapeHTML(appSettings.currency || 'تومان');
+            const tr = (a, b, v) => `<tr><td>${a}</td><td>${b || ''}</td><td class="n">${v}</td></tr>`;
+            let rows = (c.base > 0 ? tr('حقوق پایه', 'مبلغ ثابت ماهانه', payMoney(c.base, true)) : '')
+                + tr('کارکرد ثبت‌شده', `${payDigits(c.recs)} رکورد • ${formatNumber(c.qty)} واحد${c.unknown ? ` • ${payDigits(c.unknown)} بدون قیمت` : ''}`, payMoney(c.work, true));
+            Object.keys(PAY_KINDS).forEach(k => { const b = c.by[k], K = PAY_KINDS[k]; if (b.n) rows += tr(K.t, `${K.hour ? payHours(b.hours) + ' • ' : ''}${payDigits(b.n)} مورد`, payMoney(b.amount, true)); });
+            rows += `<tr class="tot"><td colspan="2">قابل پرداخت</td><td class="n">${payMoney(c.total)}</td></tr>`;
+            const meta = [sc ? escapeHTML(sc.name) : '', w.role ? escapeHTML(w.role) : '', `روز کاری: ${payDigits(d.days)}`, d.avg ? `میانگین هر رکورد: ${payMoney(d.avg)}` : '', d.share != null ? `سهم از کارکرد کارگاه: ${payDigits(d.share)}٪` : '', d.done ? `${payDigits(d.done)} کارکرد تکمیل‌شده` : ''].filter(Boolean).join(' • ');
+            const entT = d.ents.length ? `<h4>ثبت‌های مالی ماه (${payDigits(d.ents.length)})</h4><table><thead><tr><th>مورد</th><th>جزئیات</th><th>مبلغ</th></tr></thead><tbody>${d.ents.map(e => `<tr><td>${PAY_KINDS[e.kind].t}${e.rateTitle ? ' — ' + escapeHTML(e.rateTitle) : ''}</td><td>${wfinEntDetail(e)}</td><td class="n">${payMoney((e.effect !== 'minus' ? 1 : -1) * e.amount, true)}</td></tr>`).join('')}</tbody></table>` : '';
+            const recT = d.recs.length ? `<h4>کارکردهای ماه (${payDigits(d.recs.length)})</h4><table><thead><tr><th>کد</th><th>عنوان</th><th>تاریخ</th><th>تعداد</th><th>مبلغ کل (${cur})</th></tr></thead><tbody>${d.recs.map(r => `<tr><td>${escapeHTML(r.itemCode) || '-'}</td><td>${escapeHTML(r.itemTitle) || '-'}</td><td>${escapeHTML(r.date || '')}</td><td>${formatNumber(r.quantity)}</td><td class="n">${(typeof r.totalPrice === 'number' && Number.isFinite(r.totalPrice)) ? formatNumber(Math.round(r.totalPrice)) : '—'}</td></tr>`).join('')}</tbody></table>` : '';
+            return `<div class="wfin-pr"><h3>خلاصه‌ی مالی ${escapeHTML(w.name)} — ${payMonthLabel(mk)}</h3><p class="meta">${meta}</p><table><thead><tr><th>شرح</th><th>جزئیات</th><th>مبلغ</th></tr></thead><tbody>${rows}</tbody></table>${entT}${recT}</div>`;
+        }
+        // نمایش دوباره‌ی کادر و بلوک چاپ از روی داده‌ی فعلی؛ اگر پرسنل دیگر وجود ندارد false برمی‌گرداند
+        function wfinRender() {
+            const b = document.getElementById('wfinBox'), p = document.getElementById('wfinPrint');
+            const w = wfinState && mgrOn() ? mgrWorker(wfinState.wid) : null;
+            if (!w) { if (p) p.innerHTML = ''; return false; }
+            const d = wfinData(w, wfinState.mk);
+            if (b) b.innerHTML = wfinHTML(w, wfinState.mk, d);
+            if (p) p.innerHTML = wfinPrintHTML(w, wfinState.mk, d);
+            return true;
+        }
+        function wfinClamp() {
+            const b = document.getElementById('wfinBox'); if (!b || b.style.display === 'none') return;
+            const vh = window.innerHeight, h = b.offsetHeight, top = parseFloat(b.style.top) || 8;
+            if (top + h > vh - 8) b.style.top = Math.max(8, vh - h - 8) + 'px';
         }
         function wfinOpen(wid, mk, anchor) {
             const w = mgrWorker(wid); if (!w || !mgrOn()) return;
-            mk = mk || selectedMonthFilter;
             let box = document.getElementById('wfinBox');
-            if (!box) { box = document.createElement('div'); box.id = 'wfinBox'; box.className = 'wfin no-print'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'خلاصه‌ی مالی پرسنل'); document.body.appendChild(box); }
-            box.innerHTML = wfinHTML(w, mk);
-            box.style.display = 'block';
+            if (!box) {
+                box = document.createElement('div'); box.id = 'wfinBox'; box.className = 'wfin no-print'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-label', 'خلاصه‌ی مالی پرسنل');
+                box.addEventListener('keydown', ev => { if (ev.key === 'Escape') { ev.stopPropagation(); wfinClose(); } });
+                box.addEventListener('toggle', ev => { const d = ev.target; if (d && d.dataset && d.dataset.k) { wfinSec[d.dataset.k] = d.open; wfinClamp(); } }, true);
+                document.body.appendChild(box);
+            }
+            wfinState = { wid: w.id, mk: mk || selectedMonthFilter }; wfinAnchor = anchor || null;
+            wfinRender();
+            box.style.display = 'block'; box.scrollTop = 0;
             box.classList.remove('wfin-in'); void box.offsetWidth; box.classList.add('wfin-in');
-            wfinState = { wid: w.id, mk };
             const vw = window.innerWidth, vh = window.innerHeight, bw = box.offsetWidth, bh = box.offsetHeight;
             let left, top;
             if (vw < 640 || !anchor) { left = (vw - bw) / 2; top = Math.max(8, vh - bh - 14); }
@@ -11686,24 +11783,34 @@
                 top = rc.bottom + 6; if (top + bh > vh - 8) top = Math.max(8, rc.top - bh - 6);
             }
             box.style.left = left + 'px'; box.style.top = top + 'px'; box.style.right = 'auto';
+            const x = box.querySelector('.wfin-x'); if (x) { try { x.focus({ preventScroll: true }); } catch (e) { } }
         }
-        function wfinClose() { const b = document.getElementById('wfinBox'); if (b) b.style.display = 'none'; wfinState = null; }
+        function wfinClose() {
+            const b = document.getElementById('wfinBox'), p = document.getElementById('wfinPrint'), a = wfinAnchor;
+            if (b) b.style.display = 'none'; if (p) p.innerHTML = '';
+            wfinState = null; wfinAnchor = null;
+            if (a && a.isConnected) { try { a.focus({ preventScroll: true }); } catch (e) { } }
+        }
         function wfinRefresh() {
             const b = document.getElementById('wfinBox'); if (!wfinState || !b || b.style.display === 'none') return;
-            const w = mgrWorker(wfinState.wid); if (!w || !mgrOn()) return wfinClose();
-            b.innerHTML = wfinHTML(w, wfinState.mk);
+            const y = b.scrollTop;
+            if (!wfinRender()) return wfinClose();
+            b.scrollTop = y; wfinClamp();
         }
         document.addEventListener('click', function (e) {
             const t = e.target.closest ? e.target.closest('[data-wfin],[data-wfin-close]') : null;
             if (!t) return;
             e.preventDefault(); e.stopPropagation();
             if (t.hasAttribute('data-wfin-close')) return wfinClose();
+            const b = document.getElementById('wfinBox');
+            if (b && b.style.display !== 'none' && wfinState && wfinState.wid === t.dataset.wfin && wfinState.mk === (t.dataset.mk || selectedMonthFilter)) return wfinClose();
             wfinOpen(t.dataset.wfin, t.dataset.mk, t);
         }, true);
         document.addEventListener('keydown', function (e) {
             const t = e.target;
-            if ((e.key === 'Enter' || e.key === ' ') && t && t.matches && t.matches('[data-wfin][role="button"]')) { e.preventDefault(); e.stopPropagation(); wfinOpen(t.dataset.wfin, t.dataset.mk, t); }
+            if ((e.key === 'Enter' || e.key === ' ') && t && t.matches && t.matches('[data-wfin][role="button"]')) { e.preventDefault(); e.stopPropagation(); t.click(); }
         }, true);
+        window.addEventListener('resize', wfinClamp);
 
         function mgrPayRateOptions(kind, selId) {
             const cur = appSettings.currency || 'تومان', rates = mgrPay().rates.filter(r => r.kind === kind);
