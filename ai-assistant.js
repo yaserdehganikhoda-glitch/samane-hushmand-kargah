@@ -148,6 +148,43 @@
         st_early: ['زودتر از موعد', 'زود تحویل'],
         stop: ['در', 'از', 'به', 'را', 'که', 'با', 'برای', 'این', 'ان', 'و', 'یا', 'من', 'ما', 'شما', 'چه', 'چی', 'هم', 'هر', 'همه', 'تا', 'بر', 'ی', 'است', 'هست', 'بود', 'شد', 'میشه', 'کرد', 'کردم', 'کنم', 'کن', 'بده', 'بگو', 'بگین', 'لطفا', 'یه', 'رو', 'اون', 'بعد', 'قبل', 'هنوز', 'اگه', 'اگر', 'ولی', 'اما', 'پس', 'فقط', 'خیلی', 'کنید', 'کنیم', 'دارم', 'داشتم', 'دارد', 'داره', 'بوده', 'باشه', 'باید', 'میخوام', 'میخواهم', 'میتونم', 'کار', 'کارا', 'چقدر', 'چند', 'کدام', 'کدوم', 'چطور', 'چگونه', 'آیا', 'ایا', 'هستم', 'بود', 'بودم', 'شده', 'میشود', 'اینجا', 'خب', 'خوب', 'لطف', 'ببین', 'بزن', 'بزار', 'ممکنه', 'بنویس', 'می', 'نمی', 'ها', 'تر', 'بیشتر', 'کمتر', 'همین', 'ثبت', 'کارکرد', 'کدی']
     };
+    /* گسترش واژگان: مترادف‌ها و عبارت‌های محاوره‌ای عمومی (مناسب همه‌ی مشاغل، نه فقط خیاطی) */
+    const LX_EXTRA = {
+        greet: ['روز بخیر', 'سلام خوبی', 'سلام وقتت بخیر'],
+        thanks: ['سپاس', 'سپاسگزارم', 'ممنونم', 'دستت طلا', 'عالی بود', 'قربانت', 'مخلصیم'],
+        help: ['راهنمایی', 'کمکم کن', 'چه سوالاتی', 'چه چیزایی بلدی', 'چه کارهایی بلدی'],
+        why: ['به چه دلیل', 'برای چی', 'علتش', 'دلیلش'],
+        forecast: ['اخر ماه چقدر', 'تا اخر ماه', 'در پایان ماه', 'چقدر در میارم'],
+        goal: ['رسیدن به هدف', 'هدف ماهانه', 'هدف هفتگی', 'هدف درامد'],
+        active: ['کار در دست', 'در دست انجام', 'کار الان', 'در دست اقدام'],
+        compare: ['در مقایسه با', 'اختلاف', 'پیشرفت کردم'],
+        analysis: ['گزارش عملکرد', 'ارزیابی کلی', 'کارنامه', 'وضعیت من', 'حال و روز'],
+        summary: ['خلاصه وضعیت', 'چکیده', 'مرور', 'یک نگاه'],
+        tips: ['راه بهبود', 'برای بهتر شدن', 'ایده', 'چه توصیه ای'],
+        find: ['جست و جو', 'پیدا بکن', 'کجا بود', 'کدوم بود'],
+        who: ['چه نفری'],
+        m_perhour: ['درامد ساعتی', 'دستمزد ساعتی', 'ساعتی'],
+        m_hours: ['مجموع زمان', 'کل ساعت', 'ساعت کارکرد'],
+        m_days: ['روز حضور', 'روزهای حضور', 'روزهای فعال', 'چند روز کار'],
+        m_count: ['چند پروژه', 'تعداد پروژه', 'چند سفارش', 'تعداد سفارش', 'چند بار', 'تعداد دفعات'],
+        m_qty: ['تیراژ', 'تعداد کل', 'خروجی'],
+        m_income: ['عایدی', 'دریافتی', 'گردش مالی', 'منفعت', 'چقدر پول', 'حاصل کار'],
+        m_late: ['دیرتحویل'],
+        m_ontime: ['وقت شناسی', 'به وقت'],
+        m_dur: ['زمان صرف شده', 'چقدر وقت', 'وقت گرفت', 'چقدر زمان', 'زمان متوسط'],
+        m_unit: ['قیمت هر واحد', 'نرخ هر', 'قیمت یکی', 'تعرفه واحد'],
+        avg: ['به طور معمول', 'معمولا'],
+        sup_max: ['قوی ترین', 'رکوردم', 'سودآورترین', 'پرتیراژترین'],
+        sup_min: ['ضعیفتر', 'کم بازده', 'کمبازده', 'کم سودترین'],
+        d_worker: ['کارکنان', 'کارکن', 'تیم', 'اعضا', 'همکار', 'استادکار', 'شاگرد'],
+        d_section: ['دپارتمان', 'شعبه', 'خط تولید', 'ایستگاه', 'گروه کاری', 'واحد کاری'],
+        d_title: ['کدام نوع', 'هر نوع', 'کدام طرح', 'هر طرح', 'کدام کالا', 'هر کالا', 'کدام جنس', 'هر جنس'],
+        idle: ['روز تعطیل', 'کار نداشتم', 'بی فعالیت', 'فعالیت نداشتم', 'بدون فعالیت'],
+        streak: ['پشت هم', 'پی در پی', 'روزهای متوالی'],
+        anomaly: ['نوسان', 'جهش', 'افت شدید', 'اشتباه تایپی', 'تایپی'],
+        quality: ['ثبت اشتباه', 'داده اشتباه', 'مشکل داده']
+    };
+    Object.keys(LX_EXTRA).forEach(k => { LX[k] = LX[k].concat(LX_EXTRA[k]); });
     const PC = {};
     function ph(p) {
         let c = PC[p];
@@ -1098,10 +1135,11 @@
         ['فهرست', 'آخرین کارهای ثبت‌شده'], ['فهرست', 'کارهای بالای ۱ میلیون'], ['فهرست', 'میانگین‌ها'],
         ['پرسنل', 'عملکرد پرسنل این ماه', 1], ['پرسنل', 'کی بیکاره؟', 1], ['پرسنل', 'کدام کارگر بیشترین تاخیر را دارد؟', 1], ['پرسنل', 'درآمد بخش‌ها', 1]
     ];
+    CATALOG.push(['گزارش', 'گزارش هفتگی'], ['گزارش', 'امروز چه کار کنم؟'], ['دانش', 'بازده ساعتی یعنی چه؟'], ['دانش', 'نرخ تاخیر یعنی چه؟'], ['دانش', 'چطور هدف درآمد را تنظیم کنم؟']);
     function aHelp(S) {
         const cats = {}; CATALOG.forEach(c => { if (c[2] && !S.emp) return; (cats[c[0]] = cats[c[0]] || []).push(c[1]); });
         const blocks = [B.p('**می‌توانید محاوره‌ای و با غلط املایی هم بپرسید.** سوال را با زمان، کد، نام پرسنل، رنگ یا مدل ترکیب کنید و بعد با «و ماه قبل؟»، «چرا؟» یا «به تفکیک روز» ادامه دهید.'),
-            B.table(['نمونه', 'مثال'], [['زمان', 'امروز · دیروز · ۳ روز اخیر · هفته‌ی قبل · مهر · ۱۴۰۵/۰۷/۱۰'], ['فیلتر', 'کد ۶۴۴۹ · علی · بخش برش · کارهای بالای ۲ میلیون'], ['بُعد', 'هر روز · هر کد · روز هفته · ساعت · هر هفته'], ['سنجه', 'درآمد · تعداد · تاخیر · میانگین · بازده ساعتی · مدت'], ['تحلیل', 'مقایسه · چرا؟ · پیش‌بینی · هدف · غیرعادی']])];
+            B.table(['نمونه', 'مثال'], [['زمان', 'امروز · دیروز · ۳ روز اخیر · هفته‌ی قبل · مهر · ۱۴۰۵/۰۷/۱۰'], ['فیلتر', 'کد ۶۴۴۹ · علی · بخش برش · کارهای بالای ۲ میلیون'], ['بُعد', 'هر روز · هر کد · روز هفته · ساعت · هر هفته'], ['سنجه', 'درآمد · تعداد · تاخیر · میانگین · بازده ساعتی · مدت'], ['گزارش', 'گزارش هفتگی · امروز چه کار کنم؟'], ['محاسبه', 'اگر ۲۰ عدد کد ۱۲۳ بزنم چقدر می‌شود؟ · برای رسیدن به ۲ میلیون چند عدد کد ۱۲۳ لازم است؟'], ['دانش', 'بازده ساعتی یعنی چه؟ · چطور هدف را تنظیم کنم؟'], ['تحلیل', 'مقایسه · چرا؟ · پیش‌بینی · هدف · غیرعادی']])];
         return R(blocks, ['درآمد هر روز این هفته', 'مقایسه با ماه قبل', 'تحلیل هوشمند', S.emp ? 'کی بیکاره؟' : 'روزهای بدون کار']);
     }
     function aFallback(S, P) {
@@ -1121,6 +1159,111 @@
     }
 
     /* ============================ مسیریاب و زمینه ============================ */
+    /* ============================ دانش‌نامه، محاسبه‌گر و گزارش‌های تکمیلی ============================ */
+    const GLOSS = [
+        { k: ['بازده ساعتی', 'بازدهی ساعتی', 'درامد ساعتی'], t: 'بازده ساعتی', a: 'ارزش کار تقسیم بر ساعت‌های واقعی انجام آن. فقط کارهایی حساب می‌شوند که هم قیمت و هم مدت انجام ثبت‌شده دارند؛ عدد بالاتر یعنی آن کد به‌صرفه‌تر است.', c: ['کدام کد بازده ساعتی بهتری دارد؟'] },
+        { k: ['نرخ تاخیر', 'درصد تاخیر'], t: 'نرخ تاخیر', a: 'سهم کارهای دیرتحویل از کارهایی که وضعیت تحویلشان مشخص است (به‌موقع، تاخیر، زودتر از موعد). کارهای هنوز باز در این نرخ نمی‌آیند.', c: ['نرخ تاخیر این ماه'] },
+        { k: ['روز کاری', 'روزهای کاری'], t: 'روز کاری', a: 'روزی که دست‌کم یک کارکرد در آن ثبت شده. در شمارش روزهای بدون ثبت و پیوستگی کار، جمعه‌ها حساب نمی‌شوند.', c: ['روزهای بدون کار'] },
+        { k: ['پیش بینی', 'پیشبینی'], t: 'پیش‌بینی پایان ماه', a: 'از میانگین هر روز هفته در ۸ هفته‌ی اخیر ساخته می‌شود: ارزش تا امروز + انتظار روزهای باقی‌مانده. بازه‌ی محتمل از نوسان روزانه به‌دست می‌آید و اطمینان آن به تعداد روزهای دارای داده بستگی دارد.', c: ['پیش‌بینی پایان ماه'] },
+        { k: ['غیرعادی', 'ناهنجاری'], t: 'روز یا مورد غیرعادی', a: 'روزهایی که ارزششان در ۴۵ روز اخیر خیلی از میانگین دور است، به‌علاوه قیمت واحد یا تعدادِ پرت در هر کد (بیش از ۳۰٪ اختلاف قیمت یا بیش از ۳ برابر تعداد معمول).', c: ['روزهای غیرعادی'] },
+        { k: ['پشت سر هم', 'پیوستگی'], t: 'کار پشت سر هم', a: 'تعداد روزهای کاری متوالی که کارکرد ثبت کرده‌اید؛ جمعه‌ها زنجیره را قطع نمی‌کنند.', c: ['چند روز پشت سر هم کار کردم؟'] },
+        { k: ['سلامت داده', 'کیفیت داده'], t: 'سلامت داده‌ها', a: 'بررسی کارکردهای بدون قیمت یا مدت، تکراری، با تعداد صفر، کارهای بیش از ۷ روز بازمانده و مقادیر مشکوک؛ هرچه داده کامل‌تر باشد تحلیل دقیق‌تر است.', c: ['بررسی سلامت داده‌ها'] },
+        { k: ['ارزش کار'], t: 'ارزش کار', a: 'در حالت کارفرما، مجموع ارزش کارکردهای ثبت‌شده‌ی پرسنل؛ در حالت پرسنل همان درآمد شماست.', c: ['درآمد این ماه'] },
+        { k: ['قیمت واحد'], t: 'قیمت واحد', a: 'قیمت هر عدد در یک کارکرد؛ ارزش کل معمولاً از ضرب آن در تعداد به‌دست می‌آید. اگر قیمت یک کد ناگهان عوض شود، در «روزهای غیرعادی» هشدار می‌گیرید.', c: ['میانگین‌ها'] }
+    ];
+    const KB = [
+        { k: ['هدف'], v: ['تنظیم', 'وارد', 'ست', 'بذار', 'بزار', 'تعریف', 'کجا', 'فعال'], a: 'از «تنظیمات ← هدف درآمد» مبلغ هدف ماهانه (و در صورت نیاز هفتگی) را وارد کنید. بعد از آن «پیش‌بینی پایان ماه»، «هدف» و پیشنهادهای روزانه برایتان فعال می‌شود.', c: ['هدف', 'پیش‌بینی پایان ماه'] },
+        { k: ['کار تمام', 'تمام شد', 'پایان کار', 'اتمام کار', 'ببندم', 'تموم شد'], a: 'در کارت «کار جاری» دکمه‌ی «کار تمام شد» را بزنید تا زمان پایان ثبت شود. اگر نزنید کار باز می‌ماند و آمار تاخیر دقیق نمی‌شود.', c: ['کار جاری', 'کارهای با تاخیر'] },
+        { k: ['ویجت'], s: 1, a: 'ویجت پیشرفت کار جاری میزان پیشرفت تا موعد را نشان می‌دهد و با دکمه‌ی «کار تمام شد» کار را می‌بندد؛ جزئیات کار مرتبط هم همان‌جا دیده می‌شود.', c: ['کار جاری'] },
+        { k: ['افلاین', 'اینترنت', 'سرور', 'حریم'], s: 1, a: 'دستیار کاملاً آفلاین و روی همین دستگاه کار می‌کند: همه‌ی تحلیل‌ها از کارکردهای ذخیره‌شده‌ی خود برنامه ساخته می‌شود و چیزی به اینترنت یا سرور فرستاده نمی‌شود.', c: ['راهنما'] },
+        { k: ['حالت کارفرما', 'حالت پرسنل', 'کارفرما'], s: 1, a: 'در حالت کارفرما دستیار روی کارکرد همه‌ی پرسنل و بخش‌ها کار می‌کند (عملکرد نفرات، بیکارها، مقایسه‌ی افراد، تاخیر هر نفر). در حالت پرسنل فقط کارکردهای خودتان تحلیل می‌شود.', c: ['کی بیکاره؟', 'عملکرد پرسنل این ماه'] },
+        { k: ['کپی', 'پاک کردن'], a: 'گوشه‌ی هر پاسخ آیکن کپی هست که متن آن را کپی می‌کند، و «پاک کردن گفتگو» بالای گفتگو، پرسش‌ها و زمینه‌ی گفتگو را پاک می‌کند.', c: ['راهنما'] }
+    ];
+    const DEFQ = /(یعنی|چیه|چی هست|معنی|تعریف|توضیح|(چطور|چجوری|چگونه|چه جوری) (محاسبه|حساب)|محاسبه میشه)/;
+    const HOWQ = /(چطور|چگونه|چجوری|چه جوری|چطوری|کجا|آموزش|راهنمای|میتونم|میشه)/;
+    function topicMatch(nq, list, keys) {
+        const qt = nq.split(' ').map(stem); let best = null, bs = 0;
+        list.forEach(e => keys(e).forEach(k => { const kt = norm(k).split(' ').map(stem); if (kt.every(t => qt.some(z => z === t || near(z, t)))) { const sc = kt.length * 2 + 1; if (sc > bs) { bs = sc; best = e; } } }));
+        return best;
+    }
+    function aWhatIf(S, V, nq) {
+        const t = nq.split(' '); let code = null;
+        for (let i = 0; i < t.length && !code; i++) { const z = t[i] === 'کد' ? t[i + 1] : t[i]; if (z && Object.prototype.hasOwnProperty.call(V.codes, z) && (z.length >= 3 || /[a-z]/.test(z))) code = z; }
+        if (!code) return null;
+        const q2 = ' ' + nq + ' ', mq = /(?: |^)(\d+(?:\.\d+)?) ?(عدد|تا|دانه|قطعه)(?= )/.exec(q2), mt = /(?:رسیدن به|برسم به|معادل|به مبلغ) (\d+(?:\.\d+)?) ?(میلیون|هزار|میلیارد)?(?= )/.exec(q2);
+        const reverse = !!mt && /(چند|چه تعداد)/.test(nq), forward = !!mq && /(اگه|اگر|فرض|محاسبه|حساب کن|بزنم|بسازم|تولید کنم|انجام بدم|چقدر میشه|چقدر در میاد|چقدر درمیاد)/.test(nq) && !/(بالای|زیر|حداقل|حداکثر|کمتر از|بیشتر از)/.test(nq);
+        if (!reverse && !forward) return null;
+        const nm = 'کد ' + fa(V.codes[code]), hist = S.recs.filter(x => x.code === code && x.unit > 0).sort((a, b) => b.jdn - a.jdn);
+        if (!hist.length) return R([B.p(`برای ${nm} قیمت واحدی ثبت نشده؛ نمی‌توانم محاسبه کنم.`)], [nm]);
+        const u = hist[0].unit, us = hist.map(x => x.unit), mn = Math.min.apply(null, us), mx = Math.max.apply(null, us);
+        const dq = S.recs.filter(x => x.code === code && x.dur > 0 && x.qty > 0), perU = dq.length ? sum(dq, x => x.dur) / sum(dq, x => x.qty) : null;
+        const rows = []; let big;
+        if (reverse) { const target = parseFloat(mt[1]) * ({ میلیون: 1e6, هزار: 1e3, میلیارد: 1e9 }[mt[2]] || 1), need = Math.ceil(target / u); big = B.big('برای رسیدن به ' + money(target), f(need) + ' عدد ' + nm, 'قیمت واحد آخرین ثبت: ' + money(u), 'info'); if (perU) rows.push(['زمان تقریبی (خطی)', formatMinutesDuration(perU * need)]); }
+        else { const q = parseFloat(mq[1]); big = B.big(f(q) + ' عدد ' + nm, money(q * u), 'قیمت واحد آخرین ثبت: ' + money(u), 'info'); if (perU) rows.push(['زمان تقریبی (خطی)', formatMinutesDuration(perU * q)]); }
+        if (mn !== mx) rows.unshift(['بازه‌ی قیمت واحد در سابقه', `${money(mn)} تا ${money(mx)}`]);
+        const bl = [big]; if (rows.length) bl.push(B.kv(rows));
+        bl.push(B.note('محاسبه بر پایه‌ی قیمت واحد آخرین ثبت همین کد است؛ اگر نرخ عوض شده باشد نتیجه هم عوض می‌شود.', 'info'));
+        return R(bl, [nm, 'برترین کدها']);
+    }
+    function aWeekReport(S) {
+        const cw = RG.days(S.ws, S.T, 'این هفته'), pw = RG.days(S.ws - 7, S.ws - 7 + (S.T - S.ws), 'هفته‌ی قبل');
+        const L = S.recs.filter(x => inR(x, cw)), a = agg(L), b = agg(S.recs.filter(x => inR(x, pw)));
+        if (!a.n) return R([B.p('در این هفته هنوز کارکردی ثبت نشده است.')], ['هفته‌ی قبل', 'خلاصه‌ی این ماه']);
+        const d = dlt('income', a, b), blocks = [B.big('گزارش هفتگی — ' + lab(S), money(a.inc), `${f(a.n)} کارکرد · ${f(a.qty)} عدد · ${f(a.days)} روز دارای ثبت`, d ? d.tone : 'info')];
+        if (d && b.n) blocks.push(B.note(`${d.t} (هفته‌ی قبل تا همین روز: ${money(b.inc)})`, d.tone));
+        const rows = [], dd = groupBy(L, 'day', S).rows.sort((x, y) => x.k - y.k);
+        if (dd.length) { const bd = dd.reduce((m, r) => r.a.inc > m.a.inc ? r : m, dd[0]); rows.push(['بهترین روز', `${bd.name} — ${money(bd.a.inc)}`]); }
+        const gc = groupBy(L, 'code', S).rows.sort((x, y) => y.a.inc - x.a.inc)[0]; if (gc) rows.push(['پرارزش‌ترین کد', `${gc.name} — ${money(gc.a.inc)}`]);
+        if (S.emp) { const gw = groupBy(L, 'worker', S).rows.sort((x, y) => y.a.inc - x.a.inc)[0]; if (gw) rows.push(['برترین نفر', `${gw.name} — ${money(gw.a.inc)}`]); }
+        if (a.judged) rows.push(['نرخ تحویل به‌موقع', pctS((a.judged - a.late) / a.judged * 100)]);
+        const idl = idleDays(S, S.ws, S.T - 1); if (idl.length) rows.push(['روزهای بدون ثبت', idl.map(j => WD[S.wdOf(j)]).join('، ')]);
+        if (rows.length) blocks.push(B.kv(rows));
+        if (S.goalW > 0) blocks.push(B.prog('هدف هفتگی', Math.min(100, a.inc / S.goalW * 100), `${pctS(a.inc / S.goalW * 100)} از ${money(S.goalW)}`, a.inc >= S.goalW ? 'good' : 'info'));
+        if (dd.length >= 3) blocks.push(B.spark(dd.map(r => r.a.inc), dd.map(r => r.name), dd.reduce((i, r, j, z) => r.a.inc > z[i].a.inc ? j : i, 0)));
+        return R(blocks, ['مقایسه این هفته با هفته قبل', 'درآمد هر روز این هفته', 'تحلیل هوشمند']);
+    }
+    function aPlan(S) {
+        if (!S.recs.length) return R([B.p('هنوز کارکردی ثبت نشده؛ بعد از ثبت اولین کار، برنامه‌ی پیشنهادی ساخته می‌شود.')], ['راهنما']);
+        const t = [], c = cur(), ex = expectation(S), today = agg(S.recs.filter(x => x.jdn === S.T)), typ = ex.E[S.wdOf(S.T)], m = agg(S.m);
+        if (S.act && S.prog) { const nm = S.act.itemTitle || S.act.itemCode || 'کار جاری'; t.push(S.prog.remainingMinutes < 0 ? { i: 'fa-triangle-exclamation', t: 'warn', x: `اول «${nm}»: از موعد گذشته؛ تمامش کنید یا پایانش را ثبت کنید.` } : { i: 'fa-stopwatch', t: S.prog.percent >= 85 ? 'warn' : 'info', x: `اول «${nm}» را جلو ببرید (${f(Math.min(S.prog.percent, 999))}٪ پیش رفته، حدود ${f(S.prog.remainingMinutes / 60)} ساعت تا موعد).` }); }
+        if (typ > 0) t.push({ i: 'fa-sun', t: today.inc >= typ ? 'good' : 'info', x: today.inc >= typ ? `امروز از حد معمولِ روز ${WD[S.wdOf(S.T)]} (حدود ${f(typ)} ${c}) جلوترید.` : `در روز ${WD[S.wdOf(S.T)]} معمولاً حدود ${f(typ)} ${c} ثبت می‌شود؛ تا الان ${f(today.inc)} ${c} ثبت شده.` });
+        if (S.goal > 0) { const left = S.goal - m.inc, dl = Math.max(1, project(S, S.mEnd, m.inc, S.recs).workLeft); t.push(left <= 0 ? { i: 'fa-trophy', t: 'good', x: 'هدف ماهانه محقق شده است.' } : { i: 'fa-bullseye', t: 'info', x: `برای هدف ماهانه از امروز روزی حدود ${f(left / dl)} ${c} لازم است.` }); }
+        const bt = groupBy(S.recs, 'code', S).rows.filter(r => r.a.hDur > 0 && r.a.n >= 3).sort((x, y) => mval('perhour', y.a) - mval('perhour', x.a))[0];
+        if (bt) t.push({ i: 'fa-ranking-star', t: 'info', x: `اگر انتخاب دارید، کد ${fa(bt.list[0].codeRaw)} با ${money(mval('perhour', bt.a))} در ساعت بهترین بازده را دارد.` });
+        const stale = S.recs.filter(x => x.open && x.jdn && S.T - x.jdn > 7).length; if (stale) t.push({ i: 'fa-folder-open', t: 'warn', x: `${f(stale)} کار بیش از ۷ روز باز مانده؛ وضعیتشان را روشن کنید.` });
+        if (!t.length) t.push({ i: 'fa-circle-info', t: 'info', x: 'مورد فوری‌ای دیده نمی‌شود؛ کارکرد جدید را ثبت کنید.' });
+        return R([B.h('برنامه‌ی پیشنهادی امروز'), B.finds(t.slice(0, 5))], ['تحلیل هوشمند', 'کار جاری', 'پیش‌بینی پایان ماه']);
+    }
+    /* پیش‌مسیریاب: سوال‌های دانشی، محاسبه‌گر، گزارش هفتگی، برنامه‌ی امروز و گپ کوتاه؛ در غیر این صورت null */
+    function extra(raw, S, V) {
+        const nq = wordNums(norm(raw)); if (!nq) return null;
+        const n = nq.split(' ').filter(Boolean).length;
+        if (n <= 6) {
+            if (/((تو|شما) (کی|چی)( هستی| هستید| هست)?$)|اسمت|اسم تو|کی ساختت/.test(nq)) return R([B.p('من دستیار هوشمند همین برنامه‌ام و کاملاً آفلاین روی دستگاه شما کار می‌کنم؛ کارکردها، درآمد، تاخیرها و روندتان را تحلیل می‌کنم و به پرسش‌هایتان پاسخ می‌دهم.')], ['راهنما', 'تحلیل هوشمند']);
+            if (/^(خداحافظ|بای|فعلا|خدانگهدار|موفق باشی)/.test(nq)) return R([B.p('موفق و پردرآمد باشید! 🌟 هر وقت خواستید برگردید.')], ['تحلیل هوشمند']);
+            if (/^(خوبی|حالت چطوره|احوالت|چطوری)$/.test(nq)) return R([B.p('ممنون، آماده‌ام! 😊 چه کمکی از من برمی‌آید؟')], ['تحلیل هوشمند', 'امروز', 'راهنما']);
+        }
+        if (/(گزارش|خلاصه|وضعیت|مرور)( ی)?( این)? (هفته|هفتگی)/.test(nq) && !/(قبل|گذشته|پیش) /.test(nq + ' ')) return aWeekReport(S);
+        if (/امروز (چه|چی)( کار| کاری)? (کنم|بکنم|انجام بدم|بدم|باید انجام)|برنامه( ی)? (امروز|روز)|اولویت( ی)?( های)? امروز|امروز از کجا شروع/.test(nq)) return aPlan(S);
+        const wi = aWhatIf(S, V, nq); if (wi) return wi;
+        if (DEFQ.test(nq)) { const g = topicMatch(nq, GLOSS, e => e.k); if (g) return R([B.h(g.t), B.p(g.a)], (g.c || []).concat(['راهنما'])); }
+        const kb = KB.find(e => topicMatch(nq, [e], x => x.k) && (!e.v || e.v.some(v => nq.indexOf(v) >= 0)) && (HOWQ.test(nq) || (e.s && n <= 7)));
+        if (kb) return R([B.p(kb.a)], (kb.c || []).concat(['راهنما']));
+        return null;
+    }
+    /* حافظه‌ی پرسش‌های پرتکرار (فقط روی همین دستگاه) برای پیشنهاد سریع */
+    const FKEY = 'ai_freq_v1';
+    function freqRead() { try { const o = JSON.parse(localStorage.getItem(FKEY) || '{}'); return (o && typeof o === 'object') ? o : {}; } catch (e) { return {}; } }
+    function freqAdd(q) {
+        try {
+            const t = String(q).trim(); if (t.length < 4 || t.length > 80) return;
+            const o = freqRead(), k = norm(t), e = o[k] || { q: t, n: 0, t: 0 }; e.n++; e.t = Date.now(); e.q = t; o[k] = e;
+            const ks = Object.keys(o); if (ks.length > 60) ks.sort((a, b) => (o[a].n - o[b].n) || (o[a].t - o[b].t)).slice(0, ks.length - 60).forEach(z => { delete o[z]; });
+            localStorage.setItem(FKEY, JSON.stringify(o));
+        } catch (e) { /* ذخیره نشد */ }
+    }
+    function freqTop(n) { const o = freqRead(); return Object.keys(o).map(k => o[k]).filter(e => e && e.n >= 2 && e.q).sort((a, b) => b.n - a.n || b.t - a.t).slice(0, n).map(e => e.q); }
+
     const ctx = { plan: null };
     function inherit(P, c) {
         if (!c) return P;
@@ -1135,7 +1278,9 @@
         return P;
     }
     function route(raw) {
-        const S = build(), V = vocab(S), P = parse(raw, S, V), fl = P.flags, F = P.filters, c = ctx.plan;
+        const S = build(), V = vocab(S);
+        const X = extra(raw, S, V); if (X) return X;
+        const P = parse(raw, S, V), fl = P.flags, F = P.filters, c = ctx.plan;
         const anyIntent = fl.help || fl.why || fl.forecast || fl.goal || fl.compare || fl.analysis || fl.summary || fl.anomaly || fl.streak || fl.idle || fl.quality || fl.tips || fl.active || fl.last || fl.first || fl.list || fl.find;
         const anySlot = !!(P.metric || P.dim || P.sup);
         const hasEntity = P.entities > 0 || F.text.length > 0 || F.status || F.wd !== null || F.minV !== null || F.maxV !== null || F.minQ !== null || F.maxQ !== null;
@@ -1237,13 +1382,15 @@
         if (a.lastElementChild && a.lastElementChild.scrollIntoView) a.lastElementChild.scrollIntoView({ block: 'nearest' });
     }
     function submit(q) {
-        q = String(q || '').trim(); if (!q) return;
+        q = String(q || '').trim(); if (!q) return; freqAdd(q);
         const e = { q, pending: true, blocks: [], chips: [] }; history.push(e); while (history.length > 8) history.shift(); renderChat();
         setTimeout(() => { const r = answer(q); e.blocks = r.blocks; e.chips = r.chips; e.pending = false; renderChat(); }, 160);
     }
     window.aiAsk = function () { const inp = $('aiInput'); if (!inp) return; const q = inp.value.trim(); if (!q) return; inp.value = ''; hideSuggest(); submit(q); };
     window.aiAskText = function (t) { const inp = $('aiInput'); if (inp) inp.value = ''; hideSuggest(); submit(t); };
     window.aiClear = function () { history.length = 0; ctx.plan = null; renderChat(); };
+    window.aiAnswerText = function (q) { return toPlain(answer(String(q || '')).blocks); };
+    window.aiForgetFrequent = function () { try { localStorage.removeItem(FKEY); } catch (e) { /* بی‌اهمیت */ } buildChips(); };
     window.aiCopy = function (i) { const h = history[i]; if (!h) return; const t = toPlain(h.blocks); try { navigator.clipboard.writeText(t); } catch (e) { /* در دسترس نیست */ } };
     const KIND = { summary: 'خلاصه‌ی این ماه', today: 'امروز', week: 'این هفته', compare: 'مقایسه با ماه قبل', forecast: 'پیش‌بینی پایان ماه', late: 'کارهای با تاخیر', active: 'کار جاری', top: 'برترین کدها', avg: 'میانگین‌ها', hours: 'ساعت‌های پرکار', tips: 'پیشنهادها', workers: 'پرسنل', help: 'راهنما' };
     window.aiChip = function (kind) { const t = KIND[kind]; if (t) submit(t); };
@@ -1265,6 +1412,7 @@
             if (S.goal > 0 && S.m.length) c.push('برای رسیدن به هدف چه کنم؟');
             if (S.p.length && S.day <= 10) c.push('مقایسه با ماه قبل');
         }
+        freqTop(3).forEach(x => c.push(x));
         ['تحلیل هوشمند', 'امروز', 'این هفته', 'درآمد هر روز این ماه', 'پیش‌بینی پایان ماه', 'برترین کدها', 'کدام کد بازده ساعتی بهتری دارد؟', 'کارهای با تاخیر', 'کدام روز هفته پرکارتر است؟', 'روزهای غیرعادی', 'روزهای بدون کار'].forEach(x => c.push(x));
         if (S && S.emp) c.push('کی بیکاره؟', 'عملکرد پرسنل');
         c.push('راهنما');
@@ -1282,6 +1430,7 @@
         const pool = CATALOG.filter(c => !c[2] || S.emp).map(c => c[1]);
         const codes = (S.__codes || (S.__codes = uniq(S.recs.map(x => x.codeRaw)).filter(Boolean).slice(0, 400))); codes.forEach(c => pool.push('کد ' + c));
         S.workers.forEach(w => { if (w && w.name) { pool.push('عملکرد ' + w.name + ' این ماه'); pool.push('درآمد ' + w.name + ' هفته قبل'); } });
+        freqTop(20).forEach(x => pool.push(x));
         const tk = t.split(' ').map(stem).filter(Boolean);
         const sc = pool.map(p => { const pn = ' ' + norm(p).split(' ').map(stem).join(' '); let s = 0; tk.forEach(w => { if (pn.indexOf(' ' + w) >= 0) s += 2; else if (pn.indexOf(w) >= 0) s += 1; else s -= 3; }); return { p, s }; }).filter(z => z.s > 0).sort((a, b) => b.s - a.s).slice(0, 4);
         if (!sc.length) { hideSuggest(); return; }
