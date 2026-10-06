@@ -6,7 +6,7 @@
  * عدد VERSION را فقط وقتی زیاد کنید که خودِ sw.js، لیست فایل‌های کش‌شده یا آیکون‌ها را عوض کرده‌اید؛
  * تغییر همین فایل باعث می‌شود بنر «نسخه جدید آماده است» در برنامه ظاهر شود.
  */
-const VERSION = 'v9';
+const VERSION = 'v10';
 const CACHE_PREFIX = 'work-stats-';
 const OLD_CACHE_PREFIXES = ['sewing-stats-']; // برای پاکسازی کش نسخه‌های قبلی، هنگام مهاجرت به نام عمومی
 const CACHE = CACHE_PREFIX + VERSION;
@@ -97,7 +97,7 @@ function withTimeout(promise, ms) {
 async function handleNavigation(event) {
   const cache = await caches.open(CACHE);
   try {
-    const res = await withTimeout(fetch(event.request.url, { cache: 'no-cache', credentials: 'same-origin' }), 4000);
+    const res = await withTimeout(fetch(event.request.url, { cache: 'no-cache', credentials: 'same-origin' }), 8000);
     if (res && res.ok) event.waitUntil(cache.put(INDEX_URL, res.clone()).catch(() => {}));
     return res;
   } catch (e) {

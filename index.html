@@ -1064,6 +1064,10 @@ body[data-deadline="1"] :is(.c-daily, .c-due, .c-end, .c-next, #autoCalcInfoBox,
 <style>
 body[data-notrack="1"] :is(div:has(> #dailyStat), div:has(> div > #recordEndDateTime)), body[data-deadline="1"] :is(div:has(> #dailyStat), div:has(> div > #recordEndDateTime)) { display: none !important; }
 </style>
+<style>
+#aiChatPage { z-index: 5000 !important; }
+body.ai-chat-open #bottomNavBar { display: none !important; }
+</style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen pb-28 font-normal-size" id="appBody">
 
@@ -13017,8 +13021,8 @@ document.addEventListener('keydown', function (e) {
   }
   if (vv) { vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); }
   const inp = $('aiInput'); if (inp) inp.addEventListener('focus', () => { setTimeout(fit, 150); setTimeout(fit, 450); });
-  const o1 = window.aiChatOpen; window.aiChatOpen = function () { if (o1) o1(); jobChips(); fit(); setTimeout(() => { jobChips(); fit(); }, 300); };
-  const o2 = window.aiChatClose; window.aiChatClose = function () { if (o2) o2(); const p = $('aiChatPage'); if (p) { p.style.top = ''; p.style.height = ''; p.style.bottom = ''; } };
+  const o1 = window.aiChatOpen; window.aiChatOpen = function () { document.body.classList.add('ai-chat-open'); if (o1) o1(); jobChips(); fit(); setTimeout(() => { jobChips(); fit(); }, 300); };
+  const o2 = window.aiChatClose; window.aiChatClose = function () { document.body.classList.remove('ai-chat-open'); if (o2) o2(); const p = $('aiChatPage'); if (p) { p.style.top = ''; p.style.height = ''; p.style.bottom = ''; } };
 })();
 </script>
 
