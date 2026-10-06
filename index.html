@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
     <title>سامانه‌ی کار هوشمند</title>
     
     <!-- تنظیمات PWA و مانیفست -->
@@ -12949,38 +12949,76 @@ document.addEventListener('keydown', function (e) {
   const jd = r => parseJalaliDateToJdn(toEnglishDigits(String(r.date || '')));
   const today = () => parseJalaliDateToJdn(toEnglishDigits(currentJalali.fullDateStr));
   const sum = (l, k) => l.reduce((s, r) => s + (Number(r[k]) || 0), 0);
-  function span(q) { const t = today(); if (/دیروز/.test(q)) return ['دیروز', t - 1, t - 1]; if (/امروز/.test(q)) return ['امروز', t, t]; if (/هفته/.test(q)) return ['۷ روز اخیر', t - 6, t]; if (/ماه/.test(q)) return ['۳۰ روز اخیر', t - 29, t]; return ['کل دوره', 0, 1e9]; }
-  function top(l) { const m = {}; l.forEach(r => { const k = String(r.itemTitle || r.itemCode || '').trim(); if (k) m[k] = (m[k] || 0) + (Number(r.quantity) || 0); }); return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 3); }
-  function answer(q) {
-    q = toEnglishDigits(q.trim()); const sp = span(q), L = allRecords.filter(r => { const j = jd(r); return j >= sp[1] && j <= sp[2]; }), lb = sp[0];
-    if (/درآمد|فروش|مجموع|مبلغ|دریافتی/.test(q) && !/پرفروش/.test(q)) return `${lb}: مجموع ${money(sum(L, 'totalPrice'))} از ${num(L.length)} ثبت.`;
-    if (/پرفروش|پرکار|بیشترین|محبوب|پرتکرار/.test(q)) { const t = top(L); return t.length ? `پرتکرارترین‌ها (${lb}): ` + t.map(x => `${x[0]} (${num(x[1])} ${U()})`).join('، ') : 'در این بازه داده‌ای نیست.'; }
-    if (/تاخیر|تأخیر/.test(q)) return `${lb}: ${num(L.filter(r => r.status === 'تاخیر').length)} مورد با تاخیر از ${num(L.length)} ثبت.`;
-    if (/تعداد|چند/.test(q)) return `${lb}: ${num(L.length)} ثبت، مجموع ${num(sum(L, 'quantity'))} ${U()}.`;
+  const cfs = () => (appSettings.customFields || []).filter(f => f && f.label);
+  const clean = s => String(s).replace(/\(.*?\)/g, ' ').replace(/\s+/g, ' ').trim();
+  const words = s => clean(s).split(' ').filter(w => w.length > 2 && !/^(شماره|نوع|نام|کد)$/.test(w));
+  function span(q, d) { const t = today(); if (/دیروز/.test(q)) return ['دیروز', t - 1, t - 1]; if (/امروز/.test(q)) return ['امروز', t, t]; if (/هفته/.test(q)) return ['۷ روز اخیر', t - 6, t]; if (/ماه/.test(q) || d) return ['۳۰ روز اخیر', t - 29, t]; return ['کل دوره', 0, 1e9]; }
+  const inSpan = s => allRecords.filter(r => { const j = jd(r); return j >= s[1] && j <= s[2]; });
+  function group(L, kf) { const m = {}; L.forEach(r => { const k = kf(r); if (!k) return; const o = m[k] || (m[k] = { q: 0, m: 0, n: 0 }); o.q += Number(r.quantity) || 0; o.m += Number(r.totalPrice) || 0; o.n++; }); return Object.entries(m).sort((a, b) => b[1].m - a[1].m || b[1].q - a[1].q); }
+  const line = e => `${e[0]}: ${money(e[1].m)} • ${num(e[1].q)} ${U()} • ${num(e[1].n)} ثبت`;
+  const title = r => String(r.itemTitle || r.itemCode || '').trim();
+  function jobAnswer(q) {
+    q = toEnglishDigits(q.trim());
+    const f = cfs().find(f => words(f.label).some(w => q.includes(w)) && /هر|تفکیک|بر اساس|پرفروش|بیشترین|رتبه/.test(q));
+    if (f) { const s = span(q, true), g = group(inSpan(s), r => String((r.custom || {})[f.id] || '').trim()).slice(0, 8); return g.length ? `${clean(f.label)} (${s[0]}):\n` + g.map(line).join('\n') : `برای «${clean(f.label)}» در ${s[0]} داده‌ای ثبت نشده.`; }
+    if (/پرفروش|پرتکرار|محبوب|بیشترین|پرمصرف/.test(q)) { const s = span(q, true), g = group(inSpan(s), title).slice(0, 5); return g.length ? `پرتکرارترین‌ها (${s[0]}):\n` + g.map(line).join('\n') : 'در این بازه داده‌ای نیست.'; }
+    if (/تاخیر|تأخیر/.test(q)) { if (appSettings.trackDelivery === false) return 'محاسبه‌ی زمان تحویل و تاخیر برای این شغل خاموش است (تنظیمات ← ساعات کاری).'; const s = span(q, true), L = inSpan(s); return `${s[0]}: ${num(L.filter(r => r.status === 'تاخیر').length)} تاخیر و ${num(L.filter(r => r.status === 'زودتر از موعد').length)} زودتر از موعد، از ${num(L.length)} ثبت.`; }
+    const f2 = cfs().find(f => words(f.label).some(w => q.includes(w))), cv = (r, id) => toEnglishDigits(String((r.custom || {})[id] || '').trim());
+    if (f2) { const v2 = q.split(/\s+/).find(x => allRecords.some(r => cv(r, f2.id) === x)); if (v2) { const L = allRecords.filter(r => cv(r, f2.id) === v2); return `${clean(f2.label)} «${v2}»: ${num(L.length)} ثبت، مجموع ${money(sum(L, 'totalPrice'))}، ${num(sum(L, 'quantity'))} ${U()}.`; } }
+    const vs = new Set(); allRecords.forEach(r => Object.values(r.custom || {}).forEach(v => { v = String(v).trim(); if (v.length > 1) vs.add(v); }));
+    const v = [...vs].find(x => q.includes(x));
+    if (v) { const L = allRecords.filter(r => Object.values(r.custom || {}).some(y => String(y).trim() === v)); return `«${v}»: ${num(L.length)} ثبت، مجموع ${money(sum(L, 'totalPrice'))}، ${num(sum(L, 'quantity'))} ${U()}.`; }
+    return null;
+  }
+  function generic(q) {
+    q = toEnglishDigits(q.trim()); const s = span(q), L = inSpan(s);
+    if (/درآمد|فروش|مجموع|مبلغ|دریافتی/.test(q)) return `${s[0]}: مجموع ${money(sum(L, 'totalPrice'))} از ${num(L.length)} ثبت.`;
+    if (/تعداد|چند/.test(q)) return `${s[0]}: ${num(L.length)} ثبت، مجموع ${num(sum(L, 'quantity'))} ${U()}.`;
     const tk = q.split(/\s+/).filter(w => w.length > 1).map(w => w.toLowerCase());
     const hit = allRecords.filter(r => { const h = [r.itemCode, r.itemTitle, r.itemColor, ...Object.values(r.custom || {})].join(' ').toLowerCase(); return tk.length && tk.every(w => h.includes(w)); }).slice(-5).reverse();
     if (hit.length) return hit.map(r => `${r.date} | ${r.itemCode} ${r.itemTitle || ''} | ${num(r.quantity)} ${U()} | ${money(r.totalPrice)}`).join('\n');
-    return 'متوجه نشدم. مثال: «درآمد امروز»، «پرفروش‌ترین‌های هفته»، «تعداد ثبت‌های ماه» یا بخشی از کد، نام یا مشتری را بنویسید.';
+    return 'متوجه نشدم. مثال: «درآمد امروز»، «پرفروش‌ترین‌های ماه»، «درآمد هر ' + (cfs()[0] ? clean(cfs()[0].label) : 'روز') + '» یا بخشی از کد، نام یا مشتری را بنویسید.';
   }
   function bubble(t, me) { const d = document.createElement('div'); d.className = 'px-3 py-2 rounded-2xl text-[13px] leading-relaxed mb-2 ' + (me ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-100'); d.style.cssText = 'width:fit-content;max-width:90%;white-space:pre-line;' + (me ? 'margin-inline-end:auto' : 'margin-inline-start:auto'); d.textContent = t; return d; }
-  if (typeof window.aiAsk !== 'function') {
-    window.aiAsk = function (t) {
-      const i = $('aiInput'), q = String(typeof t === 'string' ? t : (i && i.value) || '').trim(), box = $('aiAnswer'); if (!q || !box) return;
-      box.classList.remove('hidden'); box.appendChild(bubble(q, true));
-      let a; try { a = answer(q); } catch (e) { a = 'خطا در پردازش پرسش.'; }
-      box.appendChild(bubble(a, false)); if (i) i.value = ''; box.scrollTop = box.scrollHeight; if (box.parentElement) box.parentElement.scrollTop = box.parentElement.scrollHeight;
-    };
-    const chips = () => { const c = $('aiChips'); if (!c) return; const l = ['درآمد امروز', 'درآمد هفته', 'تعداد ثبت‌های امروز', 'پرتکرارترین‌های ماه']; if (appSettings.trackDelivery !== false) l.push('تاخیرهای ماه'); c.innerHTML = ''; l.forEach(x => { const b = document.createElement('button'); b.type = 'button'; b.textContent = x; b.className = 'shrink-0 px-3 py-1.5 rounded-full border border-indigo-300 dark:border-indigo-700 text-[12px] text-indigo-700 dark:text-indigo-300 bg-white dark:bg-slate-800'; b.onclick = () => window.aiAsk(x); c.appendChild(b); }); };
-    const open0 = window.aiChatOpen; window.aiChatOpen = function () { chips(); if (open0) open0(); };
+  const orig = typeof window.aiAsk === 'function' ? window.aiAsk : null;
+  window.aiAsk = function (t) {
+    const i = $('aiInput'), q = String(typeof t === 'string' ? t : (i && i.value) || '').trim(), box = $('aiAnswer'); if (!q || !box) return;
+    let a = null; try { a = jobAnswer(q); } catch (e) { a = null; }
+    if (a === null && orig) return orig.apply(this, arguments);
+    if (a === null) { try { a = generic(q); } catch (e) { a = 'خطا در پردازش پرسش.'; } }
+    box.classList.remove('hidden'); box.appendChild(bubble(q, true)); box.appendChild(bubble(a, false));
+    if (i) i.value = ''; box.scrollTop = box.scrollHeight; if (box.parentElement) box.parentElement.scrollTop = box.parentElement.scrollHeight;
+  };
+  function jobChips() {
+    const c = $('aiChips'); if (!c) return; c.querySelectorAll('[data-job]').forEach(x => x.remove());
+    const l = ['پرتکرارترین‌های ماه']; cfs().slice(0, 2).forEach(f => l.push('درآمد هر ' + clean(f.label).replace(/^(شماره|نوع|نام)\s+/, '') + ' (ماه)'));
+    if (appSettings.trackDelivery !== false) l.push('تاخیرهای ماه');
+    if (!orig) l.unshift('درآمد امروز', 'درآمد هفته', 'تعداد ثبت‌های امروز');
+    l.forEach(x => { const b = document.createElement('button'); b.type = 'button'; b.dataset.job = '1'; b.textContent = x; b.className = 'shrink-0 px-3 py-1.5 rounded-full border border-indigo-300 dark:border-indigo-700 text-[12px] text-indigo-700 dark:text-indigo-300 bg-white dark:bg-slate-800'; b.onclick = () => window.aiAsk(x); c.appendChild(b); });
+    const i = $('aiInput'); if (i) i.placeholder = 'بپرس: «پرتکرارترین‌ها»، «درآمد امروز»' + (cfs()[0] ? '، «درآمد هر ' + clean(cfs()[0].label).replace(/^(شماره|نوع|نام)\s+/, '') + '»' : '') + '…';
   }
-  if (typeof window.aiRenderInsights !== 'function') {
-    window.aiRenderInsights = function () {
-      const box = $('aiInsights'); if (!box) return; const t = today(), d = allRecords.filter(r => jd(r) === t), w = allRecords.filter(r => { const j = jd(r); return j >= t - 6 && j <= t; });
-      box.innerHTML = [['امروز', d], ['۷ روز اخیر', w]].map(x => `<div class="flex justify-between text-[12px] py-1 text-slate-600 dark:text-slate-300"><span>${x[0]}</span><b>${escapeHTML(money(sum(x[1], 'totalPrice')) + ' • ' + num(x[1].length) + ' ثبت')}</b></div>`).join('');
-      const s = $('aiSub'); if (s) s.textContent = 'تحلیل آفلاین روی همین دستگاه';
-    };
-    try { window.aiRenderInsights(); } catch (e) { /* بی‌اهمیت */ }
+  const baseIns = typeof window.aiRenderInsights === 'function' ? window.aiRenderInsights : function () {
+    const box = $('aiInsights'); if (!box) return; const t = today(), d = allRecords.filter(r => jd(r) === t), w = allRecords.filter(r => { const j = jd(r); return j >= t - 6 && j <= t; });
+    box.innerHTML = [['امروز', d], ['۷ روز اخیر', w]].map(x => `<div class="flex justify-between text-[12px] py-1 text-slate-600 dark:text-slate-300"><span>${x[0]}</span><b>${escapeHTML(money(sum(x[1], 'totalPrice')) + ' • ' + num(x[1].length) + ' ثبت')}</b></div>`).join('');
+    const s = $('aiSub'); if (s) s.textContent = 'تحلیل آفلاین روی همین دستگاه';
+  };
+  window.aiRenderInsights = function () {
+    try { baseIns.apply(this, arguments); } catch (e) { /* بی‌اهمیت */ }
+    const box = $('aiInsights'); if (!box) return; box.querySelectorAll('[data-job]').forEach(x => x.remove());
+    const g = group(inSpan(span('ماه', true)), title)[0]; if (!g) return;
+    const d = document.createElement('div'); d.dataset.job = '1'; d.className = 'flex justify-between text-[12px] py-1 text-slate-600 dark:text-slate-300'; d.innerHTML = '<span>پرتکرارترین (۳۰ روز اخیر)</span><b></b>'; d.lastChild.textContent = g[0] + ' • ' + num(g[1].q) + ' ' + U(); box.appendChild(d);
+  };
+  try { window.aiRenderInsights(); } catch (e) { /* بی‌اهمیت */ }
+  const vv = window.visualViewport;
+  function fit() {
+    const p = $('aiChatPage'); if (!p || p.classList.contains('hidden')) return;
+    if (vv) { p.style.top = vv.offsetTop + 'px'; p.style.bottom = 'auto'; p.style.height = vv.height + 'px'; }
+    const a = $('aiAnswer'); if (a && a.parentElement) a.parentElement.scrollTop = a.parentElement.scrollHeight;
   }
+  if (vv) { vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); }
+  const inp = $('aiInput'); if (inp) inp.addEventListener('focus', () => { setTimeout(fit, 150); setTimeout(fit, 450); });
+  const o1 = window.aiChatOpen; window.aiChatOpen = function () { if (o1) o1(); jobChips(); fit(); setTimeout(() => { jobChips(); fit(); }, 300); };
+  const o2 = window.aiChatClose; window.aiChatClose = function () { if (o2) o2(); const p = $('aiChatPage'); if (p) { p.style.top = ''; p.style.height = ''; p.style.bottom = ''; } };
 })();
 </script>
 
