@@ -1058,6 +1058,12 @@
 <style>
 body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationWrapper, #autoCalcInfoBox, [onclick*="toggleDelaySummaryVisibility"]) { display: none !important; }
 </style>
+<style>
+body[data-deadline="1"] :is(.c-daily, .c-due, .c-end, .c-next, #autoCalcInfoBox, [onclick*="toggleDelaySummaryVisibility"]) { display: none !important; }
+</style>
+<style>
+body[data-notrack="1"] :is(div:has(> #dailyStat), div:has(> div > #recordEndDateTime)), body[data-deadline="1"] :is(div:has(> #dailyStat), div:has(> div > #recordEndDateTime)) { display: none !important; }
+</style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen pb-28 font-normal-size" id="appBody">
 
@@ -1580,6 +1586,7 @@ body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationW
             </div>
 
             <form id="stitchingForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+<div id="quickItemsBar" class="hidden flex flex-wrap gap-1.5 mb-3"></div>
                 <input type="hidden" id="editingRecordId" value="">
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
@@ -2193,6 +2200,7 @@ body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationW
 <div class="grid grid-cols-2 gap-3"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">شروع کار</label><input id="wizStart" type="time" value="08:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">پایان کار</label><input id="wizEnd" type="time" value="18:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div></div>
 <div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">روزهای تعطیل هفته</label><div id="wizWeekend" class="flex flex-wrap gap-1.5"></div></div>
 <div class="grid grid-cols-2 gap-3 items-end"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد شمارش</label><input id="wizUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 pb-3 cursor-pointer"><input id="wizTrack" type="checkbox" class="accent-purple-600">محاسبه‌ی زمان تحویل و تاخیر</label></div>
+<label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="wizDeadline" type="checkbox" class="accent-purple-600">هر سفارش مهلت تحویل دارد (وضعیت از مقایسه‌ی مهلت با تحویل ساخته شود)</label>
 </div>
 <p id="wizErr" class="hidden text-xs text-red-600"></p>
 <div class="flex gap-2"><button type="button" id="wizBackBtn" onclick="wizShow(1)" class="hidden px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm font-bold text-slate-600 dark:text-slate-300">قبلی</button><button type="button" id="wizNextBtn" onclick="wizNext()" class="flex-1 py-2.5 rounded-xl bg-purple-700 text-white text-sm font-bold">بعدی</button></div>
@@ -2341,9 +2349,12 @@ body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationW
 <div id="settingWeekendDays" class="flex flex-wrap gap-1.5"></div>
 <label for="settingWeekStart" class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-2 mb-1">شروع هفته (برای هدف هفتگی)</label>
 <select id="settingWeekStart" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></select>
+<label for="settingQuickItems" class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-2 mb-1">منوی سریع (هر خط: نام | قیمت) — برای ثبت با یک لمس</label>
+<textarea id="settingQuickItems" rows="4" placeholder="مثلاً: لاته | 85000" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></textarea>
 <label for="settingQtyUnit" class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-2 mb-1">واحد شمارش (عدد، متر، ساعت، کیلو...)</label>
 <input id="settingQtyUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100">
 <label class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="settingTrackDelivery" type="checkbox" class="accent-purple-600"> محاسبه‌ی زمان تحویل و تاخیر کارها (برای خدمات و فروش خاموش کنید)</label>
+<label class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="settingDeadlineMode" type="checkbox" class="accent-purple-600"> حالت «مهلت تحویل»: وضعیت از مقایسه‌ی مهلت هر سفارش با تاریخ ثبت/تحویل ساخته می‌شود</label>
 </div>
                     <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">«ساعت کاری مفید روزانه» (مبنای محاسبه مدت از روی آمار روزانه) مستقل از بازه‌های زیر وارد می‌شود؛ بازه‌ها فقط تعیین می‌کنند کار در چه ساعاتی جلو برود. برای حذف یک استراحت، هر دو ساعت آن را خالی بگذارید. جمعه‌ها همچنان تعطیل است. تغییر فقط روی محاسبه‌های بعدی اثر می‌گذارد؛ رکوردهای قبلی تا زمان ویرایش عوض نمی‌شوند.</p>
                     <div class="grid grid-cols-2 gap-3">
@@ -3930,8 +3941,10 @@ body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationW
             if (s.weekendDays.length > 6) s.weekendDays = [6];
             s.weekStartDay = (Number.isInteger(Number(s.weekStartDay)) && Number(s.weekStartDay) >= 0 && Number(s.weekStartDay) <= 6) ? Number(s.weekStartDay) : 0;
             s.setupDone = !!s.setupDone;
+            s.quickItems = Array.isArray(s.quickItems) ? s.quickItems.map(x => ({ t: String((x && x.t) || '').trim().slice(0, 40), p: Math.max(0, Number(x && x.p) || 0) })).filter(x => x.t).slice(0, 40) : [];
             s.qtyUnit = String(s.qtyUnit || 'عدد').trim().slice(0, 12) || 'عدد';
             s.trackDelivery = s.trackDelivery !== false;
+            s.deadlineMode = !!s.deadlineMode;
             s.bestStreak = Math.max(0, Number(s.bestStreak) || 0);
             const m = (s.manager && typeof s.manager === 'object' && !Array.isArray(s.manager)) ? s.manager : {};
             const A = v => Array.isArray(v) ? v : [];
@@ -4445,6 +4458,7 @@ body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationW
                 ['پرسنل', 'افزودن/ویرایش با نام، تلفن، نقش، بخش، تاریخ شروع و پایان، یادداشت و عکس. می‌توانید پرسنل را غیرفعال کنید (سوابق می‌ماند) یا حذف کنید. فایل جداگانه‌ی هر پرسنل دانلود و در صورت نیاز بازیابی می‌شود.'],
                 ['بخش‌ها', 'بخش‌های مجموعه (مثلاً تولید، انبار، فروش) را تعریف و پرسنل را به آن‌ها اختصاص دهید.'],
                 ['راه‌اندازی اولیه', 'در اولین اجرا شغل، نام کسب‌وکار، واحد پول، ساعت کاری، روزهای تعطیل، واحد شمارش و محاسبه‌ی زمان تحویل را انتخاب کنید؛ همه‌ی آن‌ها بعداً از تنظیمات قابل تغییرند.'],
+                ['مهلت تحویل', 'در این حالت برای هر سفارش «مهلت تحویل» را انتخاب می‌کنید و وضعیت (به‌موقع، تاخیر، زودتر) از مقایسه‌ی آن با «تاریخ ثبت» به‌دست می‌آید؛ مدت تاخیر یا زودتر بر حسب شبانه‌روز است. سفارش را در روز تحویل ثبت کنید.'],
                 ['بدون زمان تحویل', 'برای خدمات و فروش، گزینه‌ی «محاسبه‌ی زمان تحویل و تاخیر» را در تنظیمات خاموش کنید تا فیلدها و ستون‌های زمان‌بندی مخفی شوند.'],
                 ['خروجی CSV حقوق', 'در پنل کارفرما، بخش حقوق، دکمه‌ی «خروجی CSV حقوق ماه» خلاصه و ریز موارد ماه انتخاب‌شده را برای اکسل می‌دهد.'],
                 ['ارجاع کار', 'هنگام ثبت کارکرد، پرسنل مسئول را انتخاب کنید. در لیست رکوردها می‌توانید «نمایش کارکرد» را برای یک پرسنل یا «بدون ارجاع» فیلتر کنید.'],
@@ -4835,19 +4849,19 @@ body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationW
         const BUSINESS_PRESETS = {
             general: { name: 'عمومی (همه‌ی مشاغل)', labels: {}, optional: { itemColor: true },
                 hints: { role: 'مثلاً استادکار، شاگرد، راننده', section: 'مثلاً تولید، انبار، فروش، خدمات' } },
-            repair: { name: 'تعمیرگاه (لوازم برقی، موبایل و...)', labels: { itemCode: 'شماره پذیرش', itemTitle: 'دستگاه / قطعه', itemColor: 'عیب / توضیح', receivedQuantity: 'تعداد', unitPrice: 'دستمزد', itemStatus: 'وضعیت تحویل' }, optional: { itemColor: true },
+            repair: { deadline: true, name: 'تعمیرگاه (لوازم برقی، موبایل و...)', labels: { itemCode: 'شماره پذیرش', itemTitle: 'دستگاه / قطعه', itemColor: 'عیب / توضیح', receivedQuantity: 'تعداد', unitPrice: 'دستمزد', itemStatus: 'وضعیت تحویل' }, optional: { itemColor: true },
                 hints: { role: 'مثلاً تعمیرکار، تکنسین', section: 'مثلاً پذیرش، تعمیر، تست، تحویل' } },
             auto: { name: 'مکانیکی و خدمات خودرو', labels: { itemCode: 'شماره پلاک / پذیرش', itemTitle: 'خودرو / نوع خدمت', itemColor: 'مشخصات', receivedQuantity: 'تعداد', unitPrice: 'دستمزد / قیمت واحد' }, optional: { itemColor: true },
                 hints: { role: 'مثلاً مکانیک، برقکار خودرو', section: 'مثلاً موتور، برق، کارواش، صافکاری' } },
-            carpentry: { name: 'نجاری، کابینت و مبلمان', labels: { itemCode: 'کد سفارش', itemTitle: 'نوع کار (درب، کابینت، مبل...)', itemColor: 'جنس / رنگ', receivedQuantity: 'تعداد' }, optional: { itemColor: true },
+            carpentry: { deadline: true, name: 'نجاری، کابینت و مبلمان', labels: { itemCode: 'کد سفارش', itemTitle: 'نوع کار (درب، کابینت، مبل...)', itemColor: 'جنس / رنگ', receivedQuantity: 'تعداد' }, optional: { itemColor: true },
                 hints: { role: 'مثلاً نجار، رنگ‌کار، نصاب', section: 'مثلاً برش، مونتاژ، رنگ، نصب' } },
-            construction: { name: 'ساختمان و نصب', labels: { itemCode: 'کد پروژه', itemTitle: 'شرح کار', itemColor: 'محل / توضیح', receivedQuantity: 'مقدار (متر / عدد)', unitPrice: 'نرخ واحد' }, optional: { itemColor: true },
+            construction: { deadline: true, name: 'ساختمان و نصب', labels: { itemCode: 'کد پروژه', itemTitle: 'شرح کار', itemColor: 'محل / توضیح', receivedQuantity: 'مقدار (متر / عدد)', unitPrice: 'نرخ واحد' }, optional: { itemColor: true },
                 hints: { role: 'مثلاً بنّا، برقکار، لوله‌کش', section: 'مثلاً اسکلت، برق، لوله‌کشی، نازک‌کاری' } },
             salon: { track: false, unit: 'مورد', name: 'آرایشگاه و خدمات زیبایی', labels: { itemCode: 'کد پذیرش', itemTitle: 'نوع خدمت', itemColor: 'توضیح', receivedQuantity: 'تعداد', unitPrice: 'تعرفه', itemStatus: 'وضعیت ثبت' }, optional: { itemColor: true },
                 hints: { role: 'مثلاً آرایشگر، پدیکور، شاگرد', section: 'مثلاً مو، پوست، ناخن، پذیرش' } },
             food: { name: 'آشپزخانه، قنادی و نانوایی', labels: { itemCode: 'کد سفارش', itemTitle: 'نام محصول', itemColor: 'مشخصات', receivedQuantity: 'تعداد', unitPrice: 'قیمت واحد' }, optional: { itemColor: true },
                 hints: { role: 'مثلاً آشپز، شاطر، کمک‌آشپز', section: 'مثلاً آماده‌سازی، پخت، بسته‌بندی، ارسال' } },
-            print: { name: 'چاپ و تبلیغات', labels: { itemCode: 'شماره سفارش', itemTitle: 'عنوان سفارش', itemColor: 'سایز / رنگ', receivedQuantity: 'تیراژ', unitPrice: 'قیمت واحد' }, optional: { itemColor: true },
+            print: { deadline: true, name: 'چاپ و تبلیغات', labels: { itemCode: 'شماره سفارش', itemTitle: 'عنوان سفارش', itemColor: 'سایز / رنگ', receivedQuantity: 'تیراژ', unitPrice: 'قیمت واحد' }, optional: { itemColor: true },
                 hints: { role: 'مثلاً طراح، اپراتور چاپ', section: 'مثلاً طراحی، چاپ، برش، بسته‌بندی' } },
             retail: { name: 'فروشگاه و عمده‌فروشی', labels: { itemCode: 'شماره فاکتور', itemTitle: 'کالا / شرح', itemColor: 'توضیح', receivedQuantity: 'تعداد', unitPrice: 'قیمت واحد' }, optional: { itemColor: true }, unit: 'عدد', track: false, customer: 'مشتری',
                 hints: { role: 'مثلاً فروشنده، صندوق‌دار', section: 'مثلاً فروش، انبار، صندوق' } },
@@ -4861,7 +4875,7 @@ body[data-notrack="1"] :is(.c-daily, .c-due, .c-end, .c-next, #deliveryDurationW
                 hints: { role: 'مثلاً راننده، باربر', section: 'مثلاً بارگیری، حمل، تحویل' } },
             clinic: { name: 'کلینیک و خدمات درمانی', labels: { itemCode: 'شماره پذیرش', itemTitle: 'نوع خدمت', itemColor: 'توضیح', receivedQuantity: 'تعداد', unitPrice: 'تعرفه' }, optional: { itemColor: true }, unit: 'مورد', track: false, customer: 'بیمار',
                 hints: { role: 'مثلاً پزشک، پرستار، منشی', section: 'مثلاً پذیرش، درمان، صندوق' } },
-            freelance: { name: 'فریلنسر و خدمات پروژه‌ای', labels: { itemCode: 'کد پروژه', itemTitle: 'عنوان پروژه', itemColor: 'توضیح', receivedQuantity: 'مقدار', unitPrice: 'نرخ واحد' }, optional: { itemColor: true }, unit: 'ساعت', track: false, customer: 'مشتری',
+            freelance: { deadline: true, name: 'فریلنسر و خدمات پروژه‌ای', labels: { itemCode: 'کد پروژه', itemTitle: 'عنوان پروژه', itemColor: 'توضیح', receivedQuantity: 'مقدار', unitPrice: 'نرخ واحد' }, optional: { itemColor: true }, unit: 'ساعت', track: true, customer: 'مشتری',
                 hints: { role: 'مثلاً طراح، برنامه‌نویس، مشاور', section: 'مثلاً طراحی، اجرا، پشتیبانی' } },
             tailor: { name: 'خیاطی و تولیدی پوشاک', labels: { itemCode: 'کد لباس', itemTitle: 'عنوان لباس / مدل', itemColor: 'رنگ', receivedQuantity: 'تعداد دریافتی' }, optional: {},
                 hints: { role: 'مثلاً خیاط، اتوکار', section: 'مثلاً برش، دوخت، اتو، بسته‌بندی' } }
@@ -4897,7 +4911,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             document.getElementById('wizStep1').classList.toggle('hidden', n !== 1);
             document.getElementById('wizStep2').classList.toggle('hidden', n !== 2);
             document.getElementById('wizBackBtn').classList.toggle('hidden', n !== 2);
-            if (n === 2) { const q = BUSINESS_PRESETS[wizBizId] || BUSINESS_PRESETS.general; document.getElementById('wizUnit').value = q.unit || 'عدد'; document.getElementById('wizTrack').checked = q.track !== false; }
+            if (n === 2) { const q = BUSINESS_PRESETS[wizBizId] || BUSINESS_PRESETS.general; document.getElementById('wizUnit').value = q.unit || 'عدد'; document.getElementById('wizTrack').checked = q.track !== false; document.getElementById('wizDeadline').checked = !!q.deadline; }
             document.getElementById('wizNextBtn').dataset.step = n;
             document.getElementById('wizNextBtn').innerText = n === 2 ? 'شروع کار' : 'بعدی';
             document.getElementById('wizStepLabel').innerText = `مرحله ${formatNumber(n)} از ${formatNumber(2)}`;
@@ -4919,7 +4933,8 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             if (name) appSettings.shopName = name.slice(0, 120);
             appSettings.currency = document.getElementById('wizCurrency').value;
             appSettings.qtyUnit = (document.getElementById('wizUnit').value.trim() || 'عدد').slice(0, 12); appSettings.trackDelivery = document.getElementById('wizTrack').checked;
-            appSettings.customFields = p.customer ? [custField(p)] : [];
+            appSettings.deadlineMode = document.getElementById('wizDeadline').checked && appSettings.trackDelivery;
+            appSettings.customFields = [...(p.customer ? [custField(p)] : []), ...(appSettings.deadlineMode ? [{ ...DEADLINE_FIELD }] : []), ...presetCf(wizBizId)].slice(0, CF_MAX); appSettings.hiddenFields = presetHide(wizBizId); appSettings.quickItems = presetQuick(wizBizId);
             appSettings.shiftStart = st; appSettings.shiftEnd = en;
             appSettings.shiftBreaks = {}; BREAK_KEYS.forEach(k => { appSettings.shiftBreaks[k] = { start: '', end: '' }; });
             appSettings.workdayMinutes = parseTimeToMinutes(en) - parseTimeToMinutes(st);
@@ -4933,29 +4948,81 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         function populateUnitTrack() {
             const u = document.getElementById('settingQtyUnit'); if (u) u.value = appSettings.qtyUnit || 'عدد';
             const k = document.getElementById('settingTrackDelivery'); if (k) k.checked = appSettings.trackDelivery !== false;
+            const qi = document.getElementById('settingQuickItems'); if (qi) qi.value = (appSettings.quickItems || []).map(x => x.t + (x.p ? ' | ' + x.p : '')).join('\n');
+            const dm = document.getElementById('settingDeadlineMode'); if (dm) dm.checked = !!appSettings.deadlineMode;
         }
-        function presetExtras(p) {
+        function presetExtras(p, id) {
             const u = document.getElementById('settingQtyUnit'); if (u) u.value = p.unit || 'عدد';
             const k = document.getElementById('settingTrackDelivery'); if (k) k.checked = p.track !== false;
+            const dm = document.getElementById('settingDeadlineMode'); if (dm) dm.checked = !!p.deadline;
+            if (p.deadline && Array.isArray(cfDraft) && !cfDraft.some(f => f.id === 'cfdeadline')) { cfDraft.push({ ...DEADLINE_FIELD }); cfEditorRender(); }
             if (p.customer && Array.isArray(cfDraft) && !cfDraft.some(f => f.id === 'cfcustomer')) { cfDraft.push(custField(p)); cfEditorRender(); }
+            const qi = document.getElementById('settingQuickItems'); if (qi && id && !qi.value.trim()) qi.value = presetQuick(id).map(x => x.t).join('\n');
+            if (id && Array.isArray(cfDraft)) { presetCf(id).forEach(f => { if (!cfDraft.some(x => x.id === f.id) && cfDraft.length < CF_MAX) cfDraft.push(f); }); cfEditorRender(); }
+        }
+        const DEADLINE_FIELD = { id: 'cfdeadline', label: 'مهلت تحویل', type: 'text' };
+        function deadlineEval(deliveredStr) {
+            const el = document.getElementById('cf_cfdeadline'), v = el ? toEnglishDigits(el.value.trim()) : '';
+            const dj = parseJalaliDateToJdn(v), aj = parseJalaliDateToJdn(toEnglishDigits(String(deliveredStr || '')));
+            if (!dj || !aj) return null;
+            const diff = aj - dj;
+            if (diff === 0) return { status: 'به موقع', durationTime: '' };
+            const h = Math.abs(diff) * 24;
+            return { status: diff > 0 ? 'تاخیر' : 'زودتر از موعد', durationTime: h > 999 ? 'نامعلوم' : String(h).padStart(2, '0') + ':00' };
+        }
+        const PRESET_EXTRA = {
+            cafe: { cf: [{id: 'cftable', label: 'شماره میز'}, {id: 'cforder', label: 'نوع سفارش (سالن / بیرون\u200cبر / پیک)'}], hide: [] },
+            retail: { cf: [{id: 'cfpay', label: 'نحوه پرداخت'}], hide: ['itemColor'] },
+            academy: { cf: [{id: 'cfclass', label: 'نام کلاس'}], hide: [] },
+            farm: { cf: [{id: 'cfland', label: 'نام زمین / باغ'}], hide: [] },
+            transport: { cf: [{id: 'cfplate', label: 'پلاک خودرو'}, {id: 'cfroute', label: 'مسیر'}], hide: [] },
+            clinic: { cf: [{id: 'cfdoctor', label: 'پزشک / ارائه\u200cدهنده'}], hide: ['itemColor'] },
+            freelance: { cf: [{id: 'cfref', label: 'لینک / مرجع'}], hide: [] },
+            salon: { cf: [{id: 'cfstylist', label: 'آرایشگر'}], hide: [] },
+            repair: { cf: [{id: 'cfphone', label: 'شماره تماس مشتری'}, {id: 'cfmodel', label: 'مدل دستگاه'}], hide: [] }
+        };
+        const PRESET_QUICK = {
+            cafe: ['اسپرسو', 'آمریکانو', 'لاته', 'کاپوچینو', 'موکا', 'چای', 'دمنوش', 'قهوه ترک', 'شیک', 'آبمیوه', 'کیک', 'ساندویچ', 'پیتزا', 'سالاد'],
+            salon: ['کوتاهی مو', 'رنگ مو', 'مش', 'کراتین', 'اصلاح صورت', 'مانیکور', 'پدیکور', 'ابرو'],
+            clinic: ['ویزیت', 'مشاوره', 'پانسمان', 'تزریق', 'نوار قلب', 'آزمایش']
+        };
+        function presetQuick(id) { return (PRESET_QUICK[id] || []).map(t => ({ t, p: 0 })); }
+        function presetCf(id) { return ((PRESET_EXTRA[id] || {}).cf || []).map(f => ({ id: f.id, label: f.label, type: 'text' })); }
+        function presetHide(id) { const h = {}; ((PRESET_EXTRA[id] || {}).hide || []).forEach(k => { h[k] = true; }); return h; }
+        function parseQuickItems(txt) {
+            return String(txt || '').split('\n').map(l => { const a = l.split(/[|،]/); return { t: (a[0] || '').trim().slice(0, 40), p: Math.max(0, Number(String(toEnglishDigits(a[1] || '')).replace(/[^\d.]/g, '')) || 0) }; }).filter(x => x.t).slice(0, 40);
+        }
+        function renderQuickItems() {
+            const bar = document.getElementById('quickItemsBar'); if (!bar) return;
+            const list = (appSettings && appSettings.quickItems) || [];
+            bar.classList.toggle('hidden', !list.length);
+            bar.innerHTML = list.map((x, i) => `<button type="button" onclick="quickFill(${i})" class="px-2.5 py-1.5 rounded-lg border border-purple-300 dark:border-purple-700 bg-purple-50 dark:bg-purple-950/40 text-[12px] font-bold text-purple-700 dark:text-purple-300">${escapeHTML(x.t)}${x.p ? ' <span class="opacity-70 font-normal">' + formatNumber(x.p) + '</span>' : ''}</button>`).join('');
+        }
+        function quickFill(i) {
+            const x = ((appSettings && appSettings.quickItems) || [])[i]; if (!x) return;
+            const set = (id, v) => { const el = document.getElementById(id); if (el) { el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); } };
+            set('itemTitle', x.t); if (x.p) set('unitPrice', String(x.p));
+            const q = document.getElementById('receivedQuantity'); if (q && !q.value.trim()) set('receivedQuantity', '1');
         }
         function ensureNoTrackStatus() {
-            if (!(appSettings && appSettings.trackDelivery === false)) return;
+            if (!(appSettings && (appSettings.trackDelivery === false || isDeadlineMode()))) return;
             const el = document.getElementById('itemStatus');
             if (el && !el.value) { const d = appSettings.defaultStatus; el.value = [...el.options].some(o => o.value === d && d) ? d : (el.options[1] ? el.options[1].value : ''); }
         }
         function applyTrackMode() {
             const on = !(appSettings && appSettings.trackDelivery === false);
+            const dl = isDeadlineMode();
             document.body.dataset.notrack = on ? '' : '1';
+            document.body.dataset.deadline = dl ? '1' : '';
+            renderQuickItems();
             ensureNoTrackStatus();
             ['overviewOnTimeCount', 'overviewEarlyCount', 'overviewDelayedCount'].forEach(id => {
                 const el = document.getElementById(id), grid = el && el.parentElement && el.parentElement.parentElement && el.parentElement.parentElement.parentElement;
                 if (grid) grid.style.display = on ? '' : 'none';
             });
-            ['dailyStat', 'recordEndDateTime'].forEach(id => { const el = document.getElementById(id); const w = el && el.closest('div'); if (w) (id === 'dailyStat' ? w : w.parentElement).classList.toggle('hidden', !on); });
         }
         function applyBusinessPreset(id) {
-            const _p = BUSINESS_PRESETS[id]; if (_p) presetExtras(_p);
+            const _p = BUSINESS_PRESETS[id]; if (_p) presetExtras(_p, id);
             const p = BUSINESS_PRESETS[id];
             if (!p) return;
             Object.keys(FORM_LABEL_DEFAULTS).forEach(k => {
@@ -4989,7 +5056,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         // نسخه‌ی نصبی (APK/Capacitor): پیش‌فرض بدون انیمیشن و بدون جلوه‌های بصری (کاربر می‌تواند از تنظیمات روشن کند)
         const IS_APK_BUILD = (() => { try { const C = window.Capacitor; return !!(C && ((C.isNativePlatform && C.isNativePlatform()) || (C.getPlatform && C.getPlatform() !== 'web'))); } catch (e) { return false; } })();
         const DEFAULT_APP_SETTINGS = {
-            workdayMinutes: 495, shiftStart: '08:00', shiftEnd: '18:00', shiftBreaks: null, formLabels: {}, optionalFields: { itemColor: true }, businessType: 'general', customFields: [], hiddenFields: {}, weekendDays: [6], weekStartDay: 0, setupDone: false, qtyUnit: 'عدد', trackDelivery: true,
+            workdayMinutes: 495, shiftStart: '08:00', shiftEnd: '18:00', shiftBreaks: null, formLabels: {}, optionalFields: { itemColor: true }, businessType: 'general', customFields: [], hiddenFields: {}, weekendDays: [6], weekStartDay: 0, setupDone: false, qtyUnit: 'عدد', trackDelivery: true, deadlineMode: false,
             schemaVersion: 1,
             shopName: 'سامانه‌ی کار هوشمند',
             currency: 'تومان',
@@ -7440,7 +7507,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const keep = {}; list.forEach(f => { const el = document.getElementById('cf_' + f.id); if (el) keep[f.id] = el.value; });
             const cls = 'w-full p-3 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all';
             box.style.display = list.length ? '' : 'none';
-            box.innerHTML = list.map(f => `<div><label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1.5">${escapeHTML(f.label)}</label><input type="text" id="cf_${f.id}" ${f.type === 'number' ? 'inputmode="numeric" data-thousands="1" maxlength="15"' : 'maxlength="100"'} value="${escapeHTML(keep[f.id] || '')}" class="${cls}"></div>`).join('');
+            box.innerHTML = list.map(f => `<div><label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1.5">${escapeHTML(f.label)}</label><input type="text" id="cf_${f.id}" ${f.type === 'number' ? 'inputmode="numeric" data-thousands="1" maxlength="15"' : (f.id === 'cfdeadline' ? 'readonly placeholder="انتخاب تاریخ" onclick="openDatePicker(\'cf_cfdeadline\', event)"' : 'maxlength="100"')} value="${escapeHTML(keep[f.id] || '')}" class="${cls}"></div>`).join('');
         }
         function cfCollectForm() {
             const o = {};
@@ -7539,7 +7606,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const businessType = (btEl && BUSINESS_PRESETS[btEl.value]) ? btEl.value : 'general';
             const hiddenFields = {};
             HIDEABLE_FIELDS.forEach(k => { const w = document.getElementById('settingFieldWrap_' + k); if (w && w.dataset.hidden === '1') hiddenFields[k] = true; });
-            return { data: { workdayMinutes, shiftStart: v.start, shiftEnd: v.end, shiftBreaks: breaks, formLabels: labels, optionalFields, businessType, hiddenFields, customFields: cfReadEditor(), weekendDays: wk, weekStartDay: Number(document.getElementById('settingWeekStart').value) || 0, qtyUnit: (document.getElementById('settingQtyUnit').value.trim() || 'عدد').slice(0, 12), trackDelivery: document.getElementById('settingTrackDelivery').checked } };
+            return { data: { workdayMinutes, shiftStart: v.start, shiftEnd: v.end, shiftBreaks: breaks, formLabels: labels, optionalFields, businessType, hiddenFields, customFields: cfReadEditor(), weekendDays: wk, weekStartDay: Number(document.getElementById('settingWeekStart').value) || 0, qtyUnit: (document.getElementById('settingQtyUnit').value.trim() || 'عدد').slice(0, 12), trackDelivery: document.getElementById('settingTrackDelivery').checked, deadlineMode: document.getElementById('settingDeadlineMode').checked, quickItems: parseQuickItems(document.getElementById('settingQuickItems').value) } };
         }
         /* ============ پایان نام فیلدها و ساعات کاری ============ */
 
@@ -7755,6 +7822,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             appSettings.motivationBgColor = motivationBgColorVal;
             appSettings.motivationTextColor = motivationTextColorVal;
             Object.assign(appSettings, workRes.data);
+            if (appSettings.deadlineMode && !cfList().some(f => f.id === 'cfdeadline')) appSettings.customFields = [...cfList(), { ...DEADLINE_FIELD }].slice(0, CF_MAX);
             try { fridayCache.clear(); } catch (e) { /* بی‌اهمیت */ }
             { const keepCf = new Set(cfList().map(f => f.id)); let chCf = false;
               allRecords.forEach(r => { if (r.custom) { Object.keys(r.custom).forEach(k => { if (!keepCf.has(k)) { delete r.custom[k]; chCf = true; } }); if (!Object.keys(r.custom).length) r.custom = null; if (chCf) r.updatedAt = Date.now(); } });
@@ -8687,7 +8755,8 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         // مقایسه‌ی «مدت زمان تحویل کار» (هدف) رکورد با زمان کاریِ واقعاً سپری‌شده تا لحظه‌ی شروع
         // کد بعدیِ واقعی، و تنظیم وضعیت (تاخیر/زودتر از موعد/به‌موقع) و مقدار آن روی رکورد.
         // خروجی: true اگر محاسبه واقعاً انجام شد (یعنی داده‌های لازم کامل بودند).
-        function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'manual'; }
+        function isDeadlineMode() { return !!(appSettings && appSettings.trackDelivery !== false && appSettings.deadlineMode); }
+function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'manual' || isDeadlineMode(); }
 
         function getOnTimeTolerance() {
             const t = Number(appSettings.onTimeToleranceMinutes);
@@ -8917,7 +8986,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const qty = parsePersianInt(document.getElementById('receivedQuantity').value);
             const isPriceUnknown = document.getElementById('priceUnknownCheckbox').checked;
             const price = isPriceUnknown ? null : parsePersianInt(document.getElementById('unitPrice').value);
-            const status = document.getElementById('itemStatus').value;
+            let status = document.getElementById('itemStatus').value;
             const dailyStatRaw = document.getElementById('dailyStat').value.trim();
             const dailyStat = dailyStatRaw ? parsePersianInt(dailyStatRaw) : null;
             const receivedQuantity = qty;
@@ -8925,6 +8994,8 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const workDuration = document.getElementById('recordWorkDuration').value.trim() || null;
             const date = document.getElementById('recordDate').value || info.fullDateStr;
             const time = document.getElementById('recordTime').value || new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+            let dlDur = null;
+            if (isDeadlineMode()) { const dl = deadlineEval(date); if (dl) { status = dl.status; dlDur = dl.durationTime; } }
             const needsDuration = (status === 'تاخیر' || status === 'زودتر از موعد');
             let durationTime = '';
             if (needsDuration) {
@@ -8938,6 +9009,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
                 }
             }
 
+            if (dlDur !== null) durationTime = dlDur;
             if ((!isFieldOptional('receivedQuantity') && qty <= 0) || (!isPriceUnknown && !isFieldOptional('unitPrice') && price <= 0)) {
                 showFeedbackBanner('لطفاً مقادیر معتبر (بزرگ‌تر از صفر) برای تعداد دریافتی و قیمت واحد وارد کنید.', 'warn');
                 return;
@@ -12870,6 +12942,47 @@ document.addEventListener('keydown', function (e) {
 });
 </script>
 <script src="ai-assistant.js" onerror="try{var e=document.getElementById('aiSub');if(e)e.textContent='فایل ai-assistant.js بارگذاری نشد';}catch(x){}"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id), U = () => (appSettings && appSettings.qtyUnit) || 'عدد', CUR = () => (appSettings && appSettings.currency) || 'تومان';
+  const num = n => formatNumber(Math.round(n || 0)), money = n => num(n) + ' ' + CUR();
+  const jd = r => parseJalaliDateToJdn(toEnglishDigits(String(r.date || '')));
+  const today = () => parseJalaliDateToJdn(toEnglishDigits(currentJalali.fullDateStr));
+  const sum = (l, k) => l.reduce((s, r) => s + (Number(r[k]) || 0), 0);
+  function span(q) { const t = today(); if (/دیروز/.test(q)) return ['دیروز', t - 1, t - 1]; if (/امروز/.test(q)) return ['امروز', t, t]; if (/هفته/.test(q)) return ['۷ روز اخیر', t - 6, t]; if (/ماه/.test(q)) return ['۳۰ روز اخیر', t - 29, t]; return ['کل دوره', 0, 1e9]; }
+  function top(l) { const m = {}; l.forEach(r => { const k = String(r.itemTitle || r.itemCode || '').trim(); if (k) m[k] = (m[k] || 0) + (Number(r.quantity) || 0); }); return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, 3); }
+  function answer(q) {
+    q = toEnglishDigits(q.trim()); const sp = span(q), L = allRecords.filter(r => { const j = jd(r); return j >= sp[1] && j <= sp[2]; }), lb = sp[0];
+    if (/درآمد|فروش|مجموع|مبلغ|دریافتی/.test(q) && !/پرفروش/.test(q)) return `${lb}: مجموع ${money(sum(L, 'totalPrice'))} از ${num(L.length)} ثبت.`;
+    if (/پرفروش|پرکار|بیشترین|محبوب|پرتکرار/.test(q)) { const t = top(L); return t.length ? `پرتکرارترین‌ها (${lb}): ` + t.map(x => `${x[0]} (${num(x[1])} ${U()})`).join('، ') : 'در این بازه داده‌ای نیست.'; }
+    if (/تاخیر|تأخیر/.test(q)) return `${lb}: ${num(L.filter(r => r.status === 'تاخیر').length)} مورد با تاخیر از ${num(L.length)} ثبت.`;
+    if (/تعداد|چند/.test(q)) return `${lb}: ${num(L.length)} ثبت، مجموع ${num(sum(L, 'quantity'))} ${U()}.`;
+    const tk = q.split(/\s+/).filter(w => w.length > 1).map(w => w.toLowerCase());
+    const hit = allRecords.filter(r => { const h = [r.itemCode, r.itemTitle, r.itemColor, ...Object.values(r.custom || {})].join(' ').toLowerCase(); return tk.length && tk.every(w => h.includes(w)); }).slice(-5).reverse();
+    if (hit.length) return hit.map(r => `${r.date} | ${r.itemCode} ${r.itemTitle || ''} | ${num(r.quantity)} ${U()} | ${money(r.totalPrice)}`).join('\n');
+    return 'متوجه نشدم. مثال: «درآمد امروز»، «پرفروش‌ترین‌های هفته»، «تعداد ثبت‌های ماه» یا بخشی از کد، نام یا مشتری را بنویسید.';
+  }
+  function bubble(t, me) { const d = document.createElement('div'); d.className = 'px-3 py-2 rounded-2xl text-[13px] leading-relaxed mb-2 ' + (me ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-100'); d.style.cssText = 'width:fit-content;max-width:90%;white-space:pre-line;' + (me ? 'margin-inline-end:auto' : 'margin-inline-start:auto'); d.textContent = t; return d; }
+  if (typeof window.aiAsk !== 'function') {
+    window.aiAsk = function (t) {
+      const i = $('aiInput'), q = String(typeof t === 'string' ? t : (i && i.value) || '').trim(), box = $('aiAnswer'); if (!q || !box) return;
+      box.classList.remove('hidden'); box.appendChild(bubble(q, true));
+      let a; try { a = answer(q); } catch (e) { a = 'خطا در پردازش پرسش.'; }
+      box.appendChild(bubble(a, false)); if (i) i.value = ''; box.scrollTop = box.scrollHeight; if (box.parentElement) box.parentElement.scrollTop = box.parentElement.scrollHeight;
+    };
+    const chips = () => { const c = $('aiChips'); if (!c) return; const l = ['درآمد امروز', 'درآمد هفته', 'تعداد ثبت‌های امروز', 'پرتکرارترین‌های ماه']; if (appSettings.trackDelivery !== false) l.push('تاخیرهای ماه'); c.innerHTML = ''; l.forEach(x => { const b = document.createElement('button'); b.type = 'button'; b.textContent = x; b.className = 'shrink-0 px-3 py-1.5 rounded-full border border-indigo-300 dark:border-indigo-700 text-[12px] text-indigo-700 dark:text-indigo-300 bg-white dark:bg-slate-800'; b.onclick = () => window.aiAsk(x); c.appendChild(b); }); };
+    const open0 = window.aiChatOpen; window.aiChatOpen = function () { chips(); if (open0) open0(); };
+  }
+  if (typeof window.aiRenderInsights !== 'function') {
+    window.aiRenderInsights = function () {
+      const box = $('aiInsights'); if (!box) return; const t = today(), d = allRecords.filter(r => jd(r) === t), w = allRecords.filter(r => { const j = jd(r); return j >= t - 6 && j <= t; });
+      box.innerHTML = [['امروز', d], ['۷ روز اخیر', w]].map(x => `<div class="flex justify-between text-[12px] py-1 text-slate-600 dark:text-slate-300"><span>${x[0]}</span><b>${escapeHTML(money(sum(x[1], 'totalPrice')) + ' • ' + num(x[1].length) + ' ثبت')}</b></div>`).join('');
+      const s = $('aiSub'); if (s) s.textContent = 'تحلیل آفلاین روی همین دستگاه';
+    };
+    try { window.aiRenderInsights(); } catch (e) { /* بی‌اهمیت */ }
+  }
+})();
+</script>
 
 
 <div id="karPremiumModal" class="kar-sheet no-print" dir="rtl" onclick="if(event.target===this)karClosePremium()">
