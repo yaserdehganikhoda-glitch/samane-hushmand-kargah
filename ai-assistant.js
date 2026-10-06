@@ -613,7 +613,8 @@
                 case 'bars': return b.rows.map(r => '• ' + r.l + ': ' + r.t).join('\n');
                 case 'table': return [b.head.join(' | ')].concat(b.rows.map(r => r.map(c => (c && c.t !== undefined) ? c.t : c).join(' | '))).join('\n');
                 case 'list': return b.items.map(i => '• ' + i).join('\n');
-                case 'finds': return b.items.map(i => '• ' + i.x).join('\n');
+                case 'btns': return `<div class="flex flex-wrap gap-2 mt-1 mb-1.5">${b.items.map(it => { const ac = CMD.acts[it.id], dead = !ac || ac.used, c = it.tone === 'ok' ? 'bg-indigo-600 text-white border-indigo-600' : it.tone === 'bad' ? 'bg-rose-600 text-white border-rose-600' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-600'; return `<button type="button" ${dead ? 'disabled' : `onclick="aiCmdBtn('${it.id}')"`} class="tactile-btn px-3 py-1.5 rounded-xl border text-[11.5px] font-bold ${c}${dead ? ' opacity-40' : ''}">${esc(it.t)}</button>`; }).join('')}</div>`;
+            case 'finds': return b.items.map(i => '• ' + i.x).join('\n');
                 case 'prog': return b.label + ': ' + (b.right || f(b.pct) + '٪');
                 default: return '';
             }
@@ -1338,6 +1339,447 @@
         catch (e) { try { console.warn('[AI]', e); } catch (z) { /* بی‌اهمیت */ } return R([B.p('در پردازش این سوال مشکلی پیش آمد. لطفاً آن را کمی ساده‌تر یا به شکل دیگری بپرسید.')], ['راهنما', 'تحلیل هوشمند']); }
     }
 
+    /* ============================ دستورهای چت: اجرای کار از داخل گفتگو ============================ */
+    const CMD = { pend: null, undo: [], acts: {}, seq: 0, hist: [], hi: -1, forceAuto: false };
+    const AUTO_KEY = 'ai_cmd_auto_v1';
+    const nz = (s) => toEnglishDigits(String(s == null ? '' : s)).replace(/ي/g, 'ی').replace(/ك/g, 'ک').replace(/[\u064b-\u065f\u0640]/g, '');
+    const autoOn = () => { try { return localStorage.getItem(AUTO_KEY) === '1'; } catch (e) { return false; } };
+    const todayJ = () => parseJalaliDateToJdn(getCurrentJalaliInfo().fullDateStr);
+    const jStr = (j) => { const d = d2j(j); return toPersianDigits(d.jy) + '/' + toPersianDigits(d.jm) + '/' + toPersianDigits(d.jd); };
+    const recKey = (r) => (parseJalaliDateToJdn(r.date) || 0) * 1440 + (parseTimeToMinutes(r.time) || 0);
+    const gl = (k) => { try { return getFormLabel(k); } catch (e) { return k; } };
+    const optF = (k) => { try { return isFieldOptional(k); } catch (e) { return false; } };
+    const p2 = (n) => String(n).padStart(2, '0');
+    const mgrIsOn = () => { try { return typeof mgrOn === 'function' && mgrOn(); } catch (e) { return false; } };
+    const reg = (fn, grp) => { const id = 'c' + (++CMD.seq); CMD.acts[id] = { fn, used: false, grp: grp || id }; const ks = Object.keys(CMD.acts); if (ks.length > 80) delete CMD.acts[ks[0]]; return id; };
+    const btn = (t, id, tone) => ({ t, id, tone });
+    const BT = (items) => ({ k: 'btns', items });
+    const WARN = (t) => R([B.note(t, 'warn')]);
+    const YES = /^(بله|بلی|اره|ارع|تایید|اوکی|ok|okay|باشه|انجام بده|انجام|درسته|ثبت کن|بزن|حله)$/;
+    const NO = /^(نه|خیر|لغو|کنسل|بیخیال|نمیخوام|نکن|انصراف|نه ممنون)$/;
+    const QW = /^(چقدر|چند|کی|کدام|کدوم|چرا|چه|چی|آیا|چطور|چگونه|کجا)( |$)/;
+    const STOP = /^(کن|بکن|بزن|را|رو|بده|بذار|بزار|بشه|بشود|شود|باشه|و|با|به|در|لطفا|هم|ثبت|جدید|کار|کارکرد|رکورد)$/;
+    const KW = { code: ['کد', 'کدجدید'], qty: ['تعداد', 'مقدار'], price: ['قیمت', 'نرخ', 'مبلغ', 'فی', 'تعرفه', 'دستمزد', 'کارمزد'], title: ['عنوان', 'مدل', 'محصول', 'آیتم', 'شرح'], color: ['رنگ'], worker: ['پرسنل', 'کارگر', 'برای', 'توسط', 'کارمند'], date: ['تاریخ'], time: ['ساعت'], status: ['وضعیت'] };
+    const WDN = { 'شنبه': 0, 'یکشنبه': 1, 'دوشنبه': 2, 'سهشنبه': 3, 'چهارشنبه': 4, 'پنجشنبه': 5, 'جمعه': 6 };
+    const CMD_TPL = ['ثبت کد  تعداد  قیمت ', 'پایان کار', 'قیمت کد  را  کن', 'تعداد آخرین ثبت را  کن', 'حذف آخرین ثبت', 'یادداشت فردا: ', 'یادآوری فردا ساعت ۹ ', 'برو به لیست', 'برو به یادداشت‌ها', 'فیلتر لیست ', 'حالت تاریک', 'پشتیبان بگیر', 'خروجی CSV', 'بازگردانی', 'دستورها'];
+
+    function cfWords(f) { const c = String(f.label).replace(/\(.*?\)/g, ' ').replace(/\s+/g, ' ').trim(); const w = c.split(' ').filter(x => x.length > 2 && !/^(شماره|نوع|نام|کد)$/.test(x)); return w.length ? w : [c]; }
+    function amt(a) {
+        const m = /(\d+(?:\.\d+)?)\s*(هزار|میلیون|میلیارد|k)?/i.exec((a || []).join(' ')); if (!m) return null;
+        let v = parseFloat(m[1]); const u = (m[2] || '').toLowerCase();
+        if (u === 'هزار' || u === 'k') v *= 1e3; else if (u === 'میلیون') v *= 1e6; else if (u === 'میلیارد') v *= 1e9;
+        return Math.round(v);
+    }
+    /* استخراج فیلدهای فرم از متن آزاد (ترتیب‌ناپذیر): کد، عنوان، رنگ، تعداد، قیمت، پرسنل، فیلدهای سفارشی */
+    function fields(text) {
+        let s = nz(text).replace(/(\d)[,٬،](?=\d{3}(?!\d))/g, '$1').replace(/[،؛;,:：]/g, ' ').replace(/\s+/g, ' ').trim();
+        s = wordNums(s);
+        const U = String((appSettings && appSettings.qtyUnit) || 'عدد').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        if (!/(^| )(تعداد|مقدار)( |$)/.test(s)) s = s.replace(new RegExp('(^| )(\\d+) (عدد|تا|دست|جفت|متر|کیلو|بسته|پرس|لیوان|مورد|' + U + ')(?= |$)'), '$1تعداد $2');
+        if (!/(^| )(قیمت|نرخ|مبلغ|فی|تعرفه|دستمزد|کارمزد)( |$)/.test(s)) s = s.replace(/(^| )(\d+(?: (?:هزار|میلیون|میلیارد))?) (?:تومان|تومن|ریال)(?= |$)/, '$1قیمت $2');
+        const kmap = {}; Object.keys(KW).forEach(k => KW[k].forEach(w => { kmap[w] = k; }));
+        const cf = ((appSettings && appSettings.customFields) || []).filter(x => x && x.id && x.label);
+        cf.forEach(x => cfWords(x).forEach(w => { kmap[w] = 'cf:' + x.id; }));
+        const T = s.split(' ').filter(Boolean), out = {}, lead = []; let cur = null;
+        for (let i = 0; i < T.length; i++) {
+            const t = T[i], k = kmap[t];
+            if (k) { cur = k; if (!out[k]) out[k] = []; continue; }
+            if (/^(شماره|نوع|نام)$/.test(t) && kmap[T[i + 1]]) continue;
+            if (cur) out[cur].push(t); else lead.push(t);
+        }
+        const trim = (a) => { a = (a || []).slice(); while (a.length && STOP.test(a[0])) a.shift(); while (a.length && STOP.test(a[a.length - 1])) a.pop(); return a; };
+        const S = { cf: {}, keyed: Object.keys(out).length > 0 };
+        if (out.code) { const a = trim(out.code); if (a.length) S.code = a[0]; }
+        else { const c = trim(lead).find(t => /^[A-Za-z0-9][A-Za-z0-9\-_\/]*$/.test(t)); if (c) S.code = c; }
+        if (out.qty) { const n = trim(out.qty).map(t => parsePersianInt(t)).find(x => x > 0); if (n) S.qty = n; }
+        if (out.price) { const v = amt(trim(out.price)); if (v != null) S.price = v; }
+        ['title', 'color'].forEach(k => { if (out[k]) { const a = trim(out[k]); if (a.length) S[k] = a.join(' ').slice(0, 100); } });
+        if (out.worker) { const a = trim(out.worker); if (a.length) S.workerText = a.join(' '); }
+        cf.forEach(x => { const a = out['cf:' + x.id]; if (!a) return; const b = trim(a); if (b.length) S.cf[x.id] = x.type === 'number' ? String(amt(b) || '') : b.join(' ').slice(0, 100); });
+        return S;
+    }
+    /* تاریخ و ساعت از متن: امروز/فردا/پس‌فردا/N روز دیگر/نام روز هفته/تاریخ دقیق/ساعت ۹ عصر/۱۰ دقیقه دیگر */
+    function whenOf(text) {
+        let s = ' ' + nz(text).replace(/پس ?فردا/g, 'پسفردا') + ' '; const t0 = todayJ(), o = { j: null, time: null, repeat: null, rest: '' }; let m;
+        const cut = (str) => { s = s.replace(str, ' '); };
+        if ((m = /هر (روز|هفته|ماه)/.exec(s))) { o.repeat = { 'روز': 'daily', 'هفته': 'weekly', 'ماه': 'monthly' }[m[1]]; cut(m[0]); }
+        if ((m = /(\d+|نیم) (دقیقه|ساعت) (?:دیگه|دیگر|بعد)/.exec(s))) {
+            const v = m[1] === 'نیم' ? 0.5 : +m[1], d = new Date(Date.now() + v * (m[2] === 'ساعت' ? 3600e3 : 60e3));
+            o.time = p2(d.getHours()) + ':' + p2(d.getMinutes()); o.j = t0 + (d.getDate() !== new Date().getDate() ? 1 : 0); cut(m[0]);
+        }
+        let mm = /ساعت (\d{1,2})(?::(\d{2}))?( و نیم)?(?: (صبح|ظهر|عصر|شب|بعد ?از ?ظهر))?/.exec(s);
+        if (!mm) { const m2 = /(?:^|\s)(\d{1,2}):(\d{2})(?: (صبح|ظهر|عصر|شب|بعد ?از ?ظهر))?(?=\s)/.exec(s); if (m2) mm = [m2[0], m2[1], m2[2], null, m2[3]]; }
+        if (mm && !o.time) {
+            let h = +mm[1]; const mi = mm[2] ? +mm[2] : (mm[3] ? 30 : 0), pd = mm[4] || '';
+            if (/عصر|بعد/.test(pd) && h < 12) h += 12; else if (/شب/.test(pd)) { if (h === 12) h = 0; else if (h < 12 && h >= 5) h += 12; } else if (/ظهر/.test(pd) && h < 7) h += 12;
+            if (h <= 23 && mi <= 59) { o.time = p2(h) + ':' + p2(mi); cut(mm[0]); }
+        }
+        const base = o.j; o.j = null;
+        try {
+            if (/پسفردا/.test(s)) { o.j = t0 + 2; cut(/پسفردا/); }
+            else if (/(^|\s)فردا(\s|$)/.test(s)) { o.j = t0 + 1; cut(/(^|\s)فردا(?=\s)/); }
+            else if (/دیروز/.test(s)) { o.j = t0 - 1; cut(/دیروز/); }
+            else if (/امروز|امشب/.test(s)) { o.j = t0; cut(/امروز|امشب/); }
+            else if ((m = /(\d+) (روز|هفته|ماه) (?:دیگه|دیگر|بعد|آینده)/.exec(s))) { o.j = t0 + (+m[1]) * ({ 'روز': 1, 'هفته': 7, 'ماه': 30 }[m[2]]); cut(m[0]); }
+            else if ((m = /(\d{4})\/(\d{1,2})\/(\d{1,2})/.exec(s))) { o.j = j2d(+m[1], +m[2], +m[3]); cut(m[0]); }
+            else if ((m = /(?:^|\s)(\d{1,2})\/(\d{1,2})(?=\s)/.exec(s))) { const cj = d2j(t0); let j = j2d(cj.jy, +m[1], +m[2]); if (j < t0) j = j2d(cj.jy + 1, +m[1], +m[2]); o.j = j; cut(m[0]); }
+            else if ((m = /(یک ?شنبه|دو ?شنبه|سه ?شنبه|چهار ?شنبه|پنج ?شنبه|جمعه|شنبه)/.exec(s))) { const wd = WDN[m[1].replace(/ /g, '')]; let dl = (wd - ((t0 + 2) % 7) + 7) % 7; if (dl === 0) dl = 7; o.j = t0 + dl; cut(m[0]); }
+        } catch (e) { o.j = null; }
+        if (o.j == null) o.j = base;
+        o.rest = s.replace(/\s+/g, ' ').trim();
+        return o;
+    }
+    function pickWorker(txt) {
+        if (!txt || !mgrIsOn()) return { w: null };
+        const q = normalizeSearchText(txt), L = mgr().workers.filter(w => w.active !== false);
+        let m = L.filter(w => normalizeSearchText(w.name) === q);
+        if (!m.length) m = L.filter(w => { const x = normalizeSearchText(w.name); return x.includes(q) || q.includes(x); });
+        return m.length === 1 ? { w: m[0] } : { w: null, err: m.length ? 'چند پرسنل با این نام هست: ' + m.map(x => x.name).join('، ') : 'پرسنلی با نام «' + txt + '» پیدا نشد.' };
+    }
+    function selOf(raw) {
+        let s = nz(raw).replace(/کد\s+جدید/g, 'کدجدید'); const sel = {}; let m;
+        if ((m = /(?:^|\s)کد\s+(\S+)/.exec(s))) { sel.code = normalizeCodeValue(m[1]); s = s.replace(m[0], ' '); }
+        if (/(^|\s)(آخرین|اخرین|آخر|قبلی|همین)(\s|$)/.test(s)) sel.last = true;
+        if ((m = /(?:پرسنل|کارگر|کارمند)\s+(\S+)/.exec(s))) { const p = pickWorker(m[1]); if (p.w) { sel.workerId = p.w.id; s = s.replace(m[0], ' '); } }
+        sel.rest = s; return sel;
+    }
+    function findRecs(sel) {
+        let L = allRecords.slice();
+        if (sel.code) L = L.filter(r => normalizeCodeValue(r.itemCode).toLowerCase() === String(sel.code).toLowerCase());
+        if (sel.workerId) L = L.filter(r => r.workerId === sel.workerId);
+        return L.sort((a, b) => recKey(b) - recKey(a) || (b.updatedAt || 0) - (a.updatedAt || 0));
+    }
+    const recRows = (r) => {
+        const rows = [[gl('itemCode'), String(r.itemCode || '-')]];
+        if (r.itemTitle) rows.push([gl('itemTitle'), r.itemTitle]); if (r.itemColor) rows.push([gl('itemColor'), r.itemColor]);
+        rows.push([gl('receivedQuantity'), fa(f(r.quantity || 0))]); rows.push([gl('unitPrice'), r.unitPrice == null ? 'نامشخص' : money(r.unitPrice)]);
+        rows.push(['تاریخ', fa(String(r.date || '') + ' ' + (r.time || ''))]); if (r.workerName) rows.push(['پرسنل', r.workerName]);
+        return rows;
+    };
+
+    /* ---------- تشخیص دستور ---------- */
+    function detect(raw) {
+        if (/^\s*\/+\s*$/.test(String(raw || ''))) return { t: 'help' };
+        const r = String(raw || '').trim().replace(/^\/+\s*/, ''); if (!r || /[؟?]/.test(r)) return null;
+        const n = norm(r); if (!n || QW.test(n)) return null; const T = (re) => re.test(n);
+        if (T(/^(دستور(ها|ات)?|راهنمای دستور(ها|ات)?|لیست دستور(ها|ات)?)$/)) return { t: 'help' };
+        if (T(/^(بازگردان\S*|برگردان|برگرد|undo|لغو (کن )?(آخرین|عملیات|دستور)|پشیمون\S*)$/)) return { t: 'undo' };
+        if (T(/^(پاک|حذف) (کردن )?(گفتگو|چت|تاریخچه)/)) return { t: 'clear' };
+        if (T(/(تایید|تاییدیه) ?(خودکار|اتوماتیک)|اجرای مستقیم|بدون (تایید|پرسش)/)) return { t: 'auto', on: !/(خاموش|غیرفعال|قطع|لغو)/.test(n) };
+        if (T(/^(به من |بهم |برام )?(یادداشت|یاد داشت|یاداوری|یاد اوری|یادم بنداز|یادم باشه|نوت|تعطیلی)( |$)/)) return { t: 'note' };
+        if (T(/^(برو|ببر|باز کن|بازکن|برگرد) ?(به|توی|تو|در)? ?(صفحه|تب|بخش|منوی)? ?(لیست|کارکرد|رکورد|جدول|ثبت|فرم|یادداشت|پیشرفت|کار جاری|کارفرما|پنل|خانه|اصلی|تنظیمات|سطل|بازیافت)/)) return { t: 'nav' };
+        if (T(/^(تم|حالت|پوسته|برنامه|صفحه)( را| رو)? ?(تاریک|دارک|شب)( کن| بکن| شو| شود)?$|^(تاریک|دارک) (کن|بکن|شو)$/)) return { t: 'theme', dark: true };
+        if (T(/^(تم|حالت|پوسته|برنامه|صفحه)( را| رو)? ?(روشن|لایت|روز)( کن| بکن| شو| شود)?$/)) return { t: 'theme', dark: false };
+        if (T(/(کارفرما).*(روشن|خاموش|فعال|غیرفعال)|(روشن|خاموش|فعال|غیرفعال) (کن|بکن).*کارفرما/)) return { t: 'mgr', on: !/(خاموش|غیرفعال)/.test(n) };
+        if (T(/(پشتیبان|بکاپ|backup)/) && T(/(بگیر|بده|بساز|تهیه|دانلود|ذخیره)/)) return { t: 'backup' };
+        if (T(/(خروجی|اکسل|csv|دانلود)/) && T(/(اکسل|csv|کارکرد|رکورد|لیست|حقوق)/) && !T(/(پشتیبان|بکاپ)/)) return { t: 'csv', pay: T(/حقوق/) };
+        if (T(/^(چاپ|پرینت)( |$)/)) return { t: 'print' };
+        if (T(/(پاک|حذف|ریست) (کردن |کن )?(فیلتر|جستجو)|^فیلتر (را )?(بردار|خاموش)/)) return { t: 'filter', clear: true };
+        if (T(/^(فیلتر|جستجو|سرچ)( کن| بکن)?( در| توی)? ?(لیست|جدول|کارکرد)/)) return { t: 'filter' };
+        if (T(/^(افزودن|اضافه|ثبت|ایجاد)( کن)? (پرسنل|کارگر|کارمند)( جدید)?( |$)|^(پرسنل|کارگر|کارمند) جدید( |$)/)) return { t: 'worker' };
+        if (T(/^(غیرفعال|فعال) (کن )?(پرسنل|کارگر|کارمند)( |$)/)) return { t: 'wtoggle', on: /^فعال/.test(n) };
+        if (T(/^(پایان|اتمام|ختم)( دادن)?( (کار|کد).*)?$|^(تمامش|تمومش|تموم|تمام) (کن|بکن|شد)|(^| )(تمام|تموم) شد( |$)/)) return { t: 'finish' };
+        if (T(/^(حذف|پاک|دلیت)( کن)?( |$)/)) return { t: 'delete' };
+        const sel = T(/(^| )(کد \S+|آخرین|اخرین|قبلی|همین)( |$)/), fld = T(/(^| )(تعداد|قیمت|نرخ|عنوان|رنگ|مقدار|کد جدید)( |$)/);
+        if ((T(/^(ویرایش|اصلاح|تغییر|عوض|اپدیت|بروزرسانی|به روز)( |$)/) && (sel || fld)) || (sel && fld && T(/(کن|بکن|بشه|بذار|بزار|بده|شود|باشه)$/))) return { t: 'edit' };
+        if (T(/^(ثبت|اضافه|افزودن|وارد|درج|ایجاد|بزن)( کن| کار| کارکرد| رکورد| جدید)*( |$)/) || (T(/^کد \S+ .*(تعداد|قیمت) \d/))) return { t: 'create' };
+        return null;
+    }
+
+    /* ---------- کارت تایید و اجرا ---------- */
+    function ask(plan) {
+        if ((autoOn() || CMD.forceAuto) && !plan.danger) return runPlan(plan);
+        const g = 'g' + (++CMD.seq), yes = reg(() => runPlan(plan), g), no = reg(() => R([B.p('لغو شد؛ تغییری اعمال نشد.')]), g);
+        CMD.pend = { kind: 'confirm', yes, no, ts: Date.now() };
+        const bl = [B.h(plan.title)]; if (plan.rows && plan.rows.length) bl.push(B.kv(plan.rows)); if (plan.warn) bl.push(B.note(plan.warn, 'warn'));
+        bl.push(BT([btn(plan.ok || 'تایید و اجرا', yes, plan.danger ? 'bad' : 'ok'), btn('لغو', no, 'no')]));
+        return R(bl, []);
+    }
+    function runPlan(plan) {
+        CMD.pend = null; let x;
+        try { x = plan.exec(); } catch (e) { try { console.warn('[AI-CMD]', e); } catch (z) { /* بی‌اهمیت */ } x = { ok: false, msg: 'اجرای دستور با خطا مواجه شد؛ تغییری اعمال نشد.' }; }
+        if (!x.ok) return R([B.note(x.msg || 'انجام نشد.', 'warn')]);
+        const bl = [B.note('✓ ' + x.msg, 'good')]; if (x.rows) bl.push(B.kv(x.rows));
+        if (x.undo) { const ent = { label: plan.title, fn: x.undo, done: false }; CMD.undo.push(ent); if (CMD.undo.length > 15) CMD.undo.shift(); bl.push(BT([btn('↩ بازگردانی', reg(() => doUndo(ent)), 'no')])); }
+        return R(bl, x.chips || []);
+    }
+    function doUndo(ent) {
+        if (ent.done) return WARN('این مورد قبلاً بازگردانده شده است.'); ent.done = true; let m;
+        try { m = ent.fn(); } catch (e) { m = 'بازگردانی ناموفق بود.'; }
+        return R([B.note('↩ ' + (m || 'بازگردانی شد.'), 'good')]);
+    }
+    function useAct(id) {
+        const a = CMD.acts[id]; if (!a) return WARN('این دستور دیگر معتبر نیست.'); if (a.used) return WARN('قبلاً انجام شده است.');
+        Object.keys(CMD.acts).forEach(k => { if (CMD.acts[k].grp === a.grp) CMD.acts[k].used = true; });
+        CMD.pend = null; return a.fn();
+    }
+
+    /* ---------- ثبت رکورد ---------- */
+    function cCreate(raw) {
+        const S = fields(raw), W = whenOf(raw), t = nz(raw);
+        if (isManualDeliveryMode() && !isDeadlineMode()) { if (/به موقع/.test(t)) S.status = 'به موقع'; else if (/زودتر/.test(t)) S.status = 'زودتر از موعد'; else if (/تاخیر/.test(t)) S.status = 'تاخیر'; }
+        return createFlow(S, W);
+    }
+    function createFlow(S, W) {
+        if (S.workerText) { const p = pickWorker(S.workerText); if (p.err) return WARN(p.err); if (p.w) { S.workerId = p.w.id; S.workerName = p.w.name; } delete S.workerText; }
+        if (W.j != null && !S.date) S.date = jStr(W.j); if (W.time && !S.time) S.time = W.time;
+        const need = [['code', 'itemCode'], ['title', 'itemTitle'], ['color', 'itemColor'], ['qty', 'receivedQuantity'], ['price', 'unitPrice']];
+        if (isManualDeliveryMode() && !isDeadlineMode()) need.push(['status', 'itemStatus']);
+        for (let i = 0; i < need.length; i++) { const k = need[i][0], id = need[i][1]; if (S[k] !== undefined) continue; if (id !== 'itemStatus' && optF(id)) continue; return askSlot(S, W, k, id); }
+        return ask({
+            title: 'ثبت رکورد جدید', ok: 'تایید و ثبت', exec: () => execCreate(S),
+            rows: [[gl('itemCode'), S.code || '-'], S.title ? [gl('itemTitle'), S.title] : null, S.color ? [gl('itemColor'), S.color] : null, S.qty != null ? [gl('receivedQuantity'), fa(f(S.qty))] : null,
+                S.price != null ? [gl('unitPrice'), money(S.price)] : null, (S.qty != null && S.price != null) ? ['مبلغ کل', money(S.qty * S.price)] : null, S.status ? ['وضعیت', S.status] : null,
+                S.date ? ['تاریخ', fa(S.date)] : null, S.time ? ['ساعت', fa(S.time)] : null, S.workerName ? ['پرسنل', S.workerName] : null]
+                .concat(Object.keys(S.cf).map(id => { const c = cfList().find(x => x.id === id); return [c ? c.label : id, S.cf[id]]; })).filter(Boolean)
+        });
+    }
+    function askSlot(S, W, k, id) {
+        const g = 'g' + (++CMD.seq), cancel = reg(() => { CMD.pend = null; return R([B.p('لغو شد.')]); }, g);
+        CMD.pend = { kind: 'slot', ts: Date.now(), cont: (raw) => slotCont(S, W, k, id, raw) };
+        const label = id === 'itemStatus' ? 'وضعیت تحویل' : gl(id), items = (k === 'status' ? ['به موقع', 'تاخیر', 'زودتر از موعد'] : []).map(c => btn(c, reg(() => slotCont(S, W, k, id, c), g), 'ok'));
+        items.push(btn('لغو', cancel, 'no'));
+        return R([B.p('«' + label + '» را بنویسید:' + ((k === 'title' || k === 'color') ? ' (برای رد کردن «-» بفرستید)' : '')), BT(items)], []);
+    }
+    function slotCont(S, W, k, id, raw) {
+        CMD.pend = null; const t = nz(raw).trim(), skip = /^(-|—|ندارد|بدون|هیچ)$/.test(t), F = fields(raw);
+        const bad = () => { const r = askSlot(S, W, k, id); r.blocks.unshift(B.note('مقدار واردشده معتبر نیست.', 'warn')); return r; };
+        if (F.keyed) {
+            ['code', 'qty', 'price', 'title', 'color', 'workerText'].forEach(x => { if (F[x] !== undefined) S[x] = F[x]; }); Object.assign(S.cf, F.cf);
+            const W2 = whenOf(raw); if (W2.j != null) W.j = W2.j; if (W2.time) W.time = W2.time;
+            if (S[k] === undefined) return bad();
+        } else if (k === 'code') { S.code = normalizeCodeValue(t.split(' ')[0]); if (!S.code) return bad(); }
+        else if (k === 'qty') { const v = parsePersianInt(wordNums(t)); if (v <= 0) return bad(); S.qty = v; }
+        else if (k === 'price') { const v = amt(wordNums(t).split(' ')); if (v == null) return bad(); S.price = v; }
+        else if (k === 'status') { S.status = /زودتر/.test(t) ? 'زودتر از موعد' : /تاخیر/.test(t) ? 'تاخیر' : /موقع/.test(t) ? 'به موقع' : ''; if (!S.status) return bad(); }
+        else S[k] = skip ? '' : t.slice(0, 100);
+        return createFlow(S, W);
+    }
+    function execCreate(S) {
+        const $e = (i) => document.getElementById(i), put = (i, v) => { const el = $e(i); if (el) el.value = v; };
+        if ($e('editingRecordId').value || isRecordFormDirty()) return { ok: false, msg: 'فرم «ثبت» نیمه‌پر یا در حال ویرایش است؛ ابتدا آن را تکمیل یا خالی کنید.' };
+        const before = new Set(allRecords.map(r => r.id)), bt = $e('actionFeedbackText'); if (bt) bt.innerText = '';
+        put('itemCode', S.code || ''); put('itemTitle', S.title || ''); put('itemColor', S.color || '');
+        put('receivedQuantity', S.qty != null ? String(S.qty) : ''); put('unitPrice', S.price != null ? String(S.price) : '');
+        Object.keys(S.cf).forEach(id => put('cf_' + id, S.cf[id]));
+        if (S.workerId && $e('recordWorker')) put('recordWorker', S.workerId);
+        try { if (S.date) { put('recordDate', S.date); recordDateTouched = true; } if (S.time) { put('recordTime', S.time); recordTimeTouched = true; } } catch (e) { /* بی‌اهمیت */ }
+        if (isManualDeliveryMode() && !isDeadlineMode() && S.status) {
+            put('itemStatus', S.status); toggleDeliveryDurationField();
+            if (S.status !== 'به موقع') { const c = $e('deliveryDurationUnknown'); if (c) { c.checked = true; toggleDeliveryDurationUnknown(); } }
+        } else runAutoDeliveryCalculation();
+        handleFormSubmit({ preventDefault() { } });
+        const rec = allRecords.find(r => !before.has(r.id));
+        if (!rec) { const why = bt ? bt.innerText : ''; try { resetFormState(); } catch (e) { /* بی‌اهمیت */ } return { ok: false, msg: 'ثبت انجام نشد' + (why ? ': ' + why : '.') }; }
+        return { ok: true, msg: 'رکورد ثبت شد' + (rec.status ? ' — وضعیت: ' + rec.status : '') + '.', rows: recRows(rec), chips: rec.finishedDate ? [] : ['پایان کار کد ' + (rec.itemCode || '')], undo: () => delRec(rec.id) ? 'ثبت لغو شد (رکورد در سطل بازیافت است).' : 'رکورد دیگر وجود ندارد.' };
+    }
+    function delRec(id) {
+        const removed = allRecords.find(r => r.id === id); if (!removed) return false;
+        addTombstone('records', id); moveToTrash(TRASH_RECORDS_STORE, removed);
+        allRecords = allRecords.filter(r => r.id !== id);
+        const owner = allRecords.find(r => recOwnerKey(r) === recOwnerKey(removed) && sameDT(r.nextCodeStartDate, r.nextCodeStartTime, removed.date, removed.time)); if (owner) syncNextCodeStartLink(owner);
+        saveRecords(); renderDashboard(); addLog('یک رکورد از طریق چت حذف شد.', 'warn'); return true;
+    }
+    function restoreSnap(snap, msg) {
+        const i = allRecords.findIndex(r => r.id === snap.id); if (i < 0) return 'رکورد دیگر وجود ندارد.';
+        snap.updatedAt = Date.now(); allRecords[i] = snap; try { recomputeAllLinks(); } catch (e) { /* بی‌اهمیت */ }
+        saveRecords(); renderDashboard(); return msg;
+    }
+
+    /* ---------- پایان کار ---------- */
+    function cFinish(raw) {
+        const sel = selOf(raw), W = whenOf(sel.rest); let rec;
+        if (sel.code || sel.last || sel.workerId) { rec = findRecs(sel).find(r => !r.finishedDate); if (!rec) return WARN('کار بازِ (پایان‌نیافته‌ی) مطابق این مشخصات پیدا نشد.'); }
+        else { rec = getCurrentActiveRecord(); if (!rec) return WARN('کار جاری‌ای وجود ندارد. می‌توانید بگویید «پایان کار کد ۶۴۴۹».'); }
+        const now = new Date(), date = W.j != null ? jStr(W.j) : getCurrentJalaliInfo().fullDateStr, time = W.time || (p2(now.getHours()) + ':' + p2(now.getMinutes()));
+        return ask({ title: 'پایان کار', ok: 'ثبت پایان', rows: recRows(rec).concat([['زمان پایان', fa(date + ' ' + time)]]), exec: () => execFinish(rec.id, date, time) });
+    }
+    function execFinish(id, date, time) {
+        const rec = allRecords.find(r => r.id === id); if (!rec || rec.finishedDate) return { ok: false, msg: 'این کار دیگر باز نیست.' };
+        const snap = JSON.parse(JSON.stringify(rec));
+        rec.finishedDate = date; rec.finishedTime = time; rec.updatedAt = Date.now();
+        evaluateDeliveryAgainst(rec, rec.finishedDate, rec.finishedTime);
+        saveRecords(); renderDashboard(); if (typeof mgrPageW !== 'undefined' && mgrPageW) mgrCloseWorkerPage();
+        checkDeliveryProgressNotifications(); addLog('پایان کار کد ' + (rec.itemCode || '-') + ' از چت ثبت شد (' + rec.status + ').', 'success');
+        return { ok: true, msg: 'کار کد ' + (rec.itemCode || '-') + ' تمام شد — وضعیت: ' + (rec.status || '-') + (rec.durationTime ? ' (' + rec.durationTime + ')' : ''), undo: () => restoreSnap(snap, 'ثبت پایان کار لغو شد.') };
+    }
+
+    /* ---------- ویرایش ---------- */
+    function cEdit(raw) {
+        const sel = selOf(raw); if (!sel.code && !sel.last && !sel.workerId) return WARN('کدام ثبت؟ مثال: «قیمت کد ۶۴۴۹ را ۱۵ هزار کن» یا «تعداد آخرین ثبت را ۶۰ کن».');
+        const rec = findRecs(sel)[0]; if (!rec) return WARN('رکوردی با این مشخصات پیدا نشد.');
+        const F = fields(sel.rest), ch = {}, rows = [];
+        const add = (key, label, oldV, newV, show) => { ch[key] = newV; rows.push([label, (show ? show(oldV) : (oldV || '-')) + ' ← ' + (show ? show(newV) : newV)]); };
+        if (/کدجدید/.test(sel.rest) && F.code) add('itemCode', gl('itemCode'), rec.itemCode, F.code);
+        if (F.title !== undefined) add('itemTitle', gl('itemTitle'), rec.itemTitle, F.title);
+        if (F.color !== undefined) add('itemColor', gl('itemColor'), rec.itemColor, F.color);
+        if (F.qty !== undefined) add('quantity', gl('receivedQuantity'), rec.quantity, F.qty, v => fa(f(v || 0)));
+        if (F.price !== undefined) add('unitPrice', gl('unitPrice'), rec.unitPrice, F.price, v => v == null ? 'نامشخص' : money(v));
+        Object.keys(F.cf).forEach(id => { const c = cfList().find(x => x.id === id); ch['cf:' + id] = F.cf[id]; rows.push([c ? c.label : id, (cfVal(rec, id) || '-') + ' ← ' + F.cf[id]]); });
+        if (!rows.length) return WARN('چه چیزی تغییر کند؟ مثال: «تعداد کد ' + (rec.itemCode || '۶۴۴۹') + ' را ۶۰ کن» یا «قیمت آخرین ثبت را ۱۵ هزار کن».');
+        return ask({ title: 'ویرایش رکورد کد ' + (rec.itemCode || '-'), ok: 'تایید و ذخیره', rows, exec: () => execEdit(rec.id, ch) });
+    }
+    function execEdit(id, ch) {
+        const $e = (i) => document.getElementById(i), put = (i, v) => { const el = $e(i); if (el) el.value = v; };
+        const rec = allRecords.find(r => r.id === id); if (!rec) return { ok: false, msg: 'رکورد پیدا نشد.' };
+        if (!$e('editingRecordId').value && isRecordFormDirty()) return { ok: false, msg: 'فرم «ثبت» نیمه‌پر است؛ ابتدا آن را تکمیل یا خالی کنید.' };
+        const snap = JSON.parse(JSON.stringify(rec)), prevTab = appTab, bt = $e('actionFeedbackText'); if (bt) bt.innerText = '';
+        editRecord(id);
+        if ('itemCode' in ch) put('itemCode', ch.itemCode); if ('itemTitle' in ch) put('itemTitle', ch.itemTitle); if ('itemColor' in ch) put('itemColor', ch.itemColor);
+        if ('quantity' in ch) put('receivedQuantity', String(ch.quantity));
+        if ('unitPrice' in ch) { const c = $e('priceUnknownCheckbox'); if (c && c.checked) { c.checked = false; togglePriceUnknown(); } put('unitPrice', String(ch.unitPrice)); }
+        Object.keys(ch).forEach(k => { if (k.indexOf('cf:') === 0) put('cf_' + k.slice(3), ch[k]); });
+        if ('quantity' in ch) runAutoDeliveryCalculation(true);
+        handleFormSubmit({ preventDefault() { } });
+        try { setAppTab(prevTab, { noScroll: true }); } catch (e) { /* بی‌اهمیت */ }
+        const after = allRecords.find(r => r.id === id);
+        if (!after || after.updatedAt === snap.updatedAt) { const why = bt ? bt.innerText : ''; try { resetFormState(); } catch (e) { /* بی‌اهمیت */ } return { ok: false, msg: 'ویرایش انجام نشد' + (why ? ': ' + why : '.') }; }
+        return { ok: true, msg: 'رکورد ویرایش شد.', rows: recRows(after), undo: () => restoreSnap(snap, 'ویرایش لغو شد.') };
+    }
+
+    /* ---------- حذف ---------- */
+    function cDelete(raw) {
+        const n = norm(raw);
+        if (/(یادداشت|یاداوری)/.test(n)) {
+            const q = n.replace(/^(حذف|پاک|دلیت)( کن)? ?(آخرین|اخرین|آخر)? ?(یادداشت|یاداوری)/, '').trim(), note = q ? dailyNotes.find(x => norm(x.text).includes(q)) : dailyNotes[0];
+            if (!note) return WARN('یادداشتی پیدا نشد.');
+            return ask({ title: 'حذف یادداشت', danger: true, ok: 'حذف', warn: 'تا ۳۰ روز در سطل بازیافت می‌ماند.', rows: [['تاریخ', fa(note.date + (note.time ? ' ' + note.time : ''))], ['متن', note.text.slice(0, 120)]], exec: () => delNote(note) });
+        }
+        const sel = selOf(raw); if (!sel.code && !sel.last && !sel.workerId) return WARN('کدام ثبت حذف شود؟ مثال: «حذف آخرین ثبت» یا «حذف کد ۶۴۴۹».');
+        const L = findRecs(sel); if (!L.length) return WARN('رکوردی با این مشخصات پیدا نشد.'); const rec = L[0], snap = JSON.parse(JSON.stringify(rec));
+        return ask({
+            title: 'حذف رکورد', danger: true, ok: 'حذف', rows: recRows(rec), warn: (L.length > 1 ? 'از ' + fa(f(L.length)) + ' ثبت با این مشخصات، آخرینِ آن‌ها حذف می‌شود. ' : '') + 'تا ۳۰ روز در سطل بازیافت می‌ماند.',
+            exec: () => {
+                if (!delRec(rec.id)) return { ok: false, msg: 'رکورد پیدا نشد.' };
+                return { ok: true, msg: 'رکورد حذف شد.', undo: () => { const r2 = sanitizeRecord(snap); delete tombstones.records[String(r2.id)]; allRecords = allRecords.filter(r => r.id !== r2.id); allRecords.unshift(r2); try { recomputeAllLinks(); } catch (e) { /* بی‌اهمیت */ } try { removeFromTrash(TRASH_RECORDS_STORE, r2.id); } catch (e) { /* بی‌اهمیت */ } saveRecords(); renderDashboard(); return 'رکورد بازگردانده شد.'; } };
+            }
+        });
+    }
+    function delNote(note) {
+        const snap = JSON.parse(JSON.stringify(note));
+        addTombstone('notes', note.id); moveToTrash(TRASH_NOTES_STORE, note); dailyNotes = dailyNotes.filter(x => x.id !== note.id); saveRecords(); renderDailyNotes();
+        return { ok: true, msg: 'یادداشت حذف شد.', undo: () => { const n2 = sanitizeNote(snap); delete tombstones.notes[String(n2.id)]; dailyNotes = dailyNotes.filter(x => x.id !== n2.id); dailyNotes.unshift(n2); try { removeFromTrash(TRASH_NOTES_STORE, n2.id); } catch (e) { /* بی‌اهمیت */ } saveRecords(); renderDailyNotes(); return 'یادداشت بازگردانده شد.'; } };
+    }
+
+    /* ---------- یادداشت و یادآوری ---------- */
+    function cNote(raw) {
+        let s = nz(raw).replace(/^\/+\s*/, ''), kind = 'normal', m;
+        if ((m = /^\s*(?:به من |بهم |برام )?(یادداشت|یاد ?داشت|یاد ?آوری|یاد ?اوری|یادم بنداز|یادم باشه|نوت|تعطیلی)\s*(?:کن|بکن|بزن|بنویس|بذار|بگذار)?\s*[:\-–]?\s*/.exec(s))) { if (/آوری|اوری|بنداز|باشه/.test(m[1])) kind = 'reminder'; else if (/تعطیلی/.test(m[1])) kind = 'holiday'; s = s.slice(m[0].length); }
+        const W = whenOf(s); let text = W.rest.replace(/\s*(کن|بکن|بزن|بنویس)$/, '').replace(/^(که|برای|را|رو)\s+/, '').trim();
+        if (kind === 'holiday' && !text) text = 'تعطیلی';
+        if (kind === 'normal' && W.time) kind = 'reminder';
+        return noteFlow({ kind, text, j: W.j != null ? W.j : todayJ(), time: W.time, repeat: W.repeat });
+    }
+    function noteFlow(N) {
+        const need = !N.text ? 'text' : (N.kind === 'reminder' && !N.time ? 'time' : null);
+        if (need) {
+            const g = 'g' + (++CMD.seq), cancel = reg(() => { CMD.pend = null; return R([B.p('لغو شد.')]); }, g);
+            CMD.pend = { kind: 'slot', ts: Date.now(), cont: (raw) => {
+                CMD.pend = null; if (need === 'text') N.text = nz(raw).trim().slice(0, 500); else { const W = whenOf(raw); if (!W.time) { const r = noteFlow(N); r.blocks.unshift(B.note('ساعت معتبر نیست؛ مثل «۹» یا «۱۴:۳۰».', 'warn')); return r; } N.time = W.time; if (W.j != null) N.j = W.j; }
+                return noteFlow(N);
+            } };
+            return R([B.p(need === 'text' ? 'متن یادداشت را بنویسید:' : 'ساعت یادآوری چند باشد؟ (مثلاً ۹ صبح یا ۱۴:۳۰)'), BT([btn('لغو', cancel, 'no')])], []);
+        }
+        return runPlan({ title: 'ثبت یادداشت', exec: () => execNote(N) });
+    }
+    function execNote(N) {
+        const $e = (i) => document.getElementById(i), put = (i, v) => { const el = $e(i); if (el) el.value = v; };
+        if (editingNoteId != null || ($e('noteTextInput') && $e('noteTextInput').value.trim())) return { ok: false, msg: 'فرم یادداشت در حال استفاده است؛ ابتدا آن را تکمیل یا خالی کنید.' };
+        const before = new Set(dailyNotes.map(x => x.id)), date = jStr(N.j);
+        resetNoteForm(); put('noteDateInput', date); put('noteTypeInput', N.kind); try { onNoteTypeChange(); } catch (e) { /* بی‌اهمیت */ }
+        if (N.kind === 'reminder') { put('noteTimeInput', N.time); put('noteRepeatInput', N.repeat || 'none'); } else { put('noteTimeInput', ''); put('noteRepeatInput', 'none'); }
+        put('noteTextInput', N.text); saveDailyNote();
+        const note = dailyNotes.find(x => !before.has(x.id));
+        if (!note) { try { resetNoteForm(); } catch (e) { /* بی‌اهمیت */ } return { ok: false, msg: 'یادداشت ثبت نشد.' }; }
+        const rows = [['تاریخ', fa(date)]]; if (note.time) rows.push(['ساعت', fa(note.time)]); if (note.repeat && note.repeat !== 'none') rows.push(['تکرار', { daily: 'روزانه', weekly: 'هفتگی', monthly: 'ماهانه' }[note.repeat]]); rows.push(['متن', note.text.slice(0, 120)]);
+        return { ok: true, msg: (N.kind === 'reminder' ? 'یادآوری' : N.kind === 'holiday' ? 'تعطیلی' : 'یادداشت') + ' ثبت شد.', rows, undo: () => { delNote(note); return 'ثبت یادداشت لغو شد.'; } };
+    }
+
+    /* ---------- ناوبری، تنظیمات و ابزارها ---------- */
+    function cNav(raw) {
+        const n = norm(raw), L = [[/(لیست|کارکرد|رکورد|جدول)/, 'list', 'لیست کارکردها'], [/(ثبت|فرم)/, 'add', 'ثبت'], [/یادداشت/, 'notes', 'یادداشت‌ها'], [/(پیشرفت|کار جاری)/, 'progress', 'پیشرفت کار'], [/(کارفرما|پنل)/, 'mgr', 'پنل کارفرما'], [/(خانه|اصلی)/, 'home', 'خانه'], [/تنظیمات/, 'settings', 'تنظیمات'], [/(سطل|بازیافت)/, 'trash', 'سطل بازیافت']];
+        const hit = L.find(x => x[0].test(n.replace(/^(برو|ببر|باز کن|بازکن|برگرد) ?(به|توی|تو|در)? ?/, ''))) || L.find(x => x[0].test(n)); if (!hit) return null;
+        if (hit[1] === 'mgr' && !mgrIsOn()) return WARN('حالت کارفرما فعال نیست. بگویید «کارفرما روشن کن».');
+        aiChatClose();
+        setTimeout(() => { if (hit[1] === 'settings') openSettingsModal(); else if (hit[1] === 'trash') openTrashBinModal(); else setAppTab(hit[1]); }, 150);
+        return R([B.note('✓ «' + hit[2] + '» باز شد.', 'good')]);
+    }
+    function cSimple(d, raw) {
+        switch (d.t) {
+            case 'help': return cHelp();
+            case 'undo': { const e = CMD.undo.slice().reverse().find(x => !x.done); return e ? doUndo(e) : WARN('چیزی برای بازگردانی نیست.'); }
+            case 'clear': window.aiClear(); return R([B.p('گفتگو پاک شد.')]);
+            case 'auto': try { localStorage.setItem(AUTO_KEY, d.on ? '1' : '0'); } catch (e) { /* بی‌اهمیت */ } return R([B.note(d.on ? '✓ اجرای مستقیم روشن شد: ثبت، ویرایش و پایان کار بدون پرسش انجام می‌شوند (حذف همیشه تایید می‌خواهد و بازگردانی ممکن است).' : '✓ از این پس پیش از ثبت، ویرایش و پایان کار تایید گرفته می‌شود.', 'good')]);
+            case 'theme': return ask({ title: d.dark ? 'حالت تاریک' : 'حالت روشن', ok: 'اعمال', exec: () => { const old = appSettings.theme || 'light'; const set = (v) => { appSettings.theme = v; persistAppSettings(); applyAppSettingsToUI(); const el = document.getElementById('settingTheme'); if (el) el.value = v; }; set(d.dark ? 'dark' : 'light'); return { ok: true, msg: 'تم تغییر کرد.', undo: () => { set(old); return 'تم قبلی برگشت.'; } }; } });
+            case 'mgr': return ask({ title: d.on ? 'روشن کردن حالت کارفرما' : 'خاموش کردن حالت کارفرما', ok: 'تایید', warn: d.on ? null : 'اطلاعات کارفرما حفظ می‌شود.', exec: () => { const old = mgrIsOn(); mgrToggle(d.on); return { ok: true, msg: d.on ? 'حالت کارفرما روشن شد.' : 'حالت کارفرما خاموش شد.', undo: () => { mgrToggle(old); return 'حالت قبلی برگشت.'; } }; } });
+            case 'backup': return ask({ title: 'دریافت نسخه‌ی پشتیبان', ok: 'بگیر', exec: () => { exportSmartBackup(); return { ok: true, msg: 'پشتیبان‌گیری اجرا شد.' }; } });
+            case 'csv': return ask({ title: d.pay ? 'خروجی CSV حقوق' : 'خروجی CSV کارکردها', ok: 'دانلود', exec: () => { if (d.pay) exportPayrollCSV(); else exportRecordsToCSV(); return { ok: true, msg: 'خروجی آماده‌ی دانلود شد.' }; } });
+            case 'print': return ask({ title: 'چاپ لیست کارکردها', ok: 'چاپ', exec: () => { aiChatClose(); setTimeout(() => printRecordsTable(), 250); return { ok: true, msg: 'پنجره‌ی چاپ باز می‌شود.' }; } });
+            case 'filter': {
+                const inp = document.getElementById('searchInput'); if (!inp) return WARN('کادر جستجوی لیست در دسترس نیست.');
+                const q = d.clear ? '' : nz(raw).replace(/^\/+\s*/, '').replace(/^(فیلتر|جستجو|سرچ)( کن| بکن)?( در| توی)? ?(لیست|جدول|کارکرد\S*)?( را| رو)?( روی| بر اساس| با)?/, '').replace(/\s*(کن|بکن)$/, '').trim().replace(/^کد\s+/, '');
+                if (!d.clear && !q) return WARN('چه چیزی؟ مثال: «فیلتر لیست کد ۶۴۴۹».');
+                const old = inp.value; inp.value = q; debouncedRenderDashboard(); aiChatClose(); setTimeout(() => setAppTab('list'), 150);
+                return R([B.note(d.clear ? '✓ فیلتر لیست پاک شد.' : '✓ لیست روی «' + q + '» فیلتر شد.', 'good'), BT([btn('↩ برگرداندن فیلتر', reg(() => { inp.value = old; debouncedRenderDashboard(); return R([B.note('✓ فیلتر قبلی برگشت.', 'good')]); }), 'no')])]);
+            }
+            case 'worker': {
+                if (!mgrIsOn()) return WARN('برای افزودن پرسنل، حالت کارفرما باید روشن باشد («کارفرما روشن کن»).');
+                const name = nz(raw).replace(/^\/+\s*/, '').replace(/^(افزودن|اضافه|ثبت|ایجاد)( کن)? ?(پرسنل|کارگر|کارمند)( جدید)? ?/, '').replace(/^(پرسنل|کارگر|کارمند) جدید ?/, '').replace(/\s*(کن|بکن)$/, '').trim().slice(0, 100);
+                if (!name) return WARN('نام پرسنل را هم بنویسید. مثال: «پرسنل جدید علی احمدی».');
+                if (mgr().workers.some(w => normalizeSearchText(w.name) === normalizeSearchText(name))) return WARN('پرسنلی با این نام قبلاً ثبت شده است.');
+                return ask({ title: 'افزودن پرسنل', ok: 'تایید و افزودن', rows: [['نام', name]], exec: () => { mgrPullIfStale(true); const w = { id: mgrId('w'), active: true, name, phone: '', sectionId: '', role: '', startDate: mgrDK(''), endDate: mgrDK(''), note: '', photo: null }; mgr().workers.push(w); mgrSave(); try { applyManagerToUI(); mgrRender(); } catch (e) { /* بی‌اهمیت */ } renderDashboard(); return { ok: true, msg: 'پرسنل «' + name + '» اضافه شد.', undo: () => { mgr().workers = mgr().workers.filter(x => x.id !== w.id); mgrSave(); try { applyManagerToUI(); mgrRender(); } catch (e) { /* بی‌اهمیت */ } renderDashboard(); return 'پرسنل حذف شد.'; } }; } });
+            }
+            case 'wtoggle': {
+                if (!mgrIsOn()) return WARN('حالت کارفرما روشن نیست.');
+                const nm = nz(raw).replace(/^(غیرفعال|فعال) (کن )?(پرسنل|کارگر|کارمند) ?/, '').replace(/\s*(کن|بکن)$/, '').trim();
+                const L = mgr().workers.filter(w => normalizeSearchText(w.name).includes(normalizeSearchText(nm))); if (!nm || L.length !== 1) return WARN(!nm ? 'نام پرسنل را بنویسید.' : (L.length ? 'چند پرسنل با این نام هست؛ نام کامل‌تر بنویسید.' : 'پرسنلی با این نام پیدا نشد.'));
+                const w = L[0]; return ask({ title: d.on ? 'فعال‌سازی پرسنل' : 'غیرفعال‌سازی پرسنل', ok: 'تایید', rows: [['نام', w.name]], exec: () => { const old = w.active; w.active = d.on; mgrSave(); try { mgrRender(); } catch (e) { /* بی‌اهمیت */ } return { ok: true, msg: 'انجام شد.', undo: () => { w.active = old; mgrSave(); try { mgrRender(); } catch (e) { /* بی‌اهمیت */ } return 'وضعیت قبلی برگشت.'; } }; } });
+            }
+        }
+        return null;
+    }
+    function cHelp() {
+        return R([B.h('دستورهای چت'), B.p('هر دستور را محاوره‌ای بنویسید؛ فیلدها هر ترتیبی می‌توانند داشته باشند. اگر چیزی کم باشد می‌پرسم و پیش از اجرا تایید می‌گیرم (با «تایید خودکار روشن» بدون پرسش). با «/» فهرست دستورها باز می‌شود.'),
+            B.table(['دسته', 'نمونه'], [['ثبت', 'ثبت کد ۶۴۴۹ تعداد ۵۰ قیمت ۱۲ هزار عنوان پیراهن رنگ آبی'], ['پایان کار', 'پایان کار · پایان کار کد ۶۴۴۹ · پایان کار ساعت ۱۴:۳۰'], ['ویرایش', 'قیمت کد ۶۴۴۹ را ۱۵ هزار کن · تعداد آخرین ثبت را ۶۰ کن'], ['حذف', 'حذف آخرین ثبت · حذف کد ۶۴۴۹ · حذف آخرین یادداشت'], ['یادداشت', 'یادداشت فردا: خرید نخ · یادآوری فردا ساعت ۹ تماس با مشتری · یادآوری هر هفته ...'], ['رفتن به', 'برو به لیست / ثبت / یادداشت‌ها / پیشرفت / تنظیمات / سطل بازیافت'], ['لیست', 'فیلتر لیست کد ۶۴۴۹ · پاک کردن فیلتر · چاپ لیست · خروجی CSV'], ['برنامه', 'حالت تاریک · پشتیبان بگیر · کارفرما روشن کن'], ['پرسنل', 'پرسنل جدید علی · ثبت کد ۱۲ تعداد ۵ قیمت ۱۰۰۰ برای علی'], ['کنترل', 'بازگردانی · تایید خودکار روشن/خاموش · چند دستور پشت هم با «؛» یا «سپس»']]),
+            B.note('پرسش‌های تحلیلی (مثل «درآمد امروز») همچنان مثل قبل کار می‌کنند.')], ['ثبت کد', 'پایان کار', 'بازگردانی']);
+    }
+
+    /* ---------- اجرا ---------- */
+    function dispatch(d, raw) {
+        switch (d.t) {
+            case 'create': return cCreate(raw); case 'finish': return cFinish(raw); case 'edit': return cEdit(raw);
+            case 'delete': return cDelete(raw); case 'note': return cNote(raw); case 'nav': return cNav(raw);
+            default: return cSimple(d, raw);
+        }
+    }
+    function batch(parts) {
+        if (parts.some(x => detect(x).t === 'delete')) return WARN('حذف را جداگانه بفرستید تا تایید بگیرم.');
+        const bl = [], old = CMD.forceAuto; CMD.forceAuto = true;
+        try { for (let i = 0; i < parts.length; i++) { const r = dispatch(detect(parts[i]), parts[i]); bl.push(B.note('▸ ' + parts[i])); if (r) r.blocks.forEach(b => bl.push(b)); if (CMD.pend && i < parts.length - 1) { bl.push(B.note('ادامه‌ی دستورها اجرا نشد؛ پس از پاسخ به پرسش بالا دوباره بفرستید.', 'warn')); break; } } }
+        finally { CMD.forceAuto = old; }
+        return R(bl, []);
+    }
+    function cmdRun(raw) {
+        const n = norm(raw); if (CMD.pend && Date.now() - CMD.pend.ts > 180000) CMD.pend = null;
+        const P = CMD.pend;
+        if (P) {
+            if (P.kind === 'confirm') { if (YES.test(n)) return useAct(P.yes); if (NO.test(n)) return useAct(P.no); CMD.pend = null; }
+            else if (P.kind === 'slot') { if (NO.test(n)) { CMD.pend = null; return R([B.p('لغو شد.')]); } if (!detect(raw)) return P.cont(raw); CMD.pend = null; }
+        }
+        const parts = String(raw).split(/\s*(?:؛|;|\n|\sسپس\s|\sبعدش\s|\sبعد از آن\s)\s*/).filter(Boolean);
+        if (parts.length > 1 && parts.every(x => detect(x))) return batch(parts);
+        const d = detect(raw); return d ? dispatch(d, raw) : null;
+    }
+    window.aiCmdIs = function (q) { try { return !!(CMD.pend || detect(String(q || '').split(/\s*[؛;\n]\s*/)[0])); } catch (e) { return false; } };
+    window.aiCmdBtn = function (id) {
+        const a = CMD.acts[id]; if (!a || a.used) return; let r;
+        try { r = useAct(id); } catch (e) { r = WARN('اجرای دستور با خطا مواجه شد.'); }
+        if (r) { history.push({ q: '', blocks: r.blocks, chips: r.chips || [], pending: false }); while (history.length > 8) history.shift(); }
+        renderChat();
+    };
+    window.aiCmdFill = function (q) { const inp = $('aiInput'); if (!inp) return; inp.value = q; hideSuggest(); try { inp.focus(); inp.setSelectionRange(q.length, q.length); } catch (e) { /* بی‌اهمیت */ } };
+
+
     /* ============================ رابط کاربری ============================ */
     const TONE = {
         info: 'bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-slate-700',
@@ -1382,9 +1824,10 @@
         if (a.lastElementChild && a.lastElementChild.scrollIntoView) a.lastElementChild.scrollIntoView({ block: 'nearest' });
     }
     function submit(q) {
-        q = String(q || '').trim(); if (!q) return; freqAdd(q);
+        q = String(q || '').trim(); if (!q) return; CMD.hist.push(q); if (CMD.hist.length > 30) CMD.hist.shift(); CMD.hi = -1;
+        let isC = false; try { isC = !!(CMD.pend || detect(q)); } catch (x) { isC = false; } if (!isC) freqAdd(q);
         const e = { q, pending: true, blocks: [], chips: [] }; history.push(e); while (history.length > 8) history.shift(); renderChat();
-        setTimeout(() => { const r = answer(q); e.blocks = r.blocks; e.chips = r.chips; e.pending = false; renderChat(); }, 160);
+        setTimeout(() => { let r = null; try { r = cmdRun(q); } catch (x) { try { console.warn('[AI-CMD]', x); } catch (z) { /* بی‌اهمیت */ } r = R([B.note('اجرای دستور با خطا مواجه شد؛ تغییری اعمال نشد.', 'warn')]); } if (!r) r = answer(q); e.blocks = r.blocks; e.chips = r.chips; e.pending = false; renderChat(); }, 160);
     }
     window.aiAsk = function () { const inp = $('aiInput'); if (!inp) return; const q = inp.value.trim(); if (!q) return; inp.value = ''; hideSuggest(); submit(q); };
     window.aiAskText = function (t) { const inp = $('aiInput'); if (inp) inp.value = ''; hideSuggest(); submit(t); };
@@ -1415,7 +1858,7 @@
         freqTop(3).forEach(x => c.push(x));
         ['تحلیل هوشمند', 'امروز', 'این هفته', 'درآمد هر روز این ماه', 'پیش‌بینی پایان ماه', 'برترین کدها', 'کدام کد بازده ساعتی بهتری دارد؟', 'کارهای با تاخیر', 'کدام روز هفته پرکارتر است؟', 'روزهای غیرعادی', 'روزهای بدون کار'].forEach(x => c.push(x));
         if (S && S.emp) c.push('کی بیکاره؟', 'عملکرد پرسنل');
-        c.push('راهنما');
+        c.push('دستورها', 'راهنما');
         el.innerHTML = uniq(c).slice(0, 14).map(x => `<button type="button" data-q="${esc(x)}" onclick="aiAskText(this.dataset.q)" class="${CHIP}">${esc(x)}</button>`).join('');
     }
 
@@ -1425,6 +1868,7 @@
     function onTypeSoon() { clearTimeout(typeTm); typeTm = setTimeout(onType, 180); }
     function onType() {
         const inp = $('aiInput'), box = $('aiSuggest'); if (!inp || !box) return;
+        if (/^\//.test(inp.value)) { const k = norm(inp.value.replace(/^\/+/, '')), L = CMD_TPL.filter(x => !k || norm(x).indexOf(k) >= 0).slice(0, 7); if (!L.length) { hideSuggest(); return; } box.innerHTML = L.map(x => `<button type="button" data-q="${esc(x)}" onclick="aiCmdFill(this.dataset.q)" class="block w-full text-right px-3 py-1.5 text-[11.5px] hover:bg-indigo-50 dark:hover:bg-slate-800">/ ${esc(x)}</button>`).join(''); box.classList.remove('hidden'); return; }
         const t = norm(inp.value); if (t.length < 2) { hideSuggest(); return; }
         let S = null; try { S = build(); } catch (e) { return; }
         const pool = CATALOG.filter(c => !c[2] || S.emp).map(c => c[1]);
@@ -1442,7 +1886,8 @@
     const later = () => { clearTimeout(tmr); tmr = setTimeout(() => idle(render), 900); };
     window.addEventListener('load', function () {
         ['renderDashboard'].forEach(n => { const o = window[n]; if (typeof o === 'function') window[n] = function () { const r = o.apply(this, arguments); later(); return r; }; });
-        const inp = $('aiInput'); if (inp) { inp.addEventListener('input', onTypeSoon); inp.addEventListener('blur', () => setTimeout(hideSuggest, 200)); }
+        const inp = $('aiInput'); if (inp) { inp.addEventListener('keydown', (ev) => { if ((ev.key === 'ArrowUp' || ev.key === 'ArrowDown') && CMD.hist.length && (!inp.value || CMD.hi >= 0)) { ev.preventDefault(); CMD.hi = ev.key === 'ArrowUp' ? Math.min(CMD.hist.length - 1, CMD.hi + 1) : CMD.hi - 1; inp.value = CMD.hi >= 0 ? CMD.hist[CMD.hist.length - 1 - CMD.hi] : ''; } });
+            inp.addEventListener('input', onTypeSoon); inp.addEventListener('blur', () => setTimeout(hideSuggest, 200)); }
         /* تحلیل اولیه بعد از بالا آمدن برنامه و در زمان بیکاری انجام می‌شود تا باز شدن برنامه کند نشود */
         setTimeout(() => idle(() => { render(); buildChips(); }), 1500);
     });
