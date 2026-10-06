@@ -63,11 +63,11 @@
         .mode-switch-btn .msb-cur { font-size: 12.5px; font-weight: 800; }
         .mode-switch-btn .msb-go { font-size: 10px; font-weight: 500; color: #7e22ce; }
         /* اشتراک: دکمه‌ی ارتقا در تب اصلی، پنجره‌ی اشتراک و قفل پایان دوره‌ی رایگان */
-        #premiumHomeBtn { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-bottom: 12px; padding: 12px 16px; border: 0; border-radius: 16px; color: #fff; font-family: inherit; font-size: 14px; font-weight: 800; text-align: right; background: linear-gradient(135deg, #f59e0b, #ea580c); box-shadow: 0 8px 20px -8px rgba(234, 88, 12, .6); }
-        #premiumHomeBtn small { display: block; font-size: 10.5px; font-weight: 500; opacity: .92; margin-top: 2px; }
+        #premiumHomeBtn { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-bottom: 10px; padding: 8px 12px; border: 0; border-radius: 12px; color: #fff; font-family: inherit; font-size: 12.5px; font-weight: 800; text-align: right; background: linear-gradient(135deg, #f59e0b, #ea580c); box-shadow: 0 6px 14px -8px rgba(234, 88, 12, .6); }
+        #premiumHomeBtn small { display: block; font-size: 10px; font-weight: 500; opacity: .92; margin-top: 1px; }
+        #premiumHomeBtn small:empty { display: none; }
         #premiumHomeBtn:active { transform: scale(.98); }
-        #premiumHomeBtn.is-active { background: linear-gradient(135deg, #059669, #0d9488); box-shadow: 0 8px 20px -8px rgba(5, 150, 105, .55); }
-        body:not([data-apptab="home"]) #premiumHomeBtn { display: none !important; }
+        #premiumHomeBtn.is-active { background: linear-gradient(135deg, #059669, #0d9488); box-shadow: 0 6px 14px -8px rgba(5, 150, 105, .55); }
         .kar-sheet { position: fixed; inset: 0; z-index: 2147482000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, .6); }
         .kar-sheet.open { display: flex; }
         .kar-card { width: 100%; max-width: 380px; border-radius: 24px; padding: 22px 20px; text-align: center; color: #1e293b; background: #fff; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, .5); }
@@ -1173,6 +1173,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                         <div class="p-3.5">
                         <!-- تب اصلی -->
                         <div id="toolsTab-main" class="tools-tab-panel">
+                            <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
                             <div class="grid grid-cols-2 gap-1.5 mb-1.5">
                                 <button onclick="openOverviewModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
@@ -1435,7 +1436,6 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
         </header>
 
         <button type="button" id="homeMgrBtn" class="hidden no-print" onclick="setAppTab('mgr')"><span class="flex items-center gap-2.5"><i class="fa-solid fa-user-tie"></i> پنل کارفرما</span><i class="fa-solid fa-chevron-left text-xs opacity-80"></i></button>
-        <button type="button" id="premiumHomeBtn" class="no-print" onclick="karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
 
         <!-- کادر نمایش لاگ‌ها -->
         <div id="logDropdownPanel" class="hidden bg-slate-900 text-slate-200 rounded-2xl p-4 mb-6 shadow-xl text-xs font-mono transition-all duration-300 border border-slate-800">
@@ -1531,7 +1531,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
             <div class="px-3 pt-3 shrink-0"><div id="aiChips" class="flex gap-1.5 overflow-x-auto pb-1" style="scrollbar-width:thin"></div></div>
             <div class="flex-1 min-h-0 overflow-y-auto px-3 py-3">
                 <div id="aiAnswer" class="hidden rounded-xl bg-white dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 p-3 text-[12px] leading-relaxed text-slate-700 dark:text-slate-200"></div>
-                <div id="aiChatHint" class="text-center text-[12px] text-slate-400 dark:text-slate-500 py-10"><i class="fa-solid fa-comments text-3xl mb-3 block opacity-40"></i>سؤال یا دستور خود را بنویسید (مثلاً «ثبت کد ۶۴۴۹ تعداد ۵۰ قیمت ۱۲ هزار»، «پایان کار»، «یادآوری فردا ساعت ۹ …»). با «/» فهرست دستورها باز می‌شود.</div>
+                <div id="aiChatHint" class="text-center text-[12px] text-slate-400 dark:text-slate-500 py-10"><i class="fa-solid fa-comments text-3xl mb-3 block opacity-40"></i>سؤال خود را بنویسید یا یکی از پیشنهادها را بزنید.</div>
             </div>
             <div class="shrink-0 px-3 pt-2 border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900" style="padding-bottom:calc(env(safe-area-inset-bottom,0px) + 10px)">
                 <div class="flex items-center gap-2">
@@ -12987,9 +12987,8 @@ document.addEventListener('keydown', function (e) {
   const orig = typeof window.aiAsk === 'function' ? window.aiAsk : null;
   window.aiAsk = function (t) {
     const i = $('aiInput'), q = String(typeof t === 'string' ? t : (i && i.value) || '').trim(), box = $('aiAnswer'); if (!q || !box) return;
-    if (orig && window.aiCmdIs && window.aiCmdIs(q)) { if (i && typeof t === 'string') i.value = q; return orig.apply(this, arguments); }
     let a = null; try { a = jobAnswer(q); } catch (e) { a = null; }
-    if (a === null && orig) { if (i && typeof t === 'string') i.value = q; return orig.apply(this, arguments); }
+    if (a === null && orig) return orig.apply(this, arguments);
     if (a === null) { try { a = generic(q); } catch (e) { a = 'خطا در پردازش پرسش.'; } }
     box.classList.remove('hidden'); box.appendChild(bubble(q, true)); box.appendChild(bubble(a, false));
     if (i) i.value = ''; box.scrollTop = box.scrollHeight; if (box.parentElement) box.parentElement.scrollTop = box.parentElement.scrollHeight;
@@ -13000,7 +12999,7 @@ document.addEventListener('keydown', function (e) {
     if (appSettings.trackDelivery !== false) l.push('تاخیرهای ماه');
     if (!orig) l.unshift('درآمد امروز', 'درآمد هفته', 'تعداد ثبت‌های امروز');
     l.forEach(x => { const b = document.createElement('button'); b.type = 'button'; b.dataset.job = '1'; b.textContent = x; b.className = 'shrink-0 px-3 py-1.5 rounded-full border border-indigo-300 dark:border-indigo-700 text-[12px] text-indigo-700 dark:text-indigo-300 bg-white dark:bg-slate-800'; b.onclick = () => window.aiAsk(x); c.appendChild(b); });
-    const i = $('aiInput'); if (i) i.placeholder = 'بپرس یا دستور بده: «ثبت کد…»، «پایان کار»، «درآمد امروز»' + (cfs()[0] ? '، «درآمد هر ' + clean(cfs()[0].label).replace(/^(شماره|نوع|نام)\s+/, '') + '»' : '') + '…';
+    const i = $('aiInput'); if (i) i.placeholder = 'بپرس: «پرتکرارترین‌ها»، «درآمد امروز»' + (cfs()[0] ? '، «درآمد هر ' + clean(cfs()[0].label).replace(/^(شماره|نوع|نام)\s+/, '') + '»' : '') + '…';
   }
   const baseIns = typeof window.aiRenderInsights === 'function' ? window.aiRenderInsights : function () {
     const box = $('aiInsights'); if (!box) return; const t = today(), d = allRecords.filter(r => jd(r) === t), w = allRecords.filter(r => { const j = jd(r); return j >= t - 6 && j <= t; });
@@ -13033,7 +13032,6 @@ document.addEventListener('keydown', function (e) {
     <div class="kar-ico"><i class="fa-solid fa-crown"></i></div>
     <h3 id="karPremTitle">نسخه‌ی ویژه</h3>
     <p id="karPremText"></p>
-    <p id="karPriceLine" style="font-weight:700;color:#7c3aed">اشتراک ماهانه — ۲۹۰٬۰۰۰ تومان در ماه</p>
     <button type="button" class="kar-btn" onclick="karBuy()"><i class="fa-solid fa-cart-shopping ml-1"></i> خرید اشتراک ماهانه</button>
     <button type="button" class="kar-btn alt" onclick="karClosePremium()">بعداً</button>
   </div>
