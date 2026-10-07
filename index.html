@@ -1174,6 +1174,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                         <!-- تب اصلی -->
                         <div id="toolsTab-main" class="tools-tab-panel">
                             <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
+                            <div id="kobTools" class="no-print"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
                             <div class="grid grid-cols-2 gap-1.5 mb-1.5">
                                 <button onclick="openOverviewModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
@@ -2204,7 +2205,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 <div class="grid grid-cols-2 gap-3"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">شروع کار</label><input id="wizStart" type="time" value="08:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">پایان کار</label><input id="wizEnd" type="time" value="18:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div></div>
 <div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">روزهای تعطیل هفته</label><div id="wizWeekend" class="flex flex-wrap gap-1.5"></div></div>
 <div class="grid grid-cols-2 gap-3 items-end"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد شمارش</label><input id="wizUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 pb-3 cursor-pointer"><input id="wizTrack" type="checkbox" class="accent-purple-600">محاسبه‌ی زمان تحویل و تاخیر</label></div>
-<label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="wizDeadline" type="checkbox" class="accent-purple-600">هر سفارش مهلت تحویل دارد (وضعیت از مقایسه‌ی مهلت با تحویل ساخته شود)</label>
+<label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="wizDeadline" type="checkbox" class="accent-purple-600">هر سفارش مهلت تحویل (تاریخ و ساعت) دارد؛ ویجت پیشرفت کار و وضعیت تحویل از روی مهلت ساخته شود</label>
 </div>
 <p id="wizErr" class="hidden text-xs text-red-600"></p>
 <div class="flex gap-2"><button type="button" id="wizBackBtn" onclick="wizShow(1)" class="hidden px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm font-bold text-slate-600 dark:text-slate-300">قبلی</button><button type="button" id="wizNextBtn" onclick="wizNext()" class="flex-1 py-2.5 rounded-xl bg-purple-700 text-white text-sm font-bold">بعدی</button></div>
@@ -2358,7 +2359,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 <label for="settingQtyUnit" class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-2 mb-1">واحد شمارش (عدد، متر، ساعت، کیلو...)</label>
 <input id="settingQtyUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100">
 <label class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="settingTrackDelivery" type="checkbox" class="accent-purple-600"> محاسبه‌ی زمان تحویل و تاخیر کارها (برای خدمات و فروش خاموش کنید)</label>
-<label class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="settingDeadlineMode" type="checkbox" class="accent-purple-600"> حالت «مهلت تحویل»: وضعیت از مقایسه‌ی مهلت هر سفارش با تاریخ ثبت/تحویل ساخته می‌شود</label>
+<label class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="settingDeadlineMode" type="checkbox" class="accent-purple-600"> حالت «مهلت تحویل»: برای هر سفارش تاریخ و ساعت تحویل را می‌دهید؛ ویجت پیشرفت کار تا مهلت پیش می‌رود و وضعیت از مقایسه‌ی لحظه‌ی واقعی تحویل با مهلت ساخته می‌شود</label>
 </div>
                     <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">«ساعت کاری مفید روزانه» (مبنای محاسبه مدت از روی آمار روزانه) مستقل از بازه‌های زیر وارد می‌شود؛ بازه‌ها فقط تعیین می‌کنند کار در چه ساعاتی جلو برود. برای حذف یک استراحت، هر دو ساعت آن را خالی بگذارید. جمعه‌ها همچنان تعطیل است. تغییر فقط روی محاسبه‌های بعدی اثر می‌گذارد؛ رکوردهای قبلی تا زمان ویرایش عوض نمی‌شوند.</p>
                     <div class="grid grid-cols-2 gap-3">
@@ -4462,7 +4463,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 ['پرسنل', 'افزودن/ویرایش با نام، تلفن، نقش، بخش، تاریخ شروع و پایان، یادداشت و عکس. می‌توانید پرسنل را غیرفعال کنید (سوابق می‌ماند) یا حذف کنید. فایل جداگانه‌ی هر پرسنل دانلود و در صورت نیاز بازیابی می‌شود.'],
                 ['بخش‌ها', 'بخش‌های مجموعه (مثلاً تولید، انبار، فروش) را تعریف و پرسنل را به آن‌ها اختصاص دهید.'],
                 ['راه‌اندازی اولیه', 'در اولین اجرا شغل، نام کسب‌وکار، واحد پول، ساعت کاری، روزهای تعطیل، واحد شمارش و محاسبه‌ی زمان تحویل را انتخاب کنید؛ همه‌ی آن‌ها بعداً از تنظیمات قابل تغییرند.'],
-                ['مهلت تحویل', 'در این حالت برای هر سفارش «مهلت تحویل» را انتخاب می‌کنید و وضعیت (به‌موقع، تاخیر، زودتر) از مقایسه‌ی آن با «تاریخ ثبت» به‌دست می‌آید؛ مدت تاخیر یا زودتر بر حسب شبانه‌روز است. سفارش را در روز تحویل ثبت کنید.'],
+                ['مهلت تحویل', 'در این حالت برای هر سفارش «مهلت تحویل» را با تاریخ و ساعت انتخاب می‌کنید (ساعت خالی = پایان شیفت). سفارش را هنگام شروع ثبت کنید؛ ویجت پیشرفت کار از شروع تا مهلت پیش می‌رود. با «کار تمام شد» (یا شروع کد بعد) وضعیت (به‌موقع، تاخیر، زودتر) از مقایسه‌ی لحظه‌ی تحویل با مهلت به‌دست می‌آید.'],
                 ['بدون زمان تحویل', 'برای خدمات و فروش، گزینه‌ی «محاسبه‌ی زمان تحویل و تاخیر» را در تنظیمات خاموش کنید تا فیلدها و ستون‌های زمان‌بندی مخفی شوند.'],
                 ['خروجی CSV حقوق', 'در پنل کارفرما، بخش حقوق، دکمه‌ی «خروجی CSV حقوق ماه» خلاصه و ریز موارد ماه انتخاب‌شده را برای اکسل می‌دهد.'],
                 ['ارجاع کار', 'هنگام ثبت کارکرد، پرسنل مسئول را انتخاب کنید. در لیست رکوردها می‌توانید «نمایش کارکرد» را برای یک پرسنل یا «بدون ارجاع» فیلتر کنید.'],
@@ -4965,14 +4966,48 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             if (id && Array.isArray(cfDraft)) { presetCf(id).forEach(f => { if (!cfDraft.some(x => x.id === f.id) && cfDraft.length < CF_MAX) cfDraft.push(f); }); cfEditorRender(); }
         }
         const DEADLINE_FIELD = { id: 'cfdeadline', label: 'مهلت تحویل', type: 'text' };
-        function deadlineEval(deliveredStr) {
-            const el = document.getElementById('cf_cfdeadline'), v = el ? toEnglishDigits(el.value.trim()) : '';
-            const dj = parseJalaliDateToJdn(v), aj = parseJalaliDateToJdn(toEnglishDigits(String(deliveredStr || '')));
-            if (!dj || !aj) return null;
-            const diff = aj - dj;
-            if (diff === 0) return { status: 'به موقع', durationTime: '' };
-            const h = Math.abs(diff) * 24;
-            return { status: diff > 0 ? 'تاخیر' : 'زودتر از موعد', durationTime: h > 999 ? 'نامعلوم' : String(h).padStart(2, '0') + ':00' };
+        const DEADLINE_TIME_FIELD = { id: 'cfdeadlinetime', label: 'ساعت تحویل', type: 'text' };
+        function deadlineDefaultTime() { const t = String((appSettings && appSettings.shiftEnd) || ''); return /^\d{1,2}:\d{2}$/.test(t) ? t : '18:00'; }
+        // تاریخ و ساعت مهلت → دقیقه‌ی مطلق (روز جلالی × ۱۴۴۰ + دقیقه‌ی روز)؛ اگر ساعت خالی باشد پایان شیفت فرض می‌شود
+        function deadlineAbsFromParts(dateStr, timeStr) {
+            const j = parseJalaliDateToJdn(toEnglishDigits(String(dateStr || '').trim())); if (!j) return null;
+            const t = toEnglishDigits(String(timeStr || '').trim());
+            return j * 1440 + parseTimeToMinutes(/^\d{1,2}:\d{2}/.test(t) ? t : deadlineDefaultTime());
+        }
+        function deadlineAbsOf(rec) { if (!rec || !isDeadlineMode()) return null; return deadlineAbsFromParts(cfVal(rec, 'cfdeadline'), cfVal(rec, 'cfdeadlinetime')); }
+        function deadlineTracked(rec) { return deadlineAbsOf(rec) !== null; }
+        function formatCalendarDuration(mins) { mins = Math.max(1, Math.round(mins)); return String(Math.floor(mins / 60)).padStart(2, '0') + ':' + String(mins % 60).padStart(2, '0'); }
+        function deadlineHumanDuration(mins) {
+            mins = Math.max(0, Math.round(mins)); const d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60, o = [];
+            if (d) o.push(formatNumber(d) + ' روز'); if (h) o.push(formatNumber(h) + ' ساعت'); if (m && !d) o.push(formatNumber(m) + ' دقیقه');
+            return o.join(' و ') || 'کمتر از یک دقیقه';
+        }
+        function updateDeadlineHint() {
+            const h = document.getElementById('cfDeadlineHint'); if (!h) return;
+            const dEl = document.getElementById('cf_cfdeadline'), tEl = document.getElementById('cf_cfdeadlinetime');
+            if (!dEl || !dEl.value) { h.textContent = ''; return; }
+            const dl = deadlineAbsFromParts(dEl.value, tEl && tEl.value);
+            const rd = (document.getElementById('recordDate') || {}).value || getCurrentJalaliInfo().fullDateStr;
+            const rt = (document.getElementById('recordTime') || {}).value || '00:00';
+            const st = deadlineAbsFromParts(rd, rt);
+            if (dl === null || st === null) { h.textContent = ''; return; }
+            const noT = !(tEl && tEl.value);
+            h.textContent = (dl <= st ? 'مهلت از زمان شروع گذشته است' : 'مدت تا مهلت: ' + deadlineHumanDuration(dl - st)) + (noT ? ' — ساعت خالی یعنی پایان شیفت (' + formatDateDigits(deadlineDefaultTime()) + ')' : '');
+        }
+        ['input', 'change'].forEach(ev => document.addEventListener(ev, e => { if (e.target && /^(cf_cfdeadline|cf_cfdeadlinetime|recordDate|recordTime)$/.test(e.target.id)) updateDeadlineHint(); }));
+        document.addEventListener('click', e => { if (e.target && e.target.id === 'cf_cfdeadline') setTimeout(updateDeadlineHint, 500); }, true);
+        // هر سفارشِ دارای مهلت: فیلد «ساعت تحویل» کنار تاریخ + هدف زمانی (مدت تا مهلت) برای ویجت پیشرفت کار
+        function ensureDeadlineSupport() {
+            if (!isDeadlineMode()) return;
+            const l = cfList(), i = l.findIndex(f => f.id === 'cfdeadline');
+            if (i > -1 && !l.some(f => f.id === 'cfdeadlinetime') && l.length < CF_MAX) { const n = l.slice(); n.splice(i + 1, 0, { ...DEADLINE_TIME_FIELD }); appSettings.customFields = n; }
+            try {
+                allRecords.forEach(r => {
+                    if (r.workDuration || r.nextCodeStartDate || r.finishedDate || !r.date || !r.time) return;
+                    const dl = deadlineAbsOf(r), sj = parseJalaliDateToJdn(r.date);
+                    if (dl !== null && sj) r.workDuration = formatCalendarDuration(dl - (sj * 1440 + parseTimeToMinutes(r.time)));
+                });
+            } catch (e) { /* allRecords هنوز آماده نیست */ }
         }
         const PRESET_EXTRA = {
             cafe: { cf: [{id: 'cftable', label: 'شماره میز'}, {id: 'cforder', label: 'نوع سفارش (سالن / بیرون\u200cبر / پیک)'}], hide: [] },
@@ -5018,6 +5053,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const dl = isDeadlineMode();
             document.body.dataset.notrack = on ? '' : '1';
             document.body.dataset.deadline = dl ? '1' : '';
+            ensureDeadlineSupport();
             renderQuickItems();
             ensureNoTrackStatus();
             ['overviewOnTimeCount', 'overviewEarlyCount', 'overviewDelayedCount'].forEach(id => {
@@ -7506,12 +7542,21 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         let _cfSig = '';
         function renderCustomFormFields() {
             const box = document.getElementById('customFormFields'); if (!box) return;
+            ensureDeadlineSupport();
             const list = cfList(), sig = JSON.stringify(list);
             if (sig === _cfSig) return; _cfSig = sig;
             const keep = {}; list.forEach(f => { const el = document.getElementById('cf_' + f.id); if (el) keep[f.id] = el.value; });
             const cls = 'w-full p-3 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all';
+            const hasT = list.some(f => f.id === 'cfdeadline') && list.some(f => f.id === 'cfdeadlinetime');
             box.style.display = list.length ? '' : 'none';
-            box.innerHTML = list.map(f => `<div><label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1.5">${escapeHTML(f.label)}</label><input type="text" id="cf_${f.id}" ${f.type === 'number' ? 'inputmode="numeric" data-thousands="1" maxlength="15"' : (f.id === 'cfdeadline' ? 'readonly placeholder="انتخاب تاریخ" onclick="openDatePicker(\'cf_cfdeadline\', event)"' : 'maxlength="100"')} value="${escapeHTML(keep[f.id] || '')}" class="${cls}"></div>`).join('');
+            box.innerHTML = list.map(f => {
+                if (hasT && f.id === 'cfdeadlinetime') return '';
+                const lab = `<label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1.5">${escapeHTML(f.label)}${hasT && f.id === 'cfdeadline' ? ' (تاریخ و ساعت)' : ''}</label>`;
+                if (hasT && f.id === 'cfdeadline') return `<div>${lab}<div class="grid grid-cols-5 gap-2"><input type="text" id="cf_cfdeadline" readonly placeholder="انتخاب تاریخ" onclick="openDatePicker('cf_cfdeadline', event)" value="${escapeHTML(keep.cfdeadline || '')}" class="col-span-3 ${cls}"><input type="time" id="cf_cfdeadlinetime" aria-label="ساعت تحویل" value="${escapeHTML(keep.cfdeadlinetime || '')}" class="col-span-2 ${cls}"></div><div id="cfDeadlineHint" class="mt-1.5 text-[11px] text-indigo-600 dark:text-indigo-300"></div></div>`;
+                const attrs = f.type === 'number' ? 'inputmode="numeric" data-thousands="1" maxlength="15"' : (f.id === 'cfdeadline' ? 'readonly placeholder="انتخاب تاریخ" onclick="openDatePicker(\'cf_cfdeadline\', event)"' : 'maxlength="100"');
+                return `<div>${lab}<input type="text" id="cf_${f.id}" ${attrs} value="${escapeHTML(keep[f.id] || '')}" class="${cls}"></div>`;
+            }).join('');
+            updateDeadlineHint();
         }
         function cfCollectForm() {
             const o = {};
@@ -7520,6 +7565,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         }
         function cfFillForm(r) {
             cfList().forEach(f => { const el = document.getElementById('cf_' + f.id); if (!el) return; const v = cfVal(r, f.id); el.value = (f.type === 'number' && v !== '' && Number.isFinite(Number(v))) ? formatNumber(Number(v)) : v; });
+            updateDeadlineHint();
         }
         function cfSyncTableColumns() {
             const tr = document.querySelector('#recordsTableWrap thead tr'); if (!tr) return;
@@ -8770,6 +8816,15 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
 
         // مقایسه‌ی زمان کاریِ واقعاً سپری‌شده تا لحظه‌ی پایان (شروع کد بعد یا «کار تمام شد») با مدت هدف
         function evaluateDeliveryAgainst(rec, endDateStr, endTimeStr) {
+            if (isDeadlineMode() && deadlineTracked(rec)) {
+                const endJdn = parseJalaliDateToJdn(endDateStr);
+                if (!endJdn || !endTimeStr) return false;
+                const out = classifyDelivery(deadlineAbsOf(rec), endJdn * 1440 + parseTimeToMinutes(endTimeStr));
+                rec.status = out.status;
+                rec.durationTime = out.durationTime;
+                updateOnTimeStreak(rec);
+                return true;
+            }
             if (isManualDeliveryMode()) return false; // حالت دستی: وضعیت و مدت را کاربر تعیین می‌کند
             const target = parseDurationStrToMinutes(rec.workDuration);
             if (target === null || !rec.date || !rec.time || !endDateStr || !endTimeStr) return false;
@@ -8804,7 +8859,7 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
             const prevCounted = rec.streakCounted;
             rec.finishedDate = manualEnd.date;
             rec.finishedTime = manualEnd.time;
-            if (isManualDeliveryMode()) return true; // وضعیتِ انتخابیِ کاربر دست‌نخورده می‌ماند
+            if (isManualDeliveryMode() && !deadlineTracked(rec)) return true; // وضعیتِ انتخابیِ کاربر دست‌نخورده می‌ماند
             rec.streakCounted = true; // ثبت گذشته‌نگر روی رکورد «کدهای متوالی به‌موقع» اثر نگذارد
             const ok = evaluateDeliveryAgainst(rec, manualEnd.date, manualEnd.time);
             if (!ok) { rec.finishedDate = null; rec.finishedTime = null; rec.streakCounted = prevCounted; }
@@ -8892,6 +8947,7 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
             rec.updatedAt = Date.now();
             rec.nextCodeStartDate = null;
             rec.nextCodeStartTime = null;
+            if (deadlineTracked(rec)) { rec.status = 'به موقع'; rec.durationTime = ''; return; }
             if (isManualDeliveryMode()) return; // حالت دستی: وضعیت ثبت‌شده‌ی کاربر بازنویسی نمی‌شود
             const est = calculateCompletionEstimate(rec.time, rec.dailyStat, rec.quantity, rec.date);
             if (!est) return;
@@ -8995,11 +9051,18 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
             const dailyStat = dailyStatRaw ? parsePersianInt(dailyStatRaw) : null;
             const receivedQuantity = qty;
             const endDateTime = document.getElementById('recordEndDateTime').value.trim() || null;
-            const workDuration = document.getElementById('recordWorkDuration').value.trim() || null;
+            let workDuration = document.getElementById('recordWorkDuration').value.trim() || null;
             const date = document.getElementById('recordDate').value || info.fullDateStr;
             const time = document.getElementById('recordTime').value || new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
             let dlDur = null;
-            if (isDeadlineMode()) { const dl = deadlineEval(date); if (dl) { status = dl.status; dlDur = dl.durationTime; } }
+            if (isDeadlineMode()) {
+                // وضعیت نهایی با «کار تمام شد» / شروع کد بعد از مقایسه‌ی لحظه‌ی تحویل با مهلت (تاریخ + ساعت) ساخته می‌شود؛
+                // تا آن زمان کار «در انتظار» است. مدت تا مهلت همان هدف زمانیِ ویجت پیشرفت کار است.
+                if (!status) status = appSettings.defaultStatus || 'به موقع';
+                const dlAbs = deadlineAbsFromParts((document.getElementById('cf_cfdeadline') || {}).value, (document.getElementById('cf_cfdeadlinetime') || {}).value);
+                const stAbs = deadlineAbsFromParts(date, time || '00:00');
+                if (dlAbs !== null && stAbs !== null) workDuration = formatCalendarDuration(dlAbs - stAbs);
+            }
             const needsDuration = (status === 'تاخیر' || status === 'زودتر از موعد');
             let durationTime = '';
             if (needsDuration) {
@@ -9853,6 +9916,8 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
 
         /* ---- یادآوری از روی موعد تحویل کار جاری ---- */
         function computeRecordDueTs(rec) {
+            const dlAbs = deadlineAbsOf(rec);
+            if (dlAbs !== null) { const g = d2g(Math.floor(dlAbs / 1440)), m = dlAbs % 1440; return new Date(g.gy, g.gm - 1, g.gd, Math.floor(m / 60), m % 60, 0).getTime(); }
             const target = parseDurationStrToMinutes(rec.workDuration);
             const sJ = parseJalaliDateToJdn(rec.date), sM = parseTimeToMinutes(rec.time);
             if (!target || target <= 0 || !sJ) return null;
@@ -10487,7 +10552,7 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
         // رکورد «در انتظار»: مدت هدف دارد ولی هنوز نه کد بعدی ثبت شده و نه «کار تمام شد» زده شده؛
         // یعنی وضعیت واقعی تحویلش هنوز مشخص نیست و نباید جزو «به موقع» شمرده شود.
         function isRecordPending(r) {
-            if (isManualDeliveryMode()) return false;
+            if (isManualDeliveryMode() && !deadlineTracked(r)) return false;
             return (r.status || 'به موقع') === 'به موقع' && !r.nextCodeStartDate && !r.finishedDate && !!r.workDuration;
         }
         function getDisplayStatus(r) {
@@ -10732,7 +10797,7 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
         // یعنی همان کدی که پرسنل همین الان روی آن مشغول است.
         function getCurrentActiveRecord() {
             const employerView = (typeof mgrOn === 'function') && mgrOn();
-            const openRecords = allRecords.filter(r => !r.nextCodeStartDate && !r.finishedDate && r.workDuration && r.date && r.time && (employerView || recOwnerKey(r) === ''));
+            const openRecords = allRecords.filter(r => !r.nextCodeStartDate && !r.finishedDate && (r.workDuration || deadlineTracked(r)) && r.date && r.time && (employerView || recOwnerKey(r) === ''));
             if (openRecords.length === 0) return null;
             return openRecords.reduce((latest, r) => {
                 const rKey = parseJalaliDateToJdn(r.date) * 1440 + parseTimeToMinutes(r.time);
@@ -10744,6 +10809,14 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
         // درصد پیشرفت رکورد نسبت به «مدت زمان تحویل کار» هدف، بر مبنای همان منطق دقیقِ محاسبه‌ی
         // زمان کاریِ واقعی (با احتساب استراحت‌ها، پایان شیفت و تعطیلی روزهای تعطیل هفته) که در بقیه‌ی برنامه هم استفاده می‌شود.
         function computeRecordProgress(rec) {
+            const dlAbs = deadlineAbsOf(rec);
+            if (dlAbs !== null) {
+                const sj = parseJalaliDateToJdn(rec.date); if (!sj) return null;
+                const startAbs = sj * 1440 + parseTimeToMinutes(rec.time);
+                const nj = parseJalaliDateToJdn(getCurrentJalaliInfo().fullDateStr), nw = new Date();
+                const targetMinutes = Math.max(1, dlAbs - startAbs), elapsed = Math.max(0, nj * 1440 + nw.getHours() * 60 + nw.getMinutes() - startAbs);
+                return { targetMinutes, elapsed, percent: Math.round((elapsed / targetMinutes) * 100), remainingMinutes: targetMinutes - elapsed };
+            }
             const targetMinutes = parseDurationStrToMinutes(rec.workDuration);
             if (targetMinutes === null || targetMinutes <= 0) return null;
             const startJdn = parseJalaliDateToJdn(rec.date);
@@ -11456,7 +11529,7 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
         /* ---------- لیست پرسنل با ویجت پیشرفت و صفحه‌ی اختصاصی هر پرسنل ---------- */
         var mgrPageW = '';
         function mgrWorkerOpenRec(w) {
-            const o = allRecords.filter(r => String(r.workerId || '') === w.id && !r.nextCodeStartDate && !r.finishedDate && r.workDuration && r.date && r.time);
+            const o = allRecords.filter(r => String(r.workerId || '') === w.id && !r.nextCodeStartDate && !r.finishedDate && (r.workDuration || deadlineTracked(r)) && r.date && r.time);
             if (!o.length) return null;
             const key = r => parseJalaliDateToJdn(r.date) * 1440 + parseTimeToMinutes(r.time);
             return o.reduce((a, r) => key(r) > key(a) ? r : a);
@@ -13117,5 +13190,239 @@ document.addEventListener('keydown', function (e) {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', refresh); else refresh();
 })();
 </script>
+<style id="kobStyle">
+.kob{position:fixed;inset:0;z-index:190;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.66);padding:14px;direction:rtl}
+.kob-card{width:100%;max-width:400px;background:#fff;color:#1e293b;border-radius:24px;padding:14px 16px 12px;box-shadow:0 28px 70px -18px rgba(0,0,0,.55);text-align:center;max-height:94vh;overflow:auto}
+.dark .kob-card{background:#0f172a;color:#f1f5f9}
+.kob-bars{display:flex;gap:4px;margin:2px 0 12px}
+.kob-bars i{flex:1;height:4px;border-radius:9px;background:#e2e8f0}
+.dark .kob-bars i{background:#334155}
+.kob-bars i.d{background:#a5b4fc}
+.kob-bars i.on{background:#6366f1}
+.kob-hero{height:132px;border-radius:18px;margin-bottom:14px;overflow:hidden;position:relative}
+.kob-svg{width:100%;height:100%;display:block}
+.kh-welcome{background:linear-gradient(135deg,#6366f1,#8b5cf6)}.kh-record{background:linear-gradient(135deg,#0ea5e9,#6366f1)}.kh-progress{background:linear-gradient(135deg,#10b981,#0d9488)}
+.kh-assistant{background:linear-gradient(135deg,#ec4899,#8b5cf6)}.kh-mode{background:linear-gradient(135deg,#3b82f6,#06b6d4)}.kh-perm{background:linear-gradient(135deg,#f59e0b,#ef4444)}.kh-sample{background:linear-gradient(135deg,#14b8a6,#22c55e)}
+.kob h2{font-size:17px;font-weight:800;margin:0 0 6px}
+.kob p{font-size:12.5px;line-height:1.95;color:#475569;margin:0}
+.dark .kob p{color:#cbd5e1}
+.kob-chips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.kob-chips span{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:#eef2ff;color:#4338ca}
+.dark .kob-chips span{background:#312e81;color:#c7d2fe}
+.kob small{display:block;font-size:11px;color:#94a3b8;margin-top:10px}
+.kob-list{margin:12px 0 2px;display:grid;gap:8px;text-align:right}
+.kob-item{display:flex;gap:10px;align-items:center;padding:9px 11px;border-radius:13px;background:#f1f5f9;font-size:12px;border:2px solid transparent;font-family:inherit;color:inherit;width:100%;text-align:right}
+.dark .kob-item{background:#1e293b}
+.kob-item>i{color:#6366f1;width:22px;text-align:center;font-size:16px;flex:none}
+.kob-item b{display:block;font-size:12.5px}
+.kob-item span{display:block;font-size:11px;color:#64748b;font-weight:400;line-height:1.7}
+.dark .kob-item span{color:#94a3b8}
+.kob-item.on{border-color:#6366f1;background:#eef2ff}
+.dark .kob-item.on{background:#312e81}
+.kob-item.ok{border-color:#10b981}
+.kob-item .kob-chip{margin-inline-start:auto;flex:none;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:99px;background:#e2e8f0;color:#475569}
+.kob-chip.g{background:#d1fae5!important;color:#047857!important}.kob-chip.r{background:#fee2e2!important;color:#b91c1c!important}.kob-chip.a{background:#fef3c7!important;color:#b45309!important}
+.kob-guide{margin-top:8px;padding:9px 11px;border-radius:12px;background:#fffbeb;color:#92400e;font-size:11px;line-height:1.9;text-align:right}
+.dark .kob-guide{background:#422006;color:#fde68a}
+.kob-nav{display:flex;gap:8px;margin-top:14px}
+.kob-btn{flex:1;padding:11px;border:0;border-radius:13px;font-family:inherit;font-weight:800;font-size:13px;color:#fff;background:linear-gradient(135deg,#6366f1,#7c3aed)}
+.kob-btn.sec{flex:0 0 28%;background:#e2e8f0;color:#334155}
+.dark .kob-btn.sec{background:#1e293b;color:#cbd5e1}
+.kob-btn.wide{display:block;width:100%;margin-top:10px}
+.kob-skip{display:block;width:100%;background:transparent;border:0;color:#64748b;font-family:inherit;font-size:12px;padding:9px 0 3px}
+.kob-in{animation:kobIn .28s ease both}
+@keyframes kobIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.kob-svg .fl{animation:kobFloat 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes kobFloat{50%{transform:translateY(-5px)}}
+@media(prefers-reduced-motion:reduce){.kob-in,.kob-svg .fl{animation:none}}
+.kob-tour{position:fixed;inset:0;z-index:190;direction:rtl}
+.kob-ring{position:fixed;border-radius:16px;box-shadow:0 0 0 9999px rgba(15,23,42,.62),0 0 0 3px #818cf8;pointer-events:none;transition:all .25s}
+.kob-tip{position:fixed;width:244px;background:#fff;color:#1e293b;border-radius:16px;padding:12px 13px;box-shadow:0 16px 38px -10px rgba(0,0,0,.55);font-size:12px;line-height:1.85;text-align:right}
+.dark .kob-tip{background:#1e293b;color:#f1f5f9}
+.kob-tip b{display:block;font-size:13.5px}
+.kob-tip em{font-style:normal;font-size:10.5px;color:#6366f1;font-weight:700}
+.kob-tip .r{display:flex;gap:6px;margin-top:8px;align-items:center}
+.kob-tip button{border:0;border-radius:9px;padding:6px 13px;font-family:inherit;font-weight:700;font-size:11.5px;color:#fff;background:#4f46e5}
+.kob-tip button.s{background:#e2e8f0;color:#334155}
+.kob-tip button.x{background:transparent;color:#64748b;margin-inline-start:auto;padding:6px 4px}
+.kob-tip:after{content:"";position:absolute;left:var(--kx,50%);width:12px;height:12px;background:inherit;transform:translateX(-50%) rotate(45deg)}
+.kob-tip.up:after{bottom:-6px}.kob-tip.dn:after{top:-6px}
+#kobTools{display:flex;gap:6px;margin:-4px 0 10px}
+#kobTools button{flex:1;padding:6px 8px;border:1px solid #cbd5e1;border-radius:10px;background:transparent;color:inherit;font-family:inherit;font-size:11px}
+#kobTools button.hidden{display:none}
+</style>
+<script id="kobScript">
+(function(){
+  var K1='kar_onboard_v2',K2='kar_tour_v2',SK='kar_sample_ids',PERM_IDX=5;
+  var S={step:0,mode:null,replay:false,perm:{notif:'unknown',bat:null,exact:null,sys:false,hint:''}};
+  var root=null,tourEl=null,wizObs=null;
+  function ls(g,k,v){try{return g?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){return null}}
+  function sampleIds(){try{return JSON.parse(ls(1,SK)||'[]')}catch(e){return []}}
+  function nat(){try{return !!(window.NativeNotify&&window.NativeNotify.isSupported&&window.NativeNotify.isSupported())}catch(e){return false}}
+  function sys(){try{var C=window.Capacitor;if(!C||!C.isNativePlatform||!C.isNativePlatform())return null;if(C.Plugins&&C.Plugins.KarSystem)return C.Plugins.KarSystem;if(C.registerPlugin)return(window.__karSys=window.__karSys||C.registerPlugin('KarSystem'))}catch(e){}return null}
+  async function sysCall(n){try{var p=sys();if(!p||typeof p[n]!=='function')return null;return await p[n]()}catch(e){return null}}
+  function curMode(){try{return mgrOn()?'employer':'worker'}catch(e){return 'worker'}}
+
+  var HERO={
+   welcome:'<svg viewBox="0 0 320 132" class="kob-svg"><defs><linearGradient id="kg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e0e7ff"/></linearGradient></defs><circle cx="160" cy="66" r="56" fill="#fff" opacity=".1"/><circle cx="160" cy="66" r="40" fill="#fff" opacity=".14"/><g class="fl"><rect x="128" y="34" width="64" height="64" rx="18" fill="url(#kg1)"/><path d="M145 66l9 9 18-20" fill="none" stroke="#6366f1" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g><circle cx="66" cy="38" r="5" fill="#fff" opacity=".6"/><circle cx="258" cy="28" r="4" fill="#fff" opacity=".5"/><circle cx="270" cy="98" r="7" fill="#fff" opacity=".3"/><circle cx="50" cy="100" r="4" fill="#fff" opacity=".5"/><path d="M236 58l4 9 9 4-9 4-4 9-4-9-9-4 9-4z" fill="#fff" opacity=".85"/><path d="M84 78l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff" opacity=".7"/></svg>',
+   record:'<svg viewBox="0 0 320 132" class="kob-svg"><rect x="96" y="30" width="136" height="88" rx="12" fill="#fff" opacity=".3" transform="rotate(-6 164 74)"/><rect x="90" y="20" width="140" height="92" rx="12" fill="#fff"/><rect x="104" y="34" width="52" height="8" rx="4" fill="#c7d2fe"/><rect x="104" y="50" width="112" height="10" rx="5" fill="#e2e8f0"/><rect x="104" y="66" width="112" height="10" rx="5" fill="#e2e8f0"/><rect x="104" y="88" width="84" height="14" rx="7" fill="#6366f1"/><circle cx="214" cy="95" r="11" fill="#10b981"/><path d="M209 95l4 4 7-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="58" cy="44" r="5" fill="#fff" opacity=".5"/><circle cx="268" cy="92" r="6" fill="#fff" opacity=".35"/></svg>',
+   progress:'<svg viewBox="0 0 320 132" class="kob-svg"><circle cx="100" cy="66" r="38" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="12"/><circle cx="100" cy="66" r="38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-dasharray="172 239" transform="rotate(-90 100 66)"/><text x="100" y="72" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">۷۲٪</text><rect x="160" y="36" width="130" height="10" rx="5" fill="#fff" opacity=".28"/><rect x="160" y="36" width="94" height="10" rx="5" fill="#fff"/><rect x="160" y="56" width="92" height="8" rx="4" fill="#fff" opacity=".4"/><rect x="160" y="82" width="104" height="26" rx="13" fill="#fff"/><text x="212" y="99" text-anchor="middle" font-size="11.5" font-weight="700" fill="#047857">مهلت تحویل ۱۸:۰۰</text></svg>',
+   assistant:'<svg viewBox="0 0 320 132" class="kob-svg"><rect x="150" y="18" width="130" height="34" rx="14" fill="#fff"/><rect x="164" y="31" width="82" height="8" rx="4" fill="#c4b5fd"/><rect x="40" y="60" width="150" height="34" rx="14" fill="#fff" opacity=".28"/><rect x="54" y="73" width="100" height="8" rx="4" fill="#fff" opacity=".85"/><path d="M300 30l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff"/><rect x="212" y="94" width="11" height="18" rx="3" fill="#fff" opacity=".55"/><rect x="228" y="84" width="11" height="28" rx="3" fill="#fff" opacity=".75"/><rect x="244" y="74" width="11" height="38" rx="3" fill="#fff"/></svg>',
+   mode:'<svg viewBox="0 0 320 132" class="kob-svg"><circle cx="96" cy="66" r="32" fill="#fff"/><circle cx="96" cy="57" r="10" fill="#3b82f6"/><path d="M77 88c3-14 37-14 40 0" fill="#3b82f6"/><circle cx="224" cy="66" r="32" fill="#fff" opacity=".92"/><circle cx="224" cy="57" r="10" fill="#0ea5e9"/><path d="M205 88c3-14 37-14 40 0" fill="#0ea5e9"/><path d="M224 66l-4 11 4 3 4-3z" fill="#fff"/><path d="M138 66h44" stroke="#fff" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/></svg>',
+   perm:'<svg viewBox="0 0 320 132" class="kob-svg"><g class="fl"><path d="M160 26c-16 0-26 12-26 28v14l-8 12h68l-8-12V54c0-16-10-28-26-28z" fill="#fff"/><circle cx="160" cy="98" r="7" fill="#fff"/></g><path d="M118 42c-6 8-8 16-8 26M202 42c6 8 8 16 8 26M104 34c-10 12-12 26-12 38M216 34c10 12 12 26 12 38" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/><rect x="236" y="86" width="40" height="22" rx="6" fill="#fff" opacity=".92"/><rect x="240" y="90" width="22" height="14" rx="3" fill="#10b981"/><rect x="276" y="93" width="4" height="8" rx="2" fill="#fff"/></svg>',
+   sample:'<svg viewBox="0 0 320 132" class="kob-svg"><g class="fl"><path d="M142 20h36v6l-6 6v22l24 34c4 7 0 14-8 14h-52c-8 0-12-7-8-14l24-34V32l-6-6z" fill="#fff" opacity=".96"/><path d="M130 88h60" stroke="#14b8a6" stroke-width="10" opacity=".55"/><circle cx="152" cy="76" r="4" fill="#14b8a6"/><circle cx="170" cy="68" r="3" fill="#14b8a6"/></g><circle cx="80" cy="50" r="5" fill="#fff" opacity=".5"/><circle cx="246" cy="44" r="6" fill="#fff" opacity=".4"/><path d="M236 86l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff" opacity=".8"/></svg>'
+  };
+  function bars(n,c){var h='<div class="kob-bars">';for(var i=0;i<n;i++)h+='<i class="'+(i<c?'d':(i===c?'on':''))+'"></i>';return h+'</div>'}
+  function hero(k){return '<div class="kob-hero kh-'+k+'">'+HERO[k]+'</div>'}
+  function items(a){return '<div class="kob-list">'+a.map(function(x){return '<div class="kob-item"><i class="fa-solid '+x[0]+'"></i><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div></div>'}).join('')+'</div>'}
+  var ST=[
+   {h:'welcome',t:'به سامانه‌ی کار هوشمند خوش آمدید',l:'دستیار ثبت و پیگیری کار برای همه‌ی مشاغل کارمزدی و پروژه‌ای؛ از تعمیرکار و خیاط و نجار تا راننده و فریلنسر.',chips:['کاملاً آفلاین','همه‌ی مشاغل','فارسی و راست‌چین'],note:'۳۰ روز اول رایگان است. اطلاعات شما روی گوشی ذخیره می‌شود.'},
+   {h:'record',t:'ثبت کارکرد در چند ثانیه',l:'هر سفارش یا کار را همان لحظه ثبت کنید و هیچ‌چیز از دست نرود.',it:[['fa-pen-to-square','ثبت سریع','کد، عنوان، تعداد، قیمت و ساعت؛ با دکمه‌های میانبر برای کارهای تکراری.'],['fa-sliders','فیلدهای دلخواه','نام فیلدها، ستون‌ها و واحد شمارش را مطابق شغل خودتان تغییر دهید.'],['fa-calendar-check','مهلت تحویل با تاریخ و ساعت','برای هر سفارش موعد دقیق تحویل را بدهید تا وضعیت و ویجت از روی آن ساخته شود.']]},
+   {h:'progress',t:'پیشرفت زنده و ویجت گوشی',l:'ببینید کار جاری چقدر مانده، بدون اینکه برنامه را باز کنید.',it:[['fa-circle-notch','حلقه و نوار پیشرفت','از لحظه‌ی شروع تا مهلت تحویل پیش می‌رود و نزدیک موعد رنگ هشدار می‌گیرد.'],['fa-mobile-screen','ویجت صفحه‌ی اصلی','کارت پیشرفت کار را روی صفحه‌ی اصلی گوشی بگذارید؛ آفلاین هم کار می‌کند.'],['fa-flag-checkered','وضعیت تحویل','با «کار تمام شد» وضعیت (به‌موقع، تاخیر، زودتر) از مقایسه‌ی تحویل با مهلت قطعی می‌شود.']]},
+   {h:'assistant',t:'دستیار هوشمند و گزارش',l:'تحلیل خودکار کارهای شما، همراه با گزارش‌هایی که می‌شود فرستاد.',it:[['fa-robot','پرسش و پاسخ و دستور','از دستیار بپرسید یا از داخل چت کار ثبت و یادداشت بسازید.'],['fa-chart-column','گزارش ماهانه','جمع کارکرد، درآمد و تاخیرها؛ قابل چاپ و اشتراک با یک لمس.'],['fa-bell','یادداشت و یادآور','هشدار موعد تحویل و یادآورها، حتی وقتی برنامه بسته است.']]},
+   {h:'mode'},{h:'perm'}
+  ];
+  function render(){
+    if(!root){root=document.createElement('div');root.className='kob';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');document.body.appendChild(root)}
+    var st=ST[S.step],b='';
+    if(st.h==='mode')b=modeBody();else if(st.h==='perm')b=permBody();
+    else{b=hero(st.h)+'<h2>'+st.t+'</h2><p>'+st.l+'</p>'+(st.chips?'<div class="kob-chips">'+st.chips.map(function(c){return '<span>'+c+'</span>'}).join('')+'</div>':'')+(st.it?items(st.it):'')+(st.note?'<small>'+st.note+'</small>':'')}
+    var last=S.step===ST.length-1;
+    var nav='<div class="kob-nav">'+(S.step>0?'<button type="button" class="kob-btn sec" onclick="kobPrev()">قبلی</button>':'')+'<button type="button" class="kob-btn" onclick="kobNext()">'+(last?(S.replay?'شروع تور راهنما':'شروع کار'):(S.step===0?'شروع معرفی':'بعدی'))+'</button></div>';
+    root.innerHTML='<div class="kob-card">'+bars(ST.length,S.step)+'<div class="kob-in" id="kobBody">'+b+'</div>'+nav+(last?'':'<button type="button" class="kob-skip" onclick="kobSkip()">رد کردن معرفی</button>')+'</div>';
+  }
+  function modeBody(){
+    var m=S.mode||curMode();
+    function o(v,ic,t,d){return '<button type="button" class="kob-item'+(m===v?' on':'')+'" onclick="kobPick(\''+v+'\')"><i class="fa-solid '+ic+'"></i><div><b>'+t+'</b><span>'+d+'</span></div></button>'}
+    return hero('mode')+'<h2>چه حالتی را می‌خواهید؟</h2><p>این انتخاب شکل صفحه‌ی اصلی و لیست‌ها را تعیین می‌کند و بعداً از منوی ابزار قابل تغییر است.</p><div class="kob-list">'+o('worker','fa-user','پرسنل','ثبت و پیگیری کارکرد شخصی خودم')+o('employer','fa-user-tie','کارفرما','مدیریت چند نفر، تعیین کار و دیدن گزارش همه')+'</div>';
+  }
+  function chip(c,t){return '<span class="kob-chip '+c+'">'+t+'</span>'}
+  function permBody(){
+    var P=S.perm,n=P.notif,isN=nat(),h='';
+    var nc=n==='granted'?chip('g','مجاز ✓'):n==='denied'?chip('r','رد شده'):n==='unsupported'?chip('','ناموجود'):chip('a','درخواست');
+    h+='<button type="button" class="kob-item'+(n==='granted'?' ok':'')+'" onclick="kobNotif()"><i class="fa-solid fa-bell"></i><div><b>اعلان‌ها</b><span>'+(n==='denied'?'برای فعال‌سازی، دوباره لمس کنید تا تنظیمات برنامه باز شود':'یادآورها و هشدار رسیدن موعد تحویل')+'</span></div>'+nc+'</button>';
+    if(P.hint)h+='<div class="kob-guide">'+P.hint+'</div>';
+    if(isN&&P.exact===false)h+='<button type="button" class="kob-item" onclick="kobExact()"><i class="fa-solid fa-alarm-clock"></i><div><b>یادآوری دقیق</b><span>اندروید ۱۲ به بالا: اجازه‌ی «آلارم دقیق» بدهید تا یادآورها سر وقت برسند</span></div>'+chip('a','تنظیم')+'</button>';
+    if(isN){
+      if(P.sys)h+='<button type="button" class="kob-item'+(P.bat?' ok':'')+'" onclick="kobBattery()"><i class="fa-solid fa-battery-full"></i><div><b>اجرا در پس‌زمینه</b><span>معاف‌شدن از بهینه‌سازی باتری تا یادآورها و ویجت متوقف نشوند</span></div>'+(P.bat?chip('g','فعال ✓'):chip('a','تنظیم'))+'</button>';
+      else h+='<div class="kob-guide"><b>اجرا در پس‌زمینه (توصیه می‌شود):</b><br>برخی گوشی‌ها برنامه را برای صرفه‌جویی باتری می‌بندند. در تنظیمات گوشی: «برنامه‌ها ← سامانه‌ی کار هوشمند ← باتری» را روی «بدون محدودیت» بگذارید. در گوشی‌های شیائومی، سامسونگ و هوآوی گزینه‌ی «شروع خودکار» را هم روشن کنید.</div>';
+    }else h+='<div class="kob-guide">اجرای در پس‌زمینه و آلارم دقیق فقط در نسخه‌ی اندروید معنا دارد.</div>';
+    return hero('perm')+'<h2>اجازه‌های لازم</h2><p>برای اینکه یادآورها و ویجت درست کار کنند. هر کدام را می‌توانید رد کنید و بعداً از تنظیمات بدهید.</p><div class="kob-list">'+h+'</div>';
+  }
+  async function refreshPerm(){
+    var P=S.perm;
+    try{if(nat())P.notif=await window.NativeNotify.checkPermission();else if('Notification' in window)P.notif=Notification.permission==='default'?'prompt':Notification.permission;else P.notif='unsupported'}catch(e){P.notif='unknown'}
+    var b=await sysCall('batteryStatus');P.sys=!!b;P.bat=b?!!b.ignoring:null;
+    var x=await sysCall('exactAlarmStatus');P.exact=x?!!x.allowed:null;
+    if(root&&S.step===PERM_IDX)render();
+  }
+  window.kobPrev=function(){if(S.step>0){S.step--;render()}};
+  window.kobNext=function(){
+    if(ST[S.step].h==='mode'&&S.mode&&S.mode!==curMode()){try{mgrToggle(S.mode==='employer')}catch(e){}}
+    if(S.step<ST.length-1){S.step++;render();if(S.step===PERM_IDX)refreshPerm()}else done1();
+  };
+  window.kobSkip=function(){done1()};
+  window.kobPick=function(m){S.mode=m;render()};
+  window.kobNotif=async function(){
+    var P=S.perm;if(P.notif==='granted')return;
+    if(P.notif==='denied'){var o=await sysCall('openAppSettings');P.hint=o?'':'مجوز اعلان قبلاً رد شده است. تنظیمات گوشی ← برنامه‌ها ← سامانه‌ی کار هوشمند ← اعلان‌ها را روشن کنید.';render();return}
+    try{var r=nat()?await window.NativeNotify.requestPermission():('Notification' in window?await Notification.requestPermission():'unsupported');P.notif=r==='default'?'prompt':r}catch(e){P.notif='denied'}
+    P.hint=P.notif==='denied'?'اگر پنجره‌ی درخواست نیامد، مجوز قبلاً رد شده؛ دوباره دکمه را لمس کنید تا تنظیمات باز شود.':'';
+    render();
+  };
+  window.kobBattery=async function(){await sysCall('requestIgnoreBattery')};
+  window.kobExact=async function(){await sysCall('requestExactAlarm')};
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&root&&S.step===PERM_IDX)refreshPerm()});
+
+  function done1(){
+    ls(0,K1,'1');if(root){root.remove();root=null}toolsBtns();
+    if(S.replay){S.replay=false;tour(0);return}
+    afterWizard();
+  }
+  function afterWizard(){
+    if(ls(1,K2))return;
+    var w=document.getElementById('setupWizard');
+    if(w&&!w.classList.contains('hidden')){
+      if(wizObs)wizObs.disconnect();
+      wizObs=new MutationObserver(function(){if(w.classList.contains('hidden')){wizObs.disconnect();wizObs=null;setTimeout(showSample,500)}});
+      wizObs.observe(w,{attributes:true,attributeFilter:['class']});
+    }else setTimeout(showSample,300);
+  }
+  function showSample(){
+    if(ls(1,K2)||root)return;
+    root=document.createElement('div');root.className='kob';root.setAttribute('role','dialog');document.body.appendChild(root);
+    root.innerHTML='<div class="kob-card"><div class="kob-in">'+hero('sample')+'<h2>با نمونه امتحان کنید؟</h2><p>چند کارکرد آزمایشی (با یک کار در حال انجام) می‌سازیم تا صفحه‌ها و ویجت پیشرفت خالی نباشند. هر وقت خواستید از منوی ابزار با یک لمس پاک می‌شوند.</p></div><div class="kob-nav" style="flex-direction:column"><button type="button" class="kob-btn" onclick="kobSample(true)">با نمونه امتحان می‌کنم</button><button type="button" class="kob-btn sec" style="flex:none" onclick="kobSample(false)">از صفر شروع می‌کنم</button></div></div>';
+  }
+  window.kobSample=function(on){
+    if(on){try{addSamples()}catch(e){try{showFeedbackBanner('ساخت داده‌ی نمونه ممکن نشد.','warn')}catch(_){}}}
+    if(root){root.remove();root=null}
+    ls(0,K2,'1');toolsBtns();tour(0);
+  };
+  function addSamples(){
+    var ids=sampleIds(),now=new Date();
+    function jd(d){var j=gregorianToJalaali(d.getFullYear(),d.getMonth()+1,d.getDate());return formatJalaliDate(j.jy,j.jm,j.jd)}
+    function hm(d){return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+    function mk(o){var r=sanitizeRecord(o);if(r){allRecords.unshift(r);ids.push(r.id)}}
+    [['9001','نمونه: کار شماره ۱',12,450000,2,'09:00','10:45'],['9002','نمونه: کار شماره ۲',8,620000,1,'10:15','13:20']].forEach(function(r){
+      var d=new Date(now.getTime()-r[4]*86400000),ds=jd(d);
+      mk({id:generateRecordId(),itemCode:r[0],itemTitle:r[1],quantity:r[2],unitPrice:r[3],totalPrice:r[2]*r[3],status:'به موقع',date:ds,time:r[5],finishedDate:ds,finishedTime:r[6],workDuration:'08:00'});
+    });
+    var st=new Date(now.getTime()-3600000),fin=new Date(now.getTime()+26*3600000),dl=false;
+    try{dl=isDeadlineMode()}catch(e){}
+    var o={id:generateRecordId(),itemCode:'9003',itemTitle:'نمونه: کار در حال انجام',quantity:20,unitPrice:300000,totalPrice:6000000,status:'به موقع',date:jd(st),time:hm(st),workDuration:'08:00'};
+    if(dl){o.custom={cfdeadline:jd(fin),cfdeadlinetime:hm(fin)};o.workDuration=formatCalendarDuration(deadlineAbsFromParts(jd(fin),hm(fin))-deadlineAbsFromParts(o.date,o.time))}
+    mk(o);
+    ls(0,SK,JSON.stringify(ids));saveRecords();renderDashboard();
+  }
+  window.kobClearSamples=function(){
+    var ids=sampleIds();if(!ids.length)return;
+    for(var i=allRecords.length-1;i>=0;i--){if(ids.indexOf(allRecords[i].id)>-1)allRecords.splice(i,1)}
+    ls(0,SK,'[]');saveRecords();renderDashboard();toolsBtns();
+    try{showFeedbackBanner('داده‌ی نمونه پاک شد.','success')}catch(e){}
+  };
+  window.karOnboardOpen=function(){if(root)return;S.replay=true;S.step=0;S.mode=curMode();render()};
+
+  var TIPS=[
+   ['#bottomNavBar [data-nav="add"]','ثبت کارکرد','سفارش یا کار جدید را با کد، تعداد، قیمت و مهلت تحویل (تاریخ و ساعت) از اینجا ثبت کنید.'],
+   ['#bottomNavBar [data-nav="list"]','لیست کارکردها','همه‌ی ثبت‌ها، جستجو، مرتب‌سازی، انتخاب ستون‌ها و گزارش ماهانه.'],
+   ['#bottomNavBar [data-nav="progress"]','پیشرفت کار','کار جاری با حلقه‌ی پیشرفت تا مهلت تحویل. دکمه‌ی «کار تمام شد» وضعیت را قطعی می‌کند.'],
+   ['#bottomNavBar [data-nav="notes"]','یادداشت و یادآور','یادآورها حتی وقتی برنامه بسته است اعلان می‌دهند.'],
+   ['#bottomNavBar [data-nav="home"]','صفحه‌ی اصلی','خلاصه‌ی امروز، تحلیل دستیار هوشمند و چت با دستیار.'],
+   ['#toolsMenuTrigger','منوی ابزار','تنظیمات، گزارش، نسخه‌ی ویژه و مرور دوباره‌ی این راهنما همه از اینجاست.']
+  ];
+  function endTour(msg){
+    if(tourEl){tourEl.remove();tourEl=null}
+    if(msg){try{showFeedbackBanner('راهنما تمام شد؛ موفق باشید!','success')}catch(e){}}
+  }
+  function tour(i){
+    if(tourEl){tourEl.remove();tourEl=null}
+    if(i>=TIPS.length){endTour(true);return}
+    var el=document.querySelector(TIPS[i][0]),rc=el&&el.getBoundingClientRect();
+    if(!rc||!rc.width||!rc.height){tour(i+1);return}
+    var w=244,cx=rc.left+rc.width/2,left=Math.max(10,Math.min(innerWidth-w-10,cx-w/2)),up=rc.top>innerHeight*.5;
+    tourEl=document.createElement('div');tourEl.className='kob-tour';
+    var pos=up?'bottom:'+(innerHeight-rc.top+16)+'px':'top:'+(rc.bottom+16)+'px';
+    tourEl.innerHTML='<div class="kob-ring" style="left:'+(rc.left-4)+'px;top:'+(rc.top-4)+'px;width:'+(rc.width+8)+'px;height:'+(rc.height+8)+'px"></div><div class="kob-tip '+(up?'up':'dn')+'" style="left:'+left+'px;'+pos+';--kx:'+(cx-left)+'px"><em>'+(i+1)+' از '+TIPS.length+'</em><b>'+TIPS[i][1]+'</b>'+TIPS[i][2]+'<div class="r"><button type="button" id="kobTn">'+(i===TIPS.length-1?'پایان':'بعدی')+'</button>'+(i>0?'<button type="button" class="s" id="kobTp">قبلی</button>':'')+'<button type="button" class="x" id="kobTx">رد کردن</button></div></div>';
+    document.body.appendChild(tourEl);
+    tourEl.querySelector('#kobTn').onclick=function(){tour(i+1)};
+    var p=tourEl.querySelector('#kobTp');if(p)p.onclick=function(){tour(i-1)};
+    tourEl.querySelector('#kobTx').onclick=function(){endTour(false)};
+  }
+  function toolsBtns(){var b=document.getElementById('kobClearBtn');if(b)b.classList.toggle('hidden',!sampleIds().length)}
+  function ready(){var s=document.getElementById('appSplashScreen');if(!s||!document.body.contains(s))return true;var c=getComputedStyle(s);return c.display==='none'||c.visibility==='hidden'||c.opacity==='0'}
+  function start(){
+    toolsBtns();
+    var has=false;try{has=allRecords.length>0}catch(e){}
+    if(has&&!ls(1,K1)){ls(0,K1,'1');ls(0,K2,'1')}
+    var n=0,t=setInterval(function(){
+      if(!(ready()||++n>20))return;clearInterval(t);
+      if(!ls(1,K1)){S.mode=curMode();render()}
+      else if(!ls(1,K2))afterWizard();
+    },400);
+  }
+  if(document.readyState==='complete')start();else window.addEventListener('load',start);
+})();
+</script>
+
 </body>
 </html>
