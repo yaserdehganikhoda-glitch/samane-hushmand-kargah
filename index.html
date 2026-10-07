@@ -324,57 +324,6 @@
             background-color: rgba(15, 23, 42, 0.62); overscroll-behavior: contain;
         }
 
-        /* ============ اسکرول کاملاً روان در تب‌های تنظیمات ============ */
-        /* ۱) فقط «یک» ناحیه‌ی اسکرول: مودال بیرونی اسکرول نمی‌کند و کارت با ارتفاع محدود، هدر و نوار تب را ثابت نگه می‌دارد؛
-              ناحیه‌ی محتوا تنها عنصر قابل‌اسکرول است (اسکرول تو در تو باعث گیر کردن و پرش می‌شد). */
-        #settingsModal { overflow: hidden !important; }
-        #settingsModal > .pro-modal { display: flex; flex-direction: column; margin: 0 !important; max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); }
-        #settingsModal > .pro-modal > * { flex-shrink: 0; }
-        #settingsScrollArea { flex: 1 1 auto !important; min-height: 0; max-height: none !important; overflow-y: auto; overflow-x: hidden;
-            overscroll-behavior: contain; -webkit-overflow-scrolling: touch; will-change: scroll-position; scrollbar-width: thin; }
-        /* ۲) سایه‌ی بزرگ و تارِ کارت سبک و ثابت شد */
-        #settingsModal > .pro-modal { box-shadow: 0 10px 28px -14px rgba(15,23,42,.45) !important; }
-        /* ۳) حذف تاری (blur) از کادر پیش‌نمایش پروفایل در هدر مودال */
-        #settingsModal .backdrop-blur-sm { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background-color: rgba(255,255,255,.16) !important; }
-        /* ۴) فقط خاصیت‌های ارزان انیمیت شوند (transition-all روی سایه/ابعاد حین اسکرول هزینه‌بر بود) */
-        #settingsModal *, #settingsModal *::before, #settingsModal *::after { transition-property: color, background-color, border-color, opacity, transform, width !important; }
-        /* ۵) نوار تب‌ها: اسکرول افقیِ نرم و بدون نوار اسکرول */
-        #settingsTabBar { -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; }
-        #settingsTabBar::-webkit-scrollbar { display: none; }
-        .settings-tab-btn { touch-action: manipulation; }
-        /* ۶) با باز بودن تنظیمات، هیچ انیمیتِ بی‌پایانی پشتِ مودال اجرا نشود و پس‌زمینه‌ی fixed (که روی موبایل باعث repaint می‌شود) عادی شود */
-        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap, #recordFormCard, #dailyNotesSection, #recordsTableCard, #mgrMainStats, #bottomNavBar, #homeMgrBtn, #mgrBody),
-        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap, #recordFormCard, #dailyNotesSection, #recordsTableCard, #mgrMainStats, #bottomNavBar, #homeMgrBtn, #mgrBody) *,
-        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap > div, #recordFormCard, #dailyNotesSection, #recordsTableCard)::before,
-        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap > div, #recordFormCard, #dailyNotesSection, #recordsTableCard)::after { animation: none !important; }
-        body.modal-anim-paused { background-attachment: scroll !important; }
-
-        /* ============ ویزاردِ معرفی (مرحله‌ی ۲): کادر کوچک‌تر و هم‌تراز ============ */
-        #setupWizard { padding: 12px; }
-        #setupWizard > div { max-width: 21.5rem; margin: 0 auto !important; border-radius: 1.1rem; }
-        #setupWizard > div > div:first-child { padding: 11px 16px; }
-        #setupWizard > div > div:first-child h2 { font-size: 14px; line-height: 1.4; }
-        #setupWizard > div > div:first-child p { font-size: 10.5px; margin-top: 2px; }
-        #setupWizard > div > div:nth-child(2) { padding: 14px 16px 12px; }
-        #setupWizard > div > div:nth-child(2) > * + * { margin-top: 10px !important; }
-        #wizStep2 > * + * { margin-top: 9px !important; }
-        #setupWizard label.block { font-size: 11px; margin-bottom: 3px; }
-        #setupWizard :is(input[type="text"], input[type="time"], select) { box-sizing: border-box; width: 100%; height: 38px; padding: 0 10px; font-size: 13px; border-radius: 12px; }
-        #setupWizard input[type="time"] { text-align: center; direction: ltr; }
-        #setupWizard input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin: 0; }
-        #wizStep2 .grid { gap: 8px; }
-        /* روزهای تعطیل: شبکه‌ی ۴ ستونه با خانه‌های هم‌اندازه */
-        #wizWeekend { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 6px !important; }
-        #wizWeekend label { justify-content: center; gap: 5px; padding: 0 4px; min-height: 34px; font-size: 11.5px; white-space: nowrap; border-radius: 10px; }
-        /* ردیف‌های تیک‌دار: جعبه‌ی هم‌ارتفاع با فیلدها، متن و تیک در یک راستا */
-        .wiz-chk { display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 6px 10px; border: 1px solid rgb(203 213 225); border-radius: 12px; font-size: 11.5px; line-height: 1.55; color: rgb(71 85 105); cursor: pointer; }
-        .dark .wiz-chk { border-color: rgb(71 85 105); color: rgb(203 213 225); }
-        #setupWizard .wiz-row { align-items: stretch !important; }
-        #setupWizard .wiz-row > div { display: flex; flex-direction: column; justify-content: flex-end; }
-        #setupWizard .wiz-row > .wiz-chk { align-self: flex-end; }
-        #setupWizard > div > div:nth-child(2) > .flex button { height: 40px; padding-top: 0; padding-bottom: 0; font-size: 13px; }
-        #setupWizard > div > div:nth-child(2) > button { padding: 2px 0; }
-
         /* ============ تب‌بندیِ اصلیِ صفحه (فرم ثبت / لیست کارکردها) ============ */
         .main-tab-btn {
             color: rgb(100 116 139);
@@ -1083,6 +1032,11 @@
         #bottomNavBar { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background-color: rgba(255,255,255,.97) !important; }
         .dark #bottomNavBar { background-color: rgba(2,6,23,.97) !important; }
         #appHeaderLogoRing { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+        /* تنظیمات: بدون ترنزیشن روی تب‌ها و محتوا (جابه‌جایی تب فوری‌تر می‌شود) */
+        #settingsModal *, #settingsModal *::before, #settingsModal *::after { transition: none !important; }
+        /* اسکرول تنظیمات: بلورِ داخل محتوای اسکرول‌شونده و سایه‌ی سنگین کادر حذف/سبک شد */
+        #settingsModal .backdrop-blur-sm, #settingsModal [class*="backdrop-blur"] { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+        #settingsModal .pro-modal, .dark #settingsModal .pro-modal { box-shadow: 0 6px 18px -6px rgba(15,23,42,.4) !important; }
         /* متن‌های بلند در لیست کارکردها: کوتاه‌شده + کلیک برای دیدن کامل */
         #recordsTableBody .rc-t { display: inline-block; max-width: 11em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
         #recordsTableBody td.rc-more .rc-t { color: #4f46e5; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
@@ -1227,6 +1181,9 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                             <button type="button" onclick="switchToolsTab('main', event)" data-tools-tab="main" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="اصلی">
                                 <i class="fa-solid fa-star"></i> اصلی
                             </button>
+                            <button type="button" onclick="switchToolsTab('tools', event)" data-tools-tab="tools" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="ابزارها">
+                                <i class="fa-solid fa-screwdriver-wrench"></i> ابزارها
+                            </button>
                             <button type="button" onclick="switchToolsTab('data', event)" data-tools-tab="data" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="داده‌ها">
                                 <i class="fa-solid fa-database"></i> داده‌ها
                             </button>
@@ -1237,10 +1194,12 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 
                         <div class="p-3.5">
                         <!-- تب اصلی -->
-                        <div id="toolsTab-main" class="tools-tab-panel">
-                            <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
-                            <div id="kobTools" class="no-print"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
+                        <div id="toolsTab-tools" class="tools-tab-panel hidden">
                             <div class="grid grid-cols-2 gap-1.5 mb-1.5">
+                                <button onclick="closeToolsDropdown(); openJalaliCalendar();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center"><i class="fa-solid fa-calendar-days text-xs"></i></span>
+                                    <span class="min-w-0"><span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">تقویم</span><span class="block text-[9px] text-slate-400">رویدادها و تعطیلات</span></span>
+                                </button>
                                 <button onclick="openOverviewModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                                         <i class="fa-solid fa-chart-pie text-xs"></i>
@@ -1291,6 +1250,12 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                                     </span>
                                 </button>
                             </div>
+                        </div>
+
+                        <div id="toolsTab-main" class="tools-tab-panel">
+                            <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
+                            <div id="kobTools" class="no-print"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
+                            
                         </div>
 
                         <!-- تب داده‌ها: تمام ابزارهای ذخیره و بارگذاری اینجا متمرکز شده‌اند -->
@@ -2269,8 +2234,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 <div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد پول</label><select id="wizCurrency" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"><option value="تومان">تومان</option><option value="ریال">ریال</option></select></div>
 <div class="grid grid-cols-2 gap-3"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">شروع کار</label><input id="wizStart" type="time" value="08:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">پایان کار</label><input id="wizEnd" type="time" value="18:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div></div>
 <div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">روزهای تعطیل هفته</label><div id="wizWeekend" class="flex flex-wrap gap-1.5"></div></div>
-<div class="grid grid-cols-2 gap-3 items-end wiz-row"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد شمارش</label><input id="wizUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><label class="wiz-chk"><input id="wizTrack" type="checkbox" class="accent-purple-600">محاسبه‌ی زمان تحویل و تاخیر</label></div>
-<label class="wiz-chk"><input id="wizDeadline" type="checkbox" class="accent-purple-600">هر سفارش مهلت تحویل (تاریخ و ساعت) دارد؛ ویجت پیشرفت کار و وضعیت تحویل از روی مهلت ساخته شود</label>
+<div class="grid grid-cols-2 gap-3 items-end"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد شمارش</label><input id="wizUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 pb-3 cursor-pointer"><input id="wizTrack" type="checkbox" class="accent-purple-600">محاسبه‌ی زمان تحویل و تاخیر</label></div>
+<label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="wizDeadline" type="checkbox" class="accent-purple-600">هر سفارش مهلت تحویل (تاریخ و ساعت) دارد؛ ویجت پیشرفت کار و وضعیت تحویل از روی مهلت ساخته شود</label>
 </div>
 <p id="wizErr" class="hidden text-xs text-red-600"></p>
 <div class="flex gap-2"><button type="button" id="wizBackBtn" onclick="wizShow(1)" class="hidden px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm font-bold text-slate-600 dark:text-slate-300">قبلی</button><button type="button" id="wizNextBtn" onclick="wizNext()" class="flex-1 py-2.5 rounded-xl bg-purple-700 text-white text-sm font-bold">بعدی</button></div>
@@ -2299,12 +2264,15 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 </div>
             </div>
 
-            <div id="settingsTabBar" class="flex items-center gap-1 px-4 pt-3 overflow-x-auto border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-1 px-4 pt-3 overflow-x-auto border-b border-slate-200 dark:border-slate-700">
                 <button type="button" onclick="switchSettingsTab('profile')" data-settings-tab="profile" class="settings-tab-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold transition-colors">
                     <i class="fa-solid fa-id-badge"></i> پروفایل
                 </button>
                 <button type="button" onclick="switchSettingsTab('work')" data-settings-tab="work" class="settings-tab-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold transition-colors">
-                    <i class="fa-solid fa-clock"></i> ساعات کاری و فرم
+                    <i class="fa-solid fa-clock"></i> ساعات کاری
+                </button>
+                <button type="button" onclick="switchSettingsTab('form')" data-settings-tab="form" class="settings-tab-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold transition-colors">
+                    <i class="fa-solid fa-pen-ruler"></i> فرم
                 </button>
                 <button type="button" onclick="switchSettingsTab('manager')" data-settings-tab="manager" class="settings-tab-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold transition-colors">
                     <i class="fa-solid fa-user-tie"></i> کارفرما
@@ -2323,7 +2291,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 </button>
             </div>
 
-            <div id="settingsScrollArea" class="p-6 space-y-4 max-h-[52vh] overflow-y-auto">
+            <div class="p-6 space-y-4 max-h-[52vh] overflow-y-auto">
                 <div id="settingsTab-profile" class="settings-tab-panel space-y-5">
                 <div class="space-y-3 pb-4 border-b border-slate-200 dark:border-slate-700">
                     <h3 class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -2409,10 +2377,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 
                 <div id="settingsTab-work" class="settings-tab-panel hidden space-y-4">
                 <div class="space-y-3 pb-4 border-b border-slate-300 dark:border-slate-600">
-                    <button type="button" onclick="toggleSettingsSection('workHoursSectionBody', 'workHoursSectionIcon', 'sewing_settings_workhours_collapsed')" class="w-full flex items-center justify-between gap-2 text-right">
-                        <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-clock"></i> ساعات کاری و استراحت‌ها</span>
-                        <i id="workHoursSectionIcon" class="fa-solid fa-chevron-up text-[10px] text-slate-400 shrink-0 transition-transform"></i>
-                    </button>
+                    <div class="w-full flex items-center justify-between gap-2 text-right">
+                        <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-clock"></i> ساعات کاری و استراحت‌ها</span></div>
                     <div id="workHoursSectionBody" class="space-y-3">
 <div>
 <label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">روزهای تعطیل هفته</label>
@@ -2425,6 +2391,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 <input id="settingQtyUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100">
 <label class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="settingTrackDelivery" type="checkbox" class="accent-purple-600"> محاسبه‌ی زمان تحویل و تاخیر کارها (برای خدمات و فروش خاموش کنید)</label>
 <label class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="settingDeadlineMode" type="checkbox" class="accent-purple-600"> حالت «مهلت تحویل»: برای هر سفارش تاریخ و ساعت تحویل را می‌دهید؛ ویجت پیشرفت کار تا مهلت پیش می‌رود و وضعیت از مقایسه‌ی لحظه‌ی واقعی تحویل با مهلت ساخته می‌شود</label>
+<label id="dualBasisRow" class="flex items-center gap-2 mt-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer" style="display:none"><input id="settingDailyWithDeadline" type="checkbox" class="accent-purple-600"> آمار روزانه هم در وضعیت تحویل لحاظ شود: وضعیت از مقایسه‌ی هر دو مبنا (مهلت تحویل و مدت هدفِ آمار روزانه) ساخته می‌شود و بدترین نتیجه ملاک است. برای مشاغل تولیدی/پروژه‌ای (نجاری، ساختمان، چاپ) مناسب است.</label>
 </div>
                     <p class="text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">«ساعت کاری مفید روزانه» (مبنای محاسبه مدت از روی آمار روزانه) مستقل از بازه‌های زیر وارد می‌شود؛ بازه‌ها فقط تعیین می‌کنند کار در چه ساعاتی جلو برود. برای حذف یک استراحت، هر دو ساعت آن را خالی بگذارید. جمعه‌ها همچنان تعطیل است. تغییر فقط روی محاسبه‌های بعدی اثر می‌گذارد؛ رکوردهای قبلی تا زمان ویرایش عوض نمی‌شوند.</p>
                     <div class="grid grid-cols-2 gap-3">
@@ -2479,11 +2446,16 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2"><div><label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">هدف بازه‌ی دلخواه</label><input type="text" inputmode="numeric" id="settingIncomeGoalCustom" data-thousands="1" placeholder="مبلغ هدف در بازه" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all"></div><div><label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">از تاریخ</label><input type="text" id="settingIncomeGoalFrom" readonly onclick="openDatePicker('settingIncomeGoalFrom', event)" placeholder="انتخاب تاریخ" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all cursor-pointer"></div><div><label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">تا تاریخ</label><input type="text" id="settingIncomeGoalTo" readonly onclick="openDatePicker('settingIncomeGoalTo', event)" placeholder="انتخاب تاریخ" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 outline-none transition-all cursor-pointer"></div></div>
                     <p class="text-[11px] text-slate-500 dark:text-slate-400">در حالت «بازه»، درآمد فقط از رکوردهای بین دو تاریخ (شامل هر دو روز) جمع می‌شود.</p>
                 </div>
+                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3 border border-slate-300 dark:border-slate-600 flex items-center justify-between">
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400">رکورد کدهای متوالی به‌موقع:</span>
+                    <span class="text-xs font-bold text-orange-600 dark:text-orange-400"><i class="fa-solid fa-fire"></i> جاری: <span id="settingCurrentStreakVal">۰</span> &nbsp;|&nbsp; بهترین: <span id="settingBestStreakVal">۰</span></span>
+                </div>
+                </div>
+
+                <div id="settingsTab-form" class="settings-tab-panel hidden space-y-4">
                 <div class="space-y-3">
-                    <button type="button" onclick="toggleSettingsSection('formLabelsSectionBody', 'formLabelsSectionIcon', 'sewing_settings_formlabels_collapsed')" class="w-full flex items-center justify-between gap-2 text-right">
-                        <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-pen-ruler"></i> نام فیلدهای فرم «ثبت کارکرد جدید»</span>
-                        <i id="formLabelsSectionIcon" class="fa-solid fa-chevron-up text-[10px] text-slate-400 shrink-0 transition-transform"></i>
-                    </button>
+                    <div class="w-full flex items-center justify-between gap-2 text-right">
+                        <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-pen-ruler"></i> نام فیلدهای فرم «ثبت کارکرد جدید»</span></div>
                     <div id="formLabelsSectionBody" class="space-y-3">
                     <div>
                         <label for="settingBusinessType" class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">نوع کسب‌وکار / صنف</label>
@@ -2502,10 +2474,6 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                         <p class="text-[10px] text-slate-400">با «ذخیره» در پایین تنظیمات اعمال می‌شود. حذف فیلد، مقادیر ثبت‌شده‌ی آن را هم از رکوردها پاک می‌کند.</p>
                     </div>
                     </div>
-                </div>
-                <div class="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3 border border-slate-300 dark:border-slate-600 flex items-center justify-between">
-                    <span class="text-[11px] text-slate-500 dark:text-slate-400">رکورد کدهای متوالی به‌موقع:</span>
-                    <span class="text-xs font-bold text-orange-600 dark:text-orange-400"><i class="fa-solid fa-fire"></i> جاری: <span id="settingCurrentStreakVal">۰</span> &nbsp;|&nbsp; بهترین: <span id="settingBestStreakVal">۰</span></span>
                 </div>
                 </div>
 
@@ -3677,7 +3645,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
             const occasion = getTodayOccasion(jm, jd);
             el.innerHTML = `
                 <div class="flex flex-wrap items-center justify-center gap-2 text-xs">
-                    <span class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-full font-medium">
+                    <span role="button" tabindex="0" title="باز کردن تقویم" onclick="openJalaliCalendar()" style="cursor:pointer" class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-full font-medium">
                         <i class="fa-solid fa-calendar-day text-indigo-500"></i> ${escapeHTML(jalaliText)}
                     </span>
                     <span class="inline-flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-3 py-1.5 rounded-full">
@@ -4017,7 +3985,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
             s.quickItems = Array.isArray(s.quickItems) ? s.quickItems.map(x => ({ t: String((x && x.t) || '').trim().slice(0, 40), p: Math.max(0, Number(x && x.p) || 0) })).filter(x => x.t).slice(0, 40) : [];
             s.qtyUnit = String(s.qtyUnit || 'عدد').trim().slice(0, 12) || 'عدد';
             s.trackDelivery = s.trackDelivery !== false;
-            s.deadlineMode = !!s.deadlineMode;
+            s.deadlineMode = !!s.deadlineMode; s.dailyWithDeadline = !!s.dailyWithDeadline;
             s.bestStreak = Math.max(0, Number(s.bestStreak) || 0);
             const m = (s.manager && typeof s.manager === 'object' && !Array.isArray(s.manager)) ? s.manager : {};
             const A = v => Array.isArray(v) ? v : [];
@@ -5006,7 +4974,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             if (name) appSettings.shopName = name.slice(0, 120);
             appSettings.currency = document.getElementById('wizCurrency').value;
             appSettings.qtyUnit = (document.getElementById('wizUnit').value.trim() || 'عدد').slice(0, 12); appSettings.trackDelivery = document.getElementById('wizTrack').checked;
-            appSettings.deadlineMode = document.getElementById('wizDeadline').checked && appSettings.trackDelivery;
+            appSettings.deadlineMode = document.getElementById('wizDeadline').checked && appSettings.trackDelivery; appSettings.dailyWithDeadline = !!appSettings.deadlineMode && DUAL_BASIS_JOBS.has(wizBizId);
             appSettings.customFields = [...(p.customer ? [custField(p)] : []), ...(appSettings.deadlineMode ? [{ ...DEADLINE_FIELD }] : []), ...presetCf(wizBizId)].slice(0, CF_MAX); appSettings.hiddenFields = presetHide(wizBizId); appSettings.quickItems = presetQuick(wizBizId);
             appSettings.shiftStart = st; appSettings.shiftEnd = en;
             appSettings.shiftBreaks = {}; BREAK_KEYS.forEach(k => { appSettings.shiftBreaks[k] = { start: '', end: '' }; });
@@ -5022,12 +4990,12 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const u = document.getElementById('settingQtyUnit'); if (u) u.value = appSettings.qtyUnit || 'عدد';
             const k = document.getElementById('settingTrackDelivery'); if (k) k.checked = appSettings.trackDelivery !== false;
             const qi = document.getElementById('settingQuickItems'); if (qi) qi.value = (appSettings.quickItems || []).map(x => x.t + (x.p ? ' | ' + x.p : '')).join('\n');
-            const dm = document.getElementById('settingDeadlineMode'); if (dm) dm.checked = !!appSettings.deadlineMode;
+            const dm = document.getElementById('settingDeadlineMode'); if (dm) dm.checked = !!appSettings.deadlineMode; const dd = document.getElementById('settingDailyWithDeadline'); if (dd) dd.checked = !!appSettings.dailyWithDeadline; syncDualUI();
         }
         function presetExtras(p, id) {
             const u = document.getElementById('settingQtyUnit'); if (u) u.value = p.unit || 'عدد';
             const k = document.getElementById('settingTrackDelivery'); if (k) k.checked = p.track !== false;
-            const dm = document.getElementById('settingDeadlineMode'); if (dm) dm.checked = !!p.deadline;
+            const dm = document.getElementById('settingDeadlineMode'); if (dm) dm.checked = !!p.deadline; const dd = document.getElementById('settingDailyWithDeadline'); if (dd) dd.checked = !!p.deadline && DUAL_BASIS_JOBS.has(id); syncDualUI();
             if (Array.isArray(cfDraft)) {
                 const drop = new Set();
                 Object.keys(PRESET_EXTRA).forEach(k => presetCf(k).forEach(f => drop.add(f.id)));
@@ -5126,13 +5094,13 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const q = document.getElementById('receivedQuantity'); if (q && !q.value.trim()) set('receivedQuantity', '1');
         }
         function ensureNoTrackStatus() {
-            if (!(appSettings && (appSettings.trackDelivery === false || isDeadlineMode()))) return;
+            if (!(appSettings && (appSettings.trackDelivery === false || isDeadlineExclusive()))) return;
             const el = document.getElementById('itemStatus');
             if (el && !el.value) { const d = appSettings.defaultStatus; el.value = [...el.options].some(o => o.value === d && d) ? d : (el.options[1] ? el.options[1].value : ''); }
         }
         function applyTrackMode() {
             const on = !(appSettings && appSettings.trackDelivery === false);
-            const dl = isDeadlineMode();
+            const dl = isDeadlineExclusive();
             document.body.dataset.notrack = on ? '' : '1';
             document.body.dataset.deadline = dl ? '1' : '';
             ensureDeadlineSupport();
@@ -7744,7 +7712,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const businessType = (btEl && BUSINESS_PRESETS[btEl.value]) ? btEl.value : 'general';
             const hiddenFields = {};
             HIDEABLE_FIELDS.forEach(k => { const w = document.getElementById('settingFieldWrap_' + k); if (w && w.dataset.hidden === '1') hiddenFields[k] = true; });
-            return { data: { workdayMinutes, shiftStart: v.start, shiftEnd: v.end, shiftBreaks: breaks, formLabels: labels, optionalFields, businessType, hiddenFields, customFields: cfReadEditor(), weekendDays: wk, weekStartDay: Number(document.getElementById('settingWeekStart').value) || 0, qtyUnit: (document.getElementById('settingQtyUnit').value.trim() || 'عدد').slice(0, 12), trackDelivery: document.getElementById('settingTrackDelivery').checked, deadlineMode: document.getElementById('settingDeadlineMode').checked, quickItems: parseQuickItems(document.getElementById('settingQuickItems').value) } };
+            return { data: { workdayMinutes, shiftStart: v.start, shiftEnd: v.end, shiftBreaks: breaks, formLabels: labels, optionalFields, businessType, hiddenFields, customFields: cfReadEditor(), weekendDays: wk, weekStartDay: Number(document.getElementById('settingWeekStart').value) || 0, qtyUnit: (document.getElementById('settingQtyUnit').value.trim() || 'عدد').slice(0, 12), trackDelivery: document.getElementById('settingTrackDelivery').checked, deadlineMode: document.getElementById('settingDeadlineMode').checked, dailyWithDeadline: document.getElementById('settingDeadlineMode').checked && document.getElementById('settingDailyWithDeadline').checked, quickItems: parseQuickItems(document.getElementById('settingQuickItems').value) } };
         }
         /* ============ پایان نام فیلدها و ساعات کاری ============ */
 
@@ -8817,7 +8785,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
                 btn.classList.toggle('text-slate-400', !isActive);
                 btn.classList.toggle('dark:text-slate-500', !isActive);
             });
-            const scrollArea = document.getElementById('settingsScrollArea');
+            const scrollArea = document.querySelector('#settingsModal .overflow-y-auto');
             if (scrollArea) scrollArea.scrollTop = 0;
         }
         /* ============ پایان مدیریت پروفایل کاربری ============ */
@@ -8894,7 +8862,16 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         // کد بعدیِ واقعی، و تنظیم وضعیت (تاخیر/زودتر از موعد/به‌موقع) و مقدار آن روی رکورد.
         // خروجی: true اگر محاسبه واقعاً انجام شد (یعنی داده‌های لازم کامل بودند).
         function isDeadlineMode() { return !!(appSettings && appSettings.trackDelivery !== false && appSettings.deadlineMode); }
-function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'manual' || isDeadlineMode(); }
+function isDualBasis() { return isDeadlineMode() && !!appSettings.dailyWithDeadline; }
+function isDeadlineExclusive() { return isDeadlineMode() && !appSettings.dailyWithDeadline; }
+function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'manual' || isDeadlineExclusive(); }
+const DUAL_BASIS_JOBS = new Set(['carpentry', 'construction', 'print']);
+function syncDualUI() {
+    const dm = document.getElementById('settingDeadlineMode'), dd = document.getElementById('settingDailyWithDeadline');
+    const row = document.getElementById('dualBasisRow'); if (!dm || !dd || !row) return;
+    row.style.display = dm.checked ? '' : 'none'; if (!dm.checked) dd.checked = false;
+}
+document.addEventListener('change', e => { if (e.target && e.target.id === 'settingDeadlineMode') syncDualUI(); });
 
         function getOnTimeTolerance() {
             const t = Number(appSettings.onTimeToleranceMinutes);
@@ -8907,7 +8884,14 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
             if (isDeadlineMode() && deadlineTracked(rec)) {
                 const endJdn = parseJalaliDateToJdn(endDateStr);
                 if (!endJdn || !endTimeStr) return false;
-                const out = classifyDelivery(deadlineAbsOf(rec), endJdn * 1440 + parseTimeToMinutes(endTimeStr));
+                let out = classifyDelivery(deadlineAbsOf(rec), endJdn * 1440 + parseTimeToMinutes(endTimeStr));
+                if (isDualBasis()) { // آمار روزانه هم لحاظ می‌شود؛ بدترین نتیجه‌ی دو مبنا ملاک است
+                    const tg = parseDurationStrToMinutes(rec.workDuration), sJ = parseJalaliDateToJdn(rec.date);
+                    if (tg !== null && sJ && rec.time) {
+                        const o2 = classifyDelivery(tg, calculateActualWorkingMinutesElapsed(sJ, parseTimeToMinutes(rec.time), endJdn, parseTimeToMinutes(endTimeStr)));
+                        if (o2.diff > out.diff) out = o2;
+                    }
+                }
                 rec.status = out.status;
                 rec.durationTime = out.durationTime;
                 updateOnTimeStreak(rec);
@@ -9143,7 +9127,7 @@ function isManualDeliveryMode() { return appSettings.deliveryStatusMode === 'man
             const date = document.getElementById('recordDate').value || info.fullDateStr;
             const time = document.getElementById('recordTime').value || new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
             let dlDur = null;
-            if (isDeadlineMode()) {
+            if (isDeadlineExclusive()) {
                 // وضعیت نهایی با «کار تمام شد» / شروع کد بعد از مقایسه‌ی لحظه‌ی تحویل با مهلت (تاریخ + ساعت) ساخته می‌شود؛
                 // تا آن زمان کار «در انتظار» است. مدت تا مهلت همان هدف زمانیِ ویجت پیشرفت کار است.
                 if (!status) status = appSettings.defaultStatus || 'به موقع';
@@ -12868,8 +12852,6 @@ document.getElementById('recordFormCard').addEventListener('focusin', ensureNoTr
             document.getElementById('kpiPriceToggleIcon').classList.add('fa-chevron-down');
         }
 
-        applySettingsSectionCollapsedState('workHoursSectionBody', 'workHoursSectionIcon', 'sewing_settings_workhours_collapsed');
-        applySettingsSectionCollapsedState('formLabelsSectionBody', 'formLabelsSectionIcon', 'sewing_settings_formlabels_collapsed');
 
         // اگر صفحه‌ی قفل ورود در حال نمایش است، یادآوری پشتیبان‌گیری روزانه نمایش داده نمی‌شود
         // (چون پشت آن مخفی می‌ماند)؛ در این حالت خودِ attemptUnlock بعد از باز شدن قفل صدایش می‌زند.
@@ -13562,8 +13544,145 @@ document.addEventListener('keydown', function (e) {
   });
   document.addEventListener('click', function (e) { if (pop && !pop.contains(e.target)) closePop(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
-  window.addEventListener('scroll', closePop, { capture: true, passive: true });
+  window.addEventListener('scroll', closePop, true);
   decorate();
+})();
+</script>
+<style>
+#karCal{position:fixed;inset:0;z-index:9990;display:none;align-items:center;justify-content:center;padding:12px;background:rgba(15,23,42,.62);direction:rtl}
+#karCal.open{display:flex}
+#karCal .kc-box{width:100%;max-width:26rem;max-height:92vh;overflow-y:auto;background:#fff;color:#1e293b;border-radius:1.2rem;border:1px solid #94a3b8;box-shadow:0 8px 24px -8px rgba(15,23,42,.45);font-family:inherit}
+.dark #karCal .kc-box{background:#0f172a;color:#f1f5f9;border-color:#475569}
+#karCal .kc-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.8rem .9rem;background:linear-gradient(135deg,#4f46e5,#7e22ce);color:#fff;border-radius:1.2rem 1.2rem 0 0}
+#karCal .kc-btn{border:0;cursor:pointer;border-radius:.7rem;padding:.4rem .7rem;font-size:.78rem;font-weight:700;background:rgba(255,255,255,.18);color:#fff;font-family:inherit}
+#karCal .kc-title{font-weight:800;font-size:.95rem;text-align:center;flex:1}
+#karCal .kc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:.6rem .6rem .2rem}
+#karCal .kc-wd{text-align:center;font-size:.7rem;font-weight:700;color:#64748b;padding:.25rem 0}
+#karCal .kc-wd.fri{color:#dc2626}
+#karCal .kc-day{position:relative;min-height:3.1rem;border:1px solid transparent;border-radius:.7rem;background:#f8fafc;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:inherit;color:inherit;padding:2px 0}
+.dark #karCal .kc-day{background:#1e293b}
+#karCal .kc-day .n{font-size:.95rem;font-weight:800;line-height:1.2}
+#karCal .kc-day .s{display:flex;justify-content:space-between;width:100%;padding:0 .3rem;font-size:.55rem;color:#94a3b8;line-height:1.1}
+#karCal .kc-day.hol .n{color:#dc2626}
+#karCal .kc-day.has::after{content:"";position:absolute;top:3px;left:4px;width:5px;height:5px;border-radius:50%;background:#f59e0b}
+#karCal .kc-day.hol.has::after{background:#dc2626}
+#karCal .kc-day.today{border-color:#4f46e5;box-shadow:0 0 0 1px #4f46e5 inset}
+#karCal .kc-day.sel{background:#e0e7ff}
+.dark #karCal .kc-day.sel{background:#312e81}
+#karCal .kc-sec{padding:.5rem .9rem}
+#karCal .kc-sec h4{margin:.2rem 0 .4rem;font-size:.78rem;font-weight:800;color:#4f46e5}
+.dark #karCal .kc-sec h4{color:#a5b4fc}
+#karCal .kc-ev{display:flex;align-items:flex-start;gap:.4rem;font-size:.78rem;line-height:1.8;padding:.15rem 0}
+#karCal .kc-ev b{flex-shrink:0;min-width:1.6rem;text-align:center;color:#64748b}
+#karCal .kc-tag{flex-shrink:0;font-size:.62rem;font-weight:800;padding:0 .4rem;border-radius:.5rem;background:#fee2e2;color:#b91c1c;margin-top:.25rem}
+#karCal .kc-note{padding:.4rem .9rem .8rem;font-size:.66rem;line-height:1.9;color:#64748b}
+#karCal .kc-adj{display:flex;align-items:center;gap:.4rem;margin-top:.3rem}
+#karCal .kc-adj button{border:1px solid #94a3b8;background:transparent;color:inherit;border-radius:.5rem;padding:0 .6rem;cursor:pointer;font-family:inherit}
+</style>
+<div id="karCal" onclick="if(event.target===this)closeJalaliCalendar()"><div class="kc-box" role="dialog" aria-label="تقویم"></div></div>
+<script>
+(function () {
+  var MONTHS = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+  var HMONTHS = ['محرم','صفر','ربیع‌الاول','ربیع‌الثانی','جمادی‌الاول','جمادی‌الثانی','رجب','شعبان','رمضان','شوال','ذی‌قعده','ذی‌الحجه'];
+  var WD = ['ش','ی','د','س','چ','پ','ج'], WDF = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+  var GM = ['ژانویه','فوریه','مارس','آوریل','مه','ژوئن','ژوئیه','اوت','سپتامبر','اکتبر','نوامبر','دسامبر'];
+  // [ماه، روز، عنوان، تعطیل؟]
+  var SOLAR = [
+    [1,1,'آغاز نوروز و سال نو',1],[1,2,'عید نوروز',1],[1,3,'عید نوروز',1],[1,4,'عید نوروز',1],[1,12,'روز جمهوری اسلامی ایران',1],[1,13,'روز طبیعت (سیزده‌بدر)',1],
+    [1,20,'روز ملی فناوری هسته‌ای'],[1,25,'روز بزرگداشت عطار نیشابوری'],[1,29,'روز ارتش جمهوری اسلامی ایران'],
+    [2,1,'روز بزرگداشت سعدی'],[2,10,'روز ملی خلیج فارس'],[2,11,'روز جهانی کارگر'],[2,12,'روز معلم (سالروز شهادت استاد مطهری)'],[2,25,'روز بزرگداشت فردوسی'],[2,28,'روز بزرگداشت حکیم عمر خیام'],
+    [3,1,'روز بزرگداشت ملاصدرا'],[3,3,'روز آزادسازی خرمشهر'],[3,14,'رحلت امام خمینی (ره)',1],[3,15,'قیام ۱۵ خرداد',1],[3,27,'روز جهاد کشاورزی'],
+    [4,1,'روز اصناف'],[4,7,'روز قوه قضاییه'],[4,14,'روز قلم'],
+    [5,14,'سالروز مشروطیت'],[5,17,'روز خبرنگار'],
+    [6,1,'روز بزرگداشت ابوعلی سینا (روز پزشک)'],[6,2,'سالروز شهادت رجایی و باهنر (آغاز هفته دولت)'],[6,5,'روز بزرگداشت زکریای رازی (روز داروساز)'],[6,8,'روز مبارزه با تروریسم'],[6,17,'قیام ۱۷ شهریور'],[6,21,'روز سینما'],[6,27,'روز شعر و ادب فارسی'],[6,31,'آغاز هفته دفاع مقدس'],
+    [7,1,'آغاز سال تحصیلی'],[7,7,'روز آتش‌نشانی و ایمنی'],[7,8,'روز بزرگداشت مولوی'],[7,14,'روز دامپزشکی'],[7,20,'روز بزرگداشت حافظ'],
+    [8,8,'روز آمار و برنامه‌ریزی'],[8,13,'روز دانش‌آموز'],[8,24,'روز کتاب و کتاب‌خوانی'],
+    [9,7,'روز نیروی دریایی'],[9,16,'روز دانشجو'],[9,30,'شب یلدا'],
+    [10,9,'روز بصیرت'],
+    [11,12,'آغاز دهه فجر'],[11,22,'پیروزی انقلاب اسلامی',1],[11,29,'قیام مردم تبریز'],
+    [12,5,'روز مهندس (خواجه نصیرالدین طوسی)'],[12,15,'روز درختکاری'],[12,29,'ملی شدن صنعت نفت ایران',1]
+  ];
+  // [ماه قمری، روز، عنوان، تعطیل؟]
+  var LUNAR = [
+    [1,9,'تاسوعای حسینی',1],[1,10,'عاشورای حسینی',1],
+    [2,20,'اربعین حسینی',1],[2,28,'رحلت پیامبر اکرم (ص) و شهادت امام حسن مجتبی (ع)',1],
+    [3,8,'شهادت امام حسن عسکری (ع)',1],[3,9,'آغاز امامت حضرت مهدی (عج)',1],[3,17,'میلاد پیامبر (ص) و امام جعفر صادق (ع)',1],
+    [5,20,'ولادت حضرت زهرا (س) و روز مادر'],[6,3,'شهادت حضرت زهرا (س)',1],
+    [7,3,'ولادت امام علی النقی (ع)'],[7,10,'ولادت امام محمد تقی (ع)'],[7,13,'ولادت امام علی (ع) و روز پدر',1],[7,27,'مبعث پیامبر اکرم (ص)',1],
+    [8,3,'ولادت امام حسین (ع)'],[8,4,'ولادت حضرت عباس (ع)'],[8,5,'ولادت امام سجاد (ع)'],[8,15,'ولادت حضرت مهدی (عج)',1],
+    [9,15,'ولادت امام حسن مجتبی (ع)'],[9,21,'شهادت امام علی (ع)',1],
+    [10,1,'عید سعید فطر',1],[10,2,'تعطیل به مناسبت عید فطر',1],[10,25,'شهادت امام جعفر صادق (ع)',1],
+    [11,1,'ولادت حضرت معصومه (س)'],[11,11,'ولادت امام رضا (ع)'],
+    [12,10,'عید سعید قربان',1],[12,18,'عید سعید غدیر خم',1]
+  ];
+  var sm = {}, lm = {};
+  SOLAR.forEach(function (e) { (sm[e[0] + '-' + e[1]] = sm[e[0] + '-' + e[1]] || []).push(e); });
+  LUNAR.forEach(function (e) { (lm[e[0] + '-' + e[1]] = lm[e[0] + '-' + e[1]] || []).push(e); });
+  function P(n) { return toPersianDigits(String(n)); }
+  var adj = 0; try { adj = parseInt(localStorage.getItem('kar_hijri_adj'), 10) || 0; } catch (e) {}
+  var fmt = null; try { fmt = new Intl.DateTimeFormat('en-u-ca-islamic-civil-nu-latn', { year: 'numeric', month: 'numeric', day: 'numeric' }); } catch (e) {}
+  function hijri(jdn) {
+    if (!fmt) return null;
+    try {
+      var g = d2g(jdn + adj), parts = fmt.formatToParts(new Date(g.gy, g.gm - 1, g.gd, 12)), r = {};
+      parts.forEach(function (p) { if (p.type === 'day' || p.type === 'month' || p.type === 'year') r[p.type] = parseInt(p.value, 10); });
+      return r.day ? { y: r.year, m: r.month, d: r.day } : null;
+    } catch (e) { return null; }
+  }
+  function info(jy, jm, jd) {
+    var jdn = j2d(jy, jm, jd), g = d2g(jdn), dow = (new Date(g.gy, g.gm - 1, g.gd, 12).getDay() + 1) % 7;
+    var h = hijri(jdn), hn = hijri(jdn + 1), ev = [], hol = dow === 6;
+    (sm[jm + '-' + jd] || []).forEach(function (e) { ev.push({ t: e[2], h: !!e[3] }); if (e[3]) hol = true; });
+    if (h) {
+      (lm[h.m + '-' + h.d] || []).forEach(function (e) { ev.push({ t: e[2], h: !!e[3], l: 1 }); if (e[3]) hol = true; });
+      if (h.m === 2 && hn && hn.m !== 2) { ev.push({ t: 'شهادت امام رضا (ع)', h: true, l: 1 }); hol = true; }
+    }
+    return { jdn: jdn, g: g, dow: dow, h: h, ev: ev, hol: hol };
+  }
+  var Y, M, S;
+  function today() { var n = new Date(); return d2j(g2d(n.getFullYear(), n.getMonth() + 1, n.getDate())); }
+  function hText(h) { return h ? P(h.d) + ' ' + HMONTHS[h.m - 1] + ' ' + P(h.y) : ''; }
+  function evHtml(list) {
+    return list.map(function (e) { return '<div class="kc-ev"><span>' + e.t + '</span>' + (e.h ? '<span class="kc-tag">تعطیل</span>' : '') + '</div>'; }).join('');
+  }
+  function render() {
+    var box = document.querySelector('#karCal .kc-box'), t = today(), len = jalaaliMonthLength(Y, M);
+    var first = info(Y, M, 1), cells = '', i, all = '';
+    for (i = 0; i < 7; i++) cells += '<div class="kc-wd' + (i === 6 ? ' fri' : '') + '">' + WD[i] + '</div>';
+    for (i = 0; i < first.dow; i++) cells += '<div></div>';
+    for (i = 1; i <= len; i++) {
+      var d = info(Y, M, i), cls = 'kc-day' + (d.hol ? ' hol' : '') + (d.ev.length ? ' has' : '') + (t.jy === Y && t.jm === M && t.jd === i ? ' today' : '') + (S === i ? ' sel' : '');
+      cells += '<button type="button" class="' + cls + '" data-d="' + i + '"><span class="n">' + P(i) + '</span><span class="s"><span>' + d.g.gd + '</span><span>' + (d.h ? P(d.h.d) : '') + '</span></span></button>';
+      if (d.ev.length) all += '<div class="kc-ev"><b>' + P(i) + '</b><span>' + d.ev.map(function (e) { return e.t; }).join('، ') + '</span>' + (d.ev.some(function (e) { return e.h; }) ? '<span class="kc-tag">تعطیل</span>' : '') + '</div>';
+    }
+    var s = info(Y, M, S), wdn = WDF[s.dow];
+    box.innerHTML =
+      '<div class="kc-head"><button class="kc-btn" data-a="next" aria-label="ماه بعد">◀</button><div class="kc-title">' + MONTHS[M - 1] + ' ' + P(Y) + '</div><button class="kc-btn" data-a="prev" aria-label="ماه قبل">▶</button></div>' +
+      '<div style="display:flex;gap:.4rem;justify-content:center;padding:.5rem .6rem 0"><button class="kc-btn" style="background:#4f46e5" data-a="today">امروز</button><button class="kc-btn" style="background:#64748b" data-a="close">بستن</button></div>' +
+      '<div class="kc-grid">' + cells + '</div>' +
+      '<div class="kc-sec"><h4>' + wdn + '، ' + P(S) + ' ' + MONTHS[M - 1] + ' ' + P(Y) + '</h4>' +
+      '<div class="kc-ev" style="color:#64748b">' + s.g.gd + ' ' + GM[s.g.gm - 1] + ' ' + s.g.gy + (s.h ? ' • ' + hText(s.h) : '') + '</div>' +
+      (s.ev.length ? evHtml(s.ev) : '<div class="kc-ev" style="color:#94a3b8">' + (s.dow === 6 ? 'جمعه (تعطیل هفتگی)' : 'رویداد ثبت‌شده‌ای ندارد') + '</div>') + '</div>' +
+      '<div class="kc-sec"><h4>رویدادهای این ماه</h4>' + (all || '<div class="kc-ev" style="color:#94a3b8">رویدادی برای این ماه ثبت نشده است</div>') + '</div>' +
+      '<div class="kc-note">جمعه‌ها و روزهای دارای برچسب «تعطیل» قرمز نمایش داده می‌شوند. تاریخ مناسبت‌های قمری بر پایه‌ی محاسبه‌ی تقویم هجری قمری است و ممکن است با رؤیت هلال یک یا دو روز تفاوت داشته باشد؛ در صورت نیاز تنظیم کنید.' +
+      '<div class="kc-adj"><span>تنظیم تاریخ قمری:</span><button data-a="adjm" aria-label="یک روز عقب">−</button><b>' + (adj > 0 ? '+' : '') + P(adj) + '</b><button data-a="adjp" aria-label="یک روز جلو">+</button></div></div>';
+  }
+  function go(dm) { M += dm; if (M > 12) { M = 1; Y++; } if (M < 1) { M = 12; Y--; } S = 1; render(); }
+  document.addEventListener('click', function (e) {
+    var cal = document.getElementById('karCal'); if (!cal || !cal.classList.contains('open')) return;
+    var el = e.target.closest && e.target.closest('#karCal [data-a],#karCal [data-d]'); if (!el) return;
+    if (el.dataset.d) { S = parseInt(el.dataset.d, 10); render(); return; }
+    var a = el.dataset.a;
+    if (a === 'next') go(1); else if (a === 'prev') go(-1);
+    else if (a === 'close') closeJalaliCalendar();
+    else if (a === 'today') { var t = today(); Y = t.jy; M = t.jm; S = t.jd; render(); }
+    else if (a === 'adjp' || a === 'adjm') { adj = Math.max(-2, Math.min(2, adj + (a === 'adjp' ? 1 : -1))); try { localStorage.setItem('kar_hijri_adj', String(adj)); } catch (x) {} render(); }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeJalaliCalendar(); });
+  window.openJalaliCalendar = function () { var t = today(); Y = t.jy; M = t.jm; S = t.jd; render(); document.getElementById('karCal').classList.add('open'); };
+  window.closeJalaliCalendar = function () { var c = document.getElementById('karCal'); if (c) c.classList.remove('open'); };
+  // مناسبتِ نوار تاریخ هدر هم از همین جدول خوانده شود
+  window.getTodayOccasion = function (m, d) { var l = sm[m + '-' + d]; return l ? l.map(function (e) { return e[2]; }).join('، ') : null; };
 })();
 </script>
 </body>
