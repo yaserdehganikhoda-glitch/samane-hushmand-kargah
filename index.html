@@ -324,6 +324,57 @@
             background-color: rgba(15, 23, 42, 0.62); overscroll-behavior: contain;
         }
 
+        /* ============ اسکرول کاملاً روان در تب‌های تنظیمات ============ */
+        /* ۱) فقط «یک» ناحیه‌ی اسکرول: مودال بیرونی اسکرول نمی‌کند و کارت با ارتفاع محدود، هدر و نوار تب را ثابت نگه می‌دارد؛
+              ناحیه‌ی محتوا تنها عنصر قابل‌اسکرول است (اسکرول تو در تو باعث گیر کردن و پرش می‌شد). */
+        #settingsModal { overflow: hidden !important; }
+        #settingsModal > .pro-modal { display: flex; flex-direction: column; margin: 0 !important; max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); }
+        #settingsModal > .pro-modal > * { flex-shrink: 0; }
+        #settingsScrollArea { flex: 1 1 auto !important; min-height: 0; max-height: none !important; overflow-y: auto; overflow-x: hidden;
+            overscroll-behavior: contain; -webkit-overflow-scrolling: touch; will-change: scroll-position; scrollbar-width: thin; }
+        /* ۲) سایه‌ی بزرگ و تارِ کارت سبک و ثابت شد */
+        #settingsModal > .pro-modal { box-shadow: 0 10px 28px -14px rgba(15,23,42,.45) !important; }
+        /* ۳) حذف تاری (blur) از کادر پیش‌نمایش پروفایل در هدر مودال */
+        #settingsModal .backdrop-blur-sm { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background-color: rgba(255,255,255,.16) !important; }
+        /* ۴) فقط خاصیت‌های ارزان انیمیت شوند (transition-all روی سایه/ابعاد حین اسکرول هزینه‌بر بود) */
+        #settingsModal *, #settingsModal *::before, #settingsModal *::after { transition-property: color, background-color, border-color, opacity, transform, width !important; }
+        /* ۵) نوار تب‌ها: اسکرول افقیِ نرم و بدون نوار اسکرول */
+        #settingsTabBar { -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; }
+        #settingsTabBar::-webkit-scrollbar { display: none; }
+        .settings-tab-btn { touch-action: manipulation; }
+        /* ۶) با باز بودن تنظیمات، هیچ انیمیتِ بی‌پایانی پشتِ مودال اجرا نشود و پس‌زمینه‌ی fixed (که روی موبایل باعث repaint می‌شود) عادی شود */
+        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap, #recordFormCard, #dailyNotesSection, #recordsTableCard, #mgrMainStats, #bottomNavBar, #homeMgrBtn, #mgrBody),
+        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap, #recordFormCard, #dailyNotesSection, #recordsTableCard, #mgrMainStats, #bottomNavBar, #homeMgrBtn, #mgrBody) *,
+        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap > div, #recordFormCard, #dailyNotesSection, #recordsTableCard)::before,
+        body.modal-anim-paused :is(#appHeaderBox, #kpiCardWrap > div, #recordFormCard, #dailyNotesSection, #recordsTableCard)::after { animation: none !important; }
+        body.modal-anim-paused { background-attachment: scroll !important; }
+
+        /* ============ ویزاردِ معرفی (مرحله‌ی ۲): کادر کوچک‌تر و هم‌تراز ============ */
+        #setupWizard { padding: 12px; }
+        #setupWizard > div { max-width: 21.5rem; margin: 0 auto !important; border-radius: 1.1rem; }
+        #setupWizard > div > div:first-child { padding: 11px 16px; }
+        #setupWizard > div > div:first-child h2 { font-size: 14px; line-height: 1.4; }
+        #setupWizard > div > div:first-child p { font-size: 10.5px; margin-top: 2px; }
+        #setupWizard > div > div:nth-child(2) { padding: 14px 16px 12px; }
+        #setupWizard > div > div:nth-child(2) > * + * { margin-top: 10px !important; }
+        #wizStep2 > * + * { margin-top: 9px !important; }
+        #setupWizard label.block { font-size: 11px; margin-bottom: 3px; }
+        #setupWizard :is(input[type="text"], input[type="time"], select) { box-sizing: border-box; width: 100%; height: 38px; padding: 0 10px; font-size: 13px; border-radius: 12px; }
+        #setupWizard input[type="time"] { text-align: center; direction: ltr; }
+        #setupWizard input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin: 0; }
+        #wizStep2 .grid { gap: 8px; }
+        /* روزهای تعطیل: شبکه‌ی ۴ ستونه با خانه‌های هم‌اندازه */
+        #wizWeekend { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 6px !important; }
+        #wizWeekend label { justify-content: center; gap: 5px; padding: 0 4px; min-height: 34px; font-size: 11.5px; white-space: nowrap; border-radius: 10px; }
+        /* ردیف‌های تیک‌دار: جعبه‌ی هم‌ارتفاع با فیلدها، متن و تیک در یک راستا */
+        .wiz-chk { display: flex; align-items: center; gap: 8px; min-height: 38px; padding: 6px 10px; border: 1px solid rgb(203 213 225); border-radius: 12px; font-size: 11.5px; line-height: 1.55; color: rgb(71 85 105); cursor: pointer; }
+        .dark .wiz-chk { border-color: rgb(71 85 105); color: rgb(203 213 225); }
+        #setupWizard .wiz-row { align-items: stretch !important; }
+        #setupWizard .wiz-row > div { display: flex; flex-direction: column; justify-content: flex-end; }
+        #setupWizard .wiz-row > .wiz-chk { align-self: flex-end; }
+        #setupWizard > div > div:nth-child(2) > .flex button { height: 40px; padding-top: 0; padding-bottom: 0; font-size: 13px; }
+        #setupWizard > div > div:nth-child(2) > button { padding: 2px 0; }
+
         /* ============ تب‌بندیِ اصلیِ صفحه (فرم ثبت / لیست کارکردها) ============ */
         .main-tab-btn {
             color: rgb(100 116 139);
@@ -1028,6 +1079,10 @@
         /* رنگ دکمه‌ی ویزارد (در style.css ساخته‌شده نبود) */
         .bg-purple-700 { background-color: #7e22ce; }
         #wizNextBtn { background-color: #7e22ce; color: #fff; }
+        /* سرعت اسکرول: حذف بلورِ پشتِ نوار پایین (هر فریم اسکرول بازمحاسبه می‌شد)؛ ظاهر تقریباً یکسان */
+        #bottomNavBar { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background-color: rgba(255,255,255,.97) !important; }
+        .dark #bottomNavBar { background-color: rgba(2,6,23,.97) !important; }
+        #appHeaderLogoRing { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
         /* متن‌های بلند در لیست کارکردها: کوتاه‌شده + کلیک برای دیدن کامل */
         #recordsTableBody .rc-t { display: inline-block; max-width: 11em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
         #recordsTableBody td.rc-more .rc-t { color: #4f46e5; text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer; }
@@ -2214,8 +2269,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 <div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد پول</label><select id="wizCurrency" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"><option value="تومان">تومان</option><option value="ریال">ریال</option></select></div>
 <div class="grid grid-cols-2 gap-3"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">شروع کار</label><input id="wizStart" type="time" value="08:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">پایان کار</label><input id="wizEnd" type="time" value="18:00" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div></div>
 <div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">روزهای تعطیل هفته</label><div id="wizWeekend" class="flex flex-wrap gap-1.5"></div></div>
-<div class="grid grid-cols-2 gap-3 items-end"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد شمارش</label><input id="wizUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 pb-3 cursor-pointer"><input id="wizTrack" type="checkbox" class="accent-purple-600">محاسبه‌ی زمان تحویل و تاخیر</label></div>
-<label class="flex items-center gap-2 text-[12px] text-slate-600 dark:text-slate-300 cursor-pointer"><input id="wizDeadline" type="checkbox" class="accent-purple-600">هر سفارش مهلت تحویل (تاریخ و ساعت) دارد؛ ویجت پیشرفت کار و وضعیت تحویل از روی مهلت ساخته شود</label>
+<div class="grid grid-cols-2 gap-3 items-end wiz-row"><div><label class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">واحد شمارش</label><input id="wizUnit" type="text" maxlength="12" class="w-full p-2.5 border border-slate-400 dark:border-slate-500 rounded-xl text-sm bg-white dark:bg-slate-800 field-box-bg dark:text-slate-100"></div><label class="wiz-chk"><input id="wizTrack" type="checkbox" class="accent-purple-600">محاسبه‌ی زمان تحویل و تاخیر</label></div>
+<label class="wiz-chk"><input id="wizDeadline" type="checkbox" class="accent-purple-600">هر سفارش مهلت تحویل (تاریخ و ساعت) دارد؛ ویجت پیشرفت کار و وضعیت تحویل از روی مهلت ساخته شود</label>
 </div>
 <p id="wizErr" class="hidden text-xs text-red-600"></p>
 <div class="flex gap-2"><button type="button" id="wizBackBtn" onclick="wizShow(1)" class="hidden px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm font-bold text-slate-600 dark:text-slate-300">قبلی</button><button type="button" id="wizNextBtn" onclick="wizNext()" class="flex-1 py-2.5 rounded-xl bg-purple-700 text-white text-sm font-bold">بعدی</button></div>
@@ -2244,7 +2299,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 </div>
             </div>
 
-            <div class="flex items-center gap-1 px-4 pt-3 overflow-x-auto border-b border-slate-200 dark:border-slate-700">
+            <div id="settingsTabBar" class="flex items-center gap-1 px-4 pt-3 overflow-x-auto border-b border-slate-200 dark:border-slate-700">
                 <button type="button" onclick="switchSettingsTab('profile')" data-settings-tab="profile" class="settings-tab-btn shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-t-xl text-xs font-bold transition-colors">
                     <i class="fa-solid fa-id-badge"></i> پروفایل
                 </button>
@@ -2268,7 +2323,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 </button>
             </div>
 
-            <div class="p-6 space-y-4 max-h-[52vh] overflow-y-auto">
+            <div id="settingsScrollArea" class="p-6 space-y-4 max-h-[52vh] overflow-y-auto">
                 <div id="settingsTab-profile" class="settings-tab-panel space-y-5">
                 <div class="space-y-3 pb-4 border-b border-slate-200 dark:border-slate-700">
                     <h3 class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -8762,7 +8817,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
                 btn.classList.toggle('text-slate-400', !isActive);
                 btn.classList.toggle('dark:text-slate-500', !isActive);
             });
-            const scrollArea = document.querySelector('#settingsModal .overflow-y-auto');
+            const scrollArea = document.getElementById('settingsScrollArea');
             if (scrollArea) scrollArea.scrollTop = 0;
         }
         /* ============ پایان مدیریت پروفایل کاربری ============ */
@@ -13507,7 +13562,7 @@ document.addEventListener('keydown', function (e) {
   });
   document.addEventListener('click', function (e) { if (pop && !pop.contains(e.target)) closePop(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
-  window.addEventListener('scroll', closePop, true);
+  window.addEventListener('scroll', closePop, { capture: true, passive: true });
   decorate();
 })();
 </script>
