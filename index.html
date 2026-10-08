@@ -1205,6 +1205,9 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                             <button type="button" onclick="switchToolsTab('main', event)" data-tools-tab="main" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="اصلی">
                                 <i class="fa-solid fa-star"></i> اصلی
                             </button>
+                            <button type="button" onclick="switchToolsTab('tools', event)" data-tools-tab="tools" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="ابزارها">
+                                <i class="fa-solid fa-screwdriver-wrench"></i> ابزارها
+                            </button>
                             <button type="button" onclick="switchToolsTab('data', event)" data-tools-tab="data" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="داده‌ها">
                                 <i class="fa-solid fa-database"></i> داده‌ها
                             </button>
@@ -1214,10 +1217,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                         </div>
 
                         <div class="p-3.5">
-                        <!-- تب اصلی -->
-
-                        <div id="toolsTab-main" class="tools-tab-panel">
-                            <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
+                        <!-- تب ابزارها -->
+                        <div id="toolsTab-tools" class="tools-tab-panel hidden">
                             <div class="grid grid-cols-2 gap-1.5 mb-1.5">
                                 <button onclick="closeToolsDropdown(); openJalaliCalendar();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center"><i class="fa-solid fa-calendar-days text-xs"></i></span>
@@ -1241,7 +1242,21 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                                     <span class="block text-[9px] text-slate-400">همه‌ی بخش‌ها</span>
                                 </span>
                             </button>
-                                <button onclick="lockAppNow()" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                                            <button  onclick="openTodayReport(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center"><i class="fa-solid fa-sun text-xs"></i></span>
+                                    <span class="min-w-0"><span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">گزارش امروز</span><span class="block text-[9px] text-slate-400">خلاصه و ارسال</span></span>
+                                </button>
+</div>
+                            </div>
+
+                        <!-- تب اصلی -->
+
+                        <div id="toolsTab-main" class="tools-tab-panel">
+                            <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
+<div class="grid grid-cols-2 gap-1.5 mb-1.5"><button  onclick="openAdvancedSearchModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
+                                    <span class="min-w-0"><span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">جستجوی پیشرفته</span><span class="block text-[9px] text-slate-400">کد، عنوان، مشخصات</span></span>
+                                </button><button onclick="lockAppNow()" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                                         <i class="fa-solid fa-lock text-xs"></i>
                                     </span>
@@ -1249,21 +1264,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                                         <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">قفل برنامه</span>
                                         <span class="block text-[9px] text-slate-400">خروج سریع</span>
                                     </span>
-                                </button>
-                            </div>
-                            <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 mb-1.5 px-0.5">کار روزانه</p>
-                            <div class="grid grid-cols-2 gap-1.5 mb-2.5">
-                                <button  onclick="openTodayReport(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
-                                    <span class="w-9 h-9 shrink-0 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center"><i class="fa-solid fa-sun text-xs"></i></span>
-                                    <span class="min-w-0"><span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">گزارش امروز</span><span class="block text-[9px] text-slate-400">خلاصه و ارسال</span></span>
-                                </button>
-                                <button  onclick="openAdvancedSearchModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
-                                    <span class="w-9 h-9 shrink-0 rounded-full bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
-                                    <span class="min-w-0"><span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">جستجوی پیشرفته</span><span class="block text-[9px] text-slate-400">کد، عنوان، مشخصات</span></span>
-                                </button>
-                                </div>
-                            <div class="grid grid-cols-1 gap-1.5">
-                                <button onclick="openSettingsModal(); closeToolsDropdown();" class="tactile-btn karo-center-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                </button></div>
+<div class="grid grid-cols-1 gap-1.5"><button onclick="openSettingsModal(); closeToolsDropdown();" class="tactile-btn karo-center-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                                         <i class="fa-solid fa-gear text-xs"></i>
                                     </span>
@@ -1271,9 +1273,9 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                                         <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">تنظیمات</span>
                                         <span class="block text-[9px] text-slate-400">ظاهر و رمز</span>
                                     </span>
-                                </button>
-                            </div>
-                            <div id="kobTools" class="no-print" style="margin:10px 0 0"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
+                                </button></div>
+
+<div id="kobTools" class="no-print" style="margin:10px 0 0"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
                             
                         </div>
 
