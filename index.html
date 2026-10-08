@@ -1088,15 +1088,38 @@ body[data-notrack="1"] :is(div:has(> #dailyStat), div:has(> div > #recordEndDate
 #aiChatPage { z-index: 5000 !important; }
 body.ai-chat-open #bottomNavBar { display: none !important; }
 </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet" onerror="this.onerror=null;this.remove()">
+    <style id="karoBrandStyle">
+        /* ===== جلوه‌ی بصری نام «کارو» ===== */
+        .karo-name{font-family:'Lalezar','Vazirmatn',Tahoma,sans-serif;font-weight:900;display:inline-block;letter-spacing:0;line-height:1.25;
+            background:linear-gradient(100deg,#6366f1 0%,#a855f7 25%,#ec4899 50%,#f59e0b 72%,#6366f1 100%);background-size:250% 100%;
+            -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+            filter:drop-shadow(0 2px 6px rgba(139,92,246,.35));animation:karoShine 5s linear infinite}
+        .karo-on-dark{background:linear-gradient(100deg,#fff 0%,#fde68a 30%,#fbcfe8 55%,#c7d2fe 80%,#fff 100%);background-size:250% 100%;
+            -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));animation:karoShine 5s linear infinite}
+        @keyframes karoShine{0%{background-position:0% 50%}100%{background-position:250% 50%}}
+        .karo-splash-title{font-size:56px;margin:2px 0 0;animation:karoShine 4s linear infinite,karoPop .9s cubic-bezier(.2,1.4,.4,1) both}
+        @keyframes karoPop{0%{opacity:0;transform:scale(.6) translateY(14px)}100%{opacity:1;transform:none}}
+        .karo-splash-glow{position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.28),rgba(236,72,153,.12) 45%,transparent 70%);filter:blur(6px);animation:karoPulse 3s ease-in-out infinite;pointer-events:none}
+        @keyframes karoPulse{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.12);opacity:1}}
+        .karo-brand-bar{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 10px;padding:6px 0 8px;border-bottom:1px dashed rgba(148,163,184,.4)}
+        .karo-brand-bar .karo-name{font-size:30px}
+        .karo-brand-bar img{width:30px;height:30px;border-radius:9px;box-shadow:0 4px 12px -2px rgba(99,102,241,.5)}
+        .karo-center-btn{width:88%;margin:2px auto 0;justify-content:center;padding:11px 14px!important;text-align:center!important}
+        .karo-center-btn .min-w-0{text-align:center}
+        @media(prefers-reduced-motion:reduce){.karo-name,.karo-on-dark,.karo-splash-title,.karo-splash-glow{animation:none}}
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased min-h-screen pb-28 font-normal-size" id="appBody">
 
     <!-- صفحه‌ی آغازین (Splash) -->
     <div id="appSplashScreen" class="fixed inset-0 z-[200] flex flex-col items-center justify-between bg-slate-50 dark:bg-slate-950 text-center px-6 py-10 transition-opacity duration-700">
         <div></div>
-        <div class="flex flex-col items-center">
-            <img src="icon-192.png" alt="لوگوی کارو" class="w-24 h-24 rounded-2xl shadow-lg mb-5">
-            <p class="text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">کارو</p>
+        <div class="flex flex-col items-center relative">
+            <span class="karo-splash-glow" style="top:-70px"></span>
+            <img src="icon-192.png" alt="لوگوی کارو" class="w-24 h-24 rounded-2xl shadow-lg mb-3 relative">
+            <p class="karo-name karo-splash-title relative">کارو</p>
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">مدیریت هوشمند کسب‌وکار</p>
             <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">ساخته‌شده برای تمامی صنف‌های کارگاهی</p>
             <div class="mt-6 flex items-center gap-1.5">
@@ -1129,7 +1152,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
             <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl mb-4">
                 <i class="fa-solid fa-lock text-2xl"></i>
             </div>
-            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1">ورود به کارو</h2>
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1">ورود به <span class="karo-name">کارو</span></h2>
             <p class="text-xs text-slate-500 dark:text-slate-400 mb-5">برای مشاهده اطلاعات، رمز عبور را وارد کنید.</p>
             <form id="pinLockForm" onsubmit="attemptUnlock(event)" class="space-y-3">
                 <input type="password" id="pinLockInput" inputmode="numeric" required autocomplete="off" class="w-full p-3 border border-slate-400 dark:border-slate-500 rounded-xl text-center text-lg tracking-[0.3em] bg-slate-50 dark:bg-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none" placeholder="رمز عبور">
@@ -1218,13 +1241,13 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                                     <span class="block text-[9px] text-slate-400">همه‌ی بخش‌ها</span>
                                 </span>
                             </button>
-                                <button onclick="openSettingsModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
-                                    <span class="w-9 h-9 shrink-0 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-                                        <i class="fa-solid fa-gear text-xs"></i>
+                                <button onclick="lockAppNow()" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                                        <i class="fa-solid fa-lock text-xs"></i>
                                     </span>
                                     <span class="min-w-0">
-                                        <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">تنظیمات</span>
-                                        <span class="block text-[9px] text-slate-400">ظاهر و رمز</span>
+                                        <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">قفل برنامه</span>
+                                        <span class="block text-[9px] text-slate-400">خروج سریع</span>
                                     </span>
                                 </button>
                             </div>
@@ -1240,13 +1263,13 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                                 </button>
                                 </div>
                             <div class="grid grid-cols-1 gap-1.5">
-                                <button onclick="lockAppNow()" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
-                                    <span class="w-9 h-9 shrink-0 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                                        <i class="fa-solid fa-lock text-xs"></i>
+                                <button onclick="openSettingsModal(); closeToolsDropdown();" class="tactile-btn karo-center-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                                        <i class="fa-solid fa-gear text-xs"></i>
                                     </span>
                                     <span class="min-w-0">
-                                        <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">قفل برنامه</span>
-                                        <span class="block text-[9px] text-slate-400">خروج سریع</span>
+                                        <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">تنظیمات</span>
+                                        <span class="block text-[9px] text-slate-400">ظاهر و رمز</span>
                                     </span>
                                 </button>
                             </div>
@@ -1446,7 +1469,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 <img src="icon-192.png" alt="لوگوی کارو" class="w-6 h-6 object-contain rounded-md">
             </div>
             <h1 id="mainAppTitle" class="text-base md:text-lg font-bold text-white tracking-tight relative z-10">
-                کارو
+                <span class="karo-name karo-on-dark" style="font-size:1.35em">کارو</span>
             </h1>
             <p id="mainAppSubtitle" class="basis-full text-[11px] text-indigo-100 font-normal relative z-10 leading-tight">سیستم هوشمند آمار و مدیریت کار</p>
             <p id="ownerInfoLine" class="hidden basis-full text-[10px] text-indigo-100/80 mt-0.5 relative z-10"></p>
@@ -2226,7 +2249,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
     <!-- مدال تنظیمات و ظاهر برنامه -->
     <div id="setupWizard" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4 overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
 <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full shadow-2xl border border-slate-300 dark:border-slate-600 my-6 overflow-hidden">
-<div class="bg-gradient-to-l from-purple-700 to-indigo-700 px-5 py-4 text-white"><h2 class="text-base font-bold">به کارو خوش آمدید</h2><p id="wizStepLabel" class="text-[11px] text-white/80 mt-1"></p></div>
+<div class="bg-gradient-to-l from-purple-700 to-indigo-700 px-5 py-4 text-white"><h2 class="text-base font-bold">به <span class="karo-name karo-on-dark" style="font-size:1.4em">کارو</span> خوش آمدید</h2><p id="wizStepLabel" class="text-[11px] text-white/80 mt-1"></p></div>
 <div class="p-5 space-y-4">
 <div id="wizStep1"><p class="text-xs font-medium text-slate-600 dark:text-slate-300 mb-2">شغل یا صنف شما چیست؟</p><div id="wizBiz" class="grid grid-cols-2 gap-2"></div></div>
 <div id="wizStep2" class="hidden space-y-3">
@@ -2248,7 +2271,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
                 <h2 class="text-lg font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-sliders"></i> تنظیمات و پیکربندی کارو
+                    <i class="fa-solid fa-sliders"></i> تنظیمات و پیکربندی <span class="karo-name karo-on-dark">کارو</span>
                 </h2>
                 <p class="text-xs text-white/75 mt-1">مدیریت پروفایل، ظاهر، امنیت و اعلان‌های برنامه</p>
 
@@ -2956,8 +2979,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 
                 <div id="settingsTab-about" class="settings-tab-panel hidden space-y-4">
                 <div class="space-y-3 pb-4 border-b border-slate-300 dark:border-slate-600">
-                    <h3 class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-info"></i> درباره کارو</h3>
-                    <p class="text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">کارو یک برنامه‌ی آفلاین برای ثبت و مدیریت کارکرد روزانه‌ی هر شغل کارمزدی، پروژه‌ای یا خدماتی است؛ از تعمیرکار، نجار و خیاط تا کافه، آموزشگاه و فریلنسر. هر کار با کد، عنوان، تعداد و قیمت ثبت می‌شود و وضعیت تحویل «به‌موقع / تاخیر / زودتر از موعد» بر پایه‌ی آمار روزانه، مهلت تحویل یا هر دو به‌صورت خودکار تعیین می‌گردد.</p>
+                    <h3 class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-info"></i> درباره <span class="karo-name" style="font-size:1.5em;text-transform:none">کارو</span></h3>
+                    <p class="text-[12px] leading-relaxed text-slate-600 dark:text-slate-300"><span class="karo-name" style="font-size:1.25em">کارو</span> یک برنامه‌ی آفلاین برای ثبت و مدیریت کارکرد روزانه‌ی هر شغل کارمزدی، پروژه‌ای یا خدماتی است؛ از تعمیرکار، نجار و خیاط تا کافه، آموزشگاه و فریلنسر. هر کار با کد، عنوان، تعداد و قیمت ثبت می‌شود و وضعیت تحویل «به‌موقع / تاخیر / زودتر از موعد» بر پایه‌ی آمار روزانه، مهلت تحویل یا هر دو به‌صورت خودکار تعیین می‌گردد.</p>
                 </div>
                 <div class="space-y-2 pb-4 border-b border-slate-300 dark:border-slate-600">
                     <h4 class="text-[11px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">امکانات کلیدی</h4>
@@ -2968,7 +2991,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>ویجت دایره‌ای پیشرفت کار جاری و اعلان‌های هوشمند پلکانی (۲۵٪ تا ۹۰٪)</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>یادداشت‌های خاص روزانه (عادی، یادآوری، تعطیلی) برای هر تاریخ</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>لیست کارکردها با نمای جدولی/کارتی، فیلتر ماهانه، جستجوی پیشرفته و نمایش تمام‌صفحه</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>گزارش کلی و نمای کلی ماهانه از کارو، همراه هدف‌گذاری درآمد هفتگی/ماهانه</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>گزارش کلی و نمای کلی ماهانه از <span class="karo-name">کارو</span>، همراه هدف‌گذاری درآمد هفتگی/ماهانه</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>پشتیبان‌گیری خودکار و دستی JSON، ارسال به فضای ابری و پشتیبان چرخشی در پوشه دستگاه</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>خروجی گزارش رسمی HTML قابل چاپ و خروجی CSV اکسل از رکوردها</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>سطل بازیافت (۳۰ روزه)، بررسی سلامت داده و لاگ کامل رویدادهای سیستم</span></li>
@@ -3004,7 +3027,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                     <div class="inline-flex items-center justify-center w-14 h-14 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl mb-2 shadow-inner overflow-hidden">
                         <img src="icon-192.png" alt="لوگوی کارو" class="w-10 h-10 object-contain rounded-lg">
                     </div>
-                    <p class="text-sm font-bold text-slate-800 dark:text-white">کارو</p>
+                    <p class="text-sm font-bold"><span class="karo-name" style="font-size:2em">کارو</span></p>
                     <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">نسخه ۱۳.۰</p>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-3">طراحی و توسعه توسط تیم <span class="font-bold text-indigo-600 dark:text-indigo-400">Phoenix.Yaser</span></p>
                 </div>
@@ -8617,7 +8640,13 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const titleElement = document.getElementById('mainAppTitle');
             if (titleElement) {
                 const customShopName = appSettings.shopName || 'کارو';
-                titleElement.innerText = `${customShopName} - ماه ${currentJalali.monthName} ${formatYearDigits(currentJalali.yearEn)}`;
+                const _tail = ` - ماه ${currentJalali.monthName} ${formatYearDigits(currentJalali.yearEn)}`;
+                if (customShopName === 'کارو') {
+                    titleElement.innerHTML = '<span class="karo-name karo-on-dark" style="font-size:1.35em">کارو</span>';
+                    titleElement.appendChild(document.createTextNode(_tail));
+                } else {
+                    titleElement.innerText = customShopName + _tail;
+                }
             }
             const ownerLine = document.getElementById('ownerInfoLine');
             if (ownerLine) {
@@ -13360,21 +13389,21 @@ document.addEventListener('keydown', function (e) {
   function hero(k){return '<div class="kob-hero kh-'+k+'">'+HERO[k]+'</div>'}
   function items(a){return '<div class="kob-list">'+a.map(function(x){return '<div class="kob-item"><i class="fa-solid '+x[0]+'"></i><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div></div>'}).join('')+'</div>'}
   var ST=[
-   {h:'welcome',t:'به کارو خوش آمدید',l:'دستیار ثبت و پیگیری کار برای همه‌ی مشاغل کارمزدی و پروژه‌ای؛ از تعمیرکار و خیاط و نجار تا راننده و فریلنسر.',chips:['کاملاً آفلاین','همه‌ی مشاغل','فارسی و راست‌چین'],note:'۳۰ روز اول رایگان است. اطلاعات شما روی گوشی ذخیره می‌شود.'},
+   {h:'welcome',t:'به کارو خوش آمدید',l:'دستیار ثبت و پیگیری کار برای همه‌ی مشاغل کارمزدی و پروژه‌ای؛ از تعمیرکار و خیاط و نجار تا راننده و فریلنسر.',chips:['کاملاً آفلاین','همه‌ی مشاغل','فارسی و راست‌چین','تقویم جلالی'],note:'۳۰ روز اول رایگان است. اطلاعات شما روی گوشی ذخیره می‌شود.'},
    {h:'record',t:'ثبت کارکرد در چند ثانیه',l:'هر سفارش یا کار را همان لحظه ثبت کنید و هیچ‌چیز از دست نرود.',it:[['fa-pen-to-square','ثبت سریع','کد، عنوان، تعداد، قیمت و ساعت؛ با دکمه‌های میانبر برای کارهای تکراری.'],['fa-sliders','فیلدهای دلخواه','نام فیلدها، ستون‌ها و واحد شمارش را مطابق شغل خودتان تغییر دهید.'],['fa-calendar-check','مهلت تحویل با تاریخ و ساعت','برای هر سفارش موعد دقیق تحویل را بدهید تا وضعیت و ویجت از روی آن ساخته شود.']]},
    {h:'progress',t:'پیشرفت زنده و ویجت گوشی',l:'ببینید کار جاری چقدر مانده، بدون اینکه برنامه را باز کنید.',it:[['fa-circle-notch','حلقه و نوار پیشرفت','از لحظه‌ی شروع تا مهلت تحویل پیش می‌رود و نزدیک موعد رنگ هشدار می‌گیرد.'],['fa-mobile-screen','ویجت صفحه‌ی اصلی','کارت پیشرفت کار را روی صفحه‌ی اصلی گوشی بگذارید؛ آفلاین هم کار می‌کند.'],['fa-flag-checkered','وضعیت تحویل','با «کار تمام شد» وضعیت (به‌موقع، تاخیر، زودتر) از مقایسه‌ی تحویل با مهلت قطعی می‌شود.']]},
    {h:'assistant',t:'دستیار هوشمند و گزارش',l:'تحلیل خودکار کارهای شما، همراه با گزارش‌هایی که می‌شود فرستاد.',it:[['fa-robot','پرسش و پاسخ و دستور','از دستیار بپرسید یا از داخل چت کار ثبت و یادداشت بسازید.'],['fa-chart-column','گزارش ماهانه','جمع کارکرد، درآمد و تاخیرها؛ قابل چاپ و اشتراک با یک لمس.'],['fa-bell','یادداشت و یادآور','هشدار موعد تحویل و یادآورها، حتی وقتی برنامه بسته است.']]},
-   {h:'calendar',t:'تقویم جلالی با رویدادها و تعطیلات',l:'با لمس تاریخ بالای صفحه، تقویم شمسی باز می‌شود؛ مناسبت‌ها و تعطیلات را یک‌جا ببینید.',it:[['fa-calendar-days','شمسی، میلادی و قمری','هر روز با تاریخ‌های سه‌گانه؛ جمعه‌ها و تعطیلات رسمی قرمز نمایش داده می‌شوند.'],['fa-star','رویدادها و مناسبت‌ها','با لمس هر روز، مناسبت‌های همان روز و فهرست رویدادهای ماه را ببینید.'],['fa-screwdriver-wrench','دسترسی سریع','دکمه‌ی تقویم در منوی ابزار ← تب «ابزارها» هم هست.']]},
+   {h:'calendar',t:'تقویم جلالی؛ همراه همیشگی شما',l:'تقویم جلالی کامل و آفلاین داخل «کارو»؛ با لمس تاریخ بالای صفحه باز می‌شود و مناسبت‌ها و تعطیلات را یک‌جا نشان می‌دهد.',chips:['شمسی','میلادی','قمری','تعطیلات رسمی'],it:[['fa-calendar-days','شمسی، میلادی و قمری','هر روز با تاریخ‌های سه‌گانه؛ جمعه‌ها و تعطیلات رسمی قرمز نمایش داده می‌شوند.'],['fa-star','رویدادها و مناسبت‌ها','با لمس هر روز، مناسبت‌های همان روز و فهرست رویدادهای ماه را ببینید.'],['fa-screwdriver-wrench','دسترسی سریع','دکمه‌ی تقویم در منوی ابزار ← تب «ابزارها» هم هست.']]},
    {h:'mode'},{h:'perm'}
   ];
   function render(){
     if(!root){root=document.createElement('div');root.className='kob';root.setAttribute('role','dialog');root.setAttribute('aria-modal','true');document.body.appendChild(root)}
     var st=ST[S.step],b='';
     if(st.h==='mode')b=modeBody();else if(st.h==='perm')b=permBody();
-    else{b=hero(st.h)+'<h2>'+st.t+'</h2><p>'+st.l+'</p>'+(st.chips?'<div class="kob-chips">'+st.chips.map(function(c){return '<span>'+c+'</span>'}).join('')+'</div>':'')+(st.it?items(st.it):'')+(st.note?'<small>'+st.note+'</small>':'')}
+    else{b=hero(st.h)+'<h2>'+st.t.replace('کارو','<span class="karo-name" style="font-size:1.35em">کارو</span>')+'</h2><p>'+st.l+'</p>'+(st.chips?'<div class="kob-chips">'+st.chips.map(function(c){return '<span>'+c+'</span>'}).join('')+'</div>':'')+(st.it?items(st.it):'')+(st.note?'<small>'+st.note+'</small>':'')}
     var last=S.step===ST.length-1;
     var nav='<div class="kob-nav">'+(S.step>0?'<button type="button" class="kob-btn sec" onclick="kobPrev()">قبلی</button>':'')+'<button type="button" class="kob-btn" onclick="kobNext()">'+(last?(S.replay?'شروع تور راهنما':'شروع کار'):(S.step===0?'شروع معرفی':'بعدی'))+'</button></div>';
-    root.innerHTML='<div class="kob-card">'+bars(ST.length,S.step)+'<div class="kob-in" id="kobBody">'+b+'</div>'+nav+(last?'':'<button type="button" class="kob-skip" onclick="kobSkip()">رد کردن معرفی</button>')+'</div>';
+    root.innerHTML='<div class="kob-card"><div class="karo-brand-bar"><img src="icon-192.png" alt=""><span class="karo-name">کارو</span></div>'+bars(ST.length,S.step)+'<div class="kob-in" id="kobBody">'+b+'</div>'+nav+(last?'':'<button type="button" class="kob-skip" onclick="kobSkip()">رد کردن معرفی</button>')+'</div>';
   }
   function modeBody(){
     var m=S.mode||curMode();
