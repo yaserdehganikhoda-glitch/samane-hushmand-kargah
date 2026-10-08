@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
-    <title>سامانه‌ی کار هوشمند</title>
+    <title>کارو</title>
     
     <!-- تنظیمات PWA و مانیفست -->
     <link rel="manifest" href="manifest.json">
@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="کار هوشمند">
+    <meta name="apple-mobile-web-app-title" content="کارو">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
     
@@ -1094,8 +1094,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
     <div id="appSplashScreen" class="fixed inset-0 z-[200] flex flex-col items-center justify-between bg-slate-50 dark:bg-slate-950 text-center px-6 py-10 transition-opacity duration-700">
         <div></div>
         <div class="flex flex-col items-center">
-            <img src="icon-192.png" alt="لوگوی سامانه‌ی کار هوشمند" class="w-24 h-24 rounded-2xl shadow-lg mb-5">
-            <p class="text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">سامانه‌ی کار هوشمند</p>
+            <img src="icon-192.png" alt="لوگوی کارو" class="w-24 h-24 rounded-2xl shadow-lg mb-5">
+            <p class="text-2xl font-extrabold text-slate-800 dark:text-white tracking-tight">کارو</p>
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">مدیریت هوشمند کسب‌وکار</p>
             <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">ساخته‌شده برای تمامی صنف‌های کارگاهی</p>
             <div class="mt-6 flex items-center gap-1.5">
@@ -1128,7 +1128,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
             <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl mb-4">
                 <i class="fa-solid fa-lock text-2xl"></i>
             </div>
-            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1">ورود به سامانه‌ی کار هوشمند</h2>
+            <h2 class="text-lg font-bold text-slate-800 dark:text-white mb-1">ورود به کارو</h2>
             <p class="text-xs text-slate-500 dark:text-slate-400 mb-5">برای مشاهده اطلاعات، رمز عبور را وارد کنید.</p>
             <form id="pinLockForm" onsubmit="attemptUnlock(event)" class="space-y-3">
                 <input type="password" id="pinLockInput" inputmode="numeric" required autocomplete="off" class="w-full p-3 border border-slate-400 dark:border-slate-500 rounded-xl text-center text-lg tracking-[0.3em] bg-slate-50 dark:bg-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none" placeholder="رمز عبور">
@@ -1394,6 +1394,10 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                             <span class="w-9 h-9 shrink-0 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center"><i class="fa-solid fa-share-nodes text-xs"></i></span>
                             <span class="min-w-0"><span class="block text-[11px] font-bold leading-snug text-slate-700 dark:text-slate-200">اشتراک‌گذاری برنامه</span><span class="block text-[9px] leading-snug text-slate-400">معرفی به دیگران</span></span>
                         </button>
+                        <button onclick="closeToolsDropdown(); toggleLogBox();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                            <span class="w-9 h-9 shrink-0 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center"><i class="fa-solid fa-terminal text-xs"></i></span>
+                            <span class="min-w-0"><span class="block text-[11px] font-bold leading-snug text-slate-700 dark:text-slate-200">رویدادهای سیستم</span><span class="block text-[9px] leading-snug text-slate-400">نمایش لاگ برنامه</span></span>
+                        </button>
                     </div>
                     <div class="flex items-center gap-2 px-1 mt-3 mb-1.5"><i class="fa-solid fa-bell text-[10px] text-slate-400"></i><span class="text-[10px] font-bold text-slate-400">اعلان و ویجت</span><span class="flex-1 h-px bg-slate-100 dark:bg-slate-800"></span></div>
                     <div class="grid grid-cols-2 gap-1.5">
@@ -1443,10 +1447,10 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 <div class="text-right"><h2 id="tabHeaderTitle" class="text-base font-bold leading-tight"></h2><p id="tabHeaderSub" class="text-[10px] text-indigo-100 leading-tight"></p></div>
             </div>
             <div id="appHeaderLogoRing" class="inline-flex items-center justify-center w-9 h-9 rounded-lg overflow-hidden relative z-10">
-                <img src="icon-192.png" alt="لوگوی سامانه" class="w-6 h-6 object-contain rounded-md">
+                <img src="icon-192.png" alt="لوگوی کارو" class="w-6 h-6 object-contain rounded-md">
             </div>
             <h1 id="mainAppTitle" class="text-base md:text-lg font-bold text-white tracking-tight relative z-10">
-                سامانه‌ی کار هوشمند
+                کارو
             </h1>
             <p id="mainAppSubtitle" class="basis-full text-[11px] text-indigo-100 font-normal relative z-10 leading-tight">سیستم هوشمند آمار و مدیریت کار</p>
             <p id="ownerInfoLine" class="hidden basis-full text-[10px] text-indigo-100/80 mt-0.5 relative z-10"></p>
@@ -2226,7 +2230,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
     <!-- مدال تنظیمات و ظاهر برنامه -->
     <div id="setupWizard" class="fixed inset-0 z-[70] hidden flex items-center justify-center p-4 overflow-y-auto bg-slate-900/60 backdrop-blur-sm">
 <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full shadow-2xl border border-slate-300 dark:border-slate-600 my-6 overflow-hidden">
-<div class="bg-gradient-to-l from-purple-700 to-indigo-700 px-5 py-4 text-white"><h2 class="text-base font-bold">به سامانه خوش آمدید</h2><p id="wizStepLabel" class="text-[11px] text-white/80 mt-1"></p></div>
+<div class="bg-gradient-to-l from-purple-700 to-indigo-700 px-5 py-4 text-white"><h2 class="text-base font-bold">به کارو خوش آمدید</h2><p id="wizStepLabel" class="text-[11px] text-white/80 mt-1"></p></div>
 <div class="p-5 space-y-4">
 <div id="wizStep1"><p class="text-xs font-medium text-slate-600 dark:text-slate-300 mb-2">شغل یا صنف شما چیست؟</p><div id="wizBiz" class="grid grid-cols-2 gap-2"></div></div>
 <div id="wizStep2" class="hidden space-y-3">
@@ -2248,7 +2252,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
                 <h2 class="text-lg font-bold flex items-center gap-2">
-                    <i class="fa-solid fa-sliders"></i> تنظیمات و پیکربندی سامانه
+                    <i class="fa-solid fa-sliders"></i> تنظیمات و پیکربندی کارو
                 </h2>
                 <p class="text-xs text-white/75 mt-1">مدیریت پروفایل، ظاهر، امنیت و اعلان‌های برنامه</p>
 
@@ -2259,7 +2263,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                     </div>
                     <div class="min-w-0">
                         <p id="settingsProfilePreviewName" class="text-sm font-bold truncate">کاربر مهمان</p>
-                        <p id="settingsProfilePreviewSub" class="text-[11px] text-white/70 truncate">سامانه‌ی کار هوشمند</p>
+                        <p id="settingsProfilePreviewSub" class="text-[11px] text-white/70 truncate">کارو</p>
                     </div>
                 </div>
             </div>
@@ -2956,26 +2960,32 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 
                 <div id="settingsTab-about" class="settings-tab-panel hidden space-y-4">
                 <div class="space-y-3 pb-4 border-b border-slate-300 dark:border-slate-600">
-                    <h3 class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-info"></i> درباره سامانه‌ی کار هوشمند</h3>
-                    <p class="text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">این سامانه‌یک ابزار آفلاین (PWA) برای ثبت و مدیریت کارکرد روزانه‌ی هر شغل کارمزدی یا پروژه‌ای است: هر کد کار با عنوان، رنگ/مشخصات، تعداد و قیمت ثبت می‌شود، مدت‌زمان تحویل به‌صورت خودکار از روی آمار روزانه محاسبه می‌شود و وضعیت «به‌موقع / تاخیر / زودتر از موعد» خودکار تعیین می‌گردد.</p>
+                    <h3 class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-circle-info"></i> درباره کارو</h3>
+                    <p class="text-[12px] leading-relaxed text-slate-600 dark:text-slate-300">کارو یک برنامه‌ی آفلاین برای ثبت و مدیریت کارکرد روزانه‌ی هر شغل کارمزدی، پروژه‌ای یا خدماتی است؛ از تعمیرکار، نجار و خیاط تا کافه، آموزشگاه و فریلنسر. هر کار با کد، عنوان، تعداد و قیمت ثبت می‌شود و وضعیت تحویل «به‌موقع / تاخیر / زودتر از موعد» بر پایه‌ی آمار روزانه، مهلت تحویل یا هر دو به‌صورت خودکار تعیین می‌گردد.</p>
                 </div>
                 <div class="space-y-2 pb-4 border-b border-slate-300 dark:border-slate-600">
                     <h4 class="text-[11px] font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider">امکانات کلیدی</h4>
                     <ul class="text-[12px] text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>ثبت سریع کارکرد روزانه با کد، عنوان، تعداد و قیمت هر کد کار، به‌همراه عکس اختیاری نمونه کار</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>محاسبه‌ی خودکار زمان تحویل با احتساب ساعات کاری، استراحت‌ها و تعطیلی روزهای تعطیل هفته</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>تعیین خودکار وضعیت «به‌موقع / تاخیر / زودتر از موعد» برای هر رکورد</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>تعیین خودکار وضعیت «به‌موقع / تاخیر / زودتر از موعد» بر پایه‌ی آمار روزانه، مهلت تحویل (تاریخ و ساعت) یا ترکیب هر دو</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>ویجت دایره‌ای پیشرفت کار جاری و اعلان‌های هوشمند پلکانی (۲۵٪ تا ۹۰٪)</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>یادداشت‌های خاص روزانه (عادی، یادآوری، تعطیلی) برای هر تاریخ</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>لیست کارکردها با نمای جدولی/کارتی، فیلتر ماهانه، جستجوی پیشرفته و نمایش تمام‌صفحه</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>گزارش کلی و نمای کلی ماهانه از کار هوشمند، همراه هدف‌گذاری درآمد هفتگی/ماهانه</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>گزارش کلی و نمای کلی ماهانه از کارو، همراه هدف‌گذاری درآمد هفتگی/ماهانه</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>پشتیبان‌گیری خودکار و دستی JSON، ارسال به فضای ابری و پشتیبان چرخشی در پوشه دستگاه</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>خروجی گزارش رسمی HTML قابل چاپ و خروجی CSV اکسل از رکوردها</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>سطل بازیافت (۳۰ روزه)، بررسی سلامت داده و لاگ کامل رویدادهای سیستم</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>شخصی‌سازی کامل: پروفایل کاربری، ظاهر روشن/تاریک، رنگ‌بندی و نوار متن انگیزشی</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>قفل ورود با رمز عبور، کد امنیتی حذف داده‌ها و ذخیره‌سازی کاملاً محلی و آفلاین</span></li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>قابل نصب روی موبایل به‌صورت PWA، با اعلان‌های دستگاه حتی در پس‌زمینه</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>اپ اندروید (و نسخه‌ی PWA) با اعلان‌ها و ویجت صفحه‌ی اصلی، حتی وقتی برنامه بسته است</span></li>
                         <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>شمارنده‌ی روزهای متوالی استفاده و اشتراک‌گذاری آسان برنامه با دیگران</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>تقویم جلالی با رویدادها، مناسبت‌ها و تعطیلات رسمی، همراه تاریخ میلادی و قمری؛ با لمس تاریخ بالای صفحه یا از منوی ابزار باز می‌شود</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>انتخاب شغل در راه‌اندازی اولیه و آماده‌سازی خودکار فیلدها، واحدها و حالت تحویل متناسب با هر صنف</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>حالت کارفرما برای مدیریت پرسنل: ثبت کارکرد، اضافه‌کاری، حقوق و گزارش جمعی</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>دستیار هوشمند با پرسش و پاسخ و دستور در چت، متناسب با شغل شما</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>منوی ابزار دسته‌بندی‌شده: ابزارها، داده‌ها و دستگاه (نصب، به‌روزرسانی، اشتراک‌گذاری و رویدادهای سیستم)</span></li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span>۳۰ روز اول رایگان است؛ پس از آن با تهیه‌ی اشتراک ویژه ادامه می‌دهید</span></li>
                     </ul>
                 </div>
                 <div class="pb-4 border-b border-slate-300 dark:border-slate-600">
@@ -2994,19 +3004,11 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                         </a>
                     </div>
                 </div>
-                <div class="pb-4 border-b border-slate-300 dark:border-slate-600">
-                    <button type="button" onclick="closeSettingsModal(); toggleLogBox();" class="w-full flex items-center justify-between gap-2 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-right">
-                        <span class="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
-                            <i class="fa-solid fa-terminal text-slate-400"></i> نمایش رویدادها و لاگ سیستم
-                        </span>
-                        <i class="fa-solid fa-chevron-left text-[10px] text-slate-400"></i>
-                    </button>
-                </div>
                 <div class="text-center pt-2">
                     <div class="inline-flex items-center justify-center w-14 h-14 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 rounded-2xl mb-2 shadow-inner overflow-hidden">
-                        <img src="icon-192.png" alt="لوگوی سامانه" class="w-10 h-10 object-contain rounded-lg">
+                        <img src="icon-192.png" alt="لوگوی کارو" class="w-10 h-10 object-contain rounded-lg">
                     </div>
-                    <p class="text-sm font-bold text-slate-800 dark:text-white">سامانه‌ی کار هوشمند</p>
+                    <p class="text-sm font-bold text-slate-800 dark:text-white">کارو</p>
                     <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">نسخه ۱۳.۰</p>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-3">طراحی و توسعه توسط تیم <span class="font-bold text-indigo-600 dark:text-indigo-400">Phoenix.Yaser</span></p>
                 </div>
@@ -3346,8 +3348,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: 'سامانه‌ی کار هوشمند',
-                        text: 'این سامانه‌ی هوشمند آمار و مدیریت کار رو ببین:',
+                        title: 'کارو',
+                        text: 'اپ «کارو» برای ثبت و مدیریت هوشمند کار رو ببین:',
                         url: shareUrl
                     });
                     addLog('لینک برنامه با موفقیت به اشتراک گذاشته شد.', 'success');
@@ -3933,7 +3935,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
             s.motivFxStyle = pick(s.motivFxStyle, ['ring', 'double', 'neon', 'gradient', 'shimmer', 'dashed', 'underline', 'pulse', 'corners', 'flow', 'offset'], 'ring');
             s.motivFxColor = pick(s.motivFxColor, ['violet', 'cyan', 'gold', 'red', 'blue', 'sunset', 'ocean', 'forest', 'candy', 'royal', 'graphite'], 'violet');
             s.shopName = String(s.shopName || DEFAULT_APP_SETTINGS.shopName).slice(0, 120);
-            if (s.shopName === 'سامانه‌ی کارگاه' + ' هوشمند') s.shopName = DEFAULT_APP_SETTINGS.shopName;
+            if (['سامانه‌ی کارگاه هوشمند', 'سامانه‌ی کار' + ' هوشمند', 'کار هوشمند'].includes(String(s.shopName || '').trim())) s.shopName = DEFAULT_APP_SETTINGS.shopName;
             ['ownerName', 'ownerPhone', 'ownerAddress'].forEach(k => { s[k] = String(s[k] == null ? '' : s[k]).slice(0, 200); });
             s.ownerPhoto = isSafeImageDataUrl(s.ownerPhoto) ? s.ownerPhoto : null;
             s.pinHash = (typeof s.pinHash === 'string' && s.pinHash) ? s.pinHash : null;
@@ -5148,7 +5150,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         const DEFAULT_APP_SETTINGS = {
             workdayMinutes: 495, shiftStart: '08:00', shiftEnd: '18:00', shiftBreaks: null, formLabels: {}, optionalFields: { itemColor: true }, businessType: 'general', customFields: [], hiddenFields: {}, weekendDays: [6], weekStartDay: 0, setupDone: false, qtyUnit: 'عدد', trackDelivery: true, deadlineMode: false,
             schemaVersion: 1,
-            shopName: 'سامانه‌ی کار هوشمند',
+            shopName: 'کارو',
             currency: 'تومان',
             defaultStatus: 'به موقع',
             onTimeToleranceMinutes: 5,
@@ -5619,7 +5621,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
         function emailRecoveryCode(code) {
             code = code || (document.getElementById('pinRecoveryCodeValue') || {}).innerText || '';
             if (!/^[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(code)) { showFeedbackBanner('کدی برای ارسال وجود ندارد.', 'warn'); return; }
-            const shop = appSettings.shopName || 'سامانه‌ی کار هوشمند';
+            const shop = appSettings.shopName || 'کارو';
             const subject = 'کد بازیابی رمز - ' + shop;
             const body = 'کد بازیابی رمز برنامه:\n\n' + code + '\n\nاین کد را فقط در صفحه‌ی قفل، بخش «رمز را فراموش کرده‌ام» وارد کنید. آن را با کسی به اشتراک نگذارید و پس از استفاده، کد جدید جایگزین می‌شود.';
             const a = document.createElement('a');
@@ -7215,7 +7217,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
                     const monthName = PERSIAN_MONTHS[parseInt(monthNum, 10) - 1] || '';
                     return `${monthName} ${formatYearDigits(year)}`;
                 })();
-            const shopName = (appSettings.shopName || 'سامانه‌ی کار هوشمند');
+            const shopName = (appSettings.shopName || 'کارو');
             const currency = appSettings.currency || 'تومان';
             const totalAmountSum = sumTotalPrice(records);
             const unknownPriceCount = countUnknownPriceRecords(records);
@@ -7735,7 +7737,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
                 removePhotoBtn.classList.add('hidden');
             }
 
-            document.getElementById('settingShopName').value = appSettings.shopName || 'سامانه‌ی کار هوشمند';
+            document.getElementById('settingShopName').value = appSettings.shopName || 'کارو';
             document.getElementById('settingCurrency').value = appSettings.currency || 'تومان';
             document.getElementById('settingDefaultStatus').value = appSettings.defaultStatus || 'به موقع';
             document.getElementById('settingOnTimeTolerance').value = formatNumber(getOnTimeTolerance()).replace(/,/g, '');
@@ -7869,7 +7871,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const ownerAddressVal = document.getElementById('settingOwnerAddress').value.trim();
             // اگر نام فروشگاه خالی گذاشته شود، از مقدار پیش‌فرض استفاده می‌شود؛ قبلاً در این حالت
             // کل فرم (از جمله تم، فونت، رنگ‌ها و واحد پول) بدون هیچ پیام خطایی ذخیره نمی‌شد.
-            const shopNameVal = document.getElementById('settingShopName').value.trim() || appSettings.shopName || 'سامانه‌ی کار هوشمند';
+            const shopNameVal = document.getElementById('settingShopName').value.trim() || appSettings.shopName || 'کارو';
             const currencyVal = document.getElementById('settingCurrency').value;
             const defaultStatusVal = document.getElementById('settingDefaultStatus').value;
             const themeVal = document.getElementById('settingTheme').value;
@@ -8388,7 +8390,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
                         await FS.writeFile({ path, data: jsonString, directory: 'CACHE', encoding: 'utf8', recursive: true });
                         const uriResult = await FS.getUri({ path, directory: 'CACHE' });
                         await ShareApi.share({
-                            title: 'پشتیبان سامانه‌ی کار هوشمند',
+                            title: 'پشتیبان کارو',
                             text: `فایل پشتیبان ماه جاری (${jsonFilename})`,
                             url: uriResult.uri,
                             dialogTitle: 'ارسال فایل پشتیبان'
@@ -8443,7 +8445,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             try {
                 await navigator.share({
                     files: [file],
-                    title: 'پشتیبان سامانه‌ی کار هوشمند',
+                    title: 'پشتیبان کارو',
                     text: `فایل پشتیبان ماه جاری (${jsonFilename}) — محتوای آن JSON است؛ به‌دلیل محدودیت اشتراک‌گذاری فایل در مرورگر با پسوند txt ارسال شده است.`
                 });
                 addLog('فایل پشتیبان از طریق منوی اشتراک‌گذاری سیستم ارسال شد.', 'success');
@@ -8618,7 +8620,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             renderTodayDateBar();
             const titleElement = document.getElementById('mainAppTitle');
             if (titleElement) {
-                const customShopName = appSettings.shopName || 'سامانه‌ی کار هوشمند';
+                const customShopName = appSettings.shopName || 'کارو';
                 titleElement.innerText = `${customShopName} - ماه ${currentJalali.monthName} ${formatYearDigits(currentJalali.yearEn)}`;
             }
             const ownerLine = document.getElementById('ownerInfoLine');
@@ -8756,7 +8758,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
                 const shopName = shopInput ? shopInput.value.trim() : (appSettings.shopName || '');
 
                 nameEl.innerText = ownerName || 'کاربر مهمان';
-                subEl.innerText = shopName || 'سامانه‌ی کار هوشمند';
+                subEl.innerText = shopName || 'کارو';
 
                 if (currentOwnerPhotoData) {
                     imgEl.src = currentOwnerPhotoData;
@@ -12737,7 +12739,7 @@ document.addEventListener('change', e => { if (e.target && e.target.id === 'sett
     </style>
 </head>
 <body>
-    ${logoImgHTML()}<h1>${escapeHTML(appSettings.shopName || 'سامانه‌ی کار هوشمند')} - گزارش عملکرد ${periodLabel}</h1>
+    ${logoImgHTML()}<h1>${escapeHTML(appSettings.shopName || 'کارو')} - گزارش عملکرد ${periodLabel}</h1>
     <p>${getOwnerInfoLineText() ? escapeHTML(getOwnerInfoLineText()) + ' &nbsp;|&nbsp; ' : ''}تاریخ تهیه گزارش: ${formatDateDigits(currentJalali.fullDateStr)}</p>
     <table>
         <tr>
@@ -12893,7 +12895,7 @@ document.getElementById('recordFormCard').addEventListener('focusin', ensureNoTr
         });
 
         applyRecordsViewModeUI();
-        addLog(`سامانه بارگذاری شد. تاریخ: ${currentJalali.fullDateStr}`, 'info');
+        addLog(`کارو بارگذاری شد. تاریخ: ${currentJalali.fullDateStr}`, 'info');
         renderDashboard();
         initPhotoStore();
         initDataStore();
@@ -13287,7 +13289,7 @@ document.addEventListener('keydown', function (e) {
 .kob-hero{height:132px;border-radius:18px;margin-bottom:14px;overflow:hidden;position:relative}
 .kob-svg{width:100%;height:100%;display:block}
 .kh-welcome{background:linear-gradient(135deg,#6366f1,#8b5cf6)}.kh-record{background:linear-gradient(135deg,#0ea5e9,#6366f1)}.kh-progress{background:linear-gradient(135deg,#10b981,#0d9488)}
-.kh-assistant{background:linear-gradient(135deg,#ec4899,#8b5cf6)}.kh-mode{background:linear-gradient(135deg,#3b82f6,#06b6d4)}.kh-perm{background:linear-gradient(135deg,#f59e0b,#ef4444)}.kh-sample{background:linear-gradient(135deg,#14b8a6,#22c55e)}
+.kh-assistant{background:linear-gradient(135deg,#ec4899,#8b5cf6)} .kh-calendar{background:linear-gradient(135deg,#f43f5e,#f59e0b)}.kh-mode{background:linear-gradient(135deg,#3b82f6,#06b6d4)}.kh-perm{background:linear-gradient(135deg,#f59e0b,#ef4444)}.kh-sample{background:linear-gradient(135deg,#14b8a6,#22c55e)}
 .kob h2{font-size:17px;font-weight:800;margin:0 0 6px}
 .kob p{font-size:12.5px;line-height:1.95;color:#475569;margin:0}
 .dark .kob p{color:#cbd5e1}
@@ -13338,7 +13340,7 @@ document.addEventListener('keydown', function (e) {
 </style>
 <script id="kobScript">
 (function(){
-  var K1='kar_onboard_v2',K2='kar_tour_v2',SK='kar_sample_ids',PERM_IDX=5;
+  var K1='kar_onboard_v2',K2='kar_tour_v2',SK='kar_sample_ids',PERM_IDX=6;
   var S={step:0,mode:null,replay:false,perm:{notif:'unknown',bat:null,exact:null,sys:false,hint:''}};
   var root=null,tourEl=null,wizObs=null;
   function ls(g,k,v){try{return g?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){return null}}
@@ -13354,6 +13356,7 @@ document.addEventListener('keydown', function (e) {
    progress:'<svg viewBox="0 0 320 132" class="kob-svg"><circle cx="100" cy="66" r="38" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="12"/><circle cx="100" cy="66" r="38" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-dasharray="172 239" transform="rotate(-90 100 66)"/><text x="100" y="72" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">۷۲٪</text><rect x="160" y="36" width="130" height="10" rx="5" fill="#fff" opacity=".28"/><rect x="160" y="36" width="94" height="10" rx="5" fill="#fff"/><rect x="160" y="56" width="92" height="8" rx="4" fill="#fff" opacity=".4"/><rect x="160" y="82" width="104" height="26" rx="13" fill="#fff"/><text x="212" y="99" text-anchor="middle" font-size="11.5" font-weight="700" fill="#047857">مهلت تحویل ۱۸:۰۰</text></svg>',
    assistant:'<svg viewBox="0 0 320 132" class="kob-svg"><rect x="150" y="18" width="130" height="34" rx="14" fill="#fff"/><rect x="164" y="31" width="82" height="8" rx="4" fill="#c4b5fd"/><rect x="40" y="60" width="150" height="34" rx="14" fill="#fff" opacity=".28"/><rect x="54" y="73" width="100" height="8" rx="4" fill="#fff" opacity=".85"/><path d="M300 30l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff"/><rect x="212" y="94" width="11" height="18" rx="3" fill="#fff" opacity=".55"/><rect x="228" y="84" width="11" height="28" rx="3" fill="#fff" opacity=".75"/><rect x="244" y="74" width="11" height="38" rx="3" fill="#fff"/></svg>',
    mode:'<svg viewBox="0 0 320 132" class="kob-svg"><circle cx="96" cy="66" r="32" fill="#fff"/><circle cx="96" cy="57" r="10" fill="#3b82f6"/><path d="M77 88c3-14 37-14 40 0" fill="#3b82f6"/><circle cx="224" cy="66" r="32" fill="#fff" opacity=".92"/><circle cx="224" cy="57" r="10" fill="#0ea5e9"/><path d="M205 88c3-14 37-14 40 0" fill="#0ea5e9"/><path d="M224 66l-4 11 4 3 4-3z" fill="#fff"/><path d="M138 66h44" stroke="#fff" stroke-width="3" stroke-dasharray="2 8" stroke-linecap="round"/></svg>',
+   calendar:'<svg viewBox="0 0 320 132" class="kob-svg"><rect x="96" y="18" width="128" height="98" rx="14" fill="#fff"/><rect x="96" y="18" width="128" height="26" rx="14" fill="#fff" opacity=".7"/><rect x="96" y="30" width="128" height="14" fill="#fecdd3"/><circle cx="124" cy="18" r="5" fill="#f43f5e"/><circle cx="196" cy="18" r="5" fill="#f43f5e"/><g fill="#cbd5e1"><circle cx="114" cy="60" r="5"/><circle cx="136" cy="60" r="5"/><circle cx="158" cy="60" r="5"/><circle cx="180" cy="60" r="5"/><circle cx="114" cy="80" r="5"/><circle cx="136" cy="80" r="5"/><circle cx="158" cy="80" r="5"/><circle cx="114" cy="100" r="5"/><circle cx="136" cy="100" r="5"/></g><circle cx="202" cy="60" r="5" fill="#dc2626"/><circle cx="180" cy="80" r="5" fill="#6366f1"/><circle cx="202" cy="80" r="5" fill="#dc2626"/></svg>',
    perm:'<svg viewBox="0 0 320 132" class="kob-svg"><g class="fl"><path d="M160 26c-16 0-26 12-26 28v14l-8 12h68l-8-12V54c0-16-10-28-26-28z" fill="#fff"/><circle cx="160" cy="98" r="7" fill="#fff"/></g><path d="M118 42c-6 8-8 16-8 26M202 42c6 8 8 16 8 26M104 34c-10 12-12 26-12 38M216 34c10 12 12 26 12 38" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/><rect x="236" y="86" width="40" height="22" rx="6" fill="#fff" opacity=".92"/><rect x="240" y="90" width="22" height="14" rx="3" fill="#10b981"/><rect x="276" y="93" width="4" height="8" rx="2" fill="#fff"/></svg>',
    sample:'<svg viewBox="0 0 320 132" class="kob-svg"><g class="fl"><path d="M142 20h36v6l-6 6v22l24 34c4 7 0 14-8 14h-52c-8 0-12-7-8-14l24-34V32l-6-6z" fill="#fff" opacity=".96"/><path d="M130 88h60" stroke="#14b8a6" stroke-width="10" opacity=".55"/><circle cx="152" cy="76" r="4" fill="#14b8a6"/><circle cx="170" cy="68" r="3" fill="#14b8a6"/></g><circle cx="80" cy="50" r="5" fill="#fff" opacity=".5"/><circle cx="246" cy="44" r="6" fill="#fff" opacity=".4"/><path d="M236 86l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#fff" opacity=".8"/></svg>'
   };
@@ -13361,10 +13364,11 @@ document.addEventListener('keydown', function (e) {
   function hero(k){return '<div class="kob-hero kh-'+k+'">'+HERO[k]+'</div>'}
   function items(a){return '<div class="kob-list">'+a.map(function(x){return '<div class="kob-item"><i class="fa-solid '+x[0]+'"></i><div><b>'+x[1]+'</b><span>'+x[2]+'</span></div></div>'}).join('')+'</div>'}
   var ST=[
-   {h:'welcome',t:'به سامانه‌ی کار هوشمند خوش آمدید',l:'دستیار ثبت و پیگیری کار برای همه‌ی مشاغل کارمزدی و پروژه‌ای؛ از تعمیرکار و خیاط و نجار تا راننده و فریلنسر.',chips:['کاملاً آفلاین','همه‌ی مشاغل','فارسی و راست‌چین'],note:'۳۰ روز اول رایگان است. اطلاعات شما روی گوشی ذخیره می‌شود.'},
+   {h:'welcome',t:'به کارو خوش آمدید',l:'دستیار ثبت و پیگیری کار برای همه‌ی مشاغل کارمزدی و پروژه‌ای؛ از تعمیرکار و خیاط و نجار تا راننده و فریلنسر.',chips:['کاملاً آفلاین','همه‌ی مشاغل','فارسی و راست‌چین'],note:'۳۰ روز اول رایگان است. اطلاعات شما روی گوشی ذخیره می‌شود.'},
    {h:'record',t:'ثبت کارکرد در چند ثانیه',l:'هر سفارش یا کار را همان لحظه ثبت کنید و هیچ‌چیز از دست نرود.',it:[['fa-pen-to-square','ثبت سریع','کد، عنوان، تعداد، قیمت و ساعت؛ با دکمه‌های میانبر برای کارهای تکراری.'],['fa-sliders','فیلدهای دلخواه','نام فیلدها، ستون‌ها و واحد شمارش را مطابق شغل خودتان تغییر دهید.'],['fa-calendar-check','مهلت تحویل با تاریخ و ساعت','برای هر سفارش موعد دقیق تحویل را بدهید تا وضعیت و ویجت از روی آن ساخته شود.']]},
    {h:'progress',t:'پیشرفت زنده و ویجت گوشی',l:'ببینید کار جاری چقدر مانده، بدون اینکه برنامه را باز کنید.',it:[['fa-circle-notch','حلقه و نوار پیشرفت','از لحظه‌ی شروع تا مهلت تحویل پیش می‌رود و نزدیک موعد رنگ هشدار می‌گیرد.'],['fa-mobile-screen','ویجت صفحه‌ی اصلی','کارت پیشرفت کار را روی صفحه‌ی اصلی گوشی بگذارید؛ آفلاین هم کار می‌کند.'],['fa-flag-checkered','وضعیت تحویل','با «کار تمام شد» وضعیت (به‌موقع، تاخیر، زودتر) از مقایسه‌ی تحویل با مهلت قطعی می‌شود.']]},
    {h:'assistant',t:'دستیار هوشمند و گزارش',l:'تحلیل خودکار کارهای شما، همراه با گزارش‌هایی که می‌شود فرستاد.',it:[['fa-robot','پرسش و پاسخ و دستور','از دستیار بپرسید یا از داخل چت کار ثبت و یادداشت بسازید.'],['fa-chart-column','گزارش ماهانه','جمع کارکرد، درآمد و تاخیرها؛ قابل چاپ و اشتراک با یک لمس.'],['fa-bell','یادداشت و یادآور','هشدار موعد تحویل و یادآورها، حتی وقتی برنامه بسته است.']]},
+   {h:'calendar',t:'تقویم جلالی با رویدادها و تعطیلات',l:'با لمس تاریخ بالای صفحه، تقویم شمسی باز می‌شود؛ مناسبت‌ها و تعطیلات را یک‌جا ببینید.',it:[['fa-calendar-days','شمسی، میلادی و قمری','هر روز با تاریخ‌های سه‌گانه؛ جمعه‌ها و تعطیلات رسمی قرمز نمایش داده می‌شوند.'],['fa-star','رویدادها و مناسبت‌ها','با لمس هر روز، مناسبت‌های همان روز و فهرست رویدادهای ماه را ببینید.'],['fa-screwdriver-wrench','دسترسی سریع','دکمه‌ی تقویم در منوی ابزار ← تب «ابزارها» هم هست.']]},
    {h:'mode'},{h:'perm'}
   ];
   function render(){
@@ -13390,7 +13394,7 @@ document.addEventListener('keydown', function (e) {
     if(isN&&P.exact===false)h+='<button type="button" class="kob-item" onclick="kobExact()"><i class="fa-solid fa-alarm-clock"></i><div><b>یادآوری دقیق</b><span>اندروید ۱۲ به بالا: اجازه‌ی «آلارم دقیق» بدهید تا یادآورها سر وقت برسند</span></div>'+chip('a','تنظیم')+'</button>';
     if(isN){
       if(P.sys)h+='<button type="button" class="kob-item'+(P.bat?' ok':'')+'" onclick="kobBattery()"><i class="fa-solid fa-battery-full"></i><div><b>اجرا در پس‌زمینه</b><span>معاف‌شدن از بهینه‌سازی باتری تا یادآورها و ویجت متوقف نشوند</span></div>'+(P.bat?chip('g','فعال ✓'):chip('a','تنظیم'))+'</button>';
-      else h+='<div class="kob-guide"><b>اجرا در پس‌زمینه (توصیه می‌شود):</b><br>برخی گوشی‌ها برنامه را برای صرفه‌جویی باتری می‌بندند. در تنظیمات گوشی: «برنامه‌ها ← سامانه‌ی کار هوشمند ← باتری» را روی «بدون محدودیت» بگذارید. در گوشی‌های شیائومی، سامسونگ و هوآوی گزینه‌ی «شروع خودکار» را هم روشن کنید.</div>';
+      else h+='<div class="kob-guide"><b>اجرا در پس‌زمینه (توصیه می‌شود):</b><br>برخی گوشی‌ها برنامه را برای صرفه‌جویی باتری می‌بندند. در تنظیمات گوشی: «برنامه‌ها ← کارو ← باتری» را روی «بدون محدودیت» بگذارید. در گوشی‌های شیائومی، سامسونگ و هوآوی گزینه‌ی «شروع خودکار» را هم روشن کنید.</div>';
     }else h+='<div class="kob-guide">اجرای در پس‌زمینه و آلارم دقیق فقط در نسخه‌ی اندروید معنا دارد.</div>';
     return hero('perm')+'<h2>اجازه‌های لازم</h2><p>برای اینکه یادآورها و ویجت درست کار کنند. هر کدام را می‌توانید رد کنید و بعداً از تنظیمات بدهید.</p><div class="kob-list">'+h+'</div>';
   }
@@ -13410,7 +13414,7 @@ document.addEventListener('keydown', function (e) {
   window.kobPick=function(m){S.mode=m;render()};
   window.kobNotif=async function(){
     var P=S.perm;if(P.notif==='granted')return;
-    if(P.notif==='denied'){var o=await sysCall('openAppSettings');P.hint=o?'':'مجوز اعلان قبلاً رد شده است. تنظیمات گوشی ← برنامه‌ها ← سامانه‌ی کار هوشمند ← اعلان‌ها را روشن کنید.';render();return}
+    if(P.notif==='denied'){var o=await sysCall('openAppSettings');P.hint=o?'':'مجوز اعلان قبلاً رد شده است. تنظیمات گوشی ← برنامه‌ها ← کارو ← اعلان‌ها را روشن کنید.';render();return}
     try{var r=nat()?await window.NativeNotify.requestPermission():('Notification' in window?await Notification.requestPermission():'unsupported');P.notif=r==='default'?'prompt':r}catch(e){P.notif='denied'}
     P.hint=P.notif==='denied'?'اگر پنجره‌ی درخواست نیامد، مجوز قبلاً رد شده؛ دوباره دکمه را لمس کنید تا تنظیمات باز شود.':'';
     render();
