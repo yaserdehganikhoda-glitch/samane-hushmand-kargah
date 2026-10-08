@@ -1254,29 +1254,26 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 
                         <div id="toolsTab-main" class="tools-tab-panel">
                             <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
-<div class="grid grid-cols-2 gap-1.5 mb-1.5"><button onclick="openSettingsModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
-                                    <span class="w-9 h-9 shrink-0 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-                                        <i class="fa-solid fa-gear text-xs"></i>
-                                    </span>
-                                    <span class="min-w-0">
-                                        <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">تنظیمات</span>
-                                        <span class="block text-[9px] text-slate-400">ظاهر و رمز</span>
-                                    </span>
-                                </button><button onclick="lockAppNow()" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
-                                    <span class="w-9 h-9 shrink-0 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-                                        <i class="fa-solid fa-lock text-xs"></i>
-                                    </span>
-                                    <span class="min-w-0">
-                                        <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">قفل برنامه</span>
-                                        <span class="block text-[9px] text-slate-400">خروج سریع</span>
-                                    </span>
-                                </button></div>
-<div class="grid grid-cols-1 gap-1.5"><button  onclick="openAdvancedSearchModal(); closeToolsDropdown();" class="tactile-btn karo-center-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
+                            <div class="grid grid-cols-2 gap-1.5 mb-1.5">
+                                <button type="button" onclick="openSettingsModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right min-h-[52px]">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center"><i class="fa-solid fa-gear text-xs"></i></span>
+                                    <span class="min-w-0 flex-1"><span class="block text-[11px] font-bold leading-snug text-slate-700 dark:text-slate-200">تنظیمات</span><span class="block text-[9px] text-slate-400 leading-tight">ظاهر و رمز</span></span>
+                                </button>
+                                <button type="button" onclick="lockAppNow()" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right min-h-[52px]">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center"><i class="fa-solid fa-lock text-xs"></i></span>
+                                    <span class="min-w-0 flex-1"><span class="block text-[11px] font-bold leading-snug text-slate-700 dark:text-slate-200">قفل برنامه</span><span class="block text-[9px] text-slate-400 leading-tight">خروج سریع</span></span>
+                                </button>
+                                <button type="button" onclick="openAdvancedSearchModal(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right min-h-[52px]">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center"><i class="fa-solid fa-magnifying-glass text-xs"></i></span>
-                                    <span class="min-w-0"><span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">جستجوی پیشرفته</span><span class="block text-[9px] text-slate-400">کد، عنوان، مشخصات</span></span>
-                                </button></div>
+                                    <span class="min-w-0 flex-1"><span class="block text-[11px] font-bold leading-snug text-slate-700 dark:text-slate-200">جستجوی پیشرفته</span><span class="block text-[9px] text-slate-400 leading-tight">کد، عنوان، مشخصات</span></span>
+                                </button>
+                                <button type="button" onclick="exportSmartBackup(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right min-h-[52px]">
+                                    <span class="w-9 h-9 shrink-0 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-download text-xs"></i></span>
+                                    <span class="min-w-0 flex-1"><span class="block text-[11px] font-bold leading-snug text-slate-700 dark:text-slate-200">پشتیبان‌گیری</span><span class="block text-[9px] text-slate-400 leading-tight">فایل JSON</span></span>
+                                </button>
+                            </div>
 
-<div id="kobTools" class="no-print" style="margin:10px 0 0"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
+                            <div id="kobTools" class="no-print" style="margin:10px 0 0"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
                             
                         </div>
 
@@ -1284,15 +1281,6 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                         <div id="toolsTab-data" class="tools-tab-panel hidden">
                             <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 mb-1.5 px-0.5">پشتیبان‌گیری و بازیابی</p>
                             <div class="grid grid-cols-2 gap-1.5 mb-3">
-                                <button onclick="exportSmartBackup(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
-                                    <span class="w-9 h-9 shrink-0 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                                        <i class="fa-solid fa-download text-xs"></i>
-                                    </span>
-                                    <span class="min-w-0">
-                                        <span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">پشتیبان‌گیری</span>
-                                        <span class="block text-[9px] text-slate-400">فایل JSON</span>
-                                    </span>
-                                </button>
                                 <button onclick="shareBackupFileToCloud(); closeToolsDropdown();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                                         <i class="fa-solid fa-cloud-arrow-up text-xs"></i>
