@@ -63,11 +63,12 @@
         .mode-switch-btn .msb-cur { font-size: 12.5px; font-weight: 800; }
         .mode-switch-btn .msb-go { font-size: 10px; font-weight: 500; color: #7e22ce; }
         /* اشتراک: دکمه‌ی ارتقا در تب اصلی، پنجره‌ی اشتراک و قفل پایان دوره‌ی رایگان */
-        #premiumHomeBtn { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-bottom: 10px; padding: 8px 12px; border: 0; border-radius: 12px; color: #fff; font-family: inherit; font-size: 12.5px; font-weight: 800; text-align: right; background: linear-gradient(135deg, #f59e0b, #ea580c); box-shadow: 0 6px 14px -8px rgba(234, 88, 12, .6); }
-        #premiumHomeBtn small { display: block; font-size: 10px; font-weight: 500; opacity: .92; margin-top: 1px; }
+        #premiumHomeBtn { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; margin-bottom: 8px; padding: 5px 6px 5px 10px; border: 1px solid rgba(255, 255, 255, .28); border-radius: 10px; color: #fff; font-family: inherit; font-size: 11px; font-weight: 700; line-height: 1.35; text-align: right; background: linear-gradient(135deg, #f59e0b 0%, #d97706 55%, #c2410c 100%); box-shadow: 0 4px 10px -6px rgba(194, 65, 12, .55), inset 0 1px 0 rgba(255, 255, 255, .28); transition: transform .15s ease, box-shadow .2s ease; }
+        #premiumHomeBtn > i { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(255, 255, 255, .22); font-size: 10px; }
+        #premiumHomeBtn small { display: block; font-size: 9.5px; font-weight: 500; opacity: .9; margin-top: 0; }
         #premiumHomeBtn small:empty { display: none; }
         #premiumHomeBtn:active { transform: scale(.98); }
-        #premiumHomeBtn.is-active { background: linear-gradient(135deg, #059669, #0d9488); box-shadow: 0 6px 14px -8px rgba(5, 150, 105, .55); }
+        #premiumHomeBtn.is-active { background: linear-gradient(135deg, #10b981 0%, #059669 55%, #0d9488 100%); box-shadow: 0 4px 10px -6px rgba(5, 150, 105, .55), inset 0 1px 0 rgba(255, 255, 255, .28); }
         .kar-sheet { position: fixed; inset: 0; z-index: 2147482000; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(15, 23, 42, .6); }
         .kar-sheet.open { display: flex; }
         .kar-card { width: 100%; max-width: 380px; border-radius: 24px; padding: 22px 20px; text-align: center; color: #1e293b; background: #fff; box-shadow: 0 25px 60px -15px rgba(0, 0, 0, .5); }
@@ -1181,9 +1182,6 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                             <button type="button" onclick="switchToolsTab('main', event)" data-tools-tab="main" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="اصلی">
                                 <i class="fa-solid fa-star"></i> اصلی
                             </button>
-                            <button type="button" onclick="switchToolsTab('tools', event)" data-tools-tab="tools" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="ابزارها">
-                                <i class="fa-solid fa-screwdriver-wrench"></i> ابزارها
-                            </button>
                             <button type="button" onclick="switchToolsTab('data', event)" data-tools-tab="data" class="tools-tab-btn shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-t-xl text-[11px] font-bold transition-colors" title="داده‌ها">
                                 <i class="fa-solid fa-database"></i> داده‌ها
                             </button>
@@ -1194,7 +1192,9 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 
                         <div class="p-3.5">
                         <!-- تب اصلی -->
-                        <div id="toolsTab-tools" class="tools-tab-panel hidden">
+
+                        <div id="toolsTab-main" class="tools-tab-panel">
+                            <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
                             <div class="grid grid-cols-2 gap-1.5 mb-1.5">
                                 <button onclick="closeToolsDropdown(); openJalaliCalendar();" class="tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right">
                                     <span class="w-9 h-9 shrink-0 rounded-full bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center"><i class="fa-solid fa-calendar-days text-xs"></i></span>
@@ -1250,11 +1250,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                                     </span>
                                 </button>
                             </div>
-                        </div>
-
-                        <div id="toolsTab-main" class="tools-tab-panel">
-                            <button type="button" id="premiumHomeBtn" class="no-print" onclick="closeToolsDropdown(); karOpenPremium()"><span><span id="premiumHomeTitle">ارتقا به نسخه‌ی ویژه</span><small id="premiumHomeSub"></small></span><i class="fa-solid fa-crown"></i></button>
-                            <div id="kobTools" class="no-print"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
+                            <div id="kobTools" class="no-print" style="margin:10px 0 0"><button type="button" onclick="closeToolsDropdown(); karOnboardOpen()"><i class="fa-solid fa-circle-question"></i> مرور معرفی برنامه</button><button type="button" id="kobClearBtn" class="hidden" onclick="closeToolsDropdown(); kobClearSamples()"><i class="fa-solid fa-trash"></i> حذف داده‌ی نمونه</button></div>
                             
                         </div>
 
