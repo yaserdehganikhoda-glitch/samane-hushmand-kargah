@@ -4416,7 +4416,7 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
                 ['منوی ابزار', 'از دکمه‌ی ابزار بالای صفحه باز می‌شود و سه زبانه دارد: <b>اصلی</b> (گزارش‌ها، تنظیمات، جستجوی پیشرفته، قفل)، <b>داده‌ها</b> (پشتیبان، خروجی، سطل بازیافت، سلامت داده) و <b>دستگاه</b> (نصب، اعلان، ویجت، انیمیشن و ...).'],
                 ['دوره‌ی گزارش (ماه)', 'همه‌ی آمارها، لیست‌ها و محاسبات مالی مربوط به «ماه فعال» هستند. ماه فعال را از انتخابگر دوره در بالای صفحه تغییر دهید؛ ماه‌های قبل با داده‌های خودشان حفظ می‌شوند.'],
                 ['حالت پرسنل و حالت کارفرما', 'در حالت پرسنل، برنامه برای ثبت کار شخصی است. با فعال‌کردن قابلیت کارفرما می‌توانید با دکمه‌ی تغییر حالت زیر عنوان صفحه بین «حالت پرسنل» و «حالت کارفرما» جابه‌جا شوید (بخش «کارفرما» در همین راهنما).'],
-                ['مناسب همه‌ی مشاغل', 'در تنظیمات، «نوع کسب‌وکار / صنف» نام فیلدها و نمونه‌ها را با شغل شما هماهنگ می‌کند (تعمیرگاه، نجاری، ساختمان، آرایشگاه، آشپزخانه و ...).']
+                ['مناسب مشاغل کارگاهی', 'در تنظیمات، «نوع کسب‌وکار / صنف» نام فیلدها و نمونه‌ها را با شغل شما هماهنگ می‌کند (خیاطی، نجاری، تعمیرگاه لوازم برقی، موبایل و خودرو).']
             ] },
             { id: 'home', ic: 'fa-house', t: 'تب خانه', items: [
                 ['کارت‌های آمار', 'خلاصه‌ی ماه فعال، از جمله «ارزش کل کارکرد» به واحد پول انتخابی (تومان یا ریال).'],
@@ -4861,39 +4861,20 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
 
         /* ============ نوع کسب‌وکار / صنف (پیش‌تنظیم نام فیلدها و نمونه‌ها) ============ */
         const BUSINESS_PRESETS = {
-            general: { name: 'عمومی (همه‌ی مشاغل)', labels: {}, optional: { itemColor: true },
-                hints: { role: 'مثلاً استادکار، شاگرد، راننده', section: 'مثلاً تولید، انبار، فروش، خدمات' } },
-            repair: { deadline: true, name: 'تعمیرگاه (لوازم برقی، موبایل و...)', labels: { itemCode: 'شماره پذیرش', itemTitle: 'دستگاه / قطعه', itemColor: 'عیب / توضیح', receivedQuantity: 'تعداد', unitPrice: 'دستمزد', itemStatus: 'وضعیت تحویل' }, optional: { itemColor: true },
-                hints: { role: 'مثلاً تعمیرکار، تکنسین', section: 'مثلاً پذیرش، تعمیر، تست، تحویل' } },
-            auto: { name: 'مکانیکی و خدمات خودرو', labels: { itemCode: 'شماره پلاک / پذیرش', itemTitle: 'خودرو / نوع خدمت', itemColor: 'مشخصات', receivedQuantity: 'تعداد', unitPrice: 'دستمزد / قیمت واحد' }, optional: { itemColor: true },
-                hints: { role: 'مثلاً مکانیک، برقکار خودرو', section: 'مثلاً موتور، برق، کارواش، صافکاری' } },
-            carpentry: { deadline: true, name: 'نجاری، کابینت و مبلمان', labels: { itemCode: 'کد سفارش', itemTitle: 'نوع کار (درب، کابینت، مبل...)', itemColor: 'جنس / رنگ', receivedQuantity: 'تعداد' }, optional: { itemColor: true },
-                hints: { role: 'مثلاً نجار، رنگ‌کار، نصاب', section: 'مثلاً برش، مونتاژ، رنگ، نصب' } },
-            construction: { deadline: true, name: 'ساختمان و نصب', labels: { itemCode: 'کد پروژه', itemTitle: 'شرح کار', itemColor: 'محل / توضیح', receivedQuantity: 'مقدار (متر / عدد)', unitPrice: 'نرخ واحد' }, optional: { itemColor: true },
-                hints: { role: 'مثلاً بنّا، برقکار، لوله‌کش', section: 'مثلاً اسکلت، برق، لوله‌کشی، نازک‌کاری' } },
-            salon: { track: false, unit: 'مورد', name: 'آرایشگاه و خدمات زیبایی', labels: { itemCode: 'کد پذیرش', itemTitle: 'نوع خدمت', itemColor: 'توضیح', receivedQuantity: 'تعداد', unitPrice: 'تعرفه', itemStatus: 'وضعیت ثبت' }, optional: { itemColor: true },
-                hints: { role: 'مثلاً آرایشگر، پدیکور، شاگرد', section: 'مثلاً مو، پوست، ناخن، پذیرش' } },
-            food: { name: 'آشپزخانه، قنادی و نانوایی', labels: { itemCode: 'کد سفارش', itemTitle: 'نام محصول', itemColor: 'مشخصات', receivedQuantity: 'تعداد', unitPrice: 'قیمت واحد' }, optional: { itemColor: true },
-                hints: { role: 'مثلاً آشپز، شاطر، کمک‌آشپز', section: 'مثلاً آماده‌سازی، پخت، بسته‌بندی، ارسال' } },
-            print: { deadline: true, name: 'چاپ و تبلیغات', labels: { itemCode: 'شماره سفارش', itemTitle: 'عنوان سفارش', itemColor: 'سایز / رنگ', receivedQuantity: 'تیراژ', unitPrice: 'قیمت واحد' }, optional: { itemColor: true },
-                hints: { role: 'مثلاً طراح، اپراتور چاپ', section: 'مثلاً طراحی، چاپ، برش، بسته‌بندی' } },
-            retail: { name: 'فروشگاه و عمده‌فروشی', labels: { itemCode: 'شماره فاکتور', itemTitle: 'کالا / شرح', itemColor: 'توضیح', receivedQuantity: 'تعداد', unitPrice: 'قیمت واحد' }, optional: { itemColor: true }, unit: 'عدد', track: false, customer: 'مشتری',
-                hints: { role: 'مثلاً فروشنده، صندوق‌دار', section: 'مثلاً فروش، انبار، صندوق' } },
-            cafe: { name: 'کافه و رستوران', labels: { itemCode: 'شماره سفارش', itemTitle: 'سفارش / محصول', itemColor: 'توضیح', receivedQuantity: 'تعداد', unitPrice: 'قیمت واحد' }, optional: { itemColor: true }, unit: 'پرس', track: false,
-                hints: { role: 'مثلاً گارسون، آشپز، باریستا', section: 'مثلاً سالن، آشپزخانه، بار' } },
-            academy: { name: 'آموزشگاه و کلاس', labels: { itemCode: 'کد جلسه', itemTitle: 'عنوان کلاس', itemColor: 'توضیح', receivedQuantity: 'مدت', unitPrice: 'شهریه واحد' }, optional: { itemColor: true }, unit: 'ساعت', track: false, customer: 'دانش‌آموز',
-                hints: { role: 'مثلاً مدرس، مربی، مسئول آموزش', section: 'مثلاً کلاس‌ها، دفتر، پشتیبانی' } },
-            farm: { name: 'کشاورزی و باغ', labels: { itemCode: 'کد عملیات', itemTitle: 'محصول / عملیات', itemColor: 'زمین / توضیح', receivedQuantity: 'مقدار', unitPrice: 'نرخ واحد' }, optional: { itemColor: true }, unit: 'کیلو', track: false,
-                hints: { role: 'مثلاً کارگر فصلی، تراکتورکار', section: 'مثلاً کاشت، برداشت، آبیاری' } },
-            transport: { name: 'حمل‌ونقل و باربری', labels: { itemCode: 'شماره بارنامه', itemTitle: 'مبدأ و مقصد', itemColor: 'نوع بار', receivedQuantity: 'مقدار', unitPrice: 'کرایه واحد' }, optional: { itemColor: true }, unit: 'کیلو', track: true, customer: 'مشتری',
-                hints: { role: 'مثلاً راننده، باربر', section: 'مثلاً بارگیری، حمل، تحویل' } },
-            clinic: { name: 'کلینیک و خدمات درمانی', labels: { itemCode: 'شماره پذیرش', itemTitle: 'نوع خدمت', itemColor: 'توضیح', receivedQuantity: 'تعداد', unitPrice: 'تعرفه' }, optional: { itemColor: true }, unit: 'مورد', track: false, customer: 'بیمار',
-                hints: { role: 'مثلاً پزشک، پرستار، منشی', section: 'مثلاً پذیرش، درمان، صندوق' } },
-            freelance: { deadline: true, name: 'فریلنسر و خدمات پروژه‌ای', labels: { itemCode: 'کد پروژه', itemTitle: 'عنوان پروژه', itemColor: 'توضیح', receivedQuantity: 'مقدار', unitPrice: 'نرخ واحد' }, optional: { itemColor: true }, unit: 'ساعت', track: true, customer: 'مشتری',
-                hints: { role: 'مثلاً طراح، برنامه‌نویس، مشاور', section: 'مثلاً طراحی، اجرا، پشتیبانی' } },
             tailor: { name: 'خیاطی و تولیدی پوشاک', labels: { itemCode: 'کد لباس', itemTitle: 'عنوان لباس / مدل', itemColor: 'رنگ', receivedQuantity: 'تعداد دریافتی' }, optional: {},
-                hints: { role: 'مثلاً خیاط، اتوکار', section: 'مثلاً برش، دوخت، اتو، بسته‌بندی' } }
+                hints: { role: 'مثلاً خیاط، اتوکار', section: 'مثلاً برش، دوخت، اتو، بسته‌بندی' } },
+            carpentry: { deadline: true, customer: 'نام مشتری', name: 'نجاری، کابینت و مبلمان', labels: { itemCode: 'کد سفارش', itemTitle: 'نوع کار (درب، کابینت، مبل...)', itemColor: 'جنس / رنگ', receivedQuantity: 'تعداد', unitPrice: 'دستمزد / قیمت واحد' }, optional: { itemColor: true },
+                hints: { role: 'مثلاً نجار، رنگ‌کار، نصاب', section: 'مثلاً برش، لبه‌چسبانی، مونتاژ، رنگ، نصب' } },
+            repair: { deadline: true, name: 'تعمیرگاه لوازم برقی', labels: { itemCode: 'شماره پذیرش', itemTitle: 'دستگاه / قطعه', itemColor: 'عیب / توضیح', receivedQuantity: 'تعداد', unitPrice: 'دستمزد', itemStatus: 'وضعیت تحویل' }, optional: { itemColor: true },
+                hints: { role: 'مثلاً تعمیرکار، تکنسین', section: 'مثلاً پذیرش، تعمیر، تست، تحویل' } },
+            mobile: { deadline: true, name: 'تعمیرگاه موبایل', labels: { itemCode: 'شماره پذیرش', itemTitle: 'مدل گوشی / دستگاه', itemColor: 'عیب / توضیح', receivedQuantity: 'تعداد', unitPrice: 'دستمزد', itemStatus: 'وضعیت تحویل' }, optional: { itemColor: true },
+                hints: { role: 'مثلاً تعمیرکار موبایل، تکنسین', section: 'مثلاً پذیرش، تعمیر، تست، تحویل' } },
+            auto: { name: 'تعمیرگاه خودرو', labels: { itemCode: 'شماره پلاک / پذیرش', itemTitle: 'خودرو / نوع خدمت', itemColor: 'مشخصات', receivedQuantity: 'تعداد', unitPrice: 'دستمزد / قیمت واحد' }, optional: { itemColor: true },
+                hints: { role: 'مثلاً مکانیک، برقکار خودرو', section: 'مثلاً موتور، برق، کارواش، صافکاری' } },
+            general: { name: 'عمومی (همه‌ی مشاغل)', labels: {}, optional: { itemColor: true },
+                hints: { role: 'مثلاً استادکار، شاگرد، راننده', section: 'مثلاً تولید، انبار، فروش، خدمات' } }
         };
+        function bizKeys() { return Object.keys(BUSINESS_PRESETS).filter(k => k !== 'general'); }
         function currentBusinessHints() {
             const p = BUSINESS_PRESETS[(typeof appSettings !== 'undefined' && appSettings && appSettings.businessType) || 'general'] || BUSINESS_PRESETS.general;
             return p.hints;
@@ -4901,8 +4882,8 @@ body.ai-chat-open #bottomNavBar { display: none !important; }
         function populateBusinessTypeSelect() {
             const sel = document.getElementById('settingBusinessType');
             if (!sel) return;
-            const cur = BUSINESS_PRESETS[appSettings.businessType] ? appSettings.businessType : 'general';
-            sel.innerHTML = Object.keys(BUSINESS_PRESETS).map(k => `<option value="${k}"${k === cur ? ' selected' : ''}>${escapeHTML(BUSINESS_PRESETS[k].name)}</option>`).join('');
+            const cur = (BUSINESS_PRESETS[appSettings.businessType] && appSettings.businessType !== 'general') ? appSettings.businessType : 'tailor';
+            sel.innerHTML = bizKeys().map(k => `<option value="${k}"${k === cur ? ' selected' : ''}>${escapeHTML(BUSINESS_PRESETS[k].name)}</option>`).join('');
         }
 const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
         function weekendSet() { const a = (typeof appSettings !== 'undefined' && appSettings) ? appSettings.weekendDays : null; return new Set(Array.isArray(a) ? a : [6]); }
@@ -4917,9 +4898,9 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             const sel = document.getElementById('settingWeekStart');
             if (sel) sel.innerHTML = WK_NAMES.map((n, i) => `<option value="${i}"${i === (appSettings.weekStartDay || 0) ? ' selected' : ''}>${n}</option>`).join('');
         }
-        let wizBizId = 'general';
+        let wizBizId = 'tailor';
         function wizRenderBiz() {
-            document.getElementById('wizBiz').innerHTML = Object.keys(BUSINESS_PRESETS).map(k => `<button type="button" onclick="wizBizId='${k}';wizRenderBiz()" class="p-2.5 rounded-xl border text-[12px] font-bold text-right ${k === wizBizId ? 'border-purple-600 bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300' : 'border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300'}">${escapeHTML(BUSINESS_PRESETS[k].name)}</button>`).join('');
+            document.getElementById('wizBiz').innerHTML = bizKeys().map(k => `<button type="button" onclick="wizBizId='${k}';wizRenderBiz()" class="p-2.5 rounded-xl border text-[12px] font-bold text-right ${k === wizBizId ? 'border-purple-600 bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300' : 'border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300'}">${escapeHTML(BUSINESS_PRESETS[k].name)}</button>`).join('');
         }
         function wizShow(n) {
             document.getElementById('wizStep1').classList.toggle('hidden', n !== 1);
@@ -4932,7 +4913,7 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             document.getElementById('wizErr').classList.add('hidden');
         }
         function wizOpen() {
-            wizBizId = 'general'; wizRenderBiz(); renderWeekChecks('wizWeekend', [6]); wizShow(1);
+            wizBizId = 'tailor'; wizRenderBiz(); renderWeekChecks('wizWeekend', [6]); wizShow(1);
             document.getElementById('setupWizard').classList.remove('hidden');
         }
         function wizSkip() { appSettings.setupDone = true; persistAppSettings(); document.getElementById('setupWizard').classList.add('hidden'); }
@@ -5033,20 +5014,15 @@ const WK_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه',
             } catch (e) { /* allRecords هنوز آماده نیست */ }
         }
         const PRESET_EXTRA = {
-            cafe: { cf: [{id: 'cftable', label: 'شماره میز'}, {id: 'cforder', label: 'نوع سفارش (سالن / بیرون\u200cبر / پیک)'}], hide: [] },
-            retail: { cf: [{id: 'cfpay', label: 'نحوه پرداخت'}], hide: ['itemColor'] },
-            academy: { cf: [{id: 'cfclass', label: 'نام کلاس'}], hide: [] },
-            farm: { cf: [{id: 'cfland', label: 'نام زمین / باغ'}], hide: [] },
-            transport: { cf: [{id: 'cfplate', label: 'پلاک خودرو'}, {id: 'cfroute', label: 'مسیر'}], hide: [] },
-            clinic: { cf: [{id: 'cfdoctor', label: 'پزشک / ارائه\u200cدهنده'}], hide: ['itemColor'] },
-            freelance: { cf: [{id: 'cfref', label: 'لینک / مرجع'}], hide: [] },
-            salon: { cf: [{id: 'cfstylist', label: 'آرایشگر'}], hide: [] },
+            mobile: { cf: [{id: 'cfphone', label: 'شماره تماس مشتری'}, {id: 'cfmodel', label: 'مدل گوشی'}, {id: 'cfimei', label: 'IMEI / سریال'}], hide: [] },
+            auto: { cf: [{id: 'cfphone', label: 'شماره تماس مشتری'}, {id: 'cfplate', label: 'پلاک خودرو'}, {id: 'cfkm', label: 'کیلومتر'}], hide: [] },
+            carpentry: { cf: [{id: 'cfphone', label: 'تلفن مشتری'}, {id: 'cfaddr', label: 'آدرس نصب'}, {id: 'cfdim', label: 'ابعاد (طول×عرض×ارتفاع)'}, {id: 'cfmat', label: 'جنس (MDF / ملامینه / چوب)'}, {id: 'cfstage', label: 'مرحله (برش / مونتاژ / رنگ / نصب)'}, {id: 'cfadv', label: 'پیش‌پرداخت'}], hide: [] },
             repair: { cf: [{id: 'cfphone', label: 'شماره تماس مشتری'}, {id: 'cfmodel', label: 'مدل دستگاه'}], hide: [] }
         };
         const PRESET_QUICK = {
-            cafe: ['اسپرسو', 'آمریکانو', 'لاته', 'کاپوچینو', 'موکا', 'چای', 'دمنوش', 'قهوه ترک', 'شیک', 'آبمیوه', 'کیک', 'ساندویچ', 'پیتزا', 'سالاد'],
-            salon: ['کوتاهی مو', 'رنگ مو', 'مش', 'کراتین', 'اصلاح صورت', 'مانیکور', 'پدیکور', 'ابرو'],
-            clinic: ['ویزیت', 'مشاوره', 'پانسمان', 'تزریق', 'نوار قلب', 'آزمایش']
+            mobile: ['تعویض ال‌سی‌دی', 'تعویض باتری', 'تعویض گلس', 'تعمیر برد', 'نصب نرم‌افزار', 'تعویض درگاه شارژ'],
+            auto: ['تعویض روغن', 'تعویض لنت', 'تنظیم موتور', 'برق‌کاری', 'کارواش', 'تعویض لاستیک'],
+            carpentry: ['کابینت آشپزخانه', 'کمد دیواری', 'درب اتاق', 'تخت‌خواب', 'میز تلویزیون', 'کتابخانه', 'دراور', 'سرویس مبل', 'میز ناهارخوری', 'کابینت حمام', 'نصب و اجرا', 'تعمیر'],
         };
         function presetQuick(id) { return (PRESET_QUICK[id] || []).map(t => ({ t, p: 0 })); }
         function presetCf(id) { return ((PRESET_EXTRA[id] || {}).cf || []).map(f => ({ id: f.id, label: f.label, type: 'text' })); }
@@ -13664,6 +13640,73 @@ document.addEventListener('keydown', function (e) {
   window.closeJalaliCalendar = function () { var c = document.getElementById('karCal'); if (c) c.classList.remove('open'); };
   // مناسبتِ نوار تاریخ هدر هم از همین جدول خوانده شود
   window.getTodayOccasion = function (m, d) { var l = sm[m + '-' + d]; return l ? l.map(function (e) { return e[2]; }).join('، ') : null; };
+})();
+</script>
+<style id="carpStyle">
+#carpModal{position:fixed;inset:0;z-index:99999;display:none;align-items:flex-end;justify-content:center;background:rgba(15,23,42,.55);font-family:Vazirmatn,sans-serif}
+#carpModal.open{display:flex}
+#carpModal .cp{background:#fff;color:#1e293b;width:100%;max-width:520px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:14px;direction:rtl;font-size:13px}
+.dark #carpModal .cp{background:#0f172a;color:#e2e8f0}
+#carpModal h3{font-weight:800;font-size:15px;margin:0}
+#carpModal .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+#carpModal .tb{display:flex;gap:6px;margin-bottom:10px}
+#carpModal .tb button{flex:1;padding:8px;border-radius:10px;border:1px solid #cbd5e1;background:transparent;color:inherit;font:inherit;font-weight:700;cursor:pointer}
+#carpModal .tb button.on{background:#7c3aed;color:#fff;border-color:#7c3aed}
+#carpModal input,#carpModal select{width:100%;box-sizing:border-box;padding:8px;border-radius:10px;border:1px solid #94a3b8;background:transparent;color:inherit;font:inherit;text-align:center}
+#carpModal label{display:block;font-size:11px;font-weight:700;margin:6px 0 3px;opacity:.8}
+#carpModal .rw{display:grid;grid-template-columns:1fr 1fr 70px 34px;gap:5px;margin-bottom:5px}
+#carpModal .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#carpModal .bt{padding:9px 12px;border-radius:10px;border:0;background:#7c3aed;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+#carpModal .bt.s{background:#e2e8f0;color:#334155}
+#carpModal .rs{margin-top:10px;padding:10px;border-radius:12px;background:#f5f3ff;line-height:2;white-space:pre-line}
+.dark #carpModal .rs{background:#1e1b4b}
+</style>
+<div id="carpModal" onclick="if(event.target===this)carpClose()"><div class="cp">
+<div class="hd"><h3>ابزار نجاری</h3><button class="bt s" onclick="carpClose()">✕</button></div>
+<div class="tb"><button id="carpT1" class="on" onclick="carpTab(1)">محاسبه ورق</button><button id="carpT2" onclick="carpTab(2)">پیش‌فاکتور</button></div>
+<div id="carpP1">
+<div class="g2"><div><label>اندازه‌ی ورق (سانتی‌متر)</label><select id="cpSheet"><option value="122x244">۱۲۲ × ۲۴۴</option><option value="183x366" selected>۱۸۳ × ۳۶۶</option><option value="210x280">۲۱۰ × ۲۸۰</option></select></div>
+<div><label>ضایعات (درصد)</label><input id="cpWaste" inputmode="decimal" value="15"></div></div>
+<label>لبه‌چسبانی هر قطعه</label><select id="cpEdge"><option value="0">ندارد</option><option value="2">دو طول</option><option value="3" selected>دو طول + یک عرض</option><option value="4">تمام اطراف</option></select>
+<label>قطعات: طول، عرض (سانتی‌متر)، تعداد</label><div id="cpRows"></div>
+<div style="display:flex;gap:6px;margin-top:6px"><button class="bt s" onclick="carpAddRow()">+ قطعه</button><button class="bt" onclick="carpCalc()">محاسبه</button></div>
+<div id="cpRes1" class="rs" style="display:none"></div></div>
+<div id="carpP2" style="display:none">
+<label>نام مشتری</label><input id="pfName">
+<div class="g2"><div><label>متر کابینت زمینی</label><input id="pfG" inputmode="decimal"></div><div><label>نرخ هر متر (زمینی)</label><input id="pfGR" inputmode="numeric"></div>
+<div><label>متر کابینت دیواری</label><input id="pfW" inputmode="decimal"></div><div><label>نرخ هر متر (دیواری)</label><input id="pfWR" inputmode="numeric"></div>
+<div><label>یراق‌آلات و لوازم</label><input id="pfH" inputmode="numeric"></div><div><label>نصب و حمل</label><input id="pfI" inputmode="numeric"></div>
+<div><label>تخفیف</label><input id="pfD" inputmode="numeric"></div><div><label>پیش‌پرداخت (درصد)</label><input id="pfA" inputmode="decimal" value="50"></div></div>
+<div style="display:flex;gap:6px;margin-top:8px"><button class="bt" onclick="carpPF()">محاسبه</button><button class="bt s" onclick="carpCopy()">کپی متن</button><button class="bt s" onclick="carpShare()">ارسال</button></div>
+<div id="cpRes2" class="rs" style="display:none"></div></div>
+</div></div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},K='carpCalcV1';
+function n(v){var s=String(v==null?'':v);try{s=toEnglishDigits(s)}catch(e){}var x=parseFloat(s.replace(/[,٬\s]/g,'').replace('٫','.'));return isFinite(x)?x:0}
+function f(x,d){d=d||0;var m=Math.pow(10,d);return (Math.round(x*m)/m).toLocaleString('fa-IR',{maximumFractionDigits:d})}
+function cur(){try{return appSettings.currency||'تومان'}catch(e){return 'تومان'}}
+function row(a){var d=document.createElement('div');d.className='rw';d.innerHTML='<input inputmode="decimal" placeholder="طول" value="'+(a[0]||'')+'"><input inputmode="decimal" placeholder="عرض" value="'+(a[1]||'')+'"><input inputmode="numeric" placeholder="تعداد" value="'+(a[2]||'1')+'"><button class="bt s" style="padding:0">✕</button>';d.lastChild.onclick=function(){if($('cpRows').children.length>1)d.remove()};$('cpRows').appendChild(d)}
+window.carpAddRow=function(){row([])};
+function load(){var s={};try{s=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}return s}
+function save(){try{var r=[].map.call($('cpRows').children,function(d){var i=d.querySelectorAll('input');return [i[0].value,i[1].value,i[2].value]});var o={rows:r};['cpSheet','cpWaste','cpEdge','pfG','pfGR','pfW','pfWR','pfH','pfI','pfD','pfA'].forEach(function(k){o[k]=$(k).value});localStorage.setItem(K,JSON.stringify(o))}catch(e){}}
+window.carpOpen=function(){var s=load();if(!$('cpRows').children.length){(s.rows&&s.rows.length?s.rows:[[]]).forEach(row);Object.keys(s).forEach(function(k){if(k!=='rows'&&$(k))$(k).value=s[k]})}$('carpModal').classList.add('open')};
+window.carpClose=function(){save();$('carpModal').classList.remove('open')};
+window.carpTab=function(t){$('carpP1').style.display=t==1?'':'none';$('carpP2').style.display=t==2?'':'none';$('carpT1').className=t==1?'on':'';$('carpT2').className=t==2?'on':''};
+window.carpCalc=function(){var sh=$('cpSheet').value.split('x'),sa=sh[0]*sh[1]/10000,w=n($('cpWaste').value),e=+$('cpEdge').value,A=0,E=0,C=0;
+[].forEach.call($('cpRows').children,function(d){var i=d.querySelectorAll('input'),l=n(i[0].value),b=n(i[1].value),q=n(i[2].value)||1;if(l>0&&b>0){A+=l*b*q/10000;C+=q;E+=(e==4?2*l+2*b:e==3?2*l+b:e==2?2*l:0)*q/100}});
+var r=$('cpRes1');r.style.display='';if(!A){r.textContent='ابعاد قطعات را وارد کنید.';return}
+var A2=A*(1+w/100);r.textContent='تعداد قطعه: '+f(C)+'\nمساحت خالص: '+f(A,2)+' متر مربع\nبا ضایعات: '+f(A2,2)+' متر مربع\nورق لازم (حداقل): '+f(Math.ceil(A/sa))+' عدد\nورق پیشنهادی: '+f(Math.ceil(A2/sa))+' عدد\nنوار لبه: '+f(E,1)+' متر';save()};
+var txt='';
+window.carpPF=function(){var g=n($('pfG').value)*n($('pfGR').value),w=n($('pfW').value)*n($('pfWR').value),h=n($('pfH').value),i=n($('pfI').value),d=n($('pfD').value),a=n($('pfA').value),T=g+w+h+i-d,P=T*a/100,c=cur(),nm=$('pfName').value.trim();
+var L=['پیش‌فاکتور'+(nm?' — '+nm:'')];if(g)L.push('کابینت زمینی: '+f(g)+' '+c);if(w)L.push('کابینت دیواری: '+f(w)+' '+c);if(h)L.push('یراق‌آلات: '+f(h)+' '+c);if(i)L.push('نصب و حمل: '+f(i)+' '+c);if(d)L.push('تخفیف: '+f(d)+' '+c);
+L.push('جمع کل: '+f(T)+' '+c,'پیش‌پرداخت ('+f(a)+'٪): '+f(P)+' '+c,'مانده: '+f(T-P)+' '+c);txt=L.join('\n');var r=$('cpRes2');r.style.display='';r.textContent=txt;save()};
+window.carpCopy=function(){if(!txt)carpPF();try{navigator.clipboard.writeText(txt)}catch(e){var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}};
+window.carpShare=function(){if(!txt)carpPF();if(navigator.share)navigator.share({text:txt}).catch(function(){});else carpCopy()};
+function sync(){var on=typeof appSettings!=='undefined'&&appSettings&&appSettings.businessType==='carpentry',b=$('carpToolBtn');
+if(on&&!b){var g=document.querySelector('#toolsTab-tools .grid');if(!g)return;b=document.createElement('button');b.id='carpToolBtn';b.className='tactile-btn flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-right';b.onclick=function(){closeToolsDropdown();carpOpen()};b.innerHTML='<span class="w-9 h-9 shrink-0 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center"><i class="fa-solid fa-ruler-combined text-xs"></i></span><span class="min-w-0"><span class="block text-[11px] font-bold text-slate-700 dark:text-slate-200 truncate">ابزار نجاری</span><span class="block text-[9px] text-slate-400">ورق و پیش‌فاکتور</span></span>';g.appendChild(b)}
+else if(!on&&b)b.remove()}
+setInterval(sync,1500);document.addEventListener('DOMContentLoaded',sync);
 })();
 </script>
 </body>
